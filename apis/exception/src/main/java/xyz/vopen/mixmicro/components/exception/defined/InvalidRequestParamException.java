@@ -6,7 +6,7 @@ package xyz.vopen.mixmicro.components.exception.defined;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2019-05-30.
  */
-public class InvalidRequestParamException extends MixmicroException {
+public class InvalidRequestParamException extends RequestException {
 
   /**
    * Constructs a new exception with the specified detail message. The cause is not initialized, and

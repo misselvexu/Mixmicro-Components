@@ -19,6 +19,9 @@
     <modules>
         <module>common</module>
         <module>exception</module>
+
+        <!-- dependencies -->
+        <module>dependencies</module>
     </modules>
 
 

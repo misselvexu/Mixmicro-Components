@@ -37,6 +37,7 @@
         <mybatis.plus.version>3.1.0</mybatis.plus.version>
 
         <!-- Components Version -->
+        <mixmicro-components-apis.dependencies.version>Antarctica.RELEASE</mixmicro-components-apis.dependencies.version>
         <mixmicro-components-kits.dependencies.version>Antarctica.RELEASE</mixmicro-components-kits.dependencies.version>
 
         <!-- Plugins Version -->
@@ -92,6 +93,14 @@
                 <version>${mixmicro-components-kits.dependencies.version}</version>
                 <type>pom</type>
             </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-apis-dependencies</artifactId>
+                <version>${mixmicro-components-apis.dependencies.version}</version>
+                <type>pom</type>
+            </dependency>
+
 
             <!-- Spring Cloud Dependency  -->
             <dependency>
