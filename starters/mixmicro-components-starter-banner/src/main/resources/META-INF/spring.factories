@@ -1,0 +1,3 @@
+# EnvironmentPostProcessor
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  xyz.vopen.mixmicro.components.boot.context.env.DefaultPropertySourceEnvironmentPostProcessor

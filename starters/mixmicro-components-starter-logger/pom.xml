@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>mixmicro-components-logger-starter</artifactId>
+    <artifactId>mixmicro-components-starter-logger</artifactId>
     <version>1.0.0.BUILD-SNAPSHOT</version>
 
     <name>YunLSP Mix Micro-service Project Logger Starter Module :: ${project.version}</name>

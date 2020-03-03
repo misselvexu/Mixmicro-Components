@@ -18,7 +18,9 @@
 
     <modules>
 
-        <module>logger</module>
+        <module>mixmicro-components-starter-logger</module>
+        <module>mixmicro-components-starter-banner</module>
+
         <!-- dependencies -->
 <!--        <module>dependencies</module>-->
     </modules>
