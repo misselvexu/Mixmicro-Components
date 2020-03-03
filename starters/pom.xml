@@ -9,20 +9,18 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>mixmicro-components-apis</artifactId>
+    <artifactId>mixmicro-components-starters</artifactId>
     <version>1.0.0.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>YunLSP Mix Micro-service Project Apis Module :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Apis Module</description>
+    <name>YunLSP Mix Micro-service Project Starters Module :: ${project.version}</name>
+    <description>🏗 YunLSP Mix Micro-service Starters Module</description>
 
     <modules>
-        <module>common</module>
-        <module>exception</module>
-        <module>logger</module>
 
+        <module>logger</module>
         <!-- dependencies -->
-        <module>dependencies</module>
+<!--        <module>dependencies</module>-->
     </modules>
 
 
@@ -31,22 +29,18 @@
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-kits-dependencies</artifactId>
-                <version>${mixmicro-components-kits.dependencies.version}</version>
+                <artifactId>mixmicro-components-apis-dependencies</artifactId>
+                <version>${mixmicro-components-apis.dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>common-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>exception-api</artifactId>
-                <version>${project.version}</version>
+                <artifactId>mixmicro-components-kits-dependencies</artifactId>
+                <version>${mixmicro-components-kits.dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

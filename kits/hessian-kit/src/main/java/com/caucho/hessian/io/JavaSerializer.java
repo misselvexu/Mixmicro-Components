@@ -230,7 +230,7 @@ public class JavaSerializer extends AbstractSerializer {
     } catch (RuntimeException e) {
       throw e;
     } catch (Exception e) {
-      // log.log(Level.FINE, e.toString(), e);
+      // core.core(Level.FINE, e.toString(), e);
       throw new RuntimeException(e);
     }
 

@@ -24,7 +24,7 @@ public class FanOutQueueTutorial {
 			
 			// enqueue some logs
 			for(int i = 0; i < 10; i++) {
-				String log = "log-" + i;
+				String log = "core-" + i;
 				foQueue.enqueue(log.getBytes());
 			}
 			

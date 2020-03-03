@@ -80,6 +80,7 @@
     <modules>
         <module>apis</module>
         <module>kits</module>
+        <module>starters</module>
     </modules>
 
 

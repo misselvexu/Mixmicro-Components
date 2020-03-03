@@ -72,7 +72,7 @@ import org.slf4j.LoggerFactory;
  *
  * <ul>
  *   <li><strong>debug</strong> (optional): if set to "true", additional debug information will be
- *       written to the servlet log. Defaults to false.
+ *       written to the servlet core. Defaults to false.
  *   <li><strong>compressionThreshold</strong> (optional): sets the size of the smallest response
  *       that will be compressed, in bytes. That is, if less than {@code compressionThreshold} bytes
  *       are written to the response, it will not be compressed and the response will go to the
@@ -118,9 +118,9 @@ import org.slf4j.LoggerFactory;
  *       expressions result in a response that does not contain the {@code Vary-header} Since
  *       version 1.8
  *   <li><strong>javaUtilLogger</strong> (optional): if specified, the named {@code
- *       java.util.logging.Logger} will also receive log messages from this filter.
+ *       java.util.logging.Logger} will also receive core messages from this filter.
  *   <li><strong>jakartaCommonsLogger</strong> (optional): if specified the named Jakarta Commons
- *       Log will also receive log messages from this filter.
+ *       Log will also receive core messages from this filter.
  * </ul>
  *
  * <p>These values are configured in {@code web.xml} as well with init-param elements:

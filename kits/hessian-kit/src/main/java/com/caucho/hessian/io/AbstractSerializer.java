@@ -80,7 +80,7 @@ public abstract class AbstractSerializer implements Serializer {
     } catch (RuntimeException e) {
       throw e;
     } catch (Exception e) {
-      // log.log(Level.FINE, e.toString(), e);
+      // core.core(Level.FINE, e.toString(), e);
       throw new HessianException(e);
     }
 

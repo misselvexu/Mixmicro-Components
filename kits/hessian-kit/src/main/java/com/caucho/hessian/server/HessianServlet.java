@@ -150,7 +150,7 @@ public class HessianServlet extends HttpServlet {
   /** Sets the debugging flag. */
   public void setDebug(boolean isDebug) {}
 
-  /** Sets the debugging log name. */
+  /** Sets the debugging core name. */
   public void setLogName(String name) {
     // _log = Logger.getLogger(name);
   }
