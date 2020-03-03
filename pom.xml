@@ -36,6 +36,8 @@
         <springfox.swagger.version>2.8.0</springfox.swagger.version>
         <mybatis.plus.version>3.1.0</mybatis.plus.version>
 
+        <!-- Components Version -->
+        <mixmicro-components-kits.dependencies.version>Antarctica.RELEASE</mixmicro-components-kits.dependencies.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -84,6 +86,12 @@
         <dependencies>
 
             <!-- Template Lib Defined -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-kits-dependencies</artifactId>
+                <version>${mixmicro-components-kits.dependencies.version}</version>
+                <type>pom</type>
+            </dependency>
 
             <!-- Spring Cloud Dependency  -->
             <dependency>
@@ -194,6 +202,12 @@
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>1.11</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.56</version>
             </dependency>
 
             <!-- bouncycastle -->

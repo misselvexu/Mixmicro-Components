@@ -17,12 +17,28 @@
     <description>🏗 YunLSP Mix Micro-service Apis Module</description>
 
     <modules>
+        <module>common</module>
         <module>exception</module>
     </modules>
 
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-kits-dependencies</artifactId>
+                <version>${mixmicro-components-kits.dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>common-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>exception-api</artifactId>

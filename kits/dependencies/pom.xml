@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>mixmicro-components-kits-dependencies</artifactId>
-    <version>Antarctica.RELEASE</version>
+    <version>${mixmicro-components-kits.dependencies.version}</version>
 
     <packaging>pom</packaging>
 
