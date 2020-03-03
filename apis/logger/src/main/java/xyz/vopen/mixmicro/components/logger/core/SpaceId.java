@@ -1,5 +1,5 @@
 /*
- * Licensed to the Acmedcare+ Group under one or more
+ * Licensed to the VOPEN+ Group under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -25,7 +25,6 @@ import java.util.Map;
 /**
  * 带有扩展属性的Space唯一Id
  *
- * @author xuanbei
  * @since 2017/07/03
  */
 public class SpaceId {

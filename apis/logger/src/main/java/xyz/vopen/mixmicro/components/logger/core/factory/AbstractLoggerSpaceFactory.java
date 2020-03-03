@@ -1,5 +1,5 @@
 /*
- * Licensed to the Acmedcare+ Group under one or more
+ * Licensed to the VOPEN+ Group under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -21,7 +21,6 @@ import xyz.vopen.mixmicro.components.logger.utils.ReportUtil;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
-/** updated by yangguanchao on 17/04/28. */
 public abstract class AbstractLoggerSpaceFactory implements ILoggerFactory {
 
   private String source;

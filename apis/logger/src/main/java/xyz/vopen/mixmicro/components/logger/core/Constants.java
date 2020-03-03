@@ -1,5 +1,5 @@
 /*
- * Licensed to the Acmedcare+ Group under one or more
+ * Licensed to the VOPEN+ Group under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -25,14 +25,15 @@ import java.io.File;
  * Class to hold configuration keys.
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a> on 16/10/26.
+ * @version ${project.version}
  */
 public interface Constants {
   // default logger, use ROOT logger if not configured in app.
   Logger DEFAULT_LOG = LoggerFactory.getLogger("xyz.vopen.mixmicro.components.logger");
   String LOG_START = "*";
-  String LOG_DIRECTORY = "core";
-  String LOG_XML_CONFIG_FILE_NAME = "core-conf.xml";
-  String LOG_XML_CONFIG_FILE_ENV_PATTERN = "core-conf-%s.xml";
+  String LOG_DIRECTORY = "log";
+  String LOG_XML_CONFIG_FILE_NAME = "log-conf.xml";
+  String LOG_XML_CONFIG_FILE_ENV_PATTERN = "log-conf-%s.xml";
   String LOG_CONFIG_PROPERTIES = "config.properties";
 
   String LOG_PATH = "logging.path";
@@ -45,25 +46,25 @@ public interface Constants {
   String DEFAULT_MIDDLEWARE_SPACE_LOG_LEVEL = "INFO";
   String IS_DEFAULT_LOG_PATH = "isDefaultLogPath";
   String IS_DEFAULT_LOG_LEVEL = "isDefaultLogLevel";
-  // specify core conf file according different environment, such as core-conf-dev.xml
-  // value pattern is similar to core.env.suffix=spaceName:dev&spaceName:test
-  String LOG_ENV_SUFFIX = "core.env.suffix";
+  // specify log conf file according different environment, such as log-conf-dev.xml
+  // value pattern is similar to log.env.suffix=spaceName:dev&spaceName:test
+  String LOG_ENV_SUFFIX = "log.env.suffix";
   // file encoding configured by VM option
   String LOG_ENCODING_PROP_KEY = "file.encoding";
-  // disable space core
-  String MIXMICRO_LOG_DISABLE_PROP_KEY = "mixmicro.core.disable";
+  // disable space log
+  String MIXMICRO_LOG_DISABLE_PROP_KEY = "mixmicro.log.disable";
   // disable log4j bridge to commons logging
   String LOG4J_COMMONS_LOGGING_MIDDLEWARE_LOG_DISABLE_PROP_KEY =
-      "log4j.commons.logging.mixmicro.core.disable";
+      "log4j.commons.logging.mixmicro.log.disable";
   // disable log4j space factory
-  String LOG4J_MIDDLEWARE_LOG_DISABLE_PROP_KEY = "log4j.mixmicro.core.disable";
+  String LOG4J_MIDDLEWARE_LOG_DISABLE_PROP_KEY = "log4j.mixmicro.log.disable";
   // disable log4j2 space factory
-  String LOG4J2_MIDDLEWARE_LOG_DISABLE_PROP_KEY = "log4j2.mixmicro.core.disable";
+  String LOG4J2_MIDDLEWARE_LOG_DISABLE_PROP_KEY = "log4j2.mixmicro.log.disable";
   // disable logback space factory
-  String LOGBACK_MIDDLEWARE_LOG_DISABLE_PROP_KEY = "logback.mixmicro.core.disable";
+  String LOGBACK_MIDDLEWARE_LOG_DISABLE_PROP_KEY = "logback.mixmicro.log.disable";
   // UTF-8 encoding
   String UTF8_STR = "UTF-8";
-  // default core path
+  // default log path
   String LOGGING_PATH_DEFAULT = System.getProperty("user.home") + File.separator + "logs";
   // default priority, Larger numbers indicate higher priority
   int DEFAULT_PRIORITY = 0;
@@ -71,33 +72,33 @@ public interface Constants {
   // PID key
   String PROCESS_MARKER = "PID";
   // config prefix
-  String MIXMICRO_CONFIG_PREFIX = "mixmicro.core.";
-  // global switch to core on console
-  String MIXMICRO_ALL_LOG_CONSOLE_SWITCH = "mixmicro.core.console";
-  // single space switch to core on console
-  String MIXMICRO_SINGLE_LOG_CONSOLE_SWITCH = "mixmicro.core.%s.console";
+  String MIXMICRO_CONFIG_PREFIX = "mixmicro.log.";
+  // global switch to log on console
+  String MIXMICRO_ALL_LOG_CONSOLE_SWITCH = "mixmicro.log.console";
+  // single space switch to log on console
+  String MIXMICRO_SINGLE_LOG_CONSOLE_SWITCH = "mixmicro.log.%s.console";
   // console string
   String CONSOLE_SUFFIX = ".console";
-  // acmedcare-common-tools 自身日志开关
-  // internal core level config.
-  String MIXMICRO_LOG_INTERNAL_LEVEL = "mixmicro.core.internal.level";
-  // global console core level
-  String MIXMICRO_ALL_LOG_CONSOLE_LEVEL = "mixmicro.core.console.level";
-  // single space console core level
-  String MIXMICRO_SINGLE_LOG_CONSOLE_LEVEL = "mixmicro.core.%s.console.level";
-  // logback core pattern on console
+  // mixmicro-common-tools 自身日志开关
+  // internal log level config.
+  String MIXMICRO_LOG_INTERNAL_LEVEL = "mixmicro.log.internal.level";
+  // global console log level
+  String MIXMICRO_ALL_LOG_CONSOLE_LEVEL = "mixmicro.log.console.level";
+  // single space console log level
+  String MIXMICRO_SINGLE_LOG_CONSOLE_LEVEL = "mixmicro.log.%s.console.level";
+  // logback log pattern on console
   String MIXMICRO_LOG_CONSOLE_LOGBACK_PATTERN =
-      "mixmicro.core.console.logback.pattern";
-  // log4j2 core pattern on console
-  String MIXMICRO_LOG_CONSOLE_LOG4J2_PATTERN = "mixmicro.core.console.log4j2.pattern";
-  // default logback core pattern
+      "mixmicro.log.console.logback.pattern";
+  // log4j2 log pattern on console
+  String MIXMICRO_LOG_CONSOLE_LOG4J2_PATTERN = "mixmicro.log.console.log4j2.pattern";
+  // default logback log pattern
   String MIXMICRO_LOG_CONSOLE_LOGBACK_PATTERN_DEFAULT =
       "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } --- [%15.15t] %-40.40logger{39} : %m%n";
-  // default log4j2 core pattern
+  // default log4j2 log pattern
   String MIXMICRO_LOG_CONSOLE_LOG4J2_PATTERN_DEFAULT =
       "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p %X{PID} --- [%15.15t] %-40.40logger{39} : %m%n";
   // logging path file
   String LOGGING_CONFIG_PATH = "logging.config.%s";
   // config marker
-  String MIXMICRO_LOG_FIRST_INITIALIZE = "mixmicro.core.first.initialize";
+  String MIXMICRO_LOG_FIRST_INITIALIZE = "mixmicro.log.first.initialize";
 }

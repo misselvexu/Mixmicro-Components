@@ -1,5 +1,5 @@
 /*
- * Licensed to the Acmedcare+ Group under one or more
+ * Licensed to the VOPEN+ Group under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class used to output core statements from within the acmedcare-common-tools package.
+ * This class used to output core statements from within the mixmicro-common-tools package.
  *
  * <p>And also it is used to output core statements to console appender.
  *
@@ -30,7 +30,7 @@ import java.util.Map;
  * @since 1.0.15
  */
 public class LogApi {
-  private static final String DEBUG_PREFIX = "Mixmicro-Log:DEBUG  ";
+  private static final String DEBUG_PREFIX = "Mixmicro-Log:DEBUG ";
   private static final String INFO_PREFIX = "Mixmicro-Log:INFO ";
   private static final String ERR_PREFIX = "Mixmicro-Log:ERROR ";
   private static final String WARN_PREFIX = "Mixmicro-Log:WARN ";

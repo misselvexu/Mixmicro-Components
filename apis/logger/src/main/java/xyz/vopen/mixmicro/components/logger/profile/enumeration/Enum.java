@@ -1,5 +1,5 @@
 /*
- * Licensed to the Acmedcare+ Group under one or more
+ * Licensed to the VOPEN+ Group under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -30,7 +30,7 @@ import java.util.*;
 
 /**
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @version $Id: Enum.java, v 0.1 2017年08月01日 上午11:46 luoguimu123 Exp $
+ * @version ${project.version}
  */
 public abstract class Enum extends Number implements NumberType, Comparable, Serializable {
   private static final long serialVersionUID = -3420208858441821772L;

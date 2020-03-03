@@ -1,5 +1,5 @@
 /*
- * Licensed to the Acmedcare+ Group under one or more
+ * Licensed to the VOPEN+ Group under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -16,7 +16,6 @@
  */
 package xyz.vopen.mixmicro.components.logger.core.env;
 
-import com.acmedcare.framework.common.utils.*;
 import xyz.vopen.mixmicro.components.logger.utils.*;
 
 import java.util.HashMap;
@@ -165,7 +164,7 @@ public final class LogEnvUtils {
     suffix = (suffix == null) ? StringUtil.EMPTY_STRING : suffix;
     if (!suffix.isEmpty()) {
       ReportUtil.reportDebug(
-          spaceName + " core configuration: " + LOG_XML_CONFIG_FILE_NAME + suffix);
+          spaceName + " log configuration: " + LOG_XML_CONFIG_FILE_NAME + suffix);
     }
     return suffix;
   }

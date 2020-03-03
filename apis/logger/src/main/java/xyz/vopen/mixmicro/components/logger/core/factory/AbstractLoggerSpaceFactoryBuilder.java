@@ -1,5 +1,5 @@
 /*
- * Licensed to the Acmedcare+ Group under one or more
+ * Licensed to the VOPEN+ Group under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -16,13 +16,13 @@
  */
 package xyz.vopen.mixmicro.components.logger.core.factory;
 
-import xyz.vopen.mixmicro.components.logger.utils.AssertUtil;
-import xyz.vopen.mixmicro.components.logger.utils.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.logger.core.SpaceId;
 import xyz.vopen.mixmicro.components.logger.core.SpaceInfo;
 import xyz.vopen.mixmicro.components.logger.core.env.LogEnvUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.logger.utils.AssertUtil;
+import xyz.vopen.mixmicro.components.logger.utils.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,8 +34,8 @@ import java.util.*;
 import static xyz.vopen.mixmicro.components.logger.core.Constants.*;
 
 /**
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a> on 16/9/22. Updated by
- *     guanchao.ygc@alibaba-inc.com on 14/04/28.
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version}
  */
 public abstract class AbstractLoggerSpaceFactoryBuilder implements LoggerSpaceFactoryBuilder {
   private static final Logger logger =
@@ -67,7 +67,7 @@ public abstract class AbstractLoggerSpaceFactoryBuilder implements LoggerSpaceFa
   private URL getSpaceLogConfigFileURL(ClassLoader spaceClassloader, String spaceName) {
     String suffix = LogEnvUtils.getLogConfEnvSuffix(spaceName);
 
-    // TODO avoid this pattern "core-conf.xml.console"
+    // TODO avoid this pattern "log-conf.xml.console"
     String logConfigLocation =
         spaceName.replace('.', '/')
             + "/"
@@ -92,7 +92,7 @@ public abstract class AbstractLoggerSpaceFactoryBuilder implements LoggerSpaceFa
 
     try {
 
-      // 拿到 core
+      // 拿到 log
       List<URL> logConfigFileUrls = new ArrayList<URL>();
       Enumeration<URL> logUrls = spaceClassloader.getResources(logConfigLocation);
       // 可能存在多个文件。
@@ -118,7 +118,7 @@ public abstract class AbstractLoggerSpaceFactoryBuilder implements LoggerSpaceFa
 
       configFileUrl = getResource(spaceClassloader, logConfigFileUrls, configPropertyFileUrls);
 
-      // recommend this pattern "core-conf-console.xml"
+      // recommend this pattern "log-conf-console.xml"
       if (configFileUrl == null && suffix != null && !suffix.isEmpty()) {
         // try again with another env profile file pattern;
         logConfigLocation =
@@ -138,9 +138,9 @@ public abstract class AbstractLoggerSpaceFactoryBuilder implements LoggerSpaceFa
     }
 
     /**
-     * customize core config file like logging.path.config.{space id}. it can be configured via VM
+     * customize log config file like logging.path.config.{space id}. it can be configured via VM
      * option or spring boot config file. Notice that when configured via VM option and use log4j2,
-     * the configure file path must end with log4j2/core-conf-custom.xml.
+     * the configure file path must end with log4j2/log-conf-custom.xml.
      */
     String loggingConfig = System.getProperty(String.format(LOGGING_CONFIG_PATH, spaceName));
     if (!StringUtil.isBlank(loggingConfig)) {

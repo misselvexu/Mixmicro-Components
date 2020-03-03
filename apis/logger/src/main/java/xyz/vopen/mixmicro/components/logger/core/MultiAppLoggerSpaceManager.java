@@ -1,5 +1,5 @@
 /*
- * Licensed to the Acmedcare+ Group under one or more
+ * Licensed to the VOPEN+ Group under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -293,7 +293,7 @@ public class MultiAppLoggerSpaceManager {
         String isLogbackDisable = System.getProperty(Constants.LOGBACK_MIDDLEWARE_LOG_DISABLE_PROP_KEY);
         if (Boolean.TRUE.toString().equalsIgnoreCase(isLogbackDisable)) {
           ReportUtil.reportWarn(
-              "Logback-Acmedcare-Middleware-Log is disabled!  -D"
+              "Logback-MixMicro-Log is disabled!  -D"
                   + Constants.LOGBACK_MIDDLEWARE_LOG_DISABLE_PROP_KEY
                   + "=true");
         } else {
@@ -310,7 +310,7 @@ public class MultiAppLoggerSpaceManager {
         String isLog4j2Disable = System.getProperty(Constants.LOG4J2_MIDDLEWARE_LOG_DISABLE_PROP_KEY);
         if (Boolean.TRUE.toString().equalsIgnoreCase(isLog4j2Disable)) {
           ReportUtil.reportWarn(
-              "Log4j2-Acmedcare-Middleware-Log is disabled!  -D"
+              "Log4j2-MixMicro-Log is disabled!  -D"
                   + Constants.LOG4J2_MIDDLEWARE_LOG_DISABLE_PROP_KEY
                   + "=true");
         } else {
@@ -326,7 +326,7 @@ public class MultiAppLoggerSpaceManager {
         String isLog4jDisable = System.getProperty(Constants.LOG4J_MIDDLEWARE_LOG_DISABLE_PROP_KEY);
         if (Boolean.TRUE.toString().equalsIgnoreCase(isLog4jDisable)) {
           ReportUtil.reportWarn(
-              "Log4j-Acmedcare-Middleware-Log is disabled!  -D"
+              "Log4j-MixMicro-Log is disabled!  -D"
                   + Constants.LOG4J_MIDDLEWARE_LOG_DISABLE_PROP_KEY
                   + "=true");
         } else {
@@ -344,7 +344,7 @@ public class MultiAppLoggerSpaceManager {
             System.getProperty(Constants.LOG4J_COMMONS_LOGGING_MIDDLEWARE_LOG_DISABLE_PROP_KEY);
         if (Boolean.TRUE.toString().equalsIgnoreCase(isLog4jDisable)) {
           ReportUtil.reportWarn(
-              "Log4j-Acmedcare-Middleware-Log(But adapter commons-logging to slf4j) is disabled!  -D"
+              "Log4j-MixMicro-Log(But adapter commons-logging to slf4j) is disabled!  -D"
                   + Constants.LOG4J_COMMONS_LOGGING_MIDDLEWARE_LOG_DISABLE_PROP_KEY
                   + "=true");
         } else {
@@ -360,7 +360,7 @@ public class MultiAppLoggerSpaceManager {
         }
       }
 
-      ReportUtil.reportWarn("No core util is usable, Default app logger will be used.");
+      ReportUtil.reportWarn("No log util is usable, Default app logger will be used.");
     } catch (Throwable e) {
       ReportUtil.reportError("Build ILoggerFactory error! Default app logger will be used.", e);
     }

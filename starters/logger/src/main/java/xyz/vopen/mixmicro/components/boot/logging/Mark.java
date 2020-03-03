@@ -1,5 +1,5 @@
 /*
- * Licensed to the Acmedcare+ Group under one or more
+ * Licensed to the VOPEN+ Group under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -14,16 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.vopen.mixmicro.components.logger.core;
+package xyz.vopen.mixmicro.components.boot.logging;
 
 /**
- * ReportUtil Compatible history usage
- *
- * <p>Output logs to console and default logger
- *
- * <p>
- *
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a> on 18/06/04.
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @since 1.0.17
  */
-@Deprecated
-public class ReportUtil extends xyz.vopen.mixmicro.components.logger.utils.ReportUtil {}
+public class Mark {}

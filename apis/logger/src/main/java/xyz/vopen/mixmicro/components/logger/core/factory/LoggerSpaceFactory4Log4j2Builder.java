@@ -1,5 +1,5 @@
 /*
- * Licensed to the Acmedcare+ Group under one or more
+ * Licensed to the VOPEN+ Group under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -22,8 +22,8 @@ import xyz.vopen.mixmicro.components.logger.core.SpaceInfo;
 import java.net.URL;
 
 /**
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a> on 16/9/14. Updated by
- *     guanchao.ygc@alibaba-inc.com on 14/04/28.
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version}
  */
 public class LoggerSpaceFactory4Log4j2Builder extends AbstractLoggerSpaceFactoryBuilder {
 
