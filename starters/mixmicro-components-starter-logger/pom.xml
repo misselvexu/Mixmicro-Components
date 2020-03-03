@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>mixmicro-components-starter-logger</artifactId>
-    <version>1.0.0.BUILD-SNAPSHOT</version>
+    <version>1.0.0.RELEASE</version>
 
     <name>YunLSP Mix Micro-service Project Logger Starter Module :: ${project.version}</name>
     <description>🏗 YunLSP Mix Micro-service Logger Starter Module</description>
