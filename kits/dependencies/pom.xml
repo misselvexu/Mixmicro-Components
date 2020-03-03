@@ -39,7 +39,7 @@
         <mixmicro-event.kit.version>Antarctica.RC1</mixmicro-event.kit.version>
         <mixmicro-compression.kit.version>Antarctica.RC1</mixmicro-compression.kit.version>
         <mixmicro-timer.kit.version>Antarctica.RC1</mixmicro-timer.kit.version>
-        <mixmicro-spring-context.kit.version>Antarctica.RC1</mixmicro-spring-context.kit.version>
+        <mixmicro-spring-context.kit.version>Antarctica.RC2</mixmicro-spring-context.kit.version>
         <mixmicro-http-client.kit.version>Antarctica.RC4</mixmicro-http-client.kit.version>
         <mixmicro-servlet-compress.kit.version>Antarctica.RC1</mixmicro-servlet-compress.kit.version>
         <mixmicro-jre-http-client.kit.version>Antarctica.RC1</mixmicro-jre-http-client.kit.version>

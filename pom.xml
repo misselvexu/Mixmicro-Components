@@ -39,6 +39,7 @@
         <!-- Components Version -->
         <mixmicro-components-apis.dependencies.version>Antarctica.RELEASE</mixmicro-components-apis.dependencies.version>
         <mixmicro-components-kits.dependencies.version>Antarctica.RELEASE</mixmicro-components-kits.dependencies.version>
+        <mixmicro-components-starters.dependencies.version>Antarctica.RELEASE</mixmicro-components-starters.dependencies.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -81,6 +82,8 @@
         <module>apis</module>
         <module>kits</module>
         <module>starters</module>
+
+        <module>all</module>
     </modules>
 
 
@@ -99,6 +102,13 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-apis-dependencies</artifactId>
                 <version>${mixmicro-components-apis.dependencies.version}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starters-dependencies</artifactId>
+                <version>${mixmicro-components-starters.dependencies.version}</version>
                 <type>pom</type>
             </dependency>
 
