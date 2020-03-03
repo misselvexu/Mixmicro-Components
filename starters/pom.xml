@@ -51,14 +51,6 @@
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-starters-dependencies</artifactId>
-                <version>${mixmicro-components-starters.dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-banner</artifactId>
                 <version>1.0.0.RELEASE</version>
             </dependency>
@@ -72,6 +64,24 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-json</artifactId>
+                <version>1.0.0.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-cors</artifactId>
+                <version>1.0.0.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-resteasy</artifactId>
+                <version>1.0.0.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-snowflake</artifactId>
                 <version>1.0.0.RELEASE</version>
             </dependency>
         </dependencies>
