@@ -1,0 +1,6 @@
+Specification-Title: queue-kit
+Specification-Version: 0.1
+Specification-Vendor: Mixmicro+
+Implementation-Version: 0.1
+Implementation-Vendor: Mixmicro+
+Implementation-Title: big, fast and persistent queue

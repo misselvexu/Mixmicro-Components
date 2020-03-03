@@ -2,40 +2,41 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.yunlsp.framework.components</groupId>
-    <artifactId>mixmicro-components-all</artifactId>
+    <parent>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-all</artifactId>
+        <version>1.0.0.BUILD-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>mixmicro-components-kits</artifactId>
     <version>1.0.0.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>YunLSP Mix Micro-service Components :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Components Parent</description>
-    <inceptionYear>2020</inceptionYear>
-    <url>http://git.hgj.net/elve.xu/Mixmicro-Components</url>
-
-    <organization>
-        <name>The YunLSP+ Organization</name>
-        <url>https://www.yunlsp.com</url>
-    </organization>
+    <name>YunLSP Mix Micro-service Project Kits Module :: ${project.version}</name>
+    <description>🏗 YunLSP Mix Micro-service Kits Module</description>
 
     <properties>
-        <!-- Deploy Properties -->
-        <maven.deploy.skip>false</maven.deploy.skip>
-
-        <!-- base properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
 
-        <!-- Framework's version -->
-        <spring.cloud.version>Hoxton.SR2</spring.cloud.version>
-        <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
-        <spring.framework.version>5.2.2.RELEASE</spring.framework.version>
-
-        <jaeger.opentracing.version>2.0.3</jaeger.opentracing.version>
-        <swagger.version>1.5.14</swagger.version>
-        <springfox.swagger.version>2.8.0</springfox.swagger.version>
-        <mybatis.plus.version>3.1.0</mybatis.plus.version>
-
+        <!-- Module Version -->
+        <mixmicro-executor.kit.version>Antarctica.RC2</mixmicro-executor.kit.version>
+        <mixmicro-event.kit.version>Antarctica.RC1</mixmicro-event.kit.version>
+        <mixmicro-compression.kit.version>Antarctica.RC1</mixmicro-compression.kit.version>
+        <mixmicro-timer.kit.version>Antarctica.RC1</mixmicro-timer.kit.version>
+        <mixmicro-spring-context.kit.version>Antarctica.RC1</mixmicro-spring-context.kit.version>
+        <mixmicro-http-client.kit.version>Antarctica.RC4</mixmicro-http-client.kit.version>
+        <mixmicro-servlet-compress.kit.version>Antarctica.RC1</mixmicro-servlet-compress.kit.version>
+        <mixmicro-jre-http-client.kit.version>Antarctica.RC1</mixmicro-jre-http-client.kit.version>
+        <mixmicro-common.kit.version>Antarctica.RC4</mixmicro-common.kit.version>
+        <mixmicro-hessian.kit.version>Antarctica.4x.RC1</mixmicro-hessian.kit.version>
+        <mixmicro-queue.kit.version>Antarctica.RC1</mixmicro-queue.kit.version>
+        <mixmicro-retry.kit.version>Antarctica.RC1</mixmicro-retry.kit.version>
+        <mixmicro-timed-id.kit.version>Antarctica.RC1</mixmicro-timed-id.kit.version>
+        <mixmicro-qrcode.kit.version>Antarctica.RC1</mixmicro-qrcode.kit.version>
+        <mixmicro-reflect.kit.version>Antarctica.RC1</mixmicro-reflect.kit.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -47,235 +48,133 @@
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+
     </properties>
 
-    <prerequisites>
-        <maven>3.2.5</maven>
-    </prerequisites>
-
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>https://choosealicense.com/licenses/mit/</url>
-            <distribution>manual</distribution>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <id>YunLSP+</id>
-            <name>Developer</name>
-            <email>developer@yunlsp.com</email>
-            <roles>
-                <role>Architect</role>
-                <role>Developer</role>
-            </roles>
-            <timezone>+8</timezone>
-        </developer>
-    </developers>
-
     <modules>
-        <module>apis</module>
-        <module>kits</module>
+        <module>dependencies</module>
+        <module>compression-kit</module>
+        <module>servlet-compress-filter</module>
+        <module>common-kits</module>
+        <module>http-client-kit</module>
+        <module>jre-http-client-kit</module>
+        <module>spring-context-support</module>
+        <module>timer-kit</module>
+        <module>timed-id-kit</module>
+        <module>executor-kit</module>
+        <module>event-kit</module>
+        <module>hessian-kit</module>
+        <module>queue-kit</module>
+        <module>retry-kit</module>
+        <module>qrcode-kit</module>
+        <module>reflect-kit</module>
     </modules>
 
 
     <dependencyManagement>
         <dependencies>
-
-            <!-- Template Lib Defined -->
-
-            <!-- Spring Cloud Dependency  -->
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- Spring Cloud Alibaba -->
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2.2.0.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- Spring Boot Dependency  -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- Database Libs -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-jdbc</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
-
-            <!-- Mybatis Libs -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis.plus.version}</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>executor-kit</artifactId>
+                <version>${mixmicro-executor.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-annotation</artifactId>
-                <version>${mybatis.plus.version}</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>compression-kit</artifactId>
+                <version>${mixmicro-compression.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-core</artifactId>
-                <version>${mybatis.plus.version}</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>reflect-kit</artifactId>
+                <version>${mixmicro-reflect.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-extension</artifactId>
-                <version>${mybatis.plus.version}</version>
-            </dependency>
-
-            <!-- test -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring.boot.version}</version>
-                <scope>test</scope>
-            </dependency>
-
-            <!-- Trace Support -->
-            <dependency>
-                <groupId>io.opentracing.contrib</groupId>
-                <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
-                <version>${jaeger.opentracing.version}</version>
-            </dependency>
-
-            <!-- Commons Kit-->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.8</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>event-kit</artifactId>
+                <version>${mixmicro-event.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.6</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>timer-kit</artifactId>
+                <version>${mixmicro-timer.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>1.9.3</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>retry-kit</artifactId>
+                <version>${mixmicro-retry.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-pool2</artifactId>
-                <version>2.6.0</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>timed-id-kit</artifactId>
+                <version>${mixmicro-timed-id.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>commons-cli</groupId>
-                <artifactId>commons-cli</artifactId>
-                <version>1.4</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${mixmicro-spring-context.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>1.11</version>
-            </dependency>
-
-            <!-- bouncycastle -->
-            <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
-                <version>1.60</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>jre-http-client-kit</artifactId>
+                <version>${mixmicro-jre-http-client.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk16</artifactId>
-                <version>1.46</version>
-            </dependency>
-
-            <!-- Swagger Support -->
-            <dependency>
-                <groupId>xyz.vopen.tiffany</groupId>
-                <artifactId>spring-boot-starter-swagger</artifactId>
-                <version>0.8.1-RELEASE</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>servlet-compress-filter</artifactId>
+                <version>${mixmicro-servlet-compress.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${springfox.swagger.version}</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>http-client-kit</artifactId>
+                <version>${mixmicro-http-client.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${springfox.swagger.version}</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>common-kits</artifactId>
+                <version>${mixmicro-common.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-bean-validators</artifactId>
-                <version>${springfox.swagger.version}</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>hessian-kit</artifactId>
+                <version>${mixmicro-hessian.kit.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger.version}</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>queue-kit</artifactId>
+                <version>${mixmicro-queue.kit.version}</version>
             </dependency>
 
-            <!-- Java Validation Libs -->
             <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>2.0.1.Final</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>qrcode-kit</artifactId>
+                <version>${mixmicro-qrcode.kit.version}</version>
             </dependency>
-
-            <!-- Hibernate Implements of Java Validation -->
-            <dependency>
-                <groupId>org.hibernate.validator</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>6.0.14.Final</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-
-        <!-- junit support -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- lombok support -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.6</version>
-        </dependency>
-
-    </dependencies>
 
     <build>
+
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>1.4.0.Final</version>
+            </extension>
+        </extensions>
 
         <pluginManagement>
             <plugins>
@@ -414,6 +313,11 @@
                     <version>2.2</version>
                 </plugin>
                 <!-- Need to set releases.repo and snapshots.repo properties in your .m2/settings.xml -->
+                <plugin>
+                    <groupId>org.jasig.maven</groupId>
+                    <artifactId>maven-notice-plugin</artifactId>
+                    <version>1.1.0</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -507,18 +411,5 @@
             </resource>
         </resources>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>nexus.releases</id>
-            <url>http://nexus.hgj.net/repository/releases/</url>
-            <uniqueVersion>false</uniqueVersion>
-        </repository>
-        <snapshotRepository>
-            <id>nexus.snapshots</id>
-            <url>http://nexus.hgj.net/repository/snapshots/</url>
-            <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>
