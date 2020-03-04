@@ -9,6 +9,8 @@ import lombok.Setter;
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
+ * @deprecated use ResponseEntity<T> instead of, will removed next release version.
+ * @see EntityBody
  */
 @Getter
 @Setter

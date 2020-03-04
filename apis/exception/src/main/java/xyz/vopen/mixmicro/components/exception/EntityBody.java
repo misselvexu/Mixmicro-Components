@@ -16,9 +16,11 @@ import java.util.Date;
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 22/10/2018.
+ * @deprecated use ResponseEntity<T> instead of, will removed next release version.
  */
 @Getter
 @Setter
+@Deprecated
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 public class EntityBody<T, M> implements Serializable {
