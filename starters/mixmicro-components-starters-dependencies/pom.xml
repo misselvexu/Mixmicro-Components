@@ -67,6 +67,12 @@
                 <artifactId>mixmicro-components-starter-openfeign</artifactId>
                 <version>1.0.0.RELEASE</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-sidecar</artifactId>
+                <version>1.0.0.RELEASE</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
