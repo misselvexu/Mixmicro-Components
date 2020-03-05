@@ -61,4 +61,14 @@ public class MixmicroInvokeException extends MixmicroException {
   public MixmicroInvokeException(Throwable cause) {
     super(cause);
   }
+
+  public static MixmicroInvokeException build(
+      MixmicroInvokeException exception, boolean isClientSide) {
+
+    if (isClientSide) {
+      return new MixmicroInvokeClientException(exception.getHttpCode(), exception.getMessage());
+    } else {
+      return new MixmicroInvokeServerException(exception.getHttpCode(), exception.getMessage());
+    }
+  }
 }

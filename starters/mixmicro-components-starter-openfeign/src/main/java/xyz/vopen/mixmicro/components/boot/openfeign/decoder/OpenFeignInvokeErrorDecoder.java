@@ -4,10 +4,12 @@ import feign.Feign;
 import feign.Response;
 import feign.RetryableException;
 import feign.codec.ErrorDecoder;
-import xyz.vopen.mixmicro.components.exception.defined.MixmicroInvokeClientException;
-import xyz.vopen.mixmicro.components.exception.defined.MixmicroInvokeServerException;
+import org.apache.commons.io.IOUtils;
+import xyz.vopen.mixmicro.components.common.ResponseEntity;
+import xyz.vopen.mixmicro.components.exception.defined.MixmicroInvokeException;
 
 import static feign.FeignException.errorStatus;
+import static xyz.vopen.mixmicro.components.exception.defined.MixmicroInvokeException.build;
 
 /**
  * {@link OpenFeignInvokeErrorDecoder}
@@ -34,14 +36,26 @@ public class OpenFeignInvokeErrorDecoder implements ErrorDecoder {
   public Exception decode(String methodKey, Response response) {
 
     if (response.status() >= 400 && response.status() <= 499) {
-      return new MixmicroInvokeClientException(response.status(), response.reason());
+      return buildException(response, true);
     }
 
     if (response.status() >= 500 && response.status() <= 599) {
-      return new MixmicroInvokeServerException(response.status(), response.reason());
+      return buildException(response, false);
     }
 
     // DEFAULT ERROR
     return errorStatus(methodKey, response);
+  }
+
+  @SuppressWarnings("unchecked")
+  private MixmicroInvokeException buildException(Response response, boolean isClientSide) {
+    try {
+      byte[] content = IOUtils.toByteArray(response.body().asInputStream());
+      ResponseEntity<String> entity = ResponseEntity.decode(content, ResponseEntity.class);
+      return build(
+          new MixmicroInvokeException(response.status(), entity.getMessage()), isClientSide);
+    } catch (Exception e) {
+      return new MixmicroInvokeException(response.status(), response.reason());
+    }
   }
 }
