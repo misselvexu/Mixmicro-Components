@@ -30,6 +30,8 @@
         <micro-starter-resteasy.version>${project.version}</micro-starter-resteasy.version>
         <micro-starter-snowflake.version>${project.version}</micro-starter-snowflake.version>
         <micro-starter-openfeign.version>${project.version}</micro-starter-openfeign.version>
+        <micro-starter-datasource.version>${project.version}</micro-starter-datasource.version>
+        <micro-starter-sidecar.version>${project.version}</micro-starter-sidecar.version>
 
         <micro-starter-cache-redis-default.version>${project.version}</micro-starter-cache-redis-default.version>
         <micro-starter-cache-redis-lettuce.version>${project.version}</micro-starter-cache-redis-lettuce.version>
@@ -77,6 +79,18 @@
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-datasource</artifactId>
+                <version>${micro-starter-datasource.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-sidecar</artifactId>
+                <version>${micro-starter-sidecar.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-openfeign</artifactId>
                 <version>${micro-starter-openfeign.version}</version>
             </dependency>
@@ -99,11 +113,6 @@
                 <version>${micro-starter-cache-redis-springdata.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-starter-sidecar</artifactId>
-                <version>1.0.0.RELEASE</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

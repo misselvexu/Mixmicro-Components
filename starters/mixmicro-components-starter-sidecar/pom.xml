@@ -10,10 +10,10 @@
     </parent>
 
     <artifactId>mixmicro-components-starter-sidecar</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
 
-    <name>YunLSP Mix Micro-service Project Sidecar Starter Module :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Sidecar Starter Module</description>
+    <name>Sidecar Starter Module :: ${project.version}</name>
+    <description>🏗 Sidecar Starter Module</description>
 
     <dependencies>
         <dependency>

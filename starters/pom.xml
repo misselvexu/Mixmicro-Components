@@ -26,7 +26,8 @@
         <module>mixmicro-components-starter-resteasy</module>
         <module>mixmicro-components-starter-openfeign</module>
         <module>mixmicro-components-starter-cache</module>
-
+        <module>mixmicro-components-starter-datasource</module>
+        <module>mixmicro-components-starter-sidecar</module>
 
         <module>mixmicro-components-starters-dependencies</module>
     </modules>
@@ -39,6 +40,8 @@
         <micro-starter-resteasy.version>${project.version}</micro-starter-resteasy.version>
         <micro-starter-snowflake.version>${project.version}</micro-starter-snowflake.version>
         <micro-starter-openfeign.version>${project.version}</micro-starter-openfeign.version>
+        <micro-starter-datasource.version>${project.version}</micro-starter-datasource.version>
+        <micro-starter-sidecar.version>${project.version}</micro-starter-sidecar.version>
     </properties>
 
     <dependencyManagement>
@@ -117,6 +120,19 @@
                 <artifactId>mixmicro-components-starter-openfeign</artifactId>
                 <version>${micro-starter-openfeign.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-datasource</artifactId>
+                <version>${micro-starter-datasource.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-sidecar</artifactId>
+                <version>${micro-starter-sidecar.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
