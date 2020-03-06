@@ -25,6 +25,7 @@
         <module>mixmicro-components-starter-snowflake</module>
         <module>mixmicro-components-starter-resteasy</module>
         <module>mixmicro-components-starter-openfeign</module>
+        <module>mixmicro-components-starter-sidecar</module>
 
 
         <module>mixmicro-components-starters-dependencies</module>
