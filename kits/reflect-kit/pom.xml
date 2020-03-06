@@ -13,7 +13,7 @@
     <artifactId>reflect-kit</artifactId>
     <version>Antarctica.RC1</version>
 
-    <name>YunLSP Mix Micro-service reflect-kit ${project.version}</name>
+    <name>Reflect Kit :: ${project.version}</name>
     <description>Mixmicro+ High performance Java reflection using code generation</description>
 
     <properties>

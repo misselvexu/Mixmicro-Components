@@ -13,8 +13,8 @@
     <version>1.0.0.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>YunLSP Mix Micro-service Project Apis Module :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Apis Module</description>
+    <name>Apis Module :: ${project.version}</name>
+    <description>🏗 Apis Module</description>
 
     <modules>
         <module>common</module>

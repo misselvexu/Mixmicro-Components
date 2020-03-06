@@ -13,7 +13,7 @@
     <artifactId>queue-kit</artifactId>
     <version>Antarctica.RC1</version>
 
-    <name>YunLSP Mix Micro-service queue-kit ${project.version}</name>
+    <name>Queue Kit :: ${project.version}</name>
     <description>Mixmicro+ Big Queue Kit (mmap)</description>
 
     <properties>

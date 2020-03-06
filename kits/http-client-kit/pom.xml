@@ -13,7 +13,7 @@
     <artifactId>http-client-kit</artifactId>
     <version>Antarctica.RC4</version>
 
-    <name>YunLSP Mix Micro-service http-client-kit ${project.version}</name>
+    <name>HttpClient kit :: ${project.version}</name>
     <description>Mixmicro+ Custom Http Client Kit</description>
 
     <properties>

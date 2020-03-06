@@ -13,7 +13,7 @@
     <artifactId>spring-context-support</artifactId>
     <version>Antarctica.RC2</version>
 
-    <name>YunLSP Mix Micro-service spring-context-support ${project.version}</name>
+    <name>Spring Context Support :: ${project.version}</name>
 
     <properties>
         <maven.compiler.source>1.6</maven.compiler.source>

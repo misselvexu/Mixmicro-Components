@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-enhance-cache-extension</artifactId>
+        <version>1.0.0.BUILD-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>mixmicro-components-enhance-cache-extension-redis-default</artifactId>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
+
+    <name>Enhance Cache With Default Jedis Implements Extension Module :: ${project.version}</name>
+    <description>🏗 Enhance Cache Extension's Jedis Module</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>mixmicro-components-enhance-cache-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

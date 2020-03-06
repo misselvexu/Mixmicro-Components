@@ -14,7 +14,7 @@
     <version>Antarctica.RC4</version>
     <packaging>jar</packaging>
 
-    <name>YunLSP Mix Micro-service common-kits ${project.version}</name>
+    <name>Common-kits ${project.version}</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

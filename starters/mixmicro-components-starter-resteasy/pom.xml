@@ -12,8 +12,8 @@
     <artifactId>mixmicro-components-starter-resteasy</artifactId>
     <version>1.0.0.RELEASE</version>
 
-    <name>YunLSP Mix Micro-service Project Resteasy Starter Module :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Resteasy Starter Module</description>
+    <name>Resteasy Starter Module :: ${project.version}</name>
+    <description>🏗 Resteasy Starter Module</description>
 
     <properties>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

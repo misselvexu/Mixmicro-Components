@@ -1,0 +1,24 @@
+package xyz.vopen.mixmicro.components.enhance.cache.embedded;
+
+import java.util.Collection;
+import java.util.Map;
+
+/**
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version}
+ */
+public interface InnerMap {
+    Object getValue(Object key);
+
+    Map getAllValues(Collection keys);
+
+    void putValue(Object key, Object value);
+
+    void putAllValues(Map map);
+
+    boolean removeValue(Object key);
+
+    boolean putIfAbsentValue(Object key, Object value);
+
+    void removeAllValues(Collection keys);
+}

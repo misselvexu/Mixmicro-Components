@@ -13,8 +13,8 @@
     <version>1.0.0.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>YunLSP Mix Micro-service Project Kits Module :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Kits Module</description>
+    <name>Kits Module :: ${project.version}</name>
+    <description>🏗 Kits Module</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

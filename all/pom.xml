@@ -16,7 +16,7 @@
 
     <packaging>pom</packaging>
 
-    <name>YunLSP Mix Micro-service All Components Dependencies ${project.version}</name>
+    <name>All Components Dependencies ${project.version}</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

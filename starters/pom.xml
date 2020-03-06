@@ -13,8 +13,8 @@
     <version>1.0.0.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>YunLSP Mix Micro-service Project Starters Module :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Starters Module</description>
+    <name>Starters Module :: ${project.version}</name>
+    <description>🏗 Starters Module</description>
 
     <modules>
 
@@ -25,6 +25,7 @@
         <module>mixmicro-components-starter-snowflake</module>
         <module>mixmicro-components-starter-resteasy</module>
         <module>mixmicro-components-starter-openfeign</module>
+        <module>mixmicro-components-starter-cache</module>
 
 
         <module>mixmicro-components-starters-dependencies</module>
@@ -89,6 +90,12 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-openfeign</artifactId>
+                <version>1.0.0.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-cache</artifactId>
                 <version>1.0.0.RELEASE</version>
             </dependency>
         </dependencies>

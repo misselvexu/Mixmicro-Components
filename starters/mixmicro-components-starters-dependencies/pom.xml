@@ -15,7 +15,7 @@
 
     <packaging>pom</packaging>
 
-    <name>YunLSP Mix Micro-service Starters Dependencies ${project.version}</name>
+    <name>Starters Dependencies ${project.version}</name>
     <description>Framwork Starters For Project(s)</description>
 
     <properties>

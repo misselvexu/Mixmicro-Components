@@ -15,7 +15,7 @@
 
     <packaging>pom</packaging>
 
-    <name>YunLSP Mix Micro-service Kits Dependencies ${project.version}</name>
+    <name>Kits Dependencies ${project.version}</name>
     <description>Framwork Kit (Utils) For Project(s)</description>
 
     <properties>

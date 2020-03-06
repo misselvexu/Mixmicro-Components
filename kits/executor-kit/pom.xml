@@ -13,7 +13,7 @@
     <artifactId>executor-kit</artifactId>
     <version>Antarctica.RC2</version>
 
-    <name>YunLSP Mix Micro-service executor-kit ${project.version}</name>
+    <name>Executor kit :: ${project.version}</name>
     <description>Mixmicro+ Thread Executor Kit</description>
 
     <properties>

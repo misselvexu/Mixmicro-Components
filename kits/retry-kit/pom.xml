@@ -13,7 +13,7 @@
     <artifactId>retry-kit</artifactId>
     <version>Antarctica.RC1</version>
 
-    <name>YunLSP Mix Micro-service retry-kit ${project.version}</name>
+    <name>Retry Kit :: ${project.version}</name>
     <description>Mixmicro+ Retry Kit</description>
 
     <properties>

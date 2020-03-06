@@ -12,8 +12,8 @@
     <artifactId>mixmicro-components-starter-snowflake</artifactId>
     <version>1.0.0.RELEASE</version>
 
-    <name>YunLSP Mix Micro-service Project Snowflake Starter Module :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Snowflake Starter Module</description>
+    <name>Snowflake Starter Module :: ${project.version}</name>
+    <description>🏗 Snowflake Starter Module</description>
 
     <dependencies>
         <dependency>
