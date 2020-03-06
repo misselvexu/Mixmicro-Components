@@ -24,6 +24,7 @@
         <module>mixmicro-components-starter-cors</module>
         <module>mixmicro-components-starter-snowflake</module>
         <module>mixmicro-components-starter-resteasy</module>
+        <module>mixmicro-components-starter-datasource</module>
 
 
         <module>mixmicro-components-starters-dependencies</module>
