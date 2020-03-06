@@ -7,5 +7,5 @@ import java.util.function.Function;
  * @version ${project.version}
  */
 public interface KeyConvertorParser {
-    Function<Object, Object> parseKeyConvertor(String convertor);
+  Function<Object, Object> parseKeyConvertor(String convertor);
 }

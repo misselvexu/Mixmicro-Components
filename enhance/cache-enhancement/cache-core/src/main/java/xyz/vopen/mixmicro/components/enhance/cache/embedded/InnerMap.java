@@ -8,17 +8,17 @@ import java.util.Map;
  * @version ${project.version}
  */
 public interface InnerMap {
-    Object getValue(Object key);
+  Object getValue(Object key);
 
-    Map getAllValues(Collection keys);
+  Map getAllValues(Collection keys);
 
-    void putValue(Object key, Object value);
+  void putValue(Object key, Object value);
 
-    void putAllValues(Map map);
+  void putAllValues(Map map);
 
-    boolean removeValue(Object key);
+  boolean removeValue(Object key);
 
-    boolean putIfAbsentValue(Object key, Object value);
+  boolean putIfAbsentValue(Object key, Object value);
 
-    void removeAllValues(Collection keys);
+  void removeAllValues(Collection keys);
 }

@@ -5,5 +5,7 @@ package xyz.vopen.mixmicro.components.enhance.cache.anno.method;
  * @version ${project.version}
  */
 enum EL {
-    BUILD_IN, MVEL, SPRING_EL
+  BUILD_IN,
+  MVEL,
+  SPRING_EL
 }

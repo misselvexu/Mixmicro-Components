@@ -10,15 +10,16 @@ import xyz.vopen.mixmicro.components.enhance.cache.embedded.EmbeddedCacheBuilder
  */
 public abstract class EmbeddedCacheAutoInit extends AbstractCacheAutoInit {
 
-    public EmbeddedCacheAutoInit(String... cacheTypes) {
-        super(cacheTypes);
-    }
+  public EmbeddedCacheAutoInit(String... cacheTypes) {
+    super(cacheTypes);
+  }
 
-    @Override
-    protected void parseGeneralConfig(CacheBuilder builder, ConfigTree ct) {
-        super.parseGeneralConfig(builder, ct);
-        EmbeddedCacheBuilder ecb = (EmbeddedCacheBuilder) builder;
+  @Override
+  protected void parseGeneralConfig(CacheBuilder builder, ConfigTree ct) {
+    super.parseGeneralConfig(builder, ct);
+    EmbeddedCacheBuilder ecb = (EmbeddedCacheBuilder) builder;
 
-        ecb.limit(Integer.parseInt(ct.getProperty("limit", String.valueOf(CacheConsts.DEFAULT_LOCAL_LIMIT))));
-    }
+    ecb.limit(
+        Integer.parseInt(ct.getProperty("limit", String.valueOf(CacheConsts.DEFAULT_LOCAL_LIMIT))));
+  }
 }

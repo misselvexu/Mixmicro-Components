@@ -5,12 +5,11 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 /**
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
- * @version ${project.version}
  */
 public class CacheNamespaceHandler extends NamespaceHandlerSupport {
 
-    @Override
-    public void init() {
-        registerBeanDefinitionParser("annotation-driven", new CacheAnnotationParser());
-    }
+  @Override
+  public void init() {
+    registerBeanDefinitionParser("annotation-driven", new CacheAnnotationParser());
+  }
 }

@@ -20,127 +20,138 @@ import java.util.stream.Collectors;
  * @version ${project.version}
  */
 public class DefaultMetricsManager {
-    private static final Logger logger = LoggerFactory.getLogger(DefaultMetricsManager.class);
+  private static final Logger logger = LoggerFactory.getLogger(DefaultMetricsManager.class);
 
-    protected CopyOnWriteArrayList<DefaultCacheMonitor> monitorList = new CopyOnWriteArrayList();
+  protected CopyOnWriteArrayList<DefaultCacheMonitor> monitorList = new CopyOnWriteArrayList();
 
-    private ScheduledFuture<?> future;
+  private ScheduledFuture<?> future;
 
-    private int resetTime;
-    private TimeUnit resetTimeUnit;
-    private Consumer<StatInfo> metricsCallback;
-
-    public DefaultMetricsManager(int resetTime, TimeUnit resetTimeUnit, Consumer<StatInfo> metricsCallback) {
-        this.resetTime = resetTime;
-        this.resetTimeUnit = resetTimeUnit;
-        this.metricsCallback = metricsCallback;
-    }
-
-    public DefaultMetricsManager(int resetTime, TimeUnit resetTimeUnit) {
-        this(resetTime, resetTimeUnit, false);
-    }
-
-    public DefaultMetricsManager(int resetTime, TimeUnit resetTimeUnit, boolean verboseLog) {
-        this.resetTime = resetTime;
-        this.resetTimeUnit = resetTimeUnit;
-        this.metricsCallback = new StatInfoLogger(verboseLog);
-    }
-
-    Runnable cmd = new Runnable() {
+  private int resetTime;
+  private TimeUnit resetTimeUnit;
+  private Consumer<StatInfo> metricsCallback;
+  Runnable cmd =
+      new Runnable() {
         private long time = System.currentTimeMillis();
 
         @Override
         public void run() {
-            try {
-                List<CacheStat> stats = monitorList.stream().map((m) -> {
-                    CacheStat stat = m.getCacheStat();
-                    m.resetStat();
-                    return stat;
-                }).collect(Collectors.toList());
+          try {
+            List<CacheStat> stats =
+                monitorList.stream()
+                    .map(
+                        (m) -> {
+                          CacheStat stat = m.getCacheStat();
+                          m.resetStat();
+                          return stat;
+                        })
+                    .collect(Collectors.toList());
 
-                long endTime = System.currentTimeMillis();
-                StatInfo statInfo = new StatInfo();
-                statInfo.setStartTime(time);
-                statInfo.setEndTime(endTime);
-                statInfo.setStats(stats);
-                time = endTime;
+            long endTime = System.currentTimeMillis();
+            StatInfo statInfo = new StatInfo();
+            statInfo.setStartTime(time);
+            statInfo.setEndTime(endTime);
+            statInfo.setStats(stats);
+            time = endTime;
 
-                metricsCallback.accept(statInfo);
-            } catch (Exception e) {
-                logger.error("mixcache DefaultMetricsManager error", e);
-            }
+            metricsCallback.accept(statInfo);
+          } catch (Exception e) {
+            logger.error("mixcache DefaultMetricsManager error", e);
+          }
         }
-    };
+      };
 
-    @PostConstruct
-    public synchronized void start() {
-        if (future != null) {
-            return;
+  public DefaultMetricsManager(
+      int resetTime, TimeUnit resetTimeUnit, Consumer<StatInfo> metricsCallback) {
+    this.resetTime = resetTime;
+    this.resetTimeUnit = resetTimeUnit;
+    this.metricsCallback = metricsCallback;
+  }
+
+  public DefaultMetricsManager(int resetTime, TimeUnit resetTimeUnit) {
+    this(resetTime, resetTimeUnit, false);
+  }
+
+  public DefaultMetricsManager(int resetTime, TimeUnit resetTimeUnit, boolean verboseLog) {
+    this.resetTime = resetTime;
+    this.resetTimeUnit = resetTimeUnit;
+    this.metricsCallback = new StatInfoLogger(verboseLog);
+  }
+
+  protected static long firstDelay(int resetTime, TimeUnit resetTimeUnit) {
+    LocalDateTime firstResetTime =
+        computeFirstResetTime(LocalDateTime.now(), resetTime, resetTimeUnit);
+    return firstResetTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        - System.currentTimeMillis();
+  }
+
+  protected static LocalDateTime computeFirstResetTime(
+      LocalDateTime baseTime, int time, TimeUnit unit) {
+    if (unit != TimeUnit.SECONDS
+        && unit != TimeUnit.MINUTES
+        && unit != TimeUnit.HOURS
+        && unit != TimeUnit.DAYS) {
+      throw new IllegalArgumentException();
+    }
+    LocalDateTime t = baseTime;
+    switch (unit) {
+      case DAYS:
+        t = t.plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        break;
+      case HOURS:
+        if (24 % time == 0) {
+          t = t.plusHours(time - t.getHour() % time);
+        } else {
+          t = t.plusHours(1);
         }
-        long delay = firstDelay(resetTime, resetTimeUnit);
-        future = MixCacheExecutor.defaultExecutor().scheduleAtFixedRate(
+        t = t.withMinute(0).withSecond(0).withNano(0);
+        break;
+      case MINUTES:
+        if (60 % time == 0) {
+          t = t.plusMinutes(time - t.getMinute() % time);
+        } else {
+          t = t.plusMinutes(1);
+        }
+        t = t.withSecond(0).withNano(0);
+        break;
+      case SECONDS:
+        if (60 % time == 0) {
+          t = t.plusSeconds(time - t.getSecond() % time);
+        } else {
+          t = t.plusSeconds(1);
+        }
+        t = t.withNano(0);
+        break;
+    }
+    return t;
+  }
+
+  @PostConstruct
+  public synchronized void start() {
+    if (future != null) {
+      return;
+    }
+    long delay = firstDelay(resetTime, resetTimeUnit);
+    future =
+        MixCacheExecutor.defaultExecutor()
+            .scheduleAtFixedRate(
                 cmd, delay, resetTimeUnit.toMillis(resetTime), TimeUnit.MILLISECONDS);
-        logger.info("cache stat period at " + resetTime + " " + resetTimeUnit);
-    }
+    logger.info("cache stat period at " + resetTime + " " + resetTimeUnit);
+  }
 
-    @PreDestroy
-    public synchronized void stop() {
-        future.cancel(false);
-        logger.info("cache stat canceled");
-        future = null;
-    }
+  @PreDestroy
+  public synchronized void stop() {
+    future.cancel(false);
+    logger.info("cache stat canceled");
+    future = null;
+  }
 
-    public DefaultMetricsManager add(DefaultCacheMonitor... monitors) {
-        monitorList.addAll(Arrays.asList(monitors));
-        return this;
-    }
+  public DefaultMetricsManager add(DefaultCacheMonitor... monitors) {
+    monitorList.addAll(Arrays.asList(monitors));
+    return this;
+  }
 
-    public DefaultMetricsManager remove(DefaultCacheMonitor... monitor) {
-        monitorList.remove(monitor);
-        return this;
-    }
-
-    protected static long firstDelay(int resetTime, TimeUnit resetTimeUnit) {
-        LocalDateTime firstResetTime = computeFirstResetTime(LocalDateTime.now(), resetTime, resetTimeUnit);
-        return firstResetTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() - System.currentTimeMillis();
-    }
-
-    protected static LocalDateTime computeFirstResetTime(LocalDateTime baseTime, int time, TimeUnit unit) {
-        if (unit != TimeUnit.SECONDS && unit != TimeUnit.MINUTES && unit != TimeUnit.HOURS && unit != TimeUnit.DAYS) {
-            throw new IllegalArgumentException();
-        }
-        LocalDateTime t = baseTime;
-        switch (unit) {
-            case DAYS:
-                t = t.plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
-                break;
-            case HOURS:
-                if (24 % time == 0) {
-                    t = t.plusHours(time - t.getHour() % time);
-                } else {
-                    t = t.plusHours(1);
-                }
-                t = t.withMinute(0).withSecond(0).withNano(0);
-                break;
-            case MINUTES:
-                if (60 % time == 0) {
-                    t = t.plusMinutes(time - t.getMinute() % time);
-                } else {
-                    t = t.plusMinutes(1);
-                }
-                t = t.withSecond(0).withNano(0);
-                break;
-            case SECONDS:
-                if (60 % time == 0) {
-                    t = t.plusSeconds(time - t.getSecond() % time);
-                } else {
-                    t = t.plusSeconds(1);
-                }
-                t = t.withNano(0);
-                break;
-        }
-        return t;
-    }
-
-
+  public DefaultMetricsManager remove(DefaultCacheMonitor... monitor) {
+    monitorList.remove(monitor);
+    return this;
+  }
 }

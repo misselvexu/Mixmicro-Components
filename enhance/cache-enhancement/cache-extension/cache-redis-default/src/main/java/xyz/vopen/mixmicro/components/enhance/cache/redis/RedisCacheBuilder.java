@@ -1,67 +1,65 @@
 package xyz.vopen.mixmicro.components.enhance.cache.redis;
 
-import xyz.vopen.mixmicro.components.enhance.cache.external.ExternalCacheBuilder;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.util.Pool;
+import xyz.vopen.mixmicro.components.enhance.cache.external.ExternalCacheBuilder;
 
 /**
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
 public class RedisCacheBuilder<T extends ExternalCacheBuilder<T>> extends ExternalCacheBuilder<T> {
-    public static class RedisCacheBuilderImpl extends RedisCacheBuilder<RedisCacheBuilderImpl> {
-    }
+  protected RedisCacheBuilder() {
+    buildFunc(config -> new RedisCache((RedisCacheConfig) config));
+  }
 
-    public static RedisCacheBuilderImpl createRedisCacheBuilder() {
-        return new RedisCacheBuilderImpl();
-    }
+  public static RedisCacheBuilderImpl createRedisCacheBuilder() {
+    return new RedisCacheBuilderImpl();
+  }
 
-    protected RedisCacheBuilder() {
-        buildFunc(config -> new RedisCache((RedisCacheConfig) config));
+  @Override
+  public RedisCacheConfig getConfig() {
+    if (config == null) {
+      config = new RedisCacheConfig();
     }
+    return (RedisCacheConfig) config;
+  }
 
-    @Override
-    public RedisCacheConfig getConfig() {
-        if (config == null) {
-            config = new RedisCacheConfig();
-        }
-        return (RedisCacheConfig) config;
-    }
+  public T jedisPool(Pool<Jedis> pool) {
+    getConfig().setJedisPool(pool);
+    return self();
+  }
 
-    public T jedisPool(Pool<Jedis> pool) {
-        getConfig().setJedisPool(pool);
-        return self();
-    }
+  public void setJedisPool(Pool<Jedis> jedisPool) {
+    getConfig().setJedisPool(jedisPool);
+  }
 
-    public void setJedisPool(Pool<Jedis> jedisPool) {
-        getConfig().setJedisPool(jedisPool);
-    }
+  public T readFromSlave(boolean readFromSlave) {
+    getConfig().setReadFromSlave(readFromSlave);
+    return self();
+  }
 
-    public T readFromSlave(boolean readFromSlave) {
-        getConfig().setReadFromSlave(readFromSlave);
-        return self();
-    }
+  public void setReadFromSlave(boolean readFromSlave) {
+    getConfig().setReadFromSlave(readFromSlave);
+  }
 
-    public void setReadFromSlave(boolean readFromSlave) {
-        getConfig().setReadFromSlave(readFromSlave);
-    }
+  public T jedisSlavePools(Pool<Jedis>... jedisSlavePools) {
+    getConfig().setJedisSlavePools(jedisSlavePools);
+    return self();
+  }
 
-    public T jedisSlavePools(Pool<Jedis>... jedisSlavePools) {
-        getConfig().setJedisSlavePools(jedisSlavePools);
-        return self();
-    }
+  public void setJedisSlavePools(Pool<Jedis>... jedisSlavePools) {
+    getConfig().setJedisSlavePools(jedisSlavePools);
+  }
 
-    public void setJedisSlavePools(Pool<Jedis>... jedisSlavePools) {
-        getConfig().setJedisSlavePools(jedisSlavePools);
-    }
+  public T slaveReadWeights(int... slaveReadWeights) {
+    getConfig().setSlaveReadWeights(slaveReadWeights);
+    return self();
+  }
 
-    public T slaveReadWeights(int... slaveReadWeights) {
-        getConfig().setSlaveReadWeights(slaveReadWeights);
-        return self();
-    }
+  public void setSlaveReadWeights(int... slaveReadWeights) {
+    getConfig().setSlaveReadWeights(slaveReadWeights);
+  }
 
-    public void setSlaveReadWeights(int... slaveReadWeights) {
-        getConfig().setSlaveReadWeights(slaveReadWeights);
-    }
-
+  public static class RedisCacheBuilderImpl extends RedisCacheBuilder<RedisCacheBuilderImpl> {}
 }

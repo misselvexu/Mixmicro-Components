@@ -9,6 +9,5 @@ import xyz.vopen.mixmicro.components.enhance.cache.event.CacheEvent;
 @FunctionalInterface
 public interface CacheMonitor {
 
-    void afterOperation(CacheEvent event);
-
+  void afterOperation(CacheEvent event);
 }

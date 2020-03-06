@@ -1,57 +1,58 @@
 package xyz.vopen.mixmicro.components.enhance.cache.redis.lettuce;
 
-import xyz.vopen.mixmicro.components.enhance.cache.external.ExternalCacheBuilder;
 import io.lettuce.core.AbstractRedisClient;
 import io.lettuce.core.api.StatefulConnection;
+import xyz.vopen.mixmicro.components.enhance.cache.external.ExternalCacheBuilder;
 
 /**
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
-public class RedisLettuceCacheBuilder<T extends ExternalCacheBuilder<T>> extends ExternalCacheBuilder<T> {
-    public static class RedisLettuceCacheBuilderImpl extends RedisLettuceCacheBuilder<RedisLettuceCacheBuilderImpl> {
-    }
+public class RedisLettuceCacheBuilder<T extends ExternalCacheBuilder<T>>
+    extends ExternalCacheBuilder<T> {
+  protected RedisLettuceCacheBuilder() {
+    buildFunc(config -> new RedisLettuceCache((RedisLettuceCacheConfig) config));
+  }
 
-    public static RedisLettuceCacheBuilderImpl createRedisLettuceCacheBuilder() {
-        return new RedisLettuceCacheBuilderImpl();
-    }
+  public static RedisLettuceCacheBuilderImpl createRedisLettuceCacheBuilder() {
+    return new RedisLettuceCacheBuilderImpl();
+  }
 
-    protected RedisLettuceCacheBuilder() {
-        buildFunc(config -> new RedisLettuceCache((RedisLettuceCacheConfig) config));
+  @Override
+  public RedisLettuceCacheConfig getConfig() {
+    if (config == null) {
+      config = new RedisLettuceCacheConfig();
     }
+    return (RedisLettuceCacheConfig) config;
+  }
 
-    @Override
-    public RedisLettuceCacheConfig getConfig() {
-        if (config == null) {
-            config = new RedisLettuceCacheConfig();
-        }
-        return (RedisLettuceCacheConfig) config;
-    }
+  public T redisClient(AbstractRedisClient redisClient) {
+    getConfig().setRedisClient(redisClient);
+    return self();
+  }
 
-    public T redisClient(AbstractRedisClient redisClient){
-        getConfig().setRedisClient(redisClient);
-        return self();
-    }
+  public void setRedisClient(AbstractRedisClient redisClient) {
+    getConfig().setRedisClient(redisClient);
+  }
 
-    public void setRedisClient(AbstractRedisClient redisClient) {
-        getConfig().setRedisClient(redisClient);
-    }
+  public T connection(StatefulConnection connection) {
+    getConfig().setConnection(connection);
+    return self();
+  }
 
-    public T connection(StatefulConnection connection) {
-        getConfig().setConnection(connection);
-        return self();
-    }
+  public void setConnection(StatefulConnection connection) {
+    getConfig().setConnection(connection);
+  }
 
-    public void setConnection(StatefulConnection connection) {
-        getConfig().setConnection(connection);
-    }
+  public T asyncResultTimeoutInMillis(long asyncResultTimeoutInMillis) {
+    getConfig().setAsyncResultTimeoutInMillis(asyncResultTimeoutInMillis);
+    return self();
+  }
 
-    public T asyncResultTimeoutInMillis(long asyncResultTimeoutInMillis) {
-        getConfig().setAsyncResultTimeoutInMillis(asyncResultTimeoutInMillis);
-        return self();
-    }
+  public void setAsyncResultTimeoutInMillis(long asyncResultTimeoutInMillis) {
+    getConfig().setAsyncResultTimeoutInMillis(asyncResultTimeoutInMillis);
+  }
 
-    public void setAsyncResultTimeoutInMillis(long asyncResultTimeoutInMillis) {
-        getConfig().setAsyncResultTimeoutInMillis(asyncResultTimeoutInMillis);
-    }
+  public static class RedisLettuceCacheBuilderImpl
+      extends RedisLettuceCacheBuilder<RedisLettuceCacheBuilderImpl> {}
 }

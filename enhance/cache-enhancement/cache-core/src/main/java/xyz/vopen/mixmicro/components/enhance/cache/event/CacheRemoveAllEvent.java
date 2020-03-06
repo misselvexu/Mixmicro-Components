@@ -10,26 +10,26 @@ import java.util.Set;
  * @version ${project.version}
  */
 public class CacheRemoveAllEvent extends CacheEvent {
-    private final long millis;
-    private final Set keys;
-    private final CacheResult result;
+  private final long millis;
+  private final Set keys;
+  private final CacheResult result;
 
-    public CacheRemoveAllEvent(Cache cache, long millis, Set keys, CacheResult result) {
-        super(cache);
-        this.millis = millis;
-        this.keys = keys;
-        this.result = result;
-    }
+  public CacheRemoveAllEvent(Cache cache, long millis, Set keys, CacheResult result) {
+    super(cache);
+    this.millis = millis;
+    this.keys = keys;
+    this.result = result;
+  }
 
-    public long getMillis() {
-        return millis;
-    }
+  public long getMillis() {
+    return millis;
+  }
 
-    public Set getKeys() {
-        return keys;
-    }
+  public Set getKeys() {
+    return keys;
+  }
 
-    public CacheResult getResult() {
-        return result;
-    }
+  public CacheResult getResult() {
+    return result;
+  }
 }

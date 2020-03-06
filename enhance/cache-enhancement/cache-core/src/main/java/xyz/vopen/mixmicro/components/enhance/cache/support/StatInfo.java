@@ -7,31 +7,31 @@ import java.util.List;
  * @version ${project.version}
  */
 public class StatInfo {
-    private List<CacheStat> stats;
-    private long startTime;
-    private long endTime;
+  private List<CacheStat> stats;
+  private long startTime;
+  private long endTime;
 
-    public List<CacheStat> getStats() {
-        return stats;
-    }
+  public List<CacheStat> getStats() {
+    return stats;
+  }
 
-    public void setStats(List<CacheStat> stats) {
-        this.stats = stats;
-    }
+  public void setStats(List<CacheStat> stats) {
+    this.stats = stats;
+  }
 
-    public long getStartTime() {
-        return startTime;
-    }
+  public long getStartTime() {
+    return startTime;
+  }
 
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
+  public void setStartTime(long startTime) {
+    this.startTime = startTime;
+  }
 
-    public long getEndTime() {
-        return endTime;
-    }
+  public long getEndTime() {
+    return endTime;
+  }
 
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
-    }
+  public void setEndTime(long endTime) {
+    this.endTime = endTime;
+  }
 }

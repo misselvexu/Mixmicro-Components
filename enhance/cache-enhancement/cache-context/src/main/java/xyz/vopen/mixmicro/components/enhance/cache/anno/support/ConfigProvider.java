@@ -14,130 +14,122 @@ import java.util.function.Function;
  */
 public class ConfigProvider extends AbstractLifecycle {
 
-    @Resource
-    protected GlobalCacheConfig globalCacheConfig;
+  @Resource protected GlobalCacheConfig globalCacheConfig;
 
-    protected SimpleCacheManager cacheManager;
-    protected EncoderParser encoderParser;
-    protected KeyConvertorParser keyConvertorParser;
-    protected CacheMonitorManager cacheMonitorManager;
-    private Consumer<StatInfo> metricsCallback = new StatInfoLogger(false);
-    private CacheMessagePublisher cacheMessagePublisher;
+  protected SimpleCacheManager cacheManager;
+  protected EncoderParser encoderParser;
+  protected KeyConvertorParser keyConvertorParser;
+  protected CacheMonitorManager cacheMonitorManager;
+  private Consumer<StatInfo> metricsCallback = new StatInfoLogger(false);
+  private CacheMessagePublisher cacheMessagePublisher;
 
-    private CacheMonitorManager defaultCacheMonitorManager = new DefaultCacheMonitorManager();
+  private CacheMonitorManager defaultCacheMonitorManager = new DefaultCacheMonitorManager();
 
-    private CacheContext cacheContext;
+  private CacheContext cacheContext;
 
-    public ConfigProvider() {
-        cacheManager = SimpleCacheManager.defaultManager;
-        encoderParser = new DefaultEncoderParser();
-        keyConvertorParser = new DefaultKeyConvertorParser();
-        cacheMonitorManager = defaultCacheMonitorManager;
+  public ConfigProvider() {
+    cacheManager = SimpleCacheManager.defaultManager;
+    encoderParser = new DefaultEncoderParser();
+    keyConvertorParser = new DefaultKeyConvertorParser();
+    cacheMonitorManager = defaultCacheMonitorManager;
+  }
+
+  @Override
+  public void doInit() {
+    initDefaultCacheMonitorInstaller();
+    cacheContext = newContext();
+  }
+
+  protected void initDefaultCacheMonitorInstaller() {
+    if (cacheMonitorManager == defaultCacheMonitorManager) {
+      DefaultCacheMonitorManager installer = (DefaultCacheMonitorManager) cacheMonitorManager;
+      installer.setGlobalCacheConfig(globalCacheConfig);
+      installer.setMetricsCallback(metricsCallback);
+      if (cacheMessagePublisher != null) {
+        installer.setCacheMessagePublisher(cacheMessagePublisher);
+      }
+      installer.init();
     }
+  }
 
-    @Override
-    public void doInit() {
-        initDefaultCacheMonitorInstaller();
-        cacheContext = newContext();
-    }
+  @Override
+  public void doShutdown() {
+    shutdownDefaultCacheMonitorInstaller();
+    cacheManager.rebuild();
+  }
 
-    protected void initDefaultCacheMonitorInstaller() {
-        if (cacheMonitorManager == defaultCacheMonitorManager) {
-            DefaultCacheMonitorManager installer = (DefaultCacheMonitorManager) cacheMonitorManager;
-            installer.setGlobalCacheConfig(globalCacheConfig);
-            installer.setMetricsCallback(metricsCallback);
-            if (cacheMessagePublisher != null) {
-                installer.setCacheMessagePublisher(cacheMessagePublisher);
-            }
-            installer.init();
-        }
+  protected void shutdownDefaultCacheMonitorInstaller() {
+    if (cacheMonitorManager == defaultCacheMonitorManager) {
+      ((DefaultCacheMonitorManager) cacheMonitorManager).shutdown();
     }
+  }
 
-    @Override
-    public void doShutdown() {
-        shutdownDefaultCacheMonitorInstaller();
-        cacheManager.rebuild();
-    }
+  /** Keep this method for backward compatibility. NOTICE: there is no getter for encoderParser. */
+  public Function<Object, byte[]> parseValueEncoder(String valueEncoder) {
+    return encoderParser.parseEncoder(valueEncoder);
+  }
 
-    protected void shutdownDefaultCacheMonitorInstaller() {
-        if (cacheMonitorManager == defaultCacheMonitorManager) {
-            ((DefaultCacheMonitorManager) cacheMonitorManager).shutdown();
-        }
-    }
+  /** Keep this method for backward compatibility. NOTICE: there is no getter for encoderParser. */
+  public Function<byte[], Object> parseValueDecoder(String valueDecoder) {
+    return encoderParser.parseDecoder(valueDecoder);
+  }
 
-    /**
-     * Keep this method for backward compatibility.
-     * NOTICE: there is no getter for encoderParser.
-     */
-    public Function<Object, byte[]> parseValueEncoder(String valueEncoder) {
-        return encoderParser.parseEncoder(valueEncoder);
-    }
+  /**
+   * Keep this method for backward compatibility. NOTICE: there is no getter for keyConvertorParser.
+   */
+  public Function<Object, Object> parseKeyConvertor(String convertor) {
+    return keyConvertorParser.parseKeyConvertor(convertor);
+  }
 
-    /**
-     * Keep this method for backward compatibility.
-     * NOTICE: there is no getter for encoderParser.
-     */
-    public Function<byte[], Object> parseValueDecoder(String valueDecoder) {
-        return encoderParser.parseDecoder(valueDecoder);
-    }
+  public CacheNameGenerator createCacheNameGenerator(String[] hiddenPackages) {
+    return new DefaultCacheNameGenerator(hiddenPackages);
+  }
 
-    /**
-     * Keep this method for backward compatibility.
-     * NOTICE: there is no getter for keyConvertorParser.
-     */
-    public Function<Object, Object> parseKeyConvertor(String convertor) {
-        return keyConvertorParser.parseKeyConvertor(convertor);
-    }
+  protected CacheContext newContext() {
+    return new CacheContext(this, globalCacheConfig);
+  }
 
-    public CacheNameGenerator createCacheNameGenerator(String[] hiddenPackages) {
-        return new DefaultCacheNameGenerator(hiddenPackages);
-    }
+  public SimpleCacheManager getCacheManager() {
+    return cacheManager;
+  }
 
-    protected CacheContext newContext() {
-        return new CacheContext(this, globalCacheConfig);
-    }
+  public void setCacheManager(SimpleCacheManager cacheManager) {
+    this.cacheManager = cacheManager;
+  }
 
-    public void setCacheManager(SimpleCacheManager cacheManager) {
-        this.cacheManager = cacheManager;
-    }
+  public void setEncoderParser(EncoderParser encoderParser) {
+    this.encoderParser = encoderParser;
+  }
 
-    public SimpleCacheManager getCacheManager() {
-        return cacheManager;
-    }
+  public void setKeyConvertorParser(KeyConvertorParser keyConvertorParser) {
+    this.keyConvertorParser = keyConvertorParser;
+  }
 
-    public void setEncoderParser(EncoderParser encoderParser) {
-        this.encoderParser = encoderParser;
-    }
+  public CacheMonitorManager getCacheMonitorManager() {
+    return cacheMonitorManager;
+  }
 
-    public void setKeyConvertorParser(KeyConvertorParser keyConvertorParser) {
-        this.keyConvertorParser = keyConvertorParser;
-    }
+  public void setCacheMonitorManager(CacheMonitorManager cacheMonitorManager) {
+    this.cacheMonitorManager = cacheMonitorManager;
+  }
 
-    public CacheMonitorManager getCacheMonitorManager() {
-        return cacheMonitorManager;
-    }
+  public GlobalCacheConfig getGlobalCacheConfig() {
+    return globalCacheConfig;
+  }
 
-    public void setCacheMonitorManager(CacheMonitorManager cacheMonitorManager) {
-        this.cacheMonitorManager = cacheMonitorManager;
-    }
+  public void setGlobalCacheConfig(GlobalCacheConfig globalCacheConfig) {
+    this.globalCacheConfig = globalCacheConfig;
+  }
 
-    public GlobalCacheConfig getGlobalCacheConfig() {
-        return globalCacheConfig;
-    }
+  public CacheContext getCacheContext() {
+    return cacheContext;
+  }
 
-    public void setGlobalCacheConfig(GlobalCacheConfig globalCacheConfig) {
-        this.globalCacheConfig = globalCacheConfig;
-    }
+  public void setMetricsCallback(Consumer<StatInfo> metricsCallback) {
+    this.metricsCallback = metricsCallback;
+  }
 
-    public CacheContext getCacheContext() {
-        return cacheContext;
-    }
-
-    public void setMetricsCallback(Consumer<StatInfo> metricsCallback) {
-        this.metricsCallback = metricsCallback;
-    }
-
-    public void setCacheMessagePublisher(CacheMessagePublisher cacheMessagePublisher) {
-        this.cacheMessagePublisher = cacheMessagePublisher;
-    }
+  public void setCacheMessagePublisher(CacheMessagePublisher cacheMessagePublisher) {
+    this.cacheMessagePublisher = cacheMessagePublisher;
+  }
 }

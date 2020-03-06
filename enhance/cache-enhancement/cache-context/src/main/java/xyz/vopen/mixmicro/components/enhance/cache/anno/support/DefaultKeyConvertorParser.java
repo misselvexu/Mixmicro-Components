@@ -11,16 +11,16 @@ import java.util.function.Function;
  * @version ${project.version}
  */
 public class DefaultKeyConvertorParser implements KeyConvertorParser {
-    @Override
-    public Function<Object, Object> parseKeyConvertor(String convertor) {
-        if (convertor == null) {
-            return null;
-        }
-        if (KeyConvertor.FASTJSON.equalsIgnoreCase(convertor)) {
-            return FastjsonKeyConvertor.INSTANCE;
-        } else if (KeyConvertor.NONE.equalsIgnoreCase(convertor)) {
-            return null;
-        }
-        throw new CacheConfigException("not supported:" + convertor);
+  @Override
+  public Function<Object, Object> parseKeyConvertor(String convertor) {
+    if (convertor == null) {
+      return null;
     }
+    if (KeyConvertor.FASTJSON.equalsIgnoreCase(convertor)) {
+      return FastjsonKeyConvertor.INSTANCE;
+    } else if (KeyConvertor.NONE.equalsIgnoreCase(convertor)) {
+      return null;
+    }
+    throw new CacheConfigException("not supported:" + convertor);
+  }
 }

@@ -14,32 +14,31 @@ import java.util.concurrent.TimeUnit;
  */
 class Cleaner {
 
-    static LinkedList<WeakReference<LinkedHashMapCache>> linkedHashMapCaches = new LinkedList<>();
+  static LinkedList<WeakReference<LinkedHashMapCache>> linkedHashMapCaches = new LinkedList<>();
 
-    static {
-        ScheduledExecutorService executorService = MixCacheExecutor.defaultExecutor();
-        executorService.scheduleWithFixedDelay(() -> run(), 60, 60, TimeUnit.SECONDS);
+  static {
+    ScheduledExecutorService executorService = MixCacheExecutor.defaultExecutor();
+    executorService.scheduleWithFixedDelay(() -> run(), 60, 60, TimeUnit.SECONDS);
+  }
+
+  static void add(LinkedHashMapCache cache) {
+    synchronized (linkedHashMapCaches) {
+      linkedHashMapCaches.add(new WeakReference<>(cache));
     }
+  }
 
-    static void add(LinkedHashMapCache cache) {
-        synchronized (linkedHashMapCaches) {
-            linkedHashMapCaches.add(new WeakReference<>(cache));
+  static void run() {
+    synchronized (linkedHashMapCaches) {
+      Iterator<WeakReference<LinkedHashMapCache>> it = linkedHashMapCaches.iterator();
+      while (it.hasNext()) {
+        WeakReference<LinkedHashMapCache> ref = it.next();
+        LinkedHashMapCache c = ref.get();
+        if (c == null) {
+          it.remove();
+        } else {
+          c.cleanExpiredEntry();
         }
+      }
     }
-
-    static void run() {
-        synchronized (linkedHashMapCaches) {
-            Iterator<WeakReference<LinkedHashMapCache>> it = linkedHashMapCaches.iterator();
-            while (it.hasNext()) {
-                WeakReference<LinkedHashMapCache> ref = it.next();
-                LinkedHashMapCache c = ref.get();
-                if (c == null) {
-                    it.remove();
-                } else {
-                    c.cleanExpiredEntry();
-                }
-            }
-        }
-    }
-
+  }
 }

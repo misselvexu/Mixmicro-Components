@@ -6,13 +6,13 @@ package xyz.vopen.mixmicro.components.enhance.cache.anno.support;
  */
 class CacheThreadLocal {
 
-    private int enabledCount = 0;
+  private int enabledCount = 0;
 
-    int getEnabledCount() {
-        return enabledCount;
-    }
+  int getEnabledCount() {
+    return enabledCount;
+  }
 
-    void setEnabledCount(int enabledCount) {
-        this.enabledCount = enabledCount;
-    }
+  void setEnabledCount(int enabledCount) {
+    this.enabledCount = enabledCount;
+  }
 }

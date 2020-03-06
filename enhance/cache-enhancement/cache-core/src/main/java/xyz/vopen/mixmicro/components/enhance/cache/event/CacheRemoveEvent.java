@@ -9,27 +9,26 @@ import xyz.vopen.mixmicro.components.enhance.cache.CacheResult;
  */
 public class CacheRemoveEvent extends CacheEvent {
 
-    private long millis;
-    private Object key;
-    private CacheResult result;
+  private long millis;
+  private Object key;
+  private CacheResult result;
 
-    public CacheRemoveEvent(Cache cache, long millis, Object key, CacheResult result) {
-        super(cache);
-        this.millis = millis;
-        this.key = key;
-        this.result = result;
-    }
+  public CacheRemoveEvent(Cache cache, long millis, Object key, CacheResult result) {
+    super(cache);
+    this.millis = millis;
+    this.key = key;
+    this.result = result;
+  }
 
-    public long getMillis() {
-        return millis;
-    }
+  public long getMillis() {
+    return millis;
+  }
 
-    public Object getKey() {
-        return key;
-    }
+  public Object getKey() {
+    return key;
+  }
 
-    public CacheResult getResult() {
-        return result;
-    }
-
+  public CacheResult getResult() {
+    return result;
+  }
 }

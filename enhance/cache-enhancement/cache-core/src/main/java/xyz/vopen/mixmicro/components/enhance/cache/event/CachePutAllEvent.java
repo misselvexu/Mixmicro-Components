@@ -10,29 +10,28 @@ import java.util.Map;
  * @version ${project.version}
  */
 public class CachePutAllEvent extends CacheEvent {
-    private final long millis;
-    /**
-     * key, value map.
-     */
-    private final Map map;
-    private final CacheResult result;
+  private final long millis;
+  /** key, value map. */
+  private final Map map;
 
-    public CachePutAllEvent(Cache cache, long millis, Map map, CacheResult result) {
-        super(cache);
-        this.millis = millis;
-        this.map = map;
-        this.result = result;
-    }
+  private final CacheResult result;
 
-    public long getMillis() {
-        return millis;
-    }
+  public CachePutAllEvent(Cache cache, long millis, Map map, CacheResult result) {
+    super(cache);
+    this.millis = millis;
+    this.map = map;
+    this.result = result;
+  }
 
-    public Map getMap() {
-        return map;
-    }
+  public long getMillis() {
+    return millis;
+  }
 
-    public CacheResult getResult() {
-        return result;
-    }
+  public Map getMap() {
+    return map;
+  }
+
+  public CacheResult getResult() {
+    return result;
+  }
 }

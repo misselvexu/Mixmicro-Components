@@ -8,13 +8,13 @@ import xyz.vopen.mixmicro.components.enhance.cache.anno.CacheConsts;
  * @version ${project.version}
  */
 public interface CacheManager {
-    Cache getCache(String area, String cacheName);
+  static CacheManager defaultManager() {
+    return SimpleCacheManager.defaultManager;
+  }
 
-    default Cache getCache(String cacheName) {
-        return getCache(CacheConsts.DEFAULT_AREA, cacheName);
-    }
+  Cache getCache(String area, String cacheName);
 
-    static CacheManager defaultManager() {
-        return SimpleCacheManager.defaultManager;
-    }
+  default Cache getCache(String cacheName) {
+    return getCache(CacheConsts.DEFAULT_AREA, cacheName);
+  }
 }

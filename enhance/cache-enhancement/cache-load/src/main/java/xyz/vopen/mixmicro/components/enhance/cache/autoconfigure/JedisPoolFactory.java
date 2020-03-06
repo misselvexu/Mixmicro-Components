@@ -10,40 +10,39 @@ import redis.clients.jedis.util.Pool;
  * @version ${project.version}
  */
 public class JedisPoolFactory implements FactoryBean<Pool<Jedis>> {
-    private String key;
-    private Class<?> poolClass;
+  private String key;
+  private Class<?> poolClass;
 
-    @Autowired
-    private AutoConfigureBeans autoConfigureBeans;
+  @Autowired private AutoConfigureBeans autoConfigureBeans;
 
-    private boolean inited;
-    private Pool<Jedis> jedisPool;
+  private boolean inited;
+  private Pool<Jedis> jedisPool;
 
-    public JedisPoolFactory(String key, Class<? extends Pool<Jedis>> poolClass){
-        this.key = key;
-        this.poolClass = poolClass;
+  public JedisPoolFactory(String key, Class<? extends Pool<Jedis>> poolClass) {
+    this.key = key;
+    this.poolClass = poolClass;
+  }
+
+  public String getKey() {
+    return key;
+  }
+
+  @Override
+  public Pool<Jedis> getObject() throws Exception {
+    if (!inited) {
+      jedisPool = (Pool<Jedis>) autoConfigureBeans.getCustomContainer().get("jedisPool." + key);
+      inited = true;
     }
+    return jedisPool;
+  }
 
-    public String getKey() {
-        return key;
-    }
+  @Override
+  public Class<?> getObjectType() {
+    return poolClass;
+  }
 
-    @Override
-    public Pool<Jedis> getObject() throws Exception {
-        if (!inited) {
-            jedisPool = (Pool<Jedis>) autoConfigureBeans.getCustomContainer().get("jedisPool." + key);
-            inited = true;
-        }
-        return jedisPool;
-    }
-
-    @Override
-    public Class<?> getObjectType() {
-        return poolClass;
-    }
-
-    @Override
-    public boolean isSingleton() {
-        return true;
-    }
+  @Override
+  public boolean isSingleton() {
+    return true;
+  }
 }

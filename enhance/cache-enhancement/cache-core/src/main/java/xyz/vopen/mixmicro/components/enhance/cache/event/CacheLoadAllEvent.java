@@ -11,32 +11,32 @@ import java.util.Set;
  */
 public class CacheLoadAllEvent extends CacheEvent {
 
-    private long millis;
-    private Set keys;
-    private Map loadedValue;
-    private boolean success;
+  private long millis;
+  private Set keys;
+  private Map loadedValue;
+  private boolean success;
 
-    public CacheLoadAllEvent(Cache cache, long millis, Set keys, Map loadedValue, boolean success) {
-        super(cache);
-        this.millis = millis;
-        this.keys = keys;
-        this.loadedValue = loadedValue;
-        this.success = success;
-    }
+  public CacheLoadAllEvent(Cache cache, long millis, Set keys, Map loadedValue, boolean success) {
+    super(cache);
+    this.millis = millis;
+    this.keys = keys;
+    this.loadedValue = loadedValue;
+    this.success = success;
+  }
 
-    public long getMillis() {
-        return millis;
-    }
+  public long getMillis() {
+    return millis;
+  }
 
-    public Set getKeys() {
-        return keys;
-    }
+  public Set getKeys() {
+    return keys;
+  }
 
-    public Map getLoadedValue() {
-        return loadedValue;
-    }
+  public Map getLoadedValue() {
+    return loadedValue;
+  }
 
-    public boolean isSuccess() {
-        return success;
-    }
+  public boolean isSuccess() {
+    return success;
+  }
 }

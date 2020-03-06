@@ -8,32 +8,32 @@ import java.util.function.Function;
  */
 public class CacheUpdateAnnoConfig extends CacheAnnoConfig {
 
-    private String value;
-    private boolean multi;
+  private String value;
+  private boolean multi;
 
-    private Function<Object, Object> valueEvaluator;
+  private Function<Object, Object> valueEvaluator;
 
-    public String getValue() {
-        return value;
-    }
+  public String getValue() {
+    return value;
+  }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+  public void setValue(String value) {
+    this.value = value;
+  }
 
-    public Function<Object, Object> getValueEvaluator() {
-        return valueEvaluator;
-    }
+  public Function<Object, Object> getValueEvaluator() {
+    return valueEvaluator;
+  }
 
-    public void setValueEvaluator(Function<Object, Object> valueEvaluator) {
-        this.valueEvaluator = valueEvaluator;
-    }
+  public void setValueEvaluator(Function<Object, Object> valueEvaluator) {
+    this.valueEvaluator = valueEvaluator;
+  }
 
-    public boolean isMulti() {
-        return multi;
-    }
+  public boolean isMulti() {
+    return multi;
+  }
 
-    public void setMulti(boolean multi) {
-        this.multi = multi;
-    }
+  public void setMulti(boolean multi) {
+    this.multi = multi;
+  }
 }

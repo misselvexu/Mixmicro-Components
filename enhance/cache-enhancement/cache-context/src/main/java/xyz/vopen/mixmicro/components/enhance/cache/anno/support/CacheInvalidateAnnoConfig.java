@@ -5,13 +5,13 @@ package xyz.vopen.mixmicro.components.enhance.cache.anno.support;
  * @version ${project.version}
  */
 public class CacheInvalidateAnnoConfig extends CacheAnnoConfig {
-    private boolean multi;
+  private boolean multi;
 
-    public boolean isMulti() {
-        return multi;
-    }
+  public boolean isMulti() {
+    return multi;
+  }
 
-    public void setMulti(boolean multi) {
-        this.multi = multi;
-    }
+  public void setMulti(boolean multi) {
+    this.multi = multi;
+  }
 }

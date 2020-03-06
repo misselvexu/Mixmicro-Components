@@ -7,6 +7,7 @@ import java.util.function.Function;
  * @version ${project.version}
  */
 public interface EncoderParser {
-    Function<Object, byte[]> parseEncoder(String valueEncoder);
-    Function<byte[], Object> parseDecoder(String valueDecoder);
+  Function<Object, byte[]> parseEncoder(String valueEncoder);
+
+  Function<byte[], Object> parseDecoder(String valueDecoder);
 }

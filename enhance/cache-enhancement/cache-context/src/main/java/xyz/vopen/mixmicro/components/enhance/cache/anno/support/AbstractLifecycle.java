@@ -8,27 +8,25 @@ import javax.annotation.PreDestroy;
  * @version ${project.version}
  */
 class AbstractLifecycle {
-    private boolean inited;
+  private boolean inited;
 
-    @PostConstruct
-    public final synchronized void init() {
-        if (!inited) {
-            doInit();
-            inited = true;
-        }
+  @PostConstruct
+  public final synchronized void init() {
+    if (!inited) {
+      doInit();
+      inited = true;
     }
+  }
 
-    protected void doInit() {
-    }
+  protected void doInit() {}
 
-    @PreDestroy
-    public final synchronized void shutdown() {
-        if (inited) {
-            doShutdown();
-            inited = false;
-        }
+  @PreDestroy
+  public final synchronized void shutdown() {
+    if (inited) {
+      doShutdown();
+      inited = false;
     }
+  }
 
-    protected void doShutdown() {
-    }
+  protected void doShutdown() {}
 }

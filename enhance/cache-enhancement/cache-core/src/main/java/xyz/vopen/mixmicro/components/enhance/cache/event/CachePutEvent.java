@@ -8,33 +8,32 @@ import xyz.vopen.mixmicro.components.enhance.cache.CacheResult;
  * @version ${project.version}
  */
 public class CachePutEvent extends CacheEvent {
-    private long millis;
-    private Object key;
-    private Object value;
-    private CacheResult result;
+  private long millis;
+  private Object key;
+  private Object value;
+  private CacheResult result;
 
-    public CachePutEvent(Cache cache, long millis, Object key, Object value, CacheResult result) {
-        super(cache);
-        this.millis = millis;
-        this.key = key;
-        this.value = value;
-        this.result = result;
-    }
+  public CachePutEvent(Cache cache, long millis, Object key, Object value, CacheResult result) {
+    super(cache);
+    this.millis = millis;
+    this.key = key;
+    this.value = value;
+    this.result = result;
+  }
 
-    public long getMillis() {
-        return millis;
-    }
+  public long getMillis() {
+    return millis;
+  }
 
-    public Object getKey() {
-        return key;
-    }
+  public Object getKey() {
+    return key;
+  }
 
-    public CacheResult getResult() {
-        return result;
-    }
+  public CacheResult getResult() {
+    return result;
+  }
 
-    public Object getValue() {
-        return value;
-    }
-
+  public Object getValue() {
+    return value;
+  }
 }

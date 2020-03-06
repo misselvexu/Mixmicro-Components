@@ -10,26 +10,26 @@ import java.util.Set;
  * @version ${project.version}
  */
 public class CacheGetAllEvent extends CacheEvent {
-    private final long millis;
-    private final Set keys;
-    private final MultiGetResult result;
+  private final long millis;
+  private final Set keys;
+  private final MultiGetResult result;
 
-    public CacheGetAllEvent(Cache cache, long millis, Set keys, MultiGetResult result) {
-        super(cache);
-        this.millis = millis;
-        this.keys = keys;
-        this.result = result;
-    }
+  public CacheGetAllEvent(Cache cache, long millis, Set keys, MultiGetResult result) {
+    super(cache);
+    this.millis = millis;
+    this.keys = keys;
+    this.result = result;
+  }
 
-    public long getMillis() {
-        return millis;
-    }
+  public long getMillis() {
+    return millis;
+  }
 
-    public Set getKeys() {
-        return keys;
-    }
+  public Set getKeys() {
+    return keys;
+  }
 
-    public MultiGetResult getResult() {
-        return result;
-    }
+  public MultiGetResult getResult() {
+    return result;
+  }
 }

@@ -5,17 +5,17 @@ package xyz.vopen.mixmicro.components.enhance.cache;
  * @version ${project.version}
  */
 public class CacheException extends RuntimeException {
-    private static final long serialVersionUID = -9066209768410752667L;
+  private static final long serialVersionUID = -9066209768410752667L;
 
-    public CacheException(String message) {
-        super(message);
-    }
+  public CacheException(String message) {
+    super(message);
+  }
 
-    public CacheException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public CacheException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-    public CacheException(Throwable cause) {
-        super(cause);
-    }
+  public CacheException(Throwable cause) {
+    super(cause);
+  }
 }

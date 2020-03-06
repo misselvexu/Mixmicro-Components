@@ -5,11 +5,10 @@ package xyz.vopen.mixmicro.components.enhance.cache;
  * @version ${project.version}
  */
 public interface ProxyCache<K, V> extends Cache<K, V> {
-    Cache<K, V> getTargetCache();
+  Cache<K, V> getTargetCache();
 
-    @Override
-    default <T> T unwrap(Class<T> clazz) {
-        return getTargetCache().unwrap(clazz);
-    }
-
+  @Override
+  default <T> T unwrap(Class<T> clazz) {
+    return getTargetCache().unwrap(clazz);
+  }
 }

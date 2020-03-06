@@ -7,15 +7,13 @@ import org.springframework.context.ApplicationContext;
  * @version ${project.version}
  */
 public class SpringCacheInvokeContext extends CacheInvokeContext {
-    protected ApplicationContext context;
+  protected ApplicationContext context;
 
-    public SpringCacheInvokeContext(ApplicationContext context) {
-        this.context = context;
-    }
+  public SpringCacheInvokeContext(ApplicationContext context) {
+    this.context = context;
+  }
 
-    public Object bean(String name) {
-        return context.getBean(name);
-    }
-
-
+  public Object bean(String name) {
+    return context.getBean(name);
+  }
 }

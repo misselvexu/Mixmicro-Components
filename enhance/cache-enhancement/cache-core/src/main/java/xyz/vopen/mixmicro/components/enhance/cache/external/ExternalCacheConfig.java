@@ -11,31 +11,31 @@ import java.util.function.Function;
  * @version ${project.version}
  */
 public class ExternalCacheConfig<K, V> extends CacheConfig<K, V> {
-    private String keyPrefix;
-    private Function<Object, byte[]> valueEncoder = JavaValueEncoder.INSTANCE;
-    private Function<byte[], Object> valueDecoder = DecoderMap.defaultJavaValueDecoder();
+  private String keyPrefix;
+  private Function<Object, byte[]> valueEncoder = JavaValueEncoder.INSTANCE;
+  private Function<byte[], Object> valueDecoder = DecoderMap.defaultJavaValueDecoder();
 
-    public String getKeyPrefix() {
-        return keyPrefix;
-    }
+  public String getKeyPrefix() {
+    return keyPrefix;
+  }
 
-    public void setKeyPrefix(String keyPrefix) {
-        this.keyPrefix = keyPrefix;
-    }
+  public void setKeyPrefix(String keyPrefix) {
+    this.keyPrefix = keyPrefix;
+  }
 
-    public Function<Object, byte[]> getValueEncoder() {
-        return valueEncoder;
-    }
+  public Function<Object, byte[]> getValueEncoder() {
+    return valueEncoder;
+  }
 
-    public void setValueEncoder(Function<Object, byte[]> valueEncoder) {
-        this.valueEncoder = valueEncoder;
-    }
+  public void setValueEncoder(Function<Object, byte[]> valueEncoder) {
+    this.valueEncoder = valueEncoder;
+  }
 
-    public Function<byte[], Object> getValueDecoder() {
-        return valueDecoder;
-    }
+  public Function<byte[], Object> getValueDecoder() {
+    return valueDecoder;
+  }
 
-    public void setValueDecoder(Function<byte[], Object> valueDecoder) {
-        this.valueDecoder = valueDecoder;
-    }
+  public void setValueDecoder(Function<byte[], Object> valueDecoder) {
+    this.valueDecoder = valueDecoder;
+  }
 }

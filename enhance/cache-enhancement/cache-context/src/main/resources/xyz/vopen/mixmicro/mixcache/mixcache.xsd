@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://vopen.xyz/schema/mixcache"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://vopen.xyz/schema/mixcache"
             targetNamespace="http://vopen.xyz/schema/mixcache"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">

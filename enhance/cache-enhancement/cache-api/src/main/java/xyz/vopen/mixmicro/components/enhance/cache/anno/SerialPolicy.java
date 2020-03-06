@@ -5,15 +5,14 @@ import java.util.function.Function;
 /**
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
- * @version ${project.version}
  */
 public interface SerialPolicy {
 
-    String JAVA = "JAVA";
+  String JAVA = "JAVA";
 
-    String KRYO = "KRYO";
+  String KRYO = "KRYO";
 
-    Function<Object, byte[]> encoder();
+  Function<Object, byte[]> encoder();
 
-    Function<byte[], Object> decoder();
+  Function<byte[], Object> decoder();
 }

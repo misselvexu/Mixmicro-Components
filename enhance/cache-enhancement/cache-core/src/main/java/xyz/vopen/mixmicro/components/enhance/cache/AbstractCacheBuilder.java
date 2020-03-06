@@ -8,129 +8,129 @@ import java.util.function.Function;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
-public abstract class AbstractCacheBuilder<T extends AbstractCacheBuilder<T>> implements CacheBuilder, Cloneable {
+public abstract class AbstractCacheBuilder<T extends AbstractCacheBuilder<T>>
+    implements CacheBuilder, Cloneable {
 
-    protected CacheConfig config;
-    private Function<CacheConfig, Cache> buildFunc;
+  protected CacheConfig config;
+  private Function<CacheConfig, Cache> buildFunc;
 
-    public abstract CacheConfig getConfig();
+  public abstract CacheConfig getConfig();
 
-    protected T self() {
-        return (T) this;
+  protected T self() {
+    return (T) this;
+  }
+
+  public T buildFunc(Function<CacheConfig, Cache> buildFunc) {
+    this.buildFunc = buildFunc;
+    return self();
+  }
+
+  protected void beforeBuild() {}
+
+  @Deprecated
+  public final <K, V> Cache<K, V> build() {
+    return buildCache();
+  }
+
+  @Override
+  public final <K, V> Cache<K, V> buildCache() {
+    if (buildFunc == null) {
+      throw new CacheConfigException("no buildFunc");
     }
-
-    public T buildFunc(Function<CacheConfig, Cache> buildFunc) {
-        this.buildFunc = buildFunc;
-        return self();
+    beforeBuild();
+    CacheConfig c = getConfig().clone();
+    Cache<K, V> cache = buildFunc.apply(c);
+    if (c.getLoader() != null) {
+      if (c.getRefreshPolicy() == null) {
+        cache = new LoadingCache<>(cache);
+      } else {
+        cache = new RefreshCache<>(cache);
+      }
     }
+    return cache;
+  }
 
-    protected void beforeBuild() {
+  @Override
+  public Object clone() {
+    AbstractCacheBuilder copy = null;
+    try {
+      copy = (AbstractCacheBuilder) super.clone();
+      copy.config = getConfig().clone();
+      return copy;
+    } catch (CloneNotSupportedException e) {
+      throw new CacheException(e);
     }
+  }
 
-    @Deprecated
-    public final <K, V> Cache<K, V> build() {
-        return buildCache();
-    }
+  public T keyConvertor(Function<Object, Object> keyConvertor) {
+    getConfig().setKeyConvertor(keyConvertor);
+    return self();
+  }
 
-    @Override
-    public final <K, V> Cache<K, V> buildCache() {
-        if (buildFunc == null) {
-            throw new CacheConfigException("no buildFunc");
-        }
-        beforeBuild();
-        CacheConfig c = getConfig().clone();
-        Cache<K, V> cache = buildFunc.apply(c);
-        if (c.getLoader() != null) {
-            if (c.getRefreshPolicy() == null) {
-                cache = new LoadingCache<>(cache);
-            } else {
-                cache = new RefreshCache<>(cache);
-            }
-        }
-        return cache;
-    }
+  public void setKeyConvertor(Function<Object, Object> keyConvertor) {
+    getConfig().setKeyConvertor(keyConvertor);
+  }
 
-    @Override
-    public Object clone() {
-        AbstractCacheBuilder copy = null;
-        try {
-            copy = (AbstractCacheBuilder) super.clone();
-            copy.config = getConfig().clone();
-            return copy;
-        } catch (CloneNotSupportedException e) {
-            throw new CacheException(e);
-        }
-    }
+  public T expireAfterAccess(long defaultExpire, TimeUnit timeUnit) {
+    getConfig().setExpireAfterAccessInMillis(timeUnit.toMillis(defaultExpire));
+    return self();
+  }
 
-    public T keyConvertor(Function<Object, Object> keyConvertor) {
-        getConfig().setKeyConvertor(keyConvertor);
-        return self();
-    }
+  public void setExpireAfterAccessInMillis(long expireAfterAccessInMillis) {
+    getConfig().setExpireAfterAccessInMillis(expireAfterAccessInMillis);
+  }
 
-    public void setKeyConvertor(Function<Object, Object> keyConvertor) {
-        getConfig().setKeyConvertor(keyConvertor);
-    }
+  public T expireAfterWrite(long defaultExpire, TimeUnit timeUnit) {
+    getConfig().setExpireAfterWriteInMillis(timeUnit.toMillis(defaultExpire));
+    return self();
+  }
 
-    public T expireAfterAccess(long defaultExpire, TimeUnit timeUnit) {
-        getConfig().setExpireAfterAccessInMillis(timeUnit.toMillis(defaultExpire));
-        return self();
-    }
+  public void setExpireAfterWriteInMillis(long expireAfterWriteInMillis) {
+    getConfig().setExpireAfterWriteInMillis(expireAfterWriteInMillis);
+  }
 
-    public void setExpireAfterAccessInMillis(long expireAfterAccessInMillis) {
-        getConfig().setExpireAfterAccessInMillis(expireAfterAccessInMillis);
-    }
+  public T addMonitor(CacheMonitor monitor) {
+    getConfig().getMonitors().add(monitor);
+    return self();
+  }
 
-    public T expireAfterWrite(long defaultExpire, TimeUnit timeUnit) {
-        getConfig().setExpireAfterWriteInMillis(timeUnit.toMillis(defaultExpire));
-        return self();
-    }
+  public void setMonitors(List<CacheMonitor> monitors) {
+    getConfig().setMonitors(monitors);
+  }
 
-    public void setExpireAfterWriteInMillis(long expireAfterWriteInMillis) {
-        getConfig().setExpireAfterWriteInMillis(expireAfterWriteInMillis);
-    }
+  public T cacheNullValue(boolean cacheNullValue) {
+    getConfig().setCacheNullValue(cacheNullValue);
+    return self();
+  }
 
-    public T addMonitor(CacheMonitor monitor) {
-        getConfig().getMonitors().add(monitor);
-        return self();
-    }
+  public void setCacheNullValue(boolean cacheNullValue) {
+    getConfig().setCacheNullValue(cacheNullValue);
+  }
 
-    public void setMonitors(List<CacheMonitor> monitors) {
-        getConfig().setMonitors(monitors);
-    }
+  public <K, V> T loader(CacheLoader<K, V> loader) {
+    getConfig().setLoader(loader);
+    return self();
+  }
 
-    public T cacheNullValue(boolean cacheNullValue) {
-        getConfig().setCacheNullValue(cacheNullValue);
-        return self();
-    }
+  public <K, V> void setLoader(CacheLoader<K, V> loader) {
+    getConfig().setLoader(loader);
+  }
 
-    public void setCacheNullValue(boolean cacheNullValue) {
-        getConfig().setCacheNullValue(cacheNullValue);
-    }
+  public T refreshPolicy(RefreshPolicy refreshPolicy) {
+    getConfig().setRefreshPolicy(refreshPolicy);
+    return self();
+  }
 
-    public <K, V> T loader(CacheLoader<K, V> loader) {
-        getConfig().setLoader(loader);
-        return self();
-    }
+  public void setRefreshPolicy(RefreshPolicy refreshPolicy) {
+    getConfig().setRefreshPolicy(refreshPolicy);
+  }
 
-    public <K, V> void setLoader(CacheLoader<K, V> loader) {
-        getConfig().setLoader(loader);
-    }
+  public T cachePenetrateProtect(boolean cachePenetrateProtect) {
+    getConfig().setCachePenetrationProtect(cachePenetrateProtect);
+    return self();
+  }
 
-    public T refreshPolicy(RefreshPolicy refreshPolicy) {
-        getConfig().setRefreshPolicy(refreshPolicy);
-        return self();
-    }
-
-    public void setRefreshPolicy(RefreshPolicy refreshPolicy) {
-        getConfig().setRefreshPolicy(refreshPolicy);
-    }
-
-    public T cachePenetrateProtect(boolean cachePenetrateProtect) {
-        getConfig().setCachePenetrationProtect(cachePenetrateProtect);
-        return self();
-    }
-
-    public void setCachePenetrateProtect(boolean cachePenetrateProtect) {
-        getConfig().setCachePenetrationProtect(cachePenetrateProtect);
-    }
+  public void setCachePenetrateProtect(boolean cachePenetrateProtect) {
+    getConfig().setCachePenetrationProtect(cachePenetrateProtect);
+  }
 }

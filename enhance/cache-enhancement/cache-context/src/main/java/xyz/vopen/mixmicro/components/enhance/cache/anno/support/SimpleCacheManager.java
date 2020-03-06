@@ -1,8 +1,8 @@
 package xyz.vopen.mixmicro.components.enhance.cache.anno.support;
 
-import xyz.vopen.mixmicro.components.enhance.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.enhance.cache.Cache;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
@@ -13,56 +13,56 @@ import java.util.function.BiFunction;
  */
 public class SimpleCacheManager implements CacheManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(SimpleCacheManager.class);
+  private static final Logger logger = LoggerFactory.getLogger(SimpleCacheManager.class);
+  static SimpleCacheManager defaultManager = new SimpleCacheManager();
+  private ConcurrentHashMap<String, ConcurrentHashMap<String, Cache>> caches =
+      new ConcurrentHashMap<>();
+  private BiFunction<String, String, Cache> cacheCreator;
 
-    private ConcurrentHashMap<String, ConcurrentHashMap<String, Cache>> caches = new ConcurrentHashMap<>();
-    private BiFunction<String, String, Cache> cacheCreator;
+  public SimpleCacheManager() {}
 
-    static SimpleCacheManager defaultManager = new SimpleCacheManager();
-
-    public SimpleCacheManager() {
-    }
-
-    public void rebuild() {
-        caches.forEach((area, areaMap) -> {
-            areaMap.forEach((cacheName, cache) -> {
+  public void rebuild() {
+    caches.forEach(
+        (area, areaMap) -> {
+          areaMap.forEach(
+              (cacheName, cache) -> {
                 try {
-                    cache.close();
+                  cache.close();
                 } catch (Exception e) {
-                    logger.error("error during close", e);
+                  logger.error("error during close", e);
                 }
-            });
+              });
         });
-        caches.clear();
-        cacheCreator = null;
-    }
+    caches.clear();
+    cacheCreator = null;
+  }
 
-    private ConcurrentHashMap<String, Cache> getCachesByArea(String area) {
-        return caches.computeIfAbsent(area, (key) -> new ConcurrentHashMap<>());
-    }
+  private ConcurrentHashMap<String, Cache> getCachesByArea(String area) {
+    return caches.computeIfAbsent(area, (key) -> new ConcurrentHashMap<>());
+  }
 
-    @Override
-    public Cache getCache(String area, String cacheName) {
-        ConcurrentHashMap<String, Cache> areaMap = getCachesByArea(area);
-        Cache c = areaMap.get(cacheName);
-        if (c == null && cacheCreator != null) {
-            return cacheCreator.apply(area, cacheName);
-        } else {
-            return c;
-        }
+  @Override
+  public Cache getCache(String area, String cacheName) {
+    ConcurrentHashMap<String, Cache> areaMap = getCachesByArea(area);
+    Cache c = areaMap.get(cacheName);
+    if (c == null && cacheCreator != null) {
+      return cacheCreator.apply(area, cacheName);
+    } else {
+      return c;
     }
+  }
 
-    public Cache getCacheWithoutCreate(String area, String cacheName) {
-        ConcurrentHashMap<String, Cache> areaMap = getCachesByArea(area);
-        return areaMap.get(cacheName);
-    }
+  public Cache getCacheWithoutCreate(String area, String cacheName) {
+    ConcurrentHashMap<String, Cache> areaMap = getCachesByArea(area);
+    return areaMap.get(cacheName);
+  }
 
-    public void putCache(String area, String cacheName, Cache cache) {
-        ConcurrentHashMap<String, Cache> areaMap = getCachesByArea(area);
-        areaMap.put(cacheName, cache);
-    }
+  public void putCache(String area, String cacheName, Cache cache) {
+    ConcurrentHashMap<String, Cache> areaMap = getCachesByArea(area);
+    areaMap.put(cacheName, cache);
+  }
 
-    public void setCacheCreator(BiFunction<String, String, Cache> cacheCreator) {
-        this.cacheCreator = cacheCreator;
-    }
+  public void setCacheCreator(BiFunction<String, String, Cache> cacheCreator) {
+    this.cacheCreator = cacheCreator;
+  }
 }

@@ -5,5 +5,5 @@ package xyz.vopen.mixmicro.components.enhance.cache;
  * @version ${project.version}
  */
 public interface CacheBuilder {
-    <K, V> Cache<K, V> buildCache();
+  <K, V> Cache<K, V> buildCache();
 }

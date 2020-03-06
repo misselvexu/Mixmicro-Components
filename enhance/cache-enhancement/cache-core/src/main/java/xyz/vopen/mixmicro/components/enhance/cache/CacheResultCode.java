@@ -5,5 +5,10 @@ package xyz.vopen.mixmicro.components.enhance.cache;
  * @version ${project.version}
  */
 public enum CacheResultCode {
-    SUCCESS, PART_SUCCESS, FAIL, NOT_EXISTS, EXISTS, EXPIRED
+  SUCCESS,
+  PART_SUCCESS,
+  FAIL,
+  NOT_EXISTS,
+  EXISTS,
+  EXPIRED
 }

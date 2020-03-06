@@ -6,14 +6,13 @@ package xyz.vopen.mixmicro.components.enhance.cache;
  */
 public class CacheInvokeException extends CacheException {
 
-    private static final long serialVersionUID = -9002505061387176702L;
+  private static final long serialVersionUID = -9002505061387176702L;
 
-    public CacheInvokeException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public CacheInvokeException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-    public CacheInvokeException(Throwable cause) {
-        super(cause);
-    }
-
+  public CacheInvokeException(Throwable cause) {
+    super(cause);
+  }
 }

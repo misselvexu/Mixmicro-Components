@@ -10,14 +10,13 @@ import xyz.vopen.mixmicro.components.enhance.cache.Cache;
  */
 public class CacheEvent {
 
-    protected Cache cache;
+  protected Cache cache;
 
-    public CacheEvent(Cache cache) {
-        this.cache = cache;
-    }
+  public CacheEvent(Cache cache) {
+    this.cache = cache;
+  }
 
-    public Cache getCache() {
-        return cache;
-    }
-
+  public Cache getCache() {
+    return cache;
+  }
 }

@@ -1,10 +1,10 @@
 package xyz.vopen.mixmicro.components.enhance.cache.autoconfigure;
 
+import org.springframework.context.annotation.Conditional;
+import org.springframework.stereotype.Component;
 import xyz.vopen.mixmicro.components.enhance.cache.CacheBuilder;
 import xyz.vopen.mixmicro.components.enhance.cache.anno.CacheConsts;
 import xyz.vopen.mixmicro.components.enhance.cache.external.MockRemoteCacheBuilder;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.stereotype.Component;
 
 /**
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
@@ -13,27 +13,28 @@ import org.springframework.stereotype.Component;
 @Component
 @Conditional(MockRemoteCacheAutoConfiguration.MockRemoteCacheCondition.class)
 public class MockRemoteCacheAutoConfiguration extends ExternalCacheAutoInit {
-    public MockRemoteCacheAutoConfiguration() {
-        super("mock");
-    }
+  public MockRemoteCacheAutoConfiguration() {
+    super("mock");
+  }
 
-    @Override
-    protected CacheBuilder initCache(ConfigTree ct, String cacheAreaWithPrefix) {
-        MockRemoteCacheBuilder builder = MockRemoteCacheBuilder.createMockRemoteCacheBuilder();
-        parseGeneralConfig(builder, ct);
-        return builder;
-    }
+  @Override
+  protected CacheBuilder initCache(ConfigTree ct, String cacheAreaWithPrefix) {
+    MockRemoteCacheBuilder builder = MockRemoteCacheBuilder.createMockRemoteCacheBuilder();
+    parseGeneralConfig(builder, ct);
+    return builder;
+  }
 
-    @Override
-    protected void parseGeneralConfig(CacheBuilder builder, ConfigTree ct) {
-        super.parseGeneralConfig(builder, ct);
-        MockRemoteCacheBuilder b = (MockRemoteCacheBuilder) builder;
-        b.limit(Integer.parseInt(ct.getProperty("limit", String.valueOf(CacheConsts.DEFAULT_LOCAL_LIMIT))));
-    }
+  @Override
+  protected void parseGeneralConfig(CacheBuilder builder, ConfigTree ct) {
+    super.parseGeneralConfig(builder, ct);
+    MockRemoteCacheBuilder b = (MockRemoteCacheBuilder) builder;
+    b.limit(
+        Integer.parseInt(ct.getProperty("limit", String.valueOf(CacheConsts.DEFAULT_LOCAL_LIMIT))));
+  }
 
-    public static class MockRemoteCacheCondition extends MixCacheCondition {
-        public MockRemoteCacheCondition() {
-            super("mock");
-        }
+  public static class MockRemoteCacheCondition extends MixCacheCondition {
+    public MockRemoteCacheCondition() {
+      super("mock");
     }
+  }
 }

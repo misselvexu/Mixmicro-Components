@@ -5,8 +5,5 @@ package xyz.vopen.mixmicro.components.enhance.cache;
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
- * @version ${project.version}
- * @version ${project.version} - 2020/3/6
  */
-public class Marker {
-}
+public class Marker {}

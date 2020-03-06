@@ -16,28 +16,31 @@ import java.util.stream.Collectors;
  */
 public abstract class MixCacheCondition extends SpringBootCondition {
 
-    private String[] cacheTypes;
+  private String[] cacheTypes;
 
-    protected MixCacheCondition(String... cacheTypes) {
-        Objects.requireNonNull(cacheTypes, "cacheTypes can't be null");
-        Assert.isTrue(cacheTypes.length > 0, "cacheTypes length is 0");
-        this.cacheTypes = cacheTypes;
-    }
+  protected MixCacheCondition(String... cacheTypes) {
+    Objects.requireNonNull(cacheTypes, "cacheTypes can't be null");
+    Assert.isTrue(cacheTypes.length > 0, "cacheTypes length is 0");
+    this.cacheTypes = cacheTypes;
+  }
 
-    @Override
-    public ConditionOutcome getMatchOutcome(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
-        ConfigTree ct = new ConfigTree((ConfigurableEnvironment) conditionContext.getEnvironment(), "mixcache.");
-        if (match(ct, "local.") || match(ct, "remote.")) {
-            return ConditionOutcome.match();
-        } else {
-            return ConditionOutcome.noMatch("no match for " + cacheTypes[0]);
-        }
+  @Override
+  public ConditionOutcome getMatchOutcome(
+      ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
+    ConfigTree ct =
+        new ConfigTree((ConfigurableEnvironment) conditionContext.getEnvironment(), "mixcache.");
+    if (match(ct, "local.") || match(ct, "remote.")) {
+      return ConditionOutcome.match();
+    } else {
+      return ConditionOutcome.noMatch("no match for " + cacheTypes[0]);
     }
+  }
 
-    private boolean match(ConfigTree ct, String prefix) {
-        Map<String, Object> m = ct.subTree(prefix).getProperties();
-        Set<String> cacheAreaNames = m.keySet().stream().map((s) -> s.substring(0, s.indexOf('.'))).collect(Collectors.toSet());
-        final List<String> cacheTypesList = Arrays.asList(cacheTypes);
-        return cacheAreaNames.stream().anyMatch((s) -> cacheTypesList.contains(m.get(s + ".type")));
-    }
+  private boolean match(ConfigTree ct, String prefix) {
+    Map<String, Object> m = ct.subTree(prefix).getProperties();
+    Set<String> cacheAreaNames =
+        m.keySet().stream().map((s) -> s.substring(0, s.indexOf('.'))).collect(Collectors.toSet());
+    final List<String> cacheTypesList = Arrays.asList(cacheTypes);
+    return cacheAreaNames.stream().anyMatch((s) -> cacheTypesList.contains(m.get(s + ".type")));
+  }
 }

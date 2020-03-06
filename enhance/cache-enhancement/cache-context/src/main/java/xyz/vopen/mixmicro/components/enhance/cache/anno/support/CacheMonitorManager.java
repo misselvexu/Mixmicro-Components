@@ -7,5 +7,5 @@ import xyz.vopen.mixmicro.components.enhance.cache.Cache;
  * @version ${project.version}
  */
 public interface CacheMonitorManager {
-    void addMonitors(String area, String cacheName, Cache cache);
+  void addMonitors(String area, String cacheName, Cache cache);
 }

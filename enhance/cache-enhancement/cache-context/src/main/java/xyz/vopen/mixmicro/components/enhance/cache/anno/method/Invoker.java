@@ -5,5 +5,5 @@ package xyz.vopen.mixmicro.components.enhance.cache.anno.method;
  * @version ${project.version}
  */
 public interface Invoker {
-    Object invoke() throws Throwable;
+  Object invoke() throws Throwable;
 }
