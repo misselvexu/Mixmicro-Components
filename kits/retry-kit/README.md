@@ -101,7 +101,7 @@ executor.execute(callable);
 <dependency>
     <groupId>com.yunlsp.framework.components</groupId>
     <artifactId>retry-kit</artifactId>
-    <version>Antarctica.RC1</version>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
 </dependency>
 ```
 

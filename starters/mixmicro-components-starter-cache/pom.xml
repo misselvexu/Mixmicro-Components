@@ -10,15 +10,25 @@
     </parent>
 
     <artifactId>mixmicro-components-starter-cache</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
 
     <name>Cache Starter Module :: ${project.version}</name>
     <description>🏗 Cache Starter Module</description>
 
-    <dependencies>
+    <packaging>pom</packaging>
 
+    <properties>
+        <spring.framework.version>5.2.2.RELEASE</spring.framework.version>
+        <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
+        <lettuce.version>5.2.2.RELEASE</lettuce.version>
+        <jedis.version>3.1.0</jedis.version>
+        <kryo.version>4.0.2</kryo.version>
+    </properties>
 
-
-    </dependencies>
+    <modules>
+        <module>mixmicro-components-starter-cache-redis-default</module>
+        <module>mixmicro-components-starter-cache-redis-lettuce</module>
+        <module>mixmicro-components-starter-cache-redis-springdata</module>
+    </modules>
 
 </project>

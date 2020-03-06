@@ -31,6 +31,15 @@
         <module>mixmicro-components-starters-dependencies</module>
     </modules>
 
+    <properties>
+        <micro-starter-banner.version>${project.version}</micro-starter-banner.version>
+        <micro-starter-logger.version>${project.version}</micro-starter-logger.version>
+        <micro-starter-json.version>${project.version}</micro-starter-json.version>
+        <micro-starter-cors.version>${project.version}</micro-starter-cors.version>
+        <micro-starter-resteasy.version>${project.version}</micro-starter-resteasy.version>
+        <micro-starter-snowflake.version>${project.version}</micro-starter-snowflake.version>
+        <micro-starter-openfeign.version>${project.version}</micro-starter-openfeign.version>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -53,51 +62,62 @@
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-parent</artifactId>
+                <version>${mixmicro-components-enhance.dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Starters Dependencies -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starters-dependencies</artifactId>
+                <version>${mixmicro-components-starters.dependencies.version}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-banner</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-banner.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-logger</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-logger.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-json</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-json.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-cors</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-cors.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-resteasy</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-resteasy.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-snowflake</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-snowflake.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-openfeign</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-openfeign.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-starter-cache</artifactId>
-                <version>1.0.0.RELEASE</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

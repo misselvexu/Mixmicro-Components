@@ -22,6 +22,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+
+        <micro-starter-banner.version>${project.version}</micro-starter-banner.version>
+        <micro-starter-logger.version>${project.version}</micro-starter-logger.version>
+        <micro-starter-json.version>${project.version}</micro-starter-json.version>
+        <micro-starter-cors.version>${project.version}</micro-starter-cors.version>
+        <micro-starter-resteasy.version>${project.version}</micro-starter-resteasy.version>
+        <micro-starter-snowflake.version>${project.version}</micro-starter-snowflake.version>
+        <micro-starter-openfeign.version>${project.version}</micro-starter-openfeign.version>
+
+        <micro-starter-cache-redis-default.version>${project.version}</micro-starter-cache-redis-default.version>
+        <micro-starter-cache-redis-lettuce.version>${project.version}</micro-starter-cache-redis-lettuce.version>
+        <micro-starter-cache-redis-springdata.version>${project.version}</micro-starter-cache-redis-springdata.version>
+
     </properties>
 
     <dependencyManagement>
@@ -29,43 +42,61 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-banner</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-banner.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-logger</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-logger.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-json</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-json.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-cors</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-cors.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-resteasy</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-resteasy.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-snowflake</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-snowflake.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-openfeign</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>${micro-starter-openfeign.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-cache-redis-default</artifactId>
+                <version>${micro-starter-cache-redis-default.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-cache-redis-lettuce</artifactId>
+                <version>${micro-starter-cache-redis-lettuce.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-cache-redis-springdata</artifactId>
+                <version>${micro-starter-cache-redis-springdata.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>servlet-compress-filter</artifactId>
-    <version>Antarctica.RC1</version>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Servlet Compress Filter :: ${project.version}</name>

@@ -22,27 +22,4 @@
         <module>cache-redis-springdata</module>
     </modules>
 
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-enhance-cache-extension-redis-default</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-enhance-cache-extension-redis-lettuce</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-enhance-cache-extension-redis-springdata</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
 </project>

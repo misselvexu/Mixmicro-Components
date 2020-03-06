@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>http-client-kit</artifactId>
-    <version>Antarctica.RC4</version>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
 
     <name>HttpClient kit :: ${project.version}</name>
     <description>Mixmicro+ Custom Http Client Kit</description>

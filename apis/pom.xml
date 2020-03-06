@@ -25,6 +25,12 @@
         <module>dependencies</module>
     </modules>
 
+    <properties>
+        <mixmicro-kits-common.version>${project.version}</mixmicro-kits-common.version>
+        <mixmicro-kits-exception.version>${project.version}</mixmicro-kits-exception.version>
+        <mixmicro-kits-logger.version>${project.version}</mixmicro-kits-logger.version>
+    </properties>
+
 
     <dependencyManagement>
         <dependencies>
@@ -40,13 +46,19 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>common-api</artifactId>
-                <version>${project.version}</version>
+                <version>${mixmicro-kits-common.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>exception-api</artifactId>
-                <version>${project.version}</version>
+                <version>${mixmicro-kits-exception.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>logger-api</artifactId>
+                <version>${mixmicro-kits-logger.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
