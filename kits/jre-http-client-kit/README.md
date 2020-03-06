@@ -13,7 +13,7 @@ The http-request library is available from [Maven Central](http://search.maven.o
 <dependency>
   <artifactId>jre-http-client-kit</artifactId>
   <groupId>com.yunlsp.framework.components</groupId>
-  <version>Antarctica.RC1</version>
+  <version>1.0.0.BUILD-SNAPSHOT</version>
 </dependency>
 ```
 

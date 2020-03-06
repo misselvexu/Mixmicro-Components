@@ -222,7 +222,7 @@ public final class CompressingFilter implements Filter {
       "xyz.vopen.mixmicro.kits.servlet.filter.compression.Compressed";
 
   static final String VARY_HEADER = "Vary";
-  static final String VERSION = "Antarctica.RC1";
+  static final String VERSION = "1.0.0.BUILD-SNAPSHOT";
   static final String VERSION_STRING = CompressingFilter.class.getName() + '/' + VERSION;
   private static final Logger LOGGER = LoggerFactory.getLogger(CompressingFilter.class);
   private static final String ALREADY_APPLIED_KEY =

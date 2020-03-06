@@ -10,10 +10,10 @@
     </parent>
 
     <artifactId>mixmicro-components-starter-cors</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
 
-    <name>YunLSP Mix Micro-service Project CORS Starter Module :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service CORS Starter Module</description>
+    <name>CORS Starter Module :: ${project.version}</name>
+    <description>🏗 CORS Starter Module</description>
 
     <dependencies>
 

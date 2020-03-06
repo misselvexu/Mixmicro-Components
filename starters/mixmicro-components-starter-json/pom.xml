@@ -10,10 +10,10 @@
     </parent>
 
     <artifactId>mixmicro-components-starter-json</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
 
-    <name>YunLSP Mix Micro-service Project Json Starter Module :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Json Starter Module</description>
+    <name>Json Starter Module :: ${project.version}</name>
+    <description>🏗 Json Starter Module</description>
 
     <dependencies>
         <dependency>

@@ -11,10 +11,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>servlet-compress-filter</artifactId>
-    <version>Antarctica.RC1</version>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>YunLSP Mix Micro-service servlet-compress-filter ${project.version}</name>
+    <name>Servlet Compress Filter :: ${project.version}</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

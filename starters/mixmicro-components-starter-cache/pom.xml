@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-starters</artifactId>
+        <version>1.0.0.BUILD-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>mixmicro-components-starter-cache</artifactId>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
+
+    <name>Cache Starter Module :: ${project.version}</name>
+    <description>🏗 Cache Starter Module</description>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <spring.framework.version>5.2.2.RELEASE</spring.framework.version>
+        <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
+        <lettuce.version>5.2.2.RELEASE</lettuce.version>
+        <jedis.version>3.1.0</jedis.version>
+        <kryo.version>4.0.2</kryo.version>
+    </properties>
+
+    <modules>
+        <module>mixmicro-components-starter-cache-redis-default</module>
+        <module>mixmicro-components-starter-cache-redis-lettuce</module>
+        <module>mixmicro-components-starter-cache-redis-springdata</module>
+    </modules>
+
+</project>

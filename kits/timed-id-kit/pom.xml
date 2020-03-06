@@ -11,9 +11,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>timed-id-kit</artifactId>
-    <version>Antarctica.RC1</version>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
 
-    <name>YunLSP Mix Micro-service timed-id-kit ${project.version}</name>
+    <name>Timed Id Kit :: ${project.version}</name>
     <description>Mixmicro+ Generates 27-character, time-ordered, k-sortable, URL-safe, globally unique identifiers.</description>
 
     <properties>

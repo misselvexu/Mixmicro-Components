@@ -10,10 +10,10 @@
     </parent>
 
     <artifactId>mixmicro-components-starter-openfeign</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
 
-    <name>YunLSP Mix Micro-service Project Uniform Openfeign Starter Module :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Uniform Openfeign Starter Module</description>
+    <name>Uniform Openfeign Starter Module :: ${project.version}</name>
+    <description>🏗 Uniform Openfeign Starter Module</description>
 
     <dependencies>
 

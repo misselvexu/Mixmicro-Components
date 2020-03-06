@@ -12,8 +12,8 @@
     <artifactId>exception-api</artifactId>
     <version>1.0.0.BUILD-SNAPSHOT</version>
 
-    <name>YunLSP Mix Micro-service Project Exception Api Module :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Exception Api Module</description>
+    <name>Exception Api Module :: ${project.version}</name>
+    <description>🏗 Exception Api Module</description>
 
 
     <dependencies>

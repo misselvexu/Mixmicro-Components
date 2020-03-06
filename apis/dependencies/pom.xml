@@ -15,7 +15,7 @@
 
     <packaging>pom</packaging>
 
-    <name>YunLSP Mix Micro-service Apis Dependencies ${project.version}</name>
+    <name>Apis Dependencies ${project.version}</name>
     <description>Framwork Apis For Project(s)</description>
 
     <properties>

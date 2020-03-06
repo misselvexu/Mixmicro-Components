@@ -11,9 +11,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jre-http-client-kit</artifactId>
-    <version>Antarctica.RC1</version>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
 
-    <name>YunLSP Mix Micro-service jre-http-client-kit ${project.version}</name>
+    <name>JRE HttpClient Kit :: ${project.version}</name>
     <description>Mixmicro+ Original Java Http Kit</description>
 
     <properties>

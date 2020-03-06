@@ -7,8 +7,8 @@
     <version>1.0.0.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>YunLSP Mix Micro-service Components :: ${project.version}</name>
-    <description>🏗 YunLSP Mix Micro-service Components Parent</description>
+    <name>Components :: ${project.version}</name>
+    <description>🏗 Components Parent</description>
     <inceptionYear>2020</inceptionYear>
     <url>http://git.hgj.net/elve.xu/Mixmicro-Components</url>
 
@@ -37,9 +37,10 @@
         <mybatis.plus.version>3.1.0</mybatis.plus.version>
 
         <!-- Components Version -->
-        <mixmicro-components-apis.dependencies.version>Antarctica.RELEASE</mixmicro-components-apis.dependencies.version>
-        <mixmicro-components-kits.dependencies.version>Antarctica.RELEASE</mixmicro-components-kits.dependencies.version>
-        <mixmicro-components-starters.dependencies.version>Antarctica.RELEASE</mixmicro-components-starters.dependencies.version>
+        <mixmicro-components-kits.dependencies.version>1.0.0.BUILD-SNAPSHOT</mixmicro-components-kits.dependencies.version>
+        <mixmicro-components-apis.dependencies.version>1.0.0.BUILD-SNAPSHOT</mixmicro-components-apis.dependencies.version>
+        <mixmicro-components-enhance.dependencies.version>1.0.0.BUILD-SNAPSHOT</mixmicro-components-enhance.dependencies.version>
+        <mixmicro-components-starters.dependencies.version>1.0.0.BUILD-SNAPSHOT</mixmicro-components-starters.dependencies.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -81,6 +82,8 @@
     <modules>
         <module>apis</module>
         <module>kits</module>
+        <module>enhance</module>
+
         <module>starters</module>
 
         <module>all</module>
@@ -112,6 +115,12 @@
                 <type>pom</type>
             </dependency>
 
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-parent</artifactId>
+                <version>${mixmicro-components-enhance.dependencies.version}</version>
+                <type>pom</type>
+            </dependency>
 
             <!-- Spring Cloud Dependency  -->
             <dependency>

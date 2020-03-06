@@ -13,7 +13,7 @@
     <artifactId>hessian-kit</artifactId>
     <version>Antarctica.4x.RC1</version>
 
-    <name>YunLSP Mix Micro-service hessian-kit ${project.version}</name>
+    <name>Hessian kit :: ${project.version}</name>
     <description>Mixmicro+ Hessian Kit</description>
 
     <properties>
