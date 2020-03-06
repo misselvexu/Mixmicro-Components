@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-all</artifactId>
-        <version>1.0.0.BUILD-SNAPSHOT</version>
+        <version>1.0.0.RC1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-parent</artifactId>
-    <version>1.0.0.BUILD-SNAPSHOT</version>
+    <version>1.0.0.RC1</version>
     <packaging>pom</packaging>
 
     <name>Enhance Module :: ${project.version}</name>
@@ -18,16 +18,16 @@
 
     <properties>
 
-        <mixmicro-enhance-cache.version>1.0.0.BUILD-SNAPSHOT</mixmicro-enhance-cache.version>
+        <mixmicro-enhance-cache.version>1.0.0.RC1</mixmicro-enhance-cache.version>
 
-        <mixmicro-enhance-cache-api.version>1.0.0.BUILD-SNAPSHOT</mixmicro-enhance-cache-api.version>
-        <mixmicro-enhance-cache-context.version>1.0.0.BUILD-SNAPSHOT</mixmicro-enhance-cache-context.version>
-        <mixmicro-enhance-cache-core.version>1.0.0.BUILD-SNAPSHOT</mixmicro-enhance-cache-core.version>
-        <mixmicro-enhance-cache-extension.version>1.0.0.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension.version>
-        <mixmicro-enhance-cache-load.version>1.0.0.BUILD-SNAPSHOT</mixmicro-enhance-cache-load.version>
-        <mixmicro-enhance-cache-extension-redis.version>1.0.0.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension-redis.version>
-        <mixmicro-enhance-cache-extension-lettuce.version>1.0.0.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension-lettuce.version>
-        <mixmicro-enhance-cache-extension-springdata.version>1.0.0.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension-springdata.version>
+        <mixmicro-enhance-cache-api.version>1.0.0.RC1</mixmicro-enhance-cache-api.version>
+        <mixmicro-enhance-cache-context.version>1.0.0.RC1</mixmicro-enhance-cache-context.version>
+        <mixmicro-enhance-cache-core.version>1.0.0.RC1</mixmicro-enhance-cache-core.version>
+        <mixmicro-enhance-cache-extension.version>1.0.0.RC1</mixmicro-enhance-cache-extension.version>
+        <mixmicro-enhance-cache-load.version>1.0.0.RC1</mixmicro-enhance-cache-load.version>
+        <mixmicro-enhance-cache-extension-redis.version>1.0.0.RC1</mixmicro-enhance-cache-extension-redis.version>
+        <mixmicro-enhance-cache-extension-lettuce.version>1.0.0.RC1</mixmicro-enhance-cache-extension-lettuce.version>
+        <mixmicro-enhance-cache-extension-springdata.version>1.0.0.RC1</mixmicro-enhance-cache-extension-springdata.version>
 
     </properties>
 
