@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-apis</artifactId>
-        <version>1.0.0.RC1</version>
+        <version>1.0.0.RC2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -35,9 +35,9 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
 
         <!-- Module Version -->
-        <mixmicro-common.kit.version>1.0.0.RC1</mixmicro-common.kit.version>
-        <mixmicro-exception.kit.version>1.0.0.RC1</mixmicro-exception.kit.version>
-        <mixmicro-logger.kit.version>1.0.0.RC1</mixmicro-logger.kit.version>
+        <mixmicro-common.kit.version>1.0.0.RC2</mixmicro-common.kit.version>
+        <mixmicro-exception.kit.version>1.0.0.RC2</mixmicro-exception.kit.version>
+        <mixmicro-logger.kit.version>1.0.0.RC2</mixmicro-logger.kit.version>
 
     </properties>
 

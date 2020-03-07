@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 1.0.0.RC1
+### 1.0.0.RC2
 
 #### features
 

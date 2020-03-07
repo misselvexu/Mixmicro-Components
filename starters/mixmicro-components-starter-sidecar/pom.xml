@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-starters</artifactId>
-        <version>1.0.0.RC1</version>
+        <version>1.0.0.RC2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-sidecar</artifactId>
-    <version>1.0.0.RC1</version>
+    <version>1.0.0.RC2</version>
 
     <name>Sidecar Starter Module :: ${project.version}</name>
     <description>🏗 Sidecar Starter Module</description>

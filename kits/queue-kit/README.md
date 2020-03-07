@@ -24,7 +24,7 @@ A big, fast and persistent queue based on memory mapped file.
 ## How to Use
 
 ### Direct jar or source reference  
-Download jar from repository mentioned in version history section below, latest stable release is [1.0.0.RC1](#maven-reference).   
+Download jar from repository mentioned in version history section below, latest stable release is [1.0.0.RC2](#maven-reference).   
 ***Note*** : queue depends on log4j, please also added log4j jar reference if you use queue.
 
 ### Maven reference  
@@ -34,7 +34,7 @@ Download jar from repository mentioned in version history section below, latest 
 <dependency>
   <groupId>com.yunlsp.framework.components</groupId>
   <artifactId>queue-kit</artifactId>
-  <version>1.0.0.RC1</version>
+  <version>1.0.0.RC2</version>
 </dependency>
 
 ```
