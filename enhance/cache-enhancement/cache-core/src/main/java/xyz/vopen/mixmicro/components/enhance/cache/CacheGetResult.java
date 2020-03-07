@@ -8,12 +8,11 @@ import java.util.concurrent.CompletionStage;
  * @version ${project.version}
  */
 public class CacheGetResult<V> extends CacheResult {
-  public static final CacheGetResult NOT_EXISTS_WITHOUT_MSG =
-      new CacheGetResult(CacheResultCode.NOT_EXISTS, null, null);
-  public static final CacheGetResult EXPIRED_WITHOUT_MSG =
-      new CacheGetResult(CacheResultCode.EXPIRED, null, null);
   private V value;
   private CacheValueHolder<V> holder;
+
+  public static final CacheGetResult NOT_EXISTS_WITHOUT_MSG = new CacheGetResult(CacheResultCode.NOT_EXISTS, null, null);
+  public static final CacheGetResult EXPIRED_WITHOUT_MSG = new CacheGetResult(CacheResultCode.EXPIRED, null, null);
 
   public CacheGetResult(CacheResultCode resultCode, String message, CacheValueHolder<V> holder) {
     super(CompletableFuture.completedFuture(new ResultData(resultCode, message, holder)));
@@ -27,6 +26,18 @@ public class CacheGetResult<V> extends CacheResult {
     super(ex);
   }
 
+  public V getValue() {
+    waitForResult();
+    return value;
+  }
+
+  @Override
+  protected void fetchResultSuccess(ResultData resultData) {
+    super.fetchResultSuccess(resultData);
+    holder = (CacheValueHolder<V>) resultData.getOriginData();
+    value = (V) unwrapValue(holder);
+  }
+
   static Object unwrapValue(Object holder) {
     // if @Cached or @CacheCache change type from REMOTE to BOTH (or from BOTH to REMOTE),
     // during the dev/publish process, the value type which different application server put into
@@ -38,18 +49,6 @@ public class CacheGetResult<V> extends CacheResult {
       v = ((CacheValueHolder) v).getValue();
     }
     return v;
-  }
-
-  public V getValue() {
-    waitForResult();
-    return value;
-  }
-
-  @Override
-  protected void fetchResultSuccess(ResultData resultData) {
-    super.fetchResultSuccess(resultData);
-    holder = (CacheValueHolder<V>) resultData.getOriginData();
-    value = (V) unwrapValue(holder);
   }
 
   @Override

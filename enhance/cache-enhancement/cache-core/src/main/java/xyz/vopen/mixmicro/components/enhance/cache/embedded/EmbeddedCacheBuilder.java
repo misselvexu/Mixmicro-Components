@@ -3,6 +3,8 @@ package xyz.vopen.mixmicro.components.enhance.cache.embedded;
 import xyz.vopen.mixmicro.components.enhance.cache.AbstractCacheBuilder;
 
 /**
+ * Created on 16/9/7.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
@@ -10,6 +12,9 @@ public class EmbeddedCacheBuilder<T extends EmbeddedCacheBuilder<T>>
     extends AbstractCacheBuilder<T> {
 
   public EmbeddedCacheBuilder() {}
+
+  public static class EmbeddedCacheBuilderImpl
+      extends EmbeddedCacheBuilder<EmbeddedCacheBuilderImpl> {}
 
   public static EmbeddedCacheBuilderImpl createEmbeddedCacheBuilder() {
     return new EmbeddedCacheBuilderImpl();
@@ -31,7 +36,4 @@ public class EmbeddedCacheBuilder<T extends EmbeddedCacheBuilder<T>>
   public void setLimit(int limit) {
     getConfig().setLimit(limit);
   }
-
-  public static class EmbeddedCacheBuilderImpl
-      extends EmbeddedCacheBuilder<EmbeddedCacheBuilderImpl> {}
 }

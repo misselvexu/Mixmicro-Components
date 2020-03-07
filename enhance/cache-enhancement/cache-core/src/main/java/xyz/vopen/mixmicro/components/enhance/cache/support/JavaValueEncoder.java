@@ -6,20 +6,25 @@ import java.io.ObjectOutputStream;
 import java.lang.ref.WeakReference;
 
 /**
+ * Created on 2018/10/4.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
 public class JavaValueEncoder extends AbstractValueEncoder {
 
   public static final JavaValueEncoder INSTANCE = new JavaValueEncoder(true);
-  private static final int INIT_BUF_SIZE = 256;
+
   protected static int IDENTITY_NUMBER = 0x4A953A80;
-  private static ThreadLocal<WeakReference<ByteArrayOutputStream>> threadLocal =
-      ThreadLocal.withInitial(() -> new WeakReference<>(new ByteArrayOutputStream(INIT_BUF_SIZE)));
+
+  private static final int INIT_BUF_SIZE = 256;
 
   public JavaValueEncoder(boolean useIdentityNumber) {
     super(useIdentityNumber);
   }
+
+  private static ThreadLocal<WeakReference<ByteArrayOutputStream>> threadLocal =
+      ThreadLocal.withInitial(() -> new WeakReference<>(new ByteArrayOutputStream(INIT_BUF_SIZE)));
 
   @Override
   public byte[] apply(Object value) {

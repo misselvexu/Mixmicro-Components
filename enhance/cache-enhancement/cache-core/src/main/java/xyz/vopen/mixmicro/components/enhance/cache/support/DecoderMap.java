@@ -10,7 +10,6 @@ import java.util.Map;
 public class DecoderMap {
 
   private static Map<Integer, AbstractValueDecoder> decoderMap = new HashMap<>();
-  private static boolean inited = false;
 
   public DecoderMap() {}
 
@@ -24,6 +23,8 @@ public class DecoderMap {
     newMap.put(identityNumber, decoder);
     decoderMap = newMap;
   }
+
+  private static boolean inited = false;
 
   static void registerBuildInDecoder() {
     if (!inited) {

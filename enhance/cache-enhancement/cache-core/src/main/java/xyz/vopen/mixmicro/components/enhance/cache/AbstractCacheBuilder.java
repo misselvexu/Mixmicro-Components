@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
+ * Created on 16/9/7.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */

@@ -3,6 +3,8 @@ package xyz.vopen.mixmicro.components.enhance.cache;
 import java.io.Serializable;
 
 /**
+ * Created on 16/9/13. This class is not thread safe.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */

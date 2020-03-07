@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.cache.external;
 
-import xyz.vopen.mixmicro.components.enhance.cache.anno.CacheConsts;
+import xyz.vopen.mixmicro.components.enhance.cache.annotation.CacheConsts;
 
 public class MockRemoteCacheConfig<K, V> extends ExternalCacheConfig<K, V> {
   private int limit = CacheConsts.DEFAULT_LOCAL_LIMIT;

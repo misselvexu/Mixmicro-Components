@@ -5,6 +5,8 @@ import xyz.vopen.mixmicro.components.enhance.cache.AbstractCacheBuilder;
 import java.util.function.Function;
 
 /**
+ * Created on 16/9/9.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */

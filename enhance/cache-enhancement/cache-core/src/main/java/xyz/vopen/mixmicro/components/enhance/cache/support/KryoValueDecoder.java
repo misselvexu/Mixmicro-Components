@@ -6,6 +6,8 @@ import com.esotericsoftware.kryo.io.Input;
 import java.io.ByteArrayInputStream;
 
 /**
+ * Created on 2018/10/4.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */

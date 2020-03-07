@@ -18,6 +18,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
+ * Created on 2018/10/7.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
@@ -26,6 +28,124 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
   private static Logger logger = LoggerFactory.getLogger(AbstractCache.class);
 
   private volatile ConcurrentHashMap<Object, LoaderLock> loaderMap;
+
+  ConcurrentHashMap<Object, LoaderLock> initOrGetLoaderMap() {
+    if (loaderMap == null) {
+      synchronized (this) {
+        if (loaderMap == null) {
+          loaderMap = new ConcurrentHashMap<>();
+        }
+      }
+    }
+    return loaderMap;
+  }
+
+  protected void logError(String oper, Object key, Throwable e) {
+    StringBuilder sb = new StringBuilder(64);
+    sb.append("mixcache(")
+        .append(this.getClass().getSimpleName())
+        .append(") ")
+        .append(oper)
+        .append(" error.");
+    if (!(key instanceof byte[])) {
+      try {
+        sb.append(" key=[").append(config().getKeyConvertor().apply((K) key)).append(']');
+      } catch (Exception ex) {
+        // ignore
+      }
+    }
+    if (needLogStackTrace(e)) {
+      logger.error(sb.toString(), e);
+    } else {
+      sb.append(' ');
+      while (e != null) {
+        sb.append(e.getClass().getName());
+        sb.append(':');
+        sb.append(e.getMessage());
+        e = e.getCause();
+        if (e != null) {
+          sb.append("\ncause by ");
+        }
+      }
+      logger.error(sb.toString());
+    }
+  }
+
+  protected boolean needLogStackTrace(Throwable e) {
+    //        if (e instanceof CacheEncodeException) {
+    //            return true;
+    //        }
+    //        return false;
+    return true;
+  }
+
+  public void notify(CacheEvent e) {
+    List<CacheMonitor> monitors = config().getMonitors();
+    for (CacheMonitor m : monitors) {
+      m.afterOperation(e);
+    }
+  }
+
+  @Override
+  public final CacheGetResult<V> GET(K key) {
+    long t = System.currentTimeMillis();
+    CacheGetResult<V> result;
+    if (key == null) {
+      result = new CacheGetResult<V>(CacheResultCode.FAIL, CacheResult.MSG_ILLEGAL_ARGUMENT, null);
+    } else {
+      result = do_GET(key);
+    }
+    result
+        .future()
+        .thenRun(
+            () -> {
+              CacheGetEvent event =
+                  new CacheGetEvent(this, System.currentTimeMillis() - t, key, result);
+              notify(event);
+            });
+    return result;
+  }
+
+  protected abstract CacheGetResult<V> do_GET(K key);
+
+  @Override
+  public final MultiGetResult<K, V> GET_ALL(Set<? extends K> keys) {
+    long t = System.currentTimeMillis();
+    MultiGetResult<K, V> result;
+    if (keys == null) {
+      result = new MultiGetResult<>(CacheResultCode.FAIL, CacheResult.MSG_ILLEGAL_ARGUMENT, null);
+    } else {
+      result = do_GET_ALL(keys);
+    }
+    result
+        .future()
+        .thenRun(
+            () -> {
+              CacheGetAllEvent event =
+                  new CacheGetAllEvent(this, System.currentTimeMillis() - t, keys, result);
+              notify(event);
+            });
+    return result;
+  }
+
+  protected abstract MultiGetResult<K, V> do_GET_ALL(Set<? extends K> keys);
+
+  @Override
+  public final V computeIfAbsent(
+      K key, Function<K, V> loader, boolean cacheNullWhenLoaderReturnNull) {
+    return computeIfAbsentImpl(key, loader, cacheNullWhenLoaderReturnNull, 0, null, this);
+  }
+
+  @Override
+  public final V computeIfAbsent(
+      K key,
+      Function<K, V> loader,
+      boolean cacheNullWhenLoaderReturnNull,
+      long expireAfterWrite,
+      TimeUnit timeUnit) {
+    return computeIfAbsentImpl(
+        key, loader, cacheNullWhenLoaderReturnNull, expireAfterWrite, timeUnit, this);
+  }
 
   private static <K, V> boolean needUpdate(
       V loadedValue, boolean cacheNullWhenLoaderReturnNull, Function<K, V> loader) {
@@ -154,124 +274,6 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
     } else {
       throw new CacheException("impossible");
     }
-  }
-
-  ConcurrentHashMap<Object, LoaderLock> initOrGetLoaderMap() {
-    if (loaderMap == null) {
-      synchronized (this) {
-        if (loaderMap == null) {
-          loaderMap = new ConcurrentHashMap<>();
-        }
-      }
-    }
-    return loaderMap;
-  }
-
-  protected void logError(String oper, Object key, Throwable e) {
-    StringBuilder sb = new StringBuilder(64);
-    sb.append("mixcache(")
-        .append(this.getClass().getSimpleName())
-        .append(") ")
-        .append(oper)
-        .append(" error.");
-    if (!(key instanceof byte[])) {
-      try {
-        sb.append(" key=[").append(config().getKeyConvertor().apply((K) key)).append(']');
-      } catch (Exception ex) {
-        // ignore
-      }
-    }
-    if (needLogStackTrace(e)) {
-      logger.error(sb.toString(), e);
-    } else {
-      sb.append(' ');
-      while (e != null) {
-        sb.append(e.getClass().getName());
-        sb.append(':');
-        sb.append(e.getMessage());
-        e = e.getCause();
-        if (e != null) {
-          sb.append("\ncause by ");
-        }
-      }
-      logger.error(sb.toString());
-    }
-  }
-
-  protected boolean needLogStackTrace(Throwable e) {
-    //        if (e instanceof CacheEncodeException) {
-    //            return true;
-    //        }
-    //        return false;
-    return true;
-  }
-
-  public void notify(CacheEvent e) {
-    List<CacheMonitor> monitors = config().getMonitors();
-    for (CacheMonitor m : monitors) {
-      m.afterOperation(e);
-    }
-  }
-
-  @Override
-  public final CacheGetResult<V> GET(K key) {
-    long t = System.currentTimeMillis();
-    CacheGetResult<V> result;
-    if (key == null) {
-      result = new CacheGetResult<V>(CacheResultCode.FAIL, CacheResult.MSG_ILLEGAL_ARGUMENT, null);
-    } else {
-      result = do_GET(key);
-    }
-    result
-        .future()
-        .thenRun(
-            () -> {
-              CacheGetEvent event =
-                  new CacheGetEvent(this, System.currentTimeMillis() - t, key, result);
-              notify(event);
-            });
-    return result;
-  }
-
-  protected abstract CacheGetResult<V> do_GET(K key);
-
-  @Override
-  public final MultiGetResult<K, V> GET_ALL(Set<? extends K> keys) {
-    long t = System.currentTimeMillis();
-    MultiGetResult<K, V> result;
-    if (keys == null) {
-      result = new MultiGetResult<>(CacheResultCode.FAIL, CacheResult.MSG_ILLEGAL_ARGUMENT, null);
-    } else {
-      result = do_GET_ALL(keys);
-    }
-    result
-        .future()
-        .thenRun(
-            () -> {
-              CacheGetAllEvent event =
-                  new CacheGetAllEvent(this, System.currentTimeMillis() - t, keys, result);
-              notify(event);
-            });
-    return result;
-  }
-
-  protected abstract MultiGetResult<K, V> do_GET_ALL(Set<? extends K> keys);
-
-  @Override
-  public final V computeIfAbsent(
-      K key, Function<K, V> loader, boolean cacheNullWhenLoaderReturnNull) {
-    return computeIfAbsentImpl(key, loader, cacheNullWhenLoaderReturnNull, 0, null, this);
-  }
-
-  @Override
-  public final V computeIfAbsent(
-      K key,
-      Function<K, V> loader,
-      boolean cacheNullWhenLoaderReturnNull,
-      long expireAfterWrite,
-      TimeUnit timeUnit) {
-    return computeIfAbsentImpl(
-        key, loader, cacheNullWhenLoaderReturnNull, expireAfterWrite, timeUnit, this);
   }
 
   @Override

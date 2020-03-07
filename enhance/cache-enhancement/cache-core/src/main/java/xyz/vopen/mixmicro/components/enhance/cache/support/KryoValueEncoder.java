@@ -7,6 +7,8 @@ import com.esotericsoftware.kryo.serializers.CompatibleFieldSerializer;
 import java.lang.ref.WeakReference;
 
 /**
+ * Created on 2018/10/4.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
@@ -23,9 +25,6 @@ public class KryoValueEncoder extends AbstractValueEncoder {
           () -> {
             Kryo kryo = new Kryo();
             kryo.setDefaultSerializer(CompatibleFieldSerializer.class);
-            //        kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
-            //        kryo.setInstantiatorStrategy(new Kryo.DefaultInstantiatorStrategy(new
-            // StdInstantiatorStrategy()));
 
             byte[] buffer = new byte[INIT_BUFFER_SIZE];
 

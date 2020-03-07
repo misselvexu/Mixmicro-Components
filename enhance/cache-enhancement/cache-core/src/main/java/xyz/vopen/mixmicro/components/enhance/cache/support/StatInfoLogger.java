@@ -11,14 +11,17 @@ import java.util.OptionalInt;
 import java.util.function.Consumer;
 
 /**
+ * Created on 2018/12/6.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
 public class StatInfoLogger implements Consumer<StatInfo> {
 
   private static Logger logger = LoggerFactory.getLogger(StatInfoLogger.class);
-  protected int maxNameLength = 65;
   private boolean verboseLog;
+
+  protected int maxNameLength = 65;
 
   public StatInfoLogger(boolean verboseLog) {
     this.verboseLog = verboseLog;

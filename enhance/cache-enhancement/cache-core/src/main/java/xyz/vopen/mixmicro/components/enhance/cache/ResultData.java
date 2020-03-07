@@ -1,6 +1,8 @@
 package xyz.vopen.mixmicro.components.enhance.cache;
 
 /**
+ * Created on 2018/5/2.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
@@ -24,10 +26,6 @@ public class ResultData {
     return CacheGetResult.unwrapValue(data);
   }
 
-  public void setData(Object data) {
-    this.data = data;
-  }
-
   public Object getOriginData() {
     return data;
   }
@@ -46,5 +44,9 @@ public class ResultData {
 
   public void setMessage(String message) {
     this.message = message;
+  }
+
+  public void setData(Object data) {
+    this.data = data;
   }
 }

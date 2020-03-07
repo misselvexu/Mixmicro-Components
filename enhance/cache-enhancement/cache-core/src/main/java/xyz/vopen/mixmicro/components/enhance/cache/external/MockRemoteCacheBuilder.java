@@ -1,16 +1,16 @@
 package xyz.vopen.mixmicro.components.enhance.cache.external;
 
 /**
+ * Created on 2018/10/20.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
 public class MockRemoteCacheBuilder<T extends ExternalCacheBuilder<T>>
     extends ExternalCacheBuilder<T> {
 
-  public MockRemoteCacheBuilder() {
-    this.setKeyPrefix("DEFAULT_PREFIX");
-    buildFunc((c) -> new MockRemoteCache((MockRemoteCacheConfig) c));
-  }
+  public static class MockRemoteCacheBuilderImpl
+      extends MockRemoteCacheBuilder<MockRemoteCacheBuilderImpl> {}
 
   public static MockRemoteCacheBuilderImpl createMockRemoteCacheBuilder() {
     return new MockRemoteCacheBuilderImpl();
@@ -24,6 +24,11 @@ public class MockRemoteCacheBuilder<T extends ExternalCacheBuilder<T>>
     return (MockRemoteCacheConfig) config;
   }
 
+  public MockRemoteCacheBuilder() {
+    this.setKeyPrefix("DEFAULT_PREFIX");
+    buildFunc((c) -> new MockRemoteCache((MockRemoteCacheConfig) c));
+  }
+
   public T limit(int limit) {
     getConfig().setLimit(limit);
     return self();
@@ -32,7 +37,4 @@ public class MockRemoteCacheBuilder<T extends ExternalCacheBuilder<T>>
   public void setLimit(int limit) {
     getConfig().setLimit(limit);
   }
-
-  public static class MockRemoteCacheBuilderImpl
-      extends MockRemoteCacheBuilder<MockRemoteCacheBuilderImpl> {}
 }

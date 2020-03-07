@@ -14,17 +14,6 @@ import java.util.stream.Collectors;
  * @version ${project.version}
  */
 public class MockRemoteCache<K, V> extends AbstractExternalCache<K, V> {
-  private static Method getHolder;
-
-  static {
-    try {
-      getHolder = CacheGetResult.class.getDeclaredMethod("getHolder");
-      getHolder.setAccessible(true);
-    } catch (NoSuchMethodException e) {
-      throw new CacheException(e);
-    }
-  }
-
   private Cache<ByteBuffer, byte[]> cache;
   private ExternalCacheConfig<K, V> config;
 
@@ -38,8 +27,6 @@ public class MockRemoteCache<K, V> extends AbstractExternalCache<K, V> {
             .buildCache();
   }
 
-  // -------------------------------
-
   @Override
   public CacheConfig<K, V> config() {
     return config;
@@ -49,9 +36,22 @@ public class MockRemoteCache<K, V> extends AbstractExternalCache<K, V> {
     return ByteBuffer.wrap(buildKey(key));
   }
 
+  // -------------------------------
+
   @Override
   public <T> T unwrap(Class<T> clazz) {
     return cache.unwrap(clazz);
+  }
+
+  private static Method getHolder;
+
+  static {
+    try {
+      getHolder = CacheGetResult.class.getDeclaredMethod("getHolder");
+      getHolder.setAccessible(true);
+    } catch (NoSuchMethodException e) {
+      throw new CacheException(e);
+    }
   }
 
   private CacheGetResult convertCacheGetResult(CacheGetResult originResult) {

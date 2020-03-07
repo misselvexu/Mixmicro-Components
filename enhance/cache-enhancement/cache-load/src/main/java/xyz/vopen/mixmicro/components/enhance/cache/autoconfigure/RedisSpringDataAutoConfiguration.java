@@ -15,6 +15,8 @@ import xyz.vopen.mixmicro.components.enhance.cache.redis.springdata.RedisSpringD
 import java.util.Map;
 
 /**
+ * Created on 2019/5/1.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
@@ -22,15 +24,15 @@ import java.util.Map;
 @Conditional(RedisSpringDataAutoConfiguration.SpringDataRedisCondition.class)
 public class RedisSpringDataAutoConfiguration {
 
-  @Bean
-  public SpringDataRedisAutoInit springDataRedisAutoInit() {
-    return new SpringDataRedisAutoInit();
-  }
-
   public static class SpringDataRedisCondition extends MixCacheCondition {
     public SpringDataRedisCondition() {
       super("redis.springdata");
     }
+  }
+
+  @Bean
+  public SpringDataRedisAutoInit springDataRedisAutoInit() {
+    return new SpringDataRedisAutoInit();
   }
 
   public static class SpringDataRedisAutoInit extends ExternalCacheAutoInit

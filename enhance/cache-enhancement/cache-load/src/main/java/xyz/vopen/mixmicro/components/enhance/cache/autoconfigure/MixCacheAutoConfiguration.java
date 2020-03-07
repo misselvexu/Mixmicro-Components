@@ -6,10 +6,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import xyz.vopen.mixmicro.components.enhance.cache.anno.support.GlobalCacheConfig;
-import xyz.vopen.mixmicro.components.enhance.cache.anno.support.SpringConfigProvider;
+import xyz.vopen.mixmicro.components.enhance.cache.annotation.support.GlobalCacheConfig;
+import xyz.vopen.mixmicro.components.enhance.cache.annotation.support.SpringConfigProvider;
 
 /**
+ * Created on 2018/11/17.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
@@ -36,11 +38,6 @@ public class MixCacheAutoConfiguration {
   private GlobalCacheConfig _globalCacheConfig;
 
   @Bean
-  public static BeanDependencyManager beanDependencyManager() {
-    return new BeanDependencyManager();
-  }
-
-  @Bean
   @ConditionalOnMissingBean
   public SpringConfigProvider springConfigProvider() {
     return _springConfigProvider;
@@ -49,6 +46,11 @@ public class MixCacheAutoConfiguration {
   @Bean
   public AutoConfigureBeans autoConfigureBeans() {
     return _autoConfigureBeans;
+  }
+
+  @Bean
+  public static BeanDependencyManager beanDependencyManager() {
+    return new BeanDependencyManager();
   }
 
   @Bean(name = GLOBAL_CACHE_CONFIG_NAME)

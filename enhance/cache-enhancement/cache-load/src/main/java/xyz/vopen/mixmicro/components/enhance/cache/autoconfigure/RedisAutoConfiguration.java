@@ -26,6 +26,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * Created on 2018/11/25.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
@@ -47,11 +49,11 @@ public class RedisAutoConfiguration {
   }
 
   public static class RedisAutoInit extends ExternalCacheAutoInit {
-    @Autowired private AutoConfigureBeans autoConfigureBeans;
-
     public RedisAutoInit() {
       super("redis");
     }
+
+    @Autowired private AutoConfigureBeans autoConfigureBeans;
 
     @Override
     protected CacheBuilder initCache(ConfigTree ct, String cacheAreaWithPrefix) {
@@ -91,18 +93,18 @@ public class RedisAutoConfiguration {
     private Pool<Jedis> parsePool(ConfigTree ct) {
       GenericObjectPoolConfig poolConfig = parsePoolConfig(ct);
 
-      String host = ct.getProperty("host", (String) null);
+      String host = ct.getProperty("host", null);
       int port = Integer.parseInt(ct.getProperty("port", "0"));
       int timeout =
           Integer.parseInt(ct.getProperty("timeout", String.valueOf(Protocol.DEFAULT_TIMEOUT)));
-      String password = ct.getProperty("password", (String) null);
+      String password = ct.getProperty("password", null);
       int database =
           Integer.parseInt(ct.getProperty("database", String.valueOf(Protocol.DEFAULT_DATABASE)));
-      String clientName = ct.getProperty("clientName", (String) null);
+      String clientName = ct.getProperty("clientName", null);
       boolean ssl = Boolean.parseBoolean(ct.getProperty("ssl", "false"));
 
-      String masterName = ct.getProperty("masterName", (String) null);
-      String sentinels = ct.getProperty("sentinels", (String) null); // ip1:port,ip2:port
+      String masterName = ct.getProperty("masterName", null);
+      String sentinels = ct.getProperty("sentinels", null); // ip1:port,ip2:port
 
       Pool<Jedis> jedisPool;
       if (sentinels == null) {

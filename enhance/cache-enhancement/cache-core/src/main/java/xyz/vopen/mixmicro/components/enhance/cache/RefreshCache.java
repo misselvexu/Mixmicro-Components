@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
+ * Created on 2018/5/25.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
@@ -147,12 +149,6 @@ public class RefreshCache<K, V> extends LoadingCache<K, V> {
     return super.getAll(keys);
   }
 
-  private byte[] combine(byte[] bs1, byte[] bs2) {
-    byte[] newArray = Arrays.copyOf(bs1, bs1.length + bs2.length);
-    System.arraycopy(bs2, 0, newArray, bs1.length, bs2.length);
-    return newArray;
-  }
-
   class RefreshTask implements Runnable {
     private Object taskId;
     private K key;
@@ -271,5 +267,11 @@ public class RefreshCache<K, V> extends LoadingCache<K, V> {
         logger.error("refresh error: key=" + key, e);
       }
     }
+  }
+
+  private byte[] combine(byte[] bs1, byte[] bs2) {
+    byte[] newArray = Arrays.copyOf(bs1, bs1.length + bs2.length);
+    System.arraycopy(bs2, 0, newArray, bs1.length, bs2.length);
+    return newArray;
   }
 }

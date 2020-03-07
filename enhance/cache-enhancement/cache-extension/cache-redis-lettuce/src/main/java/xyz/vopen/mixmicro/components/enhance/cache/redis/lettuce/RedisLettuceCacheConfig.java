@@ -1,43 +1,45 @@
 package xyz.vopen.mixmicro.components.enhance.cache.redis.lettuce;
 
+import xyz.vopen.mixmicro.components.enhance.cache.annotation.CacheConsts;
+import xyz.vopen.mixmicro.components.enhance.cache.external.ExternalCacheConfig;
 import io.lettuce.core.AbstractRedisClient;
 import io.lettuce.core.api.StatefulConnection;
-import xyz.vopen.mixmicro.components.enhance.cache.anno.CacheConsts;
-import xyz.vopen.mixmicro.components.enhance.cache.external.ExternalCacheConfig;
 
 /**
+ * Created on 2018/4/28.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
 public class RedisLettuceCacheConfig<K, V> extends ExternalCacheConfig<K, V> {
 
-  private AbstractRedisClient redisClient;
+    private AbstractRedisClient redisClient;
 
-  private StatefulConnection connection;
+    private StatefulConnection connection;
 
-  private long asyncResultTimeoutInMillis = CacheConsts.ASYNC_RESULT_TIMEOUT.toMillis();
+    private long asyncResultTimeoutInMillis = CacheConsts.ASYNC_RESULT_TIMEOUT.toMillis();
 
-  public AbstractRedisClient getRedisClient() {
-    return redisClient;
-  }
+    public AbstractRedisClient getRedisClient() {
+        return redisClient;
+    }
 
-  public void setRedisClient(AbstractRedisClient redisClient) {
-    this.redisClient = redisClient;
-  }
+    public void setRedisClient(AbstractRedisClient redisClient) {
+        this.redisClient = redisClient;
+    }
 
-  public StatefulConnection getConnection() {
-    return connection;
-  }
+    public StatefulConnection getConnection() {
+        return connection;
+    }
 
-  public void setConnection(StatefulConnection connection) {
-    this.connection = connection;
-  }
+    public void setConnection(StatefulConnection connection) {
+        this.connection = connection;
+    }
 
-  public long getAsyncResultTimeoutInMillis() {
-    return asyncResultTimeoutInMillis;
-  }
+    public long getAsyncResultTimeoutInMillis() {
+        return asyncResultTimeoutInMillis;
+    }
 
-  public void setAsyncResultTimeoutInMillis(long asyncResultTimeoutInMillis) {
-    this.asyncResultTimeoutInMillis = asyncResultTimeoutInMillis;
-  }
+    public void setAsyncResultTimeoutInMillis(long asyncResultTimeoutInMillis) {
+        this.asyncResultTimeoutInMillis = asyncResultTimeoutInMillis;
+    }
 }

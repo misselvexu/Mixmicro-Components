@@ -9,11 +9,13 @@ import java.io.Serializable;
  * @version ${project.version}
  */
 public class CacheMessage implements Serializable {
+  private static final long serialVersionUID = -462475561129953207L;
+
   public static final int TYPE_PUT = 1;
   public static final int TYPE_PUT_ALL = 2;
   public static final int TYPE_REMOVE = 3;
   public static final int TYPE_REMOVE_ALL = 4;
-  private static final long serialVersionUID = -462475561129953207L;
+
   private int type;
 
   private Object[] keys;

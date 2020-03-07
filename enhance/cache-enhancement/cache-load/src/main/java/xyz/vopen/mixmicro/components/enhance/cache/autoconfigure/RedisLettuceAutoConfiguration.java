@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import xyz.vopen.mixmicro.components.enhance.cache.CacheBuilder;
 import xyz.vopen.mixmicro.components.enhance.cache.CacheConfigException;
-import xyz.vopen.mixmicro.components.enhance.cache.anno.CacheConsts;
+import xyz.vopen.mixmicro.components.enhance.cache.annotation.CacheConsts;
 import xyz.vopen.mixmicro.components.enhance.cache.external.ExternalCacheBuilder;
 import xyz.vopen.mixmicro.components.enhance.cache.redis.lettuce.LettuceConnectionManager;
 import xyz.vopen.mixmicro.components.enhance.cache.redis.lettuce.MixCacheCodec;
@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * Created on 2018/5/10.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
@@ -32,15 +34,15 @@ import java.util.stream.Collectors;
 public class RedisLettuceAutoConfiguration {
   public static final String AUTO_INIT_BEAN_NAME = "redisLettuceAutoInit";
 
-  @Bean(name = {AUTO_INIT_BEAN_NAME})
-  public RedisLettuceAutoInit redisLettuceAutoInit() {
-    return new RedisLettuceAutoInit();
-  }
-
   public static class RedisLettuceCondition extends MixCacheCondition {
     public RedisLettuceCondition() {
       super("redis.lettuce");
     }
+  }
+
+  @Bean(name = {AUTO_INIT_BEAN_NAME})
+  public RedisLettuceAutoInit redisLettuceAutoInit() {
+    return new RedisLettuceAutoInit();
   }
 
   public static class RedisLettuceAutoInit extends ExternalCacheAutoInit {

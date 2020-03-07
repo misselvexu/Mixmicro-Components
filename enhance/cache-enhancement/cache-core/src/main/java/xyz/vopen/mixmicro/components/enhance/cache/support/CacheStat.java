@@ -5,6 +5,8 @@ import xyz.vopen.mixmicro.components.enhance.cache.CacheException;
 import java.io.Serializable;
 
 /**
+ * Created on 2018/10/27.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */

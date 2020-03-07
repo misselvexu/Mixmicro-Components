@@ -18,12 +18,12 @@ public abstract class AbstractEmbeddedCache<K, V> extends AbstractCache<K, V> {
   protected EmbeddedCacheConfig<K, V> config;
   protected InnerMap innerMap;
 
+  protected abstract InnerMap createAreaCache();
+
   public AbstractEmbeddedCache(EmbeddedCacheConfig<K, V> config) {
     this.config = config;
     innerMap = createAreaCache();
   }
-
-  protected abstract InnerMap createAreaCache();
 
   @Override
   public CacheConfig<K, V> config() {

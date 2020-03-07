@@ -16,6 +16,8 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
+ * Created on 2018/10/31.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
@@ -29,6 +31,24 @@ public class DefaultMetricsManager {
   private int resetTime;
   private TimeUnit resetTimeUnit;
   private Consumer<StatInfo> metricsCallback;
+
+  public DefaultMetricsManager(
+      int resetTime, TimeUnit resetTimeUnit, Consumer<StatInfo> metricsCallback) {
+    this.resetTime = resetTime;
+    this.resetTimeUnit = resetTimeUnit;
+    this.metricsCallback = metricsCallback;
+  }
+
+  public DefaultMetricsManager(int resetTime, TimeUnit resetTimeUnit) {
+    this(resetTime, resetTimeUnit, false);
+  }
+
+  public DefaultMetricsManager(int resetTime, TimeUnit resetTimeUnit, boolean verboseLog) {
+    this.resetTime = resetTime;
+    this.resetTimeUnit = resetTimeUnit;
+    this.metricsCallback = new StatInfoLogger(verboseLog);
+  }
+
   Runnable cmd =
       new Runnable() {
         private long time = System.currentTimeMillis();
@@ -60,21 +80,34 @@ public class DefaultMetricsManager {
         }
       };
 
-  public DefaultMetricsManager(
-      int resetTime, TimeUnit resetTimeUnit, Consumer<StatInfo> metricsCallback) {
-    this.resetTime = resetTime;
-    this.resetTimeUnit = resetTimeUnit;
-    this.metricsCallback = metricsCallback;
+  @PostConstruct
+  public synchronized void start() {
+    if (future != null) {
+      return;
+    }
+    long delay = firstDelay(resetTime, resetTimeUnit);
+    future =
+        MixCacheExecutor.defaultExecutor()
+            .scheduleAtFixedRate(
+                cmd, delay, resetTimeUnit.toMillis(resetTime), TimeUnit.MILLISECONDS);
+    logger.info("cache stat period at " + resetTime + " " + resetTimeUnit);
   }
 
-  public DefaultMetricsManager(int resetTime, TimeUnit resetTimeUnit) {
-    this(resetTime, resetTimeUnit, false);
+  @PreDestroy
+  public synchronized void stop() {
+    future.cancel(false);
+    logger.info("cache stat canceled");
+    future = null;
   }
 
-  public DefaultMetricsManager(int resetTime, TimeUnit resetTimeUnit, boolean verboseLog) {
-    this.resetTime = resetTime;
-    this.resetTimeUnit = resetTimeUnit;
-    this.metricsCallback = new StatInfoLogger(verboseLog);
+  public DefaultMetricsManager add(DefaultCacheMonitor... monitors) {
+    monitorList.addAll(Arrays.asList(monitors));
+    return this;
+  }
+
+  public DefaultMetricsManager remove(DefaultCacheMonitor... monitor) {
+    monitorList.remove(monitor);
+    return this;
   }
 
   protected static long firstDelay(int resetTime, TimeUnit resetTimeUnit) {
@@ -123,35 +156,5 @@ public class DefaultMetricsManager {
         break;
     }
     return t;
-  }
-
-  @PostConstruct
-  public synchronized void start() {
-    if (future != null) {
-      return;
-    }
-    long delay = firstDelay(resetTime, resetTimeUnit);
-    future =
-        MixCacheExecutor.defaultExecutor()
-            .scheduleAtFixedRate(
-                cmd, delay, resetTimeUnit.toMillis(resetTime), TimeUnit.MILLISECONDS);
-    logger.info("cache stat period at " + resetTime + " " + resetTimeUnit);
-  }
-
-  @PreDestroy
-  public synchronized void stop() {
-    future.cancel(false);
-    logger.info("cache stat canceled");
-    future = null;
-  }
-
-  public DefaultMetricsManager add(DefaultCacheMonitor... monitors) {
-    monitorList.addAll(Arrays.asList(monitors));
-    return this;
-  }
-
-  public DefaultMetricsManager remove(DefaultCacheMonitor... monitor) {
-    monitorList.remove(monitor);
-    return this;
   }
 }

@@ -5,17 +5,22 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
+ * Created on 2018/5/24.
+ *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version}
  */
 public class MultiLevelCacheBuilder<T extends MultiLevelCacheBuilder<T>>
     extends AbstractCacheBuilder<T> {
-  protected MultiLevelCacheBuilder() {
-    buildFunc(config -> new MultiLevelCache((MultiLevelCacheConfig) config));
-  }
+  public static class MultiLevelCacheBuilderImpl
+      extends MultiLevelCacheBuilder<MultiLevelCacheBuilderImpl> {}
 
   public static MultiLevelCacheBuilderImpl createMultiLevelCacheBuilder() {
     return new MultiLevelCacheBuilderImpl();
+  }
+
+  protected MultiLevelCacheBuilder() {
+    buildFunc(config -> new MultiLevelCache((MultiLevelCacheConfig) config));
   }
 
   @Override
@@ -65,7 +70,4 @@ public class MultiLevelCacheBuilder<T extends MultiLevelCacheBuilder<T>>
   public void setExpireAfterAccessInMillis(long expireAfterAccessInMillis) {
     throw new UnsupportedOperationException("MultiLevelCache do not support expireAfterAccess");
   }
-
-  public static class MultiLevelCacheBuilderImpl
-      extends MultiLevelCacheBuilder<MultiLevelCacheBuilderImpl> {}
 }
