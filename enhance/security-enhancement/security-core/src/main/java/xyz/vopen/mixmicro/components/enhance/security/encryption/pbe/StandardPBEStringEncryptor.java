@@ -572,8 +572,10 @@ public final class StandardPBEStringEncryptor implements PBEStringCleanablePassw
     } catch (EncryptionInitializationException e) {
       throw e;
     } catch (EncryptionOperationNotPossibleException e) {
+      e.printStackTrace();
       throw e;
     } catch (Exception e) {
+      e.printStackTrace();
       // If decryption fails, it is more secure not to return any
       // information about the cause in nested exceptions. Simply fail.
       throw new EncryptionOperationNotPossibleException();

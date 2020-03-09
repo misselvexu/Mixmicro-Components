@@ -354,10 +354,12 @@ public class SimplePBEConfig implements PBEConfig, PBECleanablePasswordConfig {
     }
   }
 
+  @Override
   public String getAlgorithm() {
     return this.algorithm;
   }
 
+  @Override
   public String getPassword() {
     if (this.passwordCleaned) {
       throw new PasswordAlreadyCleanedException();
@@ -374,26 +376,32 @@ public class SimplePBEConfig implements PBEConfig, PBECleanablePasswordConfig {
     return result;
   }
 
+  @Override
   public Integer getKeyObtentionIterations() {
     return this.keyObtentionIterations;
   }
 
+  @Override
   public SaltGenerator getSaltGenerator() {
     return this.saltGenerator;
   }
 
+  @Override
   public IvGenerator getIvGenerator() {
     return this.ivGenerator;
   }
 
+  @Override
   public String getProviderName() {
     return this.providerName;
   }
 
+  @Override
   public Provider getProvider() {
     return this.provider;
   }
 
+  @Override
   public Integer getPoolSize() {
     return this.poolSize;
   }

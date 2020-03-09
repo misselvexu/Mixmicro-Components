@@ -43,6 +43,7 @@
         <micro-starter-openfeign.version>${project.version}</micro-starter-openfeign.version>
         <micro-starter-datasource.version>${project.version}</micro-starter-datasource.version>
         <micro-starter-sidecar.version>${project.version}</micro-starter-sidecar.version>
+        <micro-starter-security.version>1.0.0.RC1</micro-starter-security.version>
     </properties>
 
     <dependencyManagement>
@@ -132,6 +133,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-sidecar</artifactId>
                 <version>${micro-starter-sidecar.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-security</artifactId>
+                <version>${micro-starter-security.version}</version>
             </dependency>
 
 

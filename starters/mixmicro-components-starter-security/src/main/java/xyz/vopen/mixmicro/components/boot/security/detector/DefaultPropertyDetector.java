@@ -5,14 +5,14 @@ import xyz.vopen.mixmicro.components.boot.security.EncryptablePropertyDetector;
 
 /**
  * Default property detector that detects encrypted property values with the format
- * "$prefix$encrypted_value$suffix" Default values are "ENC(" and ")" respectively.
+ * "$prefix$encrypted_value$suffix" Default values are "MIXENC[" and "]" respectively.
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 public class DefaultPropertyDetector implements EncryptablePropertyDetector {
 
-  private String prefix = "ENC(";
-  private String suffix = ")";
+  private String prefix = "MIXENC[";
+  private String suffix = "]";
 
   public DefaultPropertyDetector() {}
 

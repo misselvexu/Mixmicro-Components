@@ -2,7 +2,7 @@ package xyz.vopen.mixmicro.components.boot.security;
 
 /**
  * Interface that provides the contract to detect an unwrap encrypted properties. For instance, if
- * encrypted properties are to be prefixed with "ENC(" and suffixed with ")" then the implementation
+ * encrypted properties are to be prefixed with "MIXENC[" and suffixed with "]" then the implementation
  * of {@link #isEncrypted(String)} would return true when a property effectively enclosed in such
  * prefix/suffix and {@link #unwrapEncryptedValue(String)} would return the encrypted value, the
  * portion of the property without the prefix and suffix.

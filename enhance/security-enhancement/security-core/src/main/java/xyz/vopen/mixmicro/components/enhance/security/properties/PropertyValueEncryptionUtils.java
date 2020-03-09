@@ -36,8 +36,8 @@ import xyz.vopen.mixmicro.components.enhance.security.util.text.TextEncryptor;
  */
 public final class PropertyValueEncryptionUtils {
 
-  private static final String ENCRYPTED_VALUE_PREFIX = "ENC(";
-  private static final String ENCRYPTED_VALUE_SUFFIX = ")";
+  private static final String ENCRYPTED_VALUE_PREFIX = "MIXENC[";
+  private static final String ENCRYPTED_VALUE_SUFFIX = "]";
 
   public static boolean isEncryptedValue(final String value) {
     if (value == null) {

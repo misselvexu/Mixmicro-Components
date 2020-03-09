@@ -36,6 +36,7 @@
         <micro-starter-cache-redis-default.version>${project.version}</micro-starter-cache-redis-default.version>
         <micro-starter-cache-redis-lettuce.version>${project.version}</micro-starter-cache-redis-lettuce.version>
         <micro-starter-cache-redis-springdata.version>${project.version}</micro-starter-cache-redis-springdata.version>
+        <micro-starter-security.version>1.0.0.RC1</micro-starter-security.version>
 
     </properties>
 
@@ -111,6 +112,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-cache-redis-springdata</artifactId>
                 <version>${micro-starter-cache-redis-springdata.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-security</artifactId>
+                <version>${micro-starter-security.version}</version>
             </dependency>
 
         </dependencies>

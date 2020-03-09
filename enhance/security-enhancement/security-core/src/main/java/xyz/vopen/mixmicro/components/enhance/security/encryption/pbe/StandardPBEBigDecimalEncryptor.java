@@ -369,6 +369,7 @@ public final class StandardPBEBigDecimalEncryptor
    * @throws EncryptionInitializationException if initialization could not be correctly done (for
    *     example, no password has been set).
    */
+  @Override
   public BigDecimal encrypt(final BigDecimal message) {
 
     if (message == null) {
@@ -431,6 +432,7 @@ public final class StandardPBEBigDecimalEncryptor
    * @throws EncryptionInitializationException if initialization could not be correctly done (for
    *     example, no password has been set).
    */
+  @Override
   public BigDecimal decrypt(BigDecimal encryptedMessage) {
 
     if (encryptedMessage == null) {

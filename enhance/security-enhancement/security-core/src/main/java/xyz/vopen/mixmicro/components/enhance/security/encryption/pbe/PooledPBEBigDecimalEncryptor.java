@@ -22,6 +22,8 @@ package xyz.vopen.mixmicro.components.enhance.security.encryption.pbe;
 import xyz.vopen.mixmicro.components.enhance.security.commons.CommonUtils;
 import xyz.vopen.mixmicro.components.enhance.security.encryption.pbe.config.PBEConfig;
 import xyz.vopen.mixmicro.components.enhance.security.exceptions.AlreadyInitializedException;
+import xyz.vopen.mixmicro.components.enhance.security.exceptions.EncryptionInitializationException;
+import xyz.vopen.mixmicro.components.enhance.security.exceptions.EncryptionOperationNotPossibleException;
 import xyz.vopen.mixmicro.components.enhance.security.iv.IvGenerator;
 import xyz.vopen.mixmicro.components.enhance.security.salt.SaltGenerator;
 import xyz.vopen.mixmicro.components.enhance.security.iv.NoIvGenerator;
@@ -318,6 +320,7 @@ public final class PooledPBEBigDecimalEncryptor implements PBEBigDecimalCleanabl
    * @throws EncryptionInitializationException if initialization could not be correctly done (for
    *     example, no password has been set).
    */
+  @Override
   public BigDecimal encrypt(final BigDecimal message) {
 
     // Check initialization
@@ -352,6 +355,7 @@ public final class PooledPBEBigDecimalEncryptor implements PBEBigDecimalCleanabl
    * @throws EncryptionInitializationException if initialization could not be correctly done (for
    *     example, no password has been set).
    */
+  @Override
   public BigDecimal decrypt(final BigDecimal encryptedMessage) {
 
     // Check initialization

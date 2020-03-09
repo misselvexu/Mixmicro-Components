@@ -22,20 +22,13 @@ import xyz.vopen.mixmicro.components.enhance.security.encryption.StringEncryptor
 public class EncryptablePropertyResolverConfiguration {
 
   private static final String ENCRYPTOR_BEAN_PROPERTY = "mixmicro.security.encryptor.bean";
-  private static final String ENCRYPTOR_BEAN_PLACEHOLDER =
-      String.format("${%s:mixmicroSecurityStringEncryptor}", ENCRYPTOR_BEAN_PROPERTY);
-  private static final String DETECTOR_BEAN_PROPERTY =
-      "mixmicro.security.encryptor.property.detector-bean";
-  private static final String DETECTOR_BEAN_PLACEHOLDER =
-      String.format("${%s:encryptablePropertyDetector}", DETECTOR_BEAN_PROPERTY);
-  private static final String RESOLVER_BEAN_PROPERTY =
-      "mixmicro.security.encryptor.property.resolver-bean";
-  private static final String RESOLVER_BEAN_PLACEHOLDER =
-      String.format("${%s:encryptablePropertyResolver}", RESOLVER_BEAN_PROPERTY);
-  private static final String FILTER_BEAN_PROPERTY =
-      "mixmicro.security.encryptor.property.filter-bean";
-  private static final String FILTER_BEAN_PLACEHOLDER =
-      String.format("${%s:encryptablePropertyFilter}", FILTER_BEAN_PROPERTY);
+  private static final String ENCRYPTOR_BEAN_PLACEHOLDER = String.format("${%s:mixStringEncryptor}", ENCRYPTOR_BEAN_PROPERTY);
+  private static final String DETECTOR_BEAN_PROPERTY = "mixmicro.security.encryptor.property.detector-bean";
+  private static final String DETECTOR_BEAN_PLACEHOLDER = String.format("${%s:encryptablePropertyDetector}", DETECTOR_BEAN_PROPERTY);
+  private static final String RESOLVER_BEAN_PROPERTY = "mixmicro.security.encryptor.property.resolver-bean";
+  private static final String RESOLVER_BEAN_PLACEHOLDER = String.format("${%s:encryptablePropertyResolver}", RESOLVER_BEAN_PROPERTY);
+  private static final String FILTER_BEAN_PROPERTY = "mixmicro.security.encryptor.property.filter-bean";
+  private static final String FILTER_BEAN_PLACEHOLDER = String.format("${%s:encryptablePropertyFilter}", FILTER_BEAN_PROPERTY);
 
   private static final String ENCRYPTOR_BEAN_NAME = "lazyMixSecurityStringEncryptor";
   private static final String DETECTOR_BEAN_NAME = "lazyEncryptablePropertyDetector";

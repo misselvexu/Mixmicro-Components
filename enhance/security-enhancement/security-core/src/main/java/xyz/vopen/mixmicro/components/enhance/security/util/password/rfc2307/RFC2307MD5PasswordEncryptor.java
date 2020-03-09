@@ -76,6 +76,7 @@ public final class RFC2307MD5PasswordEncryptor implements PasswordEncryptor {
    * @return the resulting digest.
    * @see StandardStringDigester#digest(String)
    */
+  @Override
   public String encryptPassword(final String password) {
     return this.digester.digest(password);
   }
@@ -89,6 +90,7 @@ public final class RFC2307MD5PasswordEncryptor implements PasswordEncryptor {
    * @return true if passwords match, false if not.
    * @see StandardStringDigester#matches(String, String)
    */
+  @Override
   public boolean checkPassword(final String plainPassword, final String encryptedPassword) {
     return this.digester.matches(plainPassword, encryptedPassword);
   }

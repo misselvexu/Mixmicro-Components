@@ -130,12 +130,12 @@ public class DefaultLazyEncryptor implements StringEncryptor {
         get(
             configProps::getSaltGeneratorClassname,
             "mixmicro.security.encryptor.salt-generator-classname",
-            "RandomSaltGenerator"));
+            "xyz.vopen.mixmicro.components.enhance.security.salt.RandomSaltGenerator"));
     config.setIvGeneratorClassName(
         get(
             configProps::getIvGeneratorClassname,
             "mixmicro.security.encryptor.iv-generator-classname",
-            "RandomIvGenerator"));
+            "xyz.vopen.mixmicro.components.enhance.security.iv.RandomIvGenerator"));
     config.setStringOutputType(
         get(
             configProps::getStringOutputType,

@@ -82,9 +82,9 @@ public class MixmicroSecurityEncryptorConfigurationProperties {
 
   /**
    * Specify the name of bean to override enhance security core's default properties based {@link
-   * StringEncryptor}. Default Value is {@code mixmicroSecurityStringEncryptor}.
+   * StringEncryptor}. Default Value is {@code mixStringEncryptor}.
    */
-  private String bean = "mixmicroSecurityStringEncryptor";
+  private String bean = "mixStringEncryptor";
 
   /**
    * Master Password used for Encryption/Decryption of properties.
@@ -144,7 +144,7 @@ public class MixmicroSecurityEncryptorConfigurationProperties {
    * @see PBEStringEncryptor
    * @see StringPBEConfig#getSaltGenerator()
    */
-  private String saltGeneratorClassname = "RandomSaltGenerator";
+  private String saltGeneratorClassname = "xyz.vopen.mixmicro.components.enhance.security.salt.RandomSaltGenerator";
 
   /**
    * A {@link IvGenerator} implementation to be used by the encryptor. Default Value is {@code
@@ -153,7 +153,7 @@ public class MixmicroSecurityEncryptorConfigurationProperties {
    * @see PBEStringEncryptor
    * @see StringPBEConfig#getIvGenerator()
    */
-  private String ivGeneratorClassname = "RandomIvGenerator";
+  private String ivGeneratorClassname = "xyz.vopen.mixmicro.components.enhance.security.iv.RandomIvGenerator";
 
   /**
    * Specify the form in which String output will be encoded. {@code "base64"} or {@code
@@ -206,15 +206,15 @@ public class MixmicroSecurityEncryptorConfigurationProperties {
 
     /**
      * Specify a custom {@link String} to identify as prefix of encrypted properties. Default value
-     * is {@code "ENC("}
+     * is {@code "MIXENC["}
      */
-    private String prefix = "ENC(";
+    private String prefix = "MIXENC[";
 
     /**
      * Specify a custom {@link String} to identify as suffix of encrypted properties. Default value
-     * is {@code ")"}
+     * is {@code "]"}
      */
-    private String suffix = ")";
+    private String suffix = "]";
 
     @NestedConfigurationProperty
     private FilterConfigurationProperties filter = new FilterConfigurationProperties();

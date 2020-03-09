@@ -524,18 +524,21 @@ public class EnvironmentPBEConfig extends SimplePBEConfig {
     }
   }
 
+  @Override
   public void setAlgorithm(final String algorithm) {
     this.algorithmEnvName = null;
     this.algorithmSysPropertyName = null;
     super.setAlgorithm(algorithm);
   }
 
+  @Override
   public void setKeyObtentionIterations(final Integer keyObtentionIterations) {
     this.keyObtentionIterationsEnvName = null;
     this.keyObtentionIterationsSysPropertyName = null;
     super.setKeyObtentionIterations(keyObtentionIterations);
   }
 
+  @Override
   public void setKeyObtentionIterations(final String keyObtentionIterations) {
     this.keyObtentionIterationsEnvName = null;
     this.keyObtentionIterationsSysPropertyName = null;
@@ -554,54 +557,63 @@ public class EnvironmentPBEConfig extends SimplePBEConfig {
     super.setPasswordCharArray(password);
   }
 
+  @Override
   public void setSaltGenerator(final SaltGenerator saltGenerator) {
     this.saltGeneratorClassNameEnvName = null;
     this.saltGeneratorClassNameSysPropertyName = null;
     super.setSaltGenerator(saltGenerator);
   }
 
+  @Override
   public void setSaltGeneratorClassName(final String saltGeneratorClassName) {
     this.saltGeneratorClassNameEnvName = null;
     this.saltGeneratorClassNameSysPropertyName = null;
     super.setSaltGeneratorClassName(saltGeneratorClassName);
   }
 
+  @Override
   public void setIvGenerator(final IvGenerator ivGenerator) {
     this.ivGeneratorClassNameEnvName = null;
     this.ivGeneratorClassNameSysPropertyName = null;
     super.setIvGenerator(ivGenerator);
   }
 
+  @Override
   public void setIvGeneratorClassName(final String ivGeneratorClassName) {
     this.ivGeneratorClassNameEnvName = null;
     this.ivGeneratorClassNameSysPropertyName = null;
     super.setIvGeneratorClassName(ivGeneratorClassName);
   }
 
+  @Override
   public void setProviderName(final String providerName) {
     this.providerNameEnvName = null;
     this.providerNameSysPropertyName = null;
     super.setProviderName(providerName);
   }
 
+  @Override
   public void setProvider(final Provider provider) {
     this.providerClassNameEnvName = null;
     this.providerClassNameSysPropertyName = null;
     super.setProvider(provider);
   }
 
+  @Override
   public void setProviderClassName(final String providerClassName) {
     this.providerClassNameEnvName = null;
     this.providerClassNameSysPropertyName = null;
     super.setProviderClassName(providerClassName);
   }
 
+  @Override
   public void setPoolSize(final Integer poolSize) {
     this.poolSizeEnvName = null;
     this.poolSizeSysPropertyName = null;
     super.setPoolSize(poolSize);
   }
 
+  @Override
   public void setPoolSize(final String poolSize) {
     this.poolSizeEnvName = null;
     this.poolSizeSysPropertyName = null;

@@ -82,6 +82,7 @@ public final class BasicTextEncryptor implements TextEncryptor {
    * @param message the message to be encrypted.
    * @see StandardPBEStringEncryptor#encrypt(String)
    */
+  @Override
   public String encrypt(final String message) {
     return this.encryptor.encrypt(message);
   }
@@ -92,6 +93,7 @@ public final class BasicTextEncryptor implements TextEncryptor {
    * @param encryptedMessage the message to be decrypted.
    * @see StandardPBEStringEncryptor#decrypt(String)
    */
+  @Override
   public String decrypt(final String encryptedMessage) {
     return this.encryptor.decrypt(encryptedMessage);
   }
