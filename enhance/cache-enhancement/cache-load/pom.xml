@@ -35,16 +35,19 @@
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-enhance-cache-extension-redis-default</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-enhance-cache-extension-redis-lettuce</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-enhance-cache-extension-redis-springdata</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <!-- Spring Boot Dependency -->
