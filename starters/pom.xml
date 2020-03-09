@@ -28,6 +28,7 @@
         <module>mixmicro-components-starter-cache</module>
         <module>mixmicro-components-starter-datasource</module>
         <module>mixmicro-components-starter-sidecar</module>
+        <module>mixmicro-components-starter-security</module>
 
         <module>mixmicro-components-starters-dependencies</module>
     </modules>

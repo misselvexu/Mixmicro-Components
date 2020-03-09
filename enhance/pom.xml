@@ -29,10 +29,13 @@
         <mixmicro-enhance-cache-extension-lettuce.version>1.0.0.RC2</mixmicro-enhance-cache-extension-lettuce.version>
         <mixmicro-enhance-cache-extension-springdata.version>1.0.0.RC2</mixmicro-enhance-cache-extension-springdata.version>
 
+
+        <mixmicro-enhance-security-api.version>1.0.0.RC1</mixmicro-enhance-security-api.version>
     </properties>
 
     <modules>
         <module>cache-enhancement</module>
+        <module>security-enhancement</module>
     </modules>
 
 
@@ -112,6 +115,13 @@
                 <artifactId>mixmicro-components-enhance-cache-load</artifactId>
                 <version>${mixmicro-enhance-cache-load.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-security-core</artifactId>
+                <version>${mixmicro-enhance-security-api.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

@@ -1,0 +1,43 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-enhance-parent</artifactId>
+        <version>1.0.0.RC2</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>mixmicro-components-enhance-security</artifactId>
+    <version>1.0.0.RC1</version>
+    <packaging>pom</packaging>
+
+    <name>Enhance Security Module :: ${project.version}</name>
+    <description>🏗 Enhance Security Module</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <modules>
+        <module>security-core</module>
+        <module>security-tool</module>
+    </modules>
+
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-security-core</artifactId>
+                <version>${mixmicro-enhance-security-api.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>
