@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>exception-api</artifactId>
-    <version>1.0.0.RC2</version>
+    <version>1.0.0.RC3</version>
 
     <name>Exception Api Module :: ${project.version}</name>
     <description>🏗 Exception Api Module</description>

@@ -36,7 +36,7 @@
 
         <!-- Module Version -->
         <mixmicro-common.kit.version>1.0.0.RC2</mixmicro-common.kit.version>
-        <mixmicro-exception.kit.version>1.0.0.RC2</mixmicro-exception.kit.version>
+        <mixmicro-exception.kit.version>1.0.0.RC3</mixmicro-exception.kit.version>
         <mixmicro-logger.kit.version>1.0.0.RC2</mixmicro-logger.kit.version>
 
     </properties>
