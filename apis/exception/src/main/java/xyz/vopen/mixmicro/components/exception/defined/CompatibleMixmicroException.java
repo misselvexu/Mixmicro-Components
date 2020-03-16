@@ -49,6 +49,10 @@ public class CompatibleMixmicroException extends MixmicroException {
     return this.httpStatus.code();
   }
 
+  public int code() {
+    return this.code;
+  }
+
   // Constructors Defined.
 
   /**
