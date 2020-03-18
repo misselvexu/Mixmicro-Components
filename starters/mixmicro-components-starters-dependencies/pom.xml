@@ -34,12 +34,12 @@
         <micro-starter-sidecar.version>${project.version}</micro-starter-sidecar.version>
         <micro-starter-security.version>1.0.0.RC1</micro-starter-security.version>
         <micro-starter-cloud-event.version>1.0.0.RC1</micro-starter-cloud-event.version>
+        <micro-starter-security.version>1.0.0.RC1</micro-starter-security.version>
+        <micro-starter-message-queue.version>1.0.0.RC1</micro-starter-message-queue.version>
 
         <micro-starter-cache-redis-default.version>${project.version}</micro-starter-cache-redis-default.version>
         <micro-starter-cache-redis-lettuce.version>${project.version}</micro-starter-cache-redis-lettuce.version>
         <micro-starter-cache-redis-springdata.version>${project.version}</micro-starter-cache-redis-springdata.version>
-
-
     </properties>
 
     <dependencyManagement>
@@ -126,6 +126,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-cloud-event</artifactId>
                 <version>${micro-starter-cloud-event.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-message-queue</artifactId>
+                <version>${micro-starter-message-queue.version}</version>
             </dependency>
 
         </dependencies>
