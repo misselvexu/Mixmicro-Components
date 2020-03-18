@@ -42,6 +42,8 @@
         <mixmicro-components-enhance.dependencies.version>1.0.0.RC2</mixmicro-components-enhance.dependencies.version>
         <mixmicro-components-starters.dependencies.version>1.0.0.RC2</mixmicro-components-starters.dependencies.version>
 
+        <mixmicro-components-stream.dependencies.version>1.0.0.RC2</mixmicro-components-stream.dependencies.version>
+
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
@@ -147,6 +149,15 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- Stream Lib -->
+            <dependency>
+                <groupId>xyz.vopen.opensource</groupId>
+                <artifactId>mixmicro-stream-denpendencies</artifactId>
+                <version>1.0.0.BUILD-SNAPSHOT</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
 
             <!-- Database Libs -->

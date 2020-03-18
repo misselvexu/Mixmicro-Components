@@ -1,0 +1,31 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-enhance-parent</artifactId>
+        <version>1.0.0.RC2</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>mixmicro-components-enhance-event-api</artifactId>
+    <version>1.0.0.RC1</version>
+
+    <name>Enhance Event Api Module :: ${project.version}</name>
+    <description>🏗 Enhance Event Api Module</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>xyz.vopen.opensource</groupId>
+            <artifactId>spring-cloud-bus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.vopen.opensource</groupId>
+            <artifactId>spring-cloud-stream</artifactId>
+        </dependency>
+    </dependencies>
+
+
+</project>
