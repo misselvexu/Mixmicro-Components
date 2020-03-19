@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.exception.defined;
 
 import lombok.Builder;
+import xyz.vopen.mixmicro.components.exception.ErrorCode;
 import xyz.vopen.mixmicro.components.exception.HttpStatus;
 
 import static xyz.vopen.mixmicro.components.exception.HttpStatus.OK;
@@ -113,5 +114,34 @@ public class CompatibleMixmicroException extends MixmicroException {
     super(cause);
     this.httpStatus = httpStatus;
     this.code = code;
+  }
+
+  /**
+   * Constructs a new exception with the specified detail message. The cause is not initialized, and
+   * may subsequently be initialized by a call to {@link #initCause}.
+   *
+   * @param code biz error code
+   * @see ErrorCode error code instance
+   */
+  public CompatibleMixmicroException(ErrorCode code) {
+    super(code.reasonPhrase());
+    this.httpStatus = code.httpStatus();
+    this.code = code.code();
+  }
+
+  /**
+   * Constructs a new exception with the specified detail message. The cause is not initialized, and
+   * may subsequently be initialized by a call to {@link #initCause}.
+   *
+   * @param code biz error code
+   * @see ErrorCode error code instance
+   * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).
+   *     (A <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or
+   *     unknown.)
+   */
+  public CompatibleMixmicroException(ErrorCode code, Throwable cause) {
+    super(code.reasonPhrase(), cause);
+    this.httpStatus = code.httpStatus();
+    this.code = code.code();
   }
 }

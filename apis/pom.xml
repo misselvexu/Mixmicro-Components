@@ -27,7 +27,7 @@
 
     <properties>
         <mixmicro-kits-common.version>${project.version}</mixmicro-kits-common.version>
-        <mixmicro-kits-exception.version>${project.version}</mixmicro-kits-exception.version>
+        <mixmicro-kits-exception.version>1.0.0.RC4</mixmicro-kits-exception.version>
         <mixmicro-kits-logger.version>${project.version}</mixmicro-kits-logger.version>
     </properties>
 
