@@ -5,7 +5,7 @@
 
     <groupId>com.yunlsp.framework.components</groupId>
     <artifactId>mixmicro-components-dependencies</artifactId>
-    <version>2020.RC1</version>
+    <version>2020.03.RC2</version>
 
     <packaging>pom</packaging>
 
@@ -16,7 +16,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <mixmicro-components-apis.dependencies.version>1.0.0.RC2</mixmicro-components-apis.dependencies.version>
+        <mixmicro-components-apis.dependencies.version>1.0.0.RC3</mixmicro-components-apis.dependencies.version>
         <mixmicro-components-kits.dependencies.version>1.0.0.RC2</mixmicro-components-kits.dependencies.version>
         <mixmicro-components-starters.dependencies.version>1.0.0.RC2</mixmicro-components-starters.dependencies.version>
 

@@ -38,7 +38,7 @@
 
         <!-- Components Version -->
         <mixmicro-components-kits.dependencies.version>1.0.0.RC2</mixmicro-components-kits.dependencies.version>
-        <mixmicro-components-apis.dependencies.version>1.0.0.RC2</mixmicro-components-apis.dependencies.version>
+        <mixmicro-components-apis.dependencies.version>1.0.0.RC3</mixmicro-components-apis.dependencies.version>
         <mixmicro-components-enhance.dependencies.version>1.0.0.RC2</mixmicro-components-enhance.dependencies.version>
         <mixmicro-components-starters.dependencies.version>1.0.0.RC2</mixmicro-components-starters.dependencies.version>
 
@@ -307,6 +307,12 @@
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>6.0.14.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>25.1-jre</version>
             </dependency>
 
         </dependencies>

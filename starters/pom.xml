@@ -36,7 +36,7 @@
     <properties>
         <micro-starter-banner.version>${project.version}</micro-starter-banner.version>
         <micro-starter-logger.version>${project.version}</micro-starter-logger.version>
-        <micro-starter-json.version>${project.version}</micro-starter-json.version>
+        <micro-starter-json.version>1.0.0.RC3</micro-starter-json.version>
         <micro-starter-cors.version>${project.version}</micro-starter-cors.version>
         <micro-starter-resteasy.version>${project.version}</micro-starter-resteasy.version>
         <micro-starter-snowflake.version>${project.version}</micro-starter-snowflake.version>

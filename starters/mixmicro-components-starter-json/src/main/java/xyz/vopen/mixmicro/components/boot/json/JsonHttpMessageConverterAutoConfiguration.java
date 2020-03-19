@@ -3,6 +3,7 @@ package xyz.vopen.mixmicro.components.boot.json;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 
 /**
@@ -31,9 +33,9 @@ public class JsonHttpMessageConverterAutoConfiguration {
   public HttpMessageConverters fastJsonHttpMessageConverters() {
     FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
     FastJsonConfig fastJsonConfig = new FastJsonConfig();
-    fastJsonConfig.setSerializerFeatures(
-        SerializerFeature.WriteNonStringKeyAsString, SerializerFeature.WriteDateUseDateFormat);
+    fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteNonStringKeyAsString, SerializerFeature.WriteDateUseDateFormat);
     converter.setFastJsonConfig(fastJsonConfig);
+    converter.setSupportedMediaTypes(Lists.newArrayList(MediaType.APPLICATION_JSON));
     log.info(" == Http Message Converter:[{}] is created.", converter);
     return new HttpMessageConverters((HttpMessageConverter<?>) converter);
   }

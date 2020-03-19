@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>mixmicro-components-starter-json</artifactId>
-    <version>1.0.0.RC2</version>
+    <version>1.0.0.RC3</version>
 
     <name>Json Starter Module :: ${project.version}</name>
     <description>🏗 Json Starter Module</description>
@@ -35,6 +35,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
 
     </dependencies>
