@@ -16,6 +16,12 @@
     <description>🏗 Enhance Event Api Module</description>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>common-api</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>xyz.vopen.opensource</groupId>
             <artifactId>spring-cloud-bus</artifactId>

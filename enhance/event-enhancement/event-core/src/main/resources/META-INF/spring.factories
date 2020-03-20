@@ -1,3 +1,6 @@
 # EnvironmentPostProcessor
 org.springframework.boot.env.EnvironmentPostProcessor=\
-    xyz.vopen.mixmicro.components.enhance.event.env.MixmicroEventBusEnvironmentPostProcessor
+  xyz.vopen.mixmicro.components.enhance.event.env.MixmicroEventBusEnvironmentPostProcessor
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  xyz.vopen.mixmicro.components.enhance.event.autoconfigure.DefaultMixmicroEventAutoConfiguration

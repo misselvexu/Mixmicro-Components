@@ -12,6 +12,8 @@ import org.springframework.core.env.PropertySource;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.springframework.cloud.bus.SpringCloudBusClient.MIXMICRO_EVENT_BUS_INPUT_CHANNEL;
+
 /**
  * The lowest precedence {@link EnvironmentPostProcessor} configures default RocketMQ Bus Properties
  * that will be appended into {@link SpringApplication#defaultProperties}.
@@ -25,12 +27,6 @@ public class MixmicroEventBusEnvironmentPostProcessor implements EnvironmentPost
 
   /** The name of {@link PropertySource} of {@link SpringApplication#defaultProperties}. */
   private static final String PROPERTY_SOURCE_NAME = "defaultProperties";
-
-  /** Mixmicro Event Bus Steam Input Channel Name Defined. */
-  private static final String MIXMICRO_EVENT_BUS_INPUT_CHANNEL = "mixmicro-eventbus-input";
-
-  /** Mixmicro Event Bus Steam Output Channel Name Defined. */
-  private static final String MIXMICRO_EVENT_BUS_OUTPUT_CHANNEL = "mixmicro-eventbus-output";
 
   @Override
   public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {

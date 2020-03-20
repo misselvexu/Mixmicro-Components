@@ -19,6 +19,11 @@
 
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>common-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-enhance-event-api</artifactId>
         </dependency>
 
