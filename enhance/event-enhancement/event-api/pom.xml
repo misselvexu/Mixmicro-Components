@@ -4,8 +4,8 @@
 
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
-        <artifactId>mixmicro-components-enhance-parent</artifactId>
-        <version>1.0.0.RC2</version>
+        <artifactId>mixmicro-components-enhance-event</artifactId>
+        <version>1.0.0.RC1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 

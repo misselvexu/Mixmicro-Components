@@ -130,6 +130,13 @@
             <!-- Event enhance module -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-event</artifactId>
+                <version>${mixmicro-enhance-event-api.version}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-event-api</artifactId>
                 <version>${mixmicro-enhance-event-api.version}</version>
             </dependency>

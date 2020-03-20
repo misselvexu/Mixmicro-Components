@@ -35,15 +35,15 @@
     </modules>
 
     <properties>
-        <micro-starter-banner.version>${project.version}</micro-starter-banner.version>
-        <micro-starter-logger.version>${project.version}</micro-starter-logger.version>
-        <micro-starter-json.version>${project.version}</micro-starter-json.version>
-        <micro-starter-cors.version>${project.version}</micro-starter-cors.version>
-        <micro-starter-resteasy.version>${project.version}</micro-starter-resteasy.version>
-        <micro-starter-snowflake.version>${project.version}</micro-starter-snowflake.version>
-        <micro-starter-openfeign.version>${project.version}</micro-starter-openfeign.version>
-        <micro-starter-datasource.version>${project.version}</micro-starter-datasource.version>
-        <micro-starter-sidecar.version>${project.version}</micro-starter-sidecar.version>
+        <micro-starter-banner.version>1.0.0.RC2</micro-starter-banner.version>
+        <micro-starter-logger.version>1.0.0.RC2</micro-starter-logger.version>
+        <micro-starter-json.version>1.0.0.RC2</micro-starter-json.version>
+        <micro-starter-cors.version>1.0.0.RC2</micro-starter-cors.version>
+        <micro-starter-resteasy.version>1.0.0.RC2</micro-starter-resteasy.version>
+        <micro-starter-snowflake.version>1.0.0.RC2</micro-starter-snowflake.version>
+        <micro-starter-openfeign.version>1.0.0.RC2</micro-starter-openfeign.version>
+        <micro-starter-datasource.version>1.0.0.RC2</micro-starter-datasource.version>
+        <micro-starter-sidecar.version>1.0.0.RC2</micro-starter-sidecar.version>
         <micro-starter-security.version>1.0.0.RC1</micro-starter-security.version>
         <micro-starter-cloud-event.version>1.0.0.RC1</micro-starter-cloud-event.version>
     </properties>
