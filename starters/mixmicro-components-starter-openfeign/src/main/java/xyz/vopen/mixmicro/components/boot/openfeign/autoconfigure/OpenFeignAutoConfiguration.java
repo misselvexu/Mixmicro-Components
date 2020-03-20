@@ -39,20 +39,6 @@ public class OpenFeignAutoConfiguration {
   private static final Logger log = LoggerFactory.getLogger(OpenFeignAutoConfiguration.class);
 
   @Bean
-  @Primary
-  @ConditionalOnMissingBean
-  @ConditionalOnProperty(
-      prefix = OPENFEIGN_PROPERTIES_PREFIX,
-      name = "enabled",
-      havingValue = "true",
-      matchIfMissing = true)
-  public Decoder feignDecoder(ObjectFactory<HttpMessageConverters> messageConverters) {
-    log.info("[MIXMICRO] initializing openfeign uniform result converter .");
-    return new OpenFeignDecoder(
-        new OptionalDecoder(new ResponseEntityDecoder(new SpringDecoder(messageConverters))));
-  }
-
-  @Bean
   public OpenFeignInvokeErrorDecoder errorDecoder() {
     return new OpenFeignInvokeErrorDecoder();
   }

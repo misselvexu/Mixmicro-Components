@@ -15,4 +15,10 @@ public class MixmicroConstants {
    */
   public static final String MIXMICRO_FULL_DATE_FORMATTER = "yyyy-MM-dd HH:mm:ss";
 
+  /**
+   * Micro Service Invoke Flag
+   *
+   * <p>
+   */
+  public static final String MIXMICRO_SERVICE_INVOK_HEADER = "mixmicro.service.invoke";
 }
