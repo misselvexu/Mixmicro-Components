@@ -16,6 +16,9 @@ import java.lang.reflect.Type;
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020/3/5
+ * @deprecated will removed in release version. use {@link
+ *     xyz.vopen.mixmicro.components.boot.openfeign.interceptor.OpenFeignPreInvokeInterceptor}
+ *     instead of.
  */
 public class OpenFeignDecoder implements Decoder {
 
