@@ -46,7 +46,7 @@
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-dependencies</artifactId>
-            <version>2020.RC1</version>
+            <version>2020.RELEASE</version>
             <scope>import</scope>
             <type>pom</type>
         </dependency>               

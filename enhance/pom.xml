@@ -31,11 +31,13 @@
 
 
         <mixmicro-enhance-security-api.version>1.0.0.RC1</mixmicro-enhance-security-api.version>
+        <mixmicro-enhance-event-api.version>1.0.0.RC1</mixmicro-enhance-event-api.version>
     </properties>
 
     <modules>
         <module>cache-enhancement</module>
         <module>security-enhancement</module>
+        <module>event-enhancement</module>
     </modules>
 
 
@@ -60,6 +62,8 @@
             </dependency>
 
             <!-- Sub-modules dependencies definition -->
+
+            <!-- Cache -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-cache</artifactId>
@@ -116,12 +120,32 @@
                 <version>${mixmicro-enhance-cache-load.version}</version>
             </dependency>
 
+            <!-- Security -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-security-core</artifactId>
                 <version>${mixmicro-enhance-security-api.version}</version>
             </dependency>
 
+            <!-- Event enhance module -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-event</artifactId>
+                <version>${mixmicro-enhance-event-api.version}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-event-api</artifactId>
+                <version>${mixmicro-enhance-event-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-event-core</artifactId>
+                <version>${mixmicro-enhance-event-api.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

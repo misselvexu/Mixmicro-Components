@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>mixmicro-components-apis-dependencies</artifactId>
-    <version>${mixmicro-components-apis.dependencies.version}</version>
+    <version>1.0.0.RC2</version>
 
     <packaging>pom</packaging>
 
