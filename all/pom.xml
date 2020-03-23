@@ -18,7 +18,7 @@
 
         <mixmicro-components-apis.dependencies.version>1.0.0.RC3</mixmicro-components-apis.dependencies.version>
         <mixmicro-components-kits.dependencies.version>1.0.0.RC2</mixmicro-components-kits.dependencies.version>
-        <mixmicro-components-starters.dependencies.version>1.0.0.RC2</mixmicro-components-starters.dependencies.version>
+        <mixmicro-components-starters.dependencies.version>1.0.0.RC3</mixmicro-components-starters.dependencies.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
