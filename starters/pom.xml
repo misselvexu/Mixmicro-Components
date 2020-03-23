@@ -29,8 +29,13 @@
         <module>mixmicro-components-starter-datasource</module>
         <module>mixmicro-components-starter-sidecar</module>
         <module>mixmicro-components-starter-security</module>
+<<<<<<< HEAD
         <module>mixmicro-components-starter-cloud-event</module>
         <module>mixmicro-components-starter-message-queue</module>
+=======
+        <module>mixmicro-components-starter-message-queue</module>
+
+>>>>>>> 893f0283e19d2256e4f491a39046bc832059a6c5
         <module>mixmicro-components-starters-dependencies</module>
     </modules>
 
