@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  xyz.vopen.mixmicro.components.boot.health.autoconfigure.HealthAutoConfiguration
+
+
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  xyz.vopen.mixmicro.components.boot.health.env.HealthEnvironmentPostProcessor

@@ -31,6 +31,7 @@
         <module>mixmicro-components-starter-security</module>
         <module>mixmicro-components-starter-cloud-event</module>
         <module>mixmicro-components-starter-message-queue</module>
+        <module>mixmicro-components-starter-healthy</module>
         <module>mixmicro-components-starters-dependencies</module>
     </modules>
 
@@ -47,6 +48,7 @@
         <micro-starter-security.version>1.0.0.RC1</micro-starter-security.version>
         <micro-starter-cloud-event.version>1.0.0.RC1</micro-starter-cloud-event.version>
         <micro-starter-message-queue.version>1.0.0.RC1</micro-starter-message-queue.version>
+        <micro-starter-healthy.version>1.0.0.RC1</micro-starter-healthy.version>
     </properties>
 
     <dependencyManagement>
@@ -154,6 +156,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-message-queue</artifactId>
                 <version>${micro-starter-message-queue.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-healthy</artifactId>
+                <version>${micro-starter-healthy.version}</version>
             </dependency>
 
         </dependencies>
