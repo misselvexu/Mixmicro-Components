@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>mixmicro-components-starter-json</artifactId>
-    <version>1.0.0.RC3</version>
+    <version>1.0.0.RC4</version>
 
     <name>Json Starter Module :: ${project.version}</name>
     <description>🏗 Json Starter Module</description>

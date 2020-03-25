@@ -37,7 +37,7 @@
     <properties>
         <micro-starter-banner.version>1.0.0.RC2</micro-starter-banner.version>
         <micro-starter-logger.version>1.0.0.RC2</micro-starter-logger.version>
-        <micro-starter-json.version>1.0.0.RC2</micro-starter-json.version>
+        <micro-starter-json.version>1.0.0.RC4</micro-starter-json.version>
         <micro-starter-cors.version>1.0.0.RC2</micro-starter-cors.version>
         <micro-starter-resteasy.version>1.0.0.RC2</micro-starter-resteasy.version>
         <micro-starter-snowflake.version>1.0.0.RC2</micro-starter-snowflake.version>
