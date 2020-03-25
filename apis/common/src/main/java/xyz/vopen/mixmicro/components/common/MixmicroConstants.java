@@ -19,6 +19,22 @@ public class MixmicroConstants {
    * Micro Service Invoke Flag
    *
    * <p>
+   *
+   * @deprecated use {@link #MIXMICRO_SERVICE_INVOKE_HEADER} instead of.
    */
   public static final String MIXMICRO_SERVICE_INVOK_HEADER = "mixmicro.service.invoke";
+
+  /**
+   * Micro Service Invoke Flag
+   *
+   * <p>
+   */
+  public static final String MIXMICRO_SERVICE_INVOKE_HEADER = "mixmicro.service.invoke";
+
+  /**
+   * Micro Ingress Invoke Flag
+   *
+   * <p>
+   */
+  public static final String MIXMICRO_INGRESS_INVOKE_HEADER = "mixmicro.ingress.invoke";
 }
