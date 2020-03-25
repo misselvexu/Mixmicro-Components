@@ -23,23 +23,23 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <micro-starter-banner.version>${project.version}</micro-starter-banner.version>
-        <micro-starter-logger.version>${project.version}</micro-starter-logger.version>
+        <micro-starter-banner.version>1.0.0.RC2</micro-starter-banner.version>
+        <micro-starter-logger.version>1.0.0.RC2</micro-starter-logger.version>
         <micro-starter-json.version>1.0.0.RC3</micro-starter-json.version>
-        <micro-starter-cors.version>${project.version}</micro-starter-cors.version>
-        <micro-starter-resteasy.version>${project.version}</micro-starter-resteasy.version>
-        <micro-starter-snowflake.version>${project.version}</micro-starter-snowflake.version>
-        <micro-starter-openfeign.version>${project.version}</micro-starter-openfeign.version>
-        <micro-starter-datasource.version>${project.version}</micro-starter-datasource.version>
-        <micro-starter-sidecar.version>${project.version}</micro-starter-sidecar.version>
+        <micro-starter-cors.version>1.0.0.RC2</micro-starter-cors.version>
+        <micro-starter-resteasy.version>1.0.0.RC2</micro-starter-resteasy.version>
+        <micro-starter-snowflake.version>1.0.0.RC2</micro-starter-snowflake.version>
+        <micro-starter-openfeign.version>1.0.0.RC2</micro-starter-openfeign.version>
+        <micro-starter-datasource.version>1.0.0.RC2</micro-starter-datasource.version>
+        <micro-starter-sidecar.version>1.0.0.RC2</micro-starter-sidecar.version>
         <micro-starter-security.version>1.0.0.RC1</micro-starter-security.version>
         <micro-starter-cloud-event.version>1.0.0.RC1</micro-starter-cloud-event.version>
         <micro-starter-security.version>1.0.0.RC1</micro-starter-security.version>
         <micro-starter-message-queue.version>1.0.0.RC1</micro-starter-message-queue.version>
 
-        <micro-starter-cache-redis-default.version>${project.version}</micro-starter-cache-redis-default.version>
-        <micro-starter-cache-redis-lettuce.version>${project.version}</micro-starter-cache-redis-lettuce.version>
-        <micro-starter-cache-redis-springdata.version>${project.version}</micro-starter-cache-redis-springdata.version>
+        <micro-starter-cache-redis-default.version>1.0.0.RC2</micro-starter-cache-redis-default.version>
+        <micro-starter-cache-redis-lettuce.version>1.0.0.RC2</micro-starter-cache-redis-lettuce.version>
+        <micro-starter-cache-redis-springdata.version>1.0.0.RC2</micro-starter-cache-redis-springdata.version>
     </properties>
 
     <dependencyManagement>

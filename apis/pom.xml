@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>mixmicro-components-apis</artifactId>
-    <version>1.0.0.RC2</version>
+    <version>1.0.0.RC3</version>
     <packaging>pom</packaging>
 
     <name>Apis Module :: ${project.version}</name>
@@ -26,7 +26,7 @@
     </modules>
 
     <properties>
-        <mixmicro-kits-common.version>${project.version}</mixmicro-kits-common.version>
+        <mixmicro-kits-common.version>1.0.0.RC3</mixmicro-kits-common.version>
         <mixmicro-kits-exception.version>1.0.0.RC4</mixmicro-kits-exception.version>
         <mixmicro-kits-logger.version>${project.version}</mixmicro-kits-logger.version>
     </properties>
