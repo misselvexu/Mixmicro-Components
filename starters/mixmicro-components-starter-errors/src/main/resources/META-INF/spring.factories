@@ -1,0 +1,12 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  xyz.vopen.mixmicro.components.boot.errors.conf.ErrorsAutoConfiguration,\
+  xyz.vopen.mixmicro.components.boot.errors.conf.ServletErrorsAutoConfiguration,\
+  xyz.vopen.mixmicro.components.boot.errors.conf.ReactiveErrorsAutoConfiguration,\
+  xyz.vopen.mixmicro.components.boot.errors.conf.ServletSecurityErrorsAutoConfiguration,\
+  xyz.vopen.mixmicro.components.boot.errors.conf.ReactiveSecurityErrorsAutoConfiguration
+xyz.vopen.mixmicro.components.boot.errors.annotation.AutoConfigureErrors=\
+  xyz.vopen.mixmicro.components.boot.errors.conf.ErrorsAutoConfiguration,\
+  xyz.vopen.mixmicro.components.boot.errors.conf.ServletErrorsAutoConfiguration,\
+  xyz.vopen.mixmicro.components.boot.errors.conf.ReactiveErrorsAutoConfiguration,\
+  xyz.vopen.mixmicro.components.boot.errors.conf.ReactiveSecurityErrorsAutoConfiguration,\
+  xyz.vopen.mixmicro.components.boot.errors.conf.ServletSecurityErrorsAutoConfiguration
