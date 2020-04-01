@@ -32,12 +32,14 @@
 
         <mixmicro-enhance-security-api.version>1.0.0.RC1</mixmicro-enhance-security-api.version>
         <mixmicro-enhance-event-api.version>1.0.0.RC1</mixmicro-enhance-event-api.version>
+        <mixmicro-enhance-datasource.version>1.0.0.RC1</mixmicro-enhance-datasource.version>
     </properties>
 
     <modules>
         <module>cache-enhancement</module>
         <module>security-enhancement</module>
         <module>event-enhancement</module>
+        <module>datasource-enhancement</module>
     </modules>
 
 
@@ -145,6 +147,26 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-event-core</artifactId>
                 <version>${mixmicro-enhance-event-api.version}</version>
+            </dependency>
+
+            <!-- DataSource -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-datasource</artifactId>
+                <version>${mixmicro-enhance-datasource.version}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-datasource-orm</artifactId>
+                <version>${mixmicro-enhance-datasource.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-datasource-jdbc</artifactId>
+                <version>${mixmicro-enhance-datasource.version}</version>
             </dependency>
 
         </dependencies>
