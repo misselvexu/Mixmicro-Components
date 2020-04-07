@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>mixmicro-components-apis-dependencies</artifactId>
-    <version>1.0.0.RC2</version>
+    <version>1.0.0.RC3</version>
 
     <packaging>pom</packaging>
 
@@ -35,9 +35,9 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
 
         <!-- Module Version -->
-        <mixmicro-common.kit.version>1.0.0.RC3</mixmicro-common.kit.version>
-        <mixmicro-exception.kit.version>1.0.0.RC4</mixmicro-exception.kit.version>
-        <mixmicro-logger.kit.version>1.0.0.RC2</mixmicro-logger.kit.version>
+        <mixmicro-common.api.version>1.0.0.RC4</mixmicro-common.api.version>
+        <mixmicro-exception.api.version>1.0.0.RC4</mixmicro-exception.api.version>
+        <mixmicro-logger.api.version>1.0.0.RC2</mixmicro-logger.api.version>
 
     </properties>
 
@@ -54,19 +54,19 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>common-api</artifactId>
-                <version>${mixmicro-common.kit.version}</version>
+                <version>${mixmicro-common.api.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>exception-api</artifactId>
-                <version>${mixmicro-exception.kit.version}</version>
+                <version>${mixmicro-exception.api.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>logger-api</artifactId>
-                <version>${mixmicro-logger.kit.version}</version>
+                <version>${mixmicro-logger.api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
