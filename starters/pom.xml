@@ -48,7 +48,7 @@
         <micro-starter-sidecar.version>1.0.0.RC2</micro-starter-sidecar.version>
         <micro-starter-security.version>1.0.0.RC1</micro-starter-security.version>
         <micro-starter-cloud-event.version>1.0.0.RC1</micro-starter-cloud-event.version>
-        <micro-starter-message-queue.version>1.0.0.RC1</micro-starter-message-queue.version>
+        <micro-starter-message-queue.version>1.0.0.RC2</micro-starter-message-queue.version>
         <micro-starter-healthy.version>1.0.0.RC1</micro-starter-healthy.version>
         <micro-starter-errors.version>1.0.0.RC1</micro-starter-errors.version>
     </properties>

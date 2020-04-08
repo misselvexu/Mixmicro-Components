@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>mixmicro-components-starter-message-queue</artifactId>
-    <version>1.0.0.RC1</version>
+    <version>1.0.0.RC2</version>
 
     <name>Message Queue Starter Module :: ${project.version}</name>
     <description>🏗 Message Queue Starter Module</description>
@@ -28,8 +28,22 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
+
     </dependencies>
 
 </project>
