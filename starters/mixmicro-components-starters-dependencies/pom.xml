@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>mixmicro-components-starters-dependencies</artifactId>
-    <version>1.0.0.RC3</version>
+    <version>1.0.0.RC4</version>
 
     <packaging>pom</packaging>
 
@@ -38,6 +38,7 @@
         <micro-starter-message-queue.version>1.0.0.RC1</micro-starter-message-queue.version>
         <micro-starter-healthy.version>1.0.0.RC1</micro-starter-healthy.version>
         <micro-starter-errors.version>1.0.0.RC1</micro-starter-errors.version>
+        <micro-starter-web.version>1.0.0.RC1</micro-starter-web.version>
 
         <micro-starter-cache-redis-default.version>1.0.0.RC2</micro-starter-cache-redis-default.version>
         <micro-starter-cache-redis-lettuce.version>1.0.0.RC2</micro-starter-cache-redis-lettuce.version>
@@ -146,6 +147,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-errors</artifactId>
                 <version>${micro-starter-errors.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-spring-web</artifactId>
+                <version>${micro-starter-web.version}</version>
             </dependency>
 
         </dependencies>

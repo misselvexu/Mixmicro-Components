@@ -40,7 +40,7 @@
         <mixmicro-components-kits.dependencies.version>1.0.0.RC2</mixmicro-components-kits.dependencies.version>
         <mixmicro-components-apis.dependencies.version>1.0.0.RC3</mixmicro-components-apis.dependencies.version>
         <mixmicro-components-enhance.dependencies.version>1.0.0.RC2</mixmicro-components-enhance.dependencies.version>
-        <mixmicro-components-starters.dependencies.version>1.0.0.RC3</mixmicro-components-starters.dependencies.version>
+        <mixmicro-components-starters.dependencies.version>1.0.0.RC4</mixmicro-components-starters.dependencies.version>
 
         <mixmicro-components-stream.dependencies.version>1.0.0.RC2</mixmicro-components-stream.dependencies.version>
 

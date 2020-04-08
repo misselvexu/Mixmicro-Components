@@ -33,6 +33,7 @@
         <module>mixmicro-components-starter-message-queue</module>
         <module>mixmicro-components-starter-healthy</module>
         <module>mixmicro-components-starter-errors</module>
+        <module>mixmicro-components-starter-spring-web</module>
         <module>mixmicro-components-starters-dependencies</module>
     </modules>
 
