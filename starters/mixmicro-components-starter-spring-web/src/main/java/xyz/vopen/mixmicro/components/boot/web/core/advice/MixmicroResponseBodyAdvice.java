@@ -80,13 +80,13 @@ public class MixmicroResponseBodyAdvice extends AbstractAdvice implements Respon
 
         } else {
           response.getHeaders().add(CONTENT_TYPE, APPLICATION_JSON_VALUE);
-          return ResponseEntity.ok(body).toString();
+          return ResponseEntity.ok(getProperties().getResponse().getDefaultSuccessResponseCode(), body).toString();
         }
       }
     } else {
       if(selectedConverterType.isAssignableFrom(StringHttpMessageConverter.class)) {
         response.getHeaders().add(CONTENT_TYPE, APPLICATION_JSON_VALUE);
-        return ResponseEntity.ok(body).toString();
+        return ResponseEntity.ok(getProperties().getResponse().getDefaultSuccessResponseCode(), body).toString();
       }
     }
 
@@ -107,6 +107,6 @@ public class MixmicroResponseBodyAdvice extends AbstractAdvice implements Respon
     }
 
     // RETURN
-    return ResponseEntity.ok(body);
+    return ResponseEntity.ok(getProperties().getResponse().getDefaultSuccessResponseCode(), body);
   }
 }

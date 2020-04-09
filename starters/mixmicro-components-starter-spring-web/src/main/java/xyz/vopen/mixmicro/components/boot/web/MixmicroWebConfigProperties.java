@@ -28,6 +28,15 @@ public class MixmicroWebConfigProperties implements Serializable {
 
   @NestedConfigurationProperty private ExceptionConfig exception = new ExceptionConfig();
 
+  @NestedConfigurationProperty private ResponseConfig response = new ResponseConfig();
+
+  @Data
+  public static class ResponseConfig implements Serializable {
+
+    private int defaultSuccessResponseCode = 0;
+
+  }
+
   @Data
   public static class ExceptionConfig implements Serializable {
 
