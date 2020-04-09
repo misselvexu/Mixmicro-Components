@@ -52,8 +52,7 @@ public class OpenFeignInvokeErrorDecoder implements ErrorDecoder {
     try {
       byte[] content = IOUtils.toByteArray(response.body().asInputStream());
       ResponseEntity<String> entity = ResponseEntity.decode(content, ResponseEntity.class);
-      return build(
-          new MixmicroInvokeException(response.status(), entity.getMessage()), isClientSide);
+      return build(new MixmicroInvokeException(response.status(), entity.getMessage(), entity), isClientSide);
     } catch (Exception e) {
       return new MixmicroInvokeException(response.status(), response.reason());
     }

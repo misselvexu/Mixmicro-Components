@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>exception-api</artifactId>
-    <version>1.0.0.RC4</version>
+    <version>1.0.0.RC5</version>
 
     <name>Exception Api Module :: ${project.version}</name>
     <description>🏗 Exception Api Module</description>
@@ -28,6 +28,11 @@
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>common-kits</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>common-api</artifactId>
         </dependency>
 
         <dependency>

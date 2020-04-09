@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.exception.defined;
 
-import lombok.Getter;
+import xyz.vopen.mixmicro.components.common.ResponseEntity;
 
 /**
  * {@link MixmicroInvokeServerException}
@@ -10,14 +10,13 @@ import lombok.Getter;
  */
 public class MixmicroInvokeServerException extends MixmicroInvokeException {
 
-
   /**
    * Constructs a new exception with the specified detail message. The cause is not initialized, and
    * may subsequently be initialized by a call to {@link #initCause}.
    *
    * @param httpCode
-   * @param message  the detail message. The detail message is saved for later retrieval by the
-   *                 {@link #getMessage()} method.
+   * @param message the detail message. The detail message is saved for later retrieval by the
+   *     {@link #getMessage()} method.
    */
   public MixmicroInvokeServerException(int httpCode, String message) {
     super(httpCode, message);
@@ -30,11 +29,11 @@ public class MixmicroInvokeServerException extends MixmicroInvokeException {
    * incorporated in this exception's detail message.
    *
    * @param httpCode
-   * @param message  the detail message (which is saved for later retrieval by the {@link
-   *                 #getMessage()} method).
-   * @param cause    the cause (which is saved for later retrieval by the {@link #getCause()} method).
-   *                 (A <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or
-   *                 unknown.)
+   * @param message the detail message (which is saved for later retrieval by the {@link
+   *     #getMessage()} method).
+   * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).
+   *     (A <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or
+   *     unknown.)
    * @since 1.4
    */
   public MixmicroInvokeServerException(int httpCode, String message, Throwable cause) {
@@ -48,11 +47,20 @@ public class MixmicroInvokeServerException extends MixmicroInvokeException {
    * more than wrappers for other throwables.
    *
    * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).
-   *              (A <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or
-   *              unknown.)
+   *     (A <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or
+   *     unknown.)
    * @since 1.4
    */
   public MixmicroInvokeServerException(Throwable cause) {
     super(cause);
+  }
+
+  public MixmicroInvokeServerException(int httpCode, String message, ResponseEntity<?> response) {
+    super(httpCode, message, response);
+  }
+
+  public MixmicroInvokeServerException(
+      int httpCode, String message, ResponseEntity<?> response, Throwable cause) {
+    super(httpCode, message, response, cause);
   }
 }
