@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 /**
  * {@link SerializableBean}
  *
@@ -16,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SerializableBean implements Serializable {
+public class SerializableBean implements SerializableResponse {
 
   @Override
   public String toString() {
