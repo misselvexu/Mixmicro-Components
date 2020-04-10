@@ -1,7 +1,5 @@
 package xyz.vopen.mixmicro.components.exception.defined;
 
-import lombok.Getter;
-
 /**
  * {@link MixmicroInvokeServerException}
  *

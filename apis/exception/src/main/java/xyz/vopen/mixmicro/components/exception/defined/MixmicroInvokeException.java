@@ -17,6 +17,8 @@ public class MixmicroInvokeException extends MixmicroException {
    */
   @Getter private int httpCode;
 
+  @Getter private Throwable exception;
+
   /**
    * Constructs a new exception with the specified detail message. The cause is not initialized, and
    * may subsequently be initialized by a call to {@link #initCause}.
@@ -27,6 +29,12 @@ public class MixmicroInvokeException extends MixmicroException {
   public MixmicroInvokeException(int httpCode, String message) {
     super(message);
     this.httpCode = httpCode;
+  }
+
+  public MixmicroInvokeException(int httpCode, Throwable throwable) {
+    super(throwable.getMessage());
+    this.httpCode = httpCode;
+    this.exception = throwable;
   }
 
   /**

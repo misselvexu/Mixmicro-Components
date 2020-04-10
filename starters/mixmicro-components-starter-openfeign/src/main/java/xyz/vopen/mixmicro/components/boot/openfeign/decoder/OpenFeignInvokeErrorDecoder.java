@@ -1,12 +1,15 @@
 package xyz.vopen.mixmicro.components.boot.openfeign.decoder;
 
 import feign.Feign;
+import feign.Request;
 import feign.Response;
 import feign.RetryableException;
 import feign.codec.ErrorDecoder;
 import org.apache.commons.io.IOUtils;
 import xyz.vopen.mixmicro.components.common.ResponseEntity;
 import xyz.vopen.mixmicro.components.exception.defined.MixmicroInvokeException;
+
+import java.lang.reflect.Constructor;
 
 import static feign.FeignException.errorStatus;
 import static xyz.vopen.mixmicro.components.exception.defined.MixmicroInvokeException.build;
@@ -50,10 +53,40 @@ public class OpenFeignInvokeErrorDecoder implements ErrorDecoder {
   @SuppressWarnings("unchecked")
   private MixmicroInvokeException buildException(Response response, boolean isClientSide) {
     try {
+      Request request = response.request();
+
       byte[] content = IOUtils.toByteArray(response.body().asInputStream());
       ResponseEntity<String> entity = ResponseEntity.decode(content, ResponseEntity.class);
-      return build(
-          new MixmicroInvokeException(response.status(), entity.getMessage()), isClientSide);
+
+      /*
+      // server error
+      if(!isClientSide) {
+        ResponseEntity.ExceptionMetadata metadata = entity.getEma();
+        if(metadata != null) {
+          String className = metadata.getClassName();
+          Class<?> clazz = Class.forName(className);
+          if (clazz.isAssignableFrom(MixmicroException.class)) {
+            return build(new MixmicroInvokeException(response.status(), new RuntimeException(metadata.getDetailMessage())), true);
+          }
+        }
+      }
+      */
+
+      if (!isClientSide) {
+        ResponseEntity.ExceptionMetadata metadata = entity.getEma();
+        if(metadata != null) {
+          String className = metadata.getClassName();
+          Class<?> clazz = Class.forName(className);
+          if(clazz.isAssignableFrom(Throwable.class)) {
+            Constructor<?> constructor = clazz.getConstructor(String.class);
+            Object o = constructor.newInstance(metadata.getDetailMessage());
+            throw new MixmicroInvokeException(response.status(), (Throwable) o);
+          }
+        }
+      }
+
+      return build(new MixmicroInvokeException(response.status(), entity.getMessage()), isClientSide);
+
     } catch (Exception e) {
       return new MixmicroInvokeException(response.status(), response.reason());
     }

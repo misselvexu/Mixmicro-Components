@@ -29,7 +29,7 @@
         <micro-starter-cors.version>1.0.0.RC2</micro-starter-cors.version>
         <micro-starter-resteasy.version>1.0.0.RC2</micro-starter-resteasy.version>
         <micro-starter-snowflake.version>1.0.0.RC2</micro-starter-snowflake.version>
-        <micro-starter-openfeign.version>1.0.0.RC2</micro-starter-openfeign.version>
+        <micro-starter-openfeign.version>1.0.0.RC3</micro-starter-openfeign.version>
         <micro-starter-datasource.version>1.0.0.RC2</micro-starter-datasource.version>
         <micro-starter-sidecar.version>1.0.0.RC2</micro-starter-sidecar.version>
         <micro-starter-security.version>1.0.0.RC1</micro-starter-security.version>

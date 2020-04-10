@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>common-api</artifactId>
-    <version>1.0.0.RC4</version>
+    <version>1.0.0.RC5</version>
 
     <name>Common Api Module :: ${project.version}</name>
     <description>🏗 Common Api Module</description>

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import xyz.vopen.mixmicro.kits.annotation.JustForTest;
 import xyz.vopen.mixmicro.kits.jackson.JacksonDateFormat;
 
 import java.util.Date;
@@ -56,6 +57,11 @@ public class ResponseEntity<T> extends SerializableBean {
   @Builder.Default @JacksonDateFormat
   @JSONField(format = MIXMICRO_FULL_DATE_FORMATTER)
   private Date timestamp = new Date();
+
+  // exception de-Serialize metadata
+
+  @JustForTest private ExceptionMetadata ema;
+
 
   /**
    * Defined response body class type.
@@ -128,5 +134,21 @@ public class ResponseEntity<T> extends SerializableBean {
 
   public static <T> ResponseEntity<T> fail(Class<T> clazz, int code, T body, String message) {
     return ResponseEntity.<T>builder().bodyClassType(clazz).code(code).data(body).message(message).build();
+  }
+
+
+  @Getter
+  @Setter
+  @Builder
+  @JustForTest
+  @AllArgsConstructor
+  public static class ExceptionMetadata extends SerializableBean {
+
+    private String className;
+
+    private String detailMessage;
+
+    private transient Throwable exception;
+
   }
 }
