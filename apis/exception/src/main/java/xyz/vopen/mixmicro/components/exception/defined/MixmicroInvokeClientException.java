@@ -1,7 +1,5 @@
 package xyz.vopen.mixmicro.components.exception.defined;
 
-import xyz.vopen.mixmicro.components.common.ResponseEntity;
-
 /**
  * {@link MixmicroInvokeClientException}
  *
@@ -55,12 +53,12 @@ public class MixmicroInvokeClientException extends MixmicroInvokeException {
     super(cause);
   }
 
-  public MixmicroInvokeClientException(int httpCode, String message, ResponseEntity<?> response) {
+  public MixmicroInvokeClientException(int httpCode, String message, Object response) {
     super(httpCode, message, response);
   }
 
   public MixmicroInvokeClientException(
-      int httpCode, String message, ResponseEntity<?> response, Throwable cause) {
+      int httpCode, String message, Object response, Throwable cause) {
     super(httpCode, message, response, cause);
   }
 }

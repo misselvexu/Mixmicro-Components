@@ -1,7 +1,6 @@
 package xyz.vopen.mixmicro.components.exception.defined;
 
 import lombok.Getter;
-import xyz.vopen.mixmicro.components.common.ResponseEntity;
 import xyz.vopen.mixmicro.kits.lang.Nullable;
 
 /**
@@ -19,7 +18,7 @@ public class MixmicroInvokeException extends MixmicroException {
    */
   @Getter private int httpCode;
 
-  @Getter @Nullable protected ResponseEntity<?> response;
+  @Getter @Nullable protected Object response;
 
   /**
    * Constructs a new exception with the specified detail message. The cause is not initialized, and
@@ -33,7 +32,7 @@ public class MixmicroInvokeException extends MixmicroException {
     this.httpCode = httpCode;
   }
 
-  public MixmicroInvokeException(int httpCode, String message, ResponseEntity<?> response) {
+  public MixmicroInvokeException(int httpCode, String message, Object response) {
     super(message);
     this.httpCode = httpCode;
     this.response = response;
@@ -58,7 +57,7 @@ public class MixmicroInvokeException extends MixmicroException {
   }
 
   public MixmicroInvokeException(
-      int httpCode, String message, ResponseEntity<?> response, Throwable cause) {
+      int httpCode, String message, Object response, Throwable cause) {
     super(message, cause);
     this.httpCode = httpCode;
     this.response = response;
@@ -86,7 +85,7 @@ public class MixmicroInvokeException extends MixmicroException {
   }
 
   public static MixmicroInvokeException build(
-      MixmicroInvokeException exception, boolean isClientSide, ResponseEntity<?> response) {
+      MixmicroInvokeException exception, boolean isClientSide, Object response) {
 
     if (isClientSide) {
       return new MixmicroInvokeClientException(
