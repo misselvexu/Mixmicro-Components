@@ -1,4 +1,6 @@
 /**
- * {@link package-info}
+ * Authorization Package
+ *
+ * <p>
  */
 package xyz.vopen.mixmicro.components.authorization;

@@ -30,7 +30,7 @@
         <mixmicro-http-client.kit.version>1.0.0.RC2</mixmicro-http-client.kit.version>
         <mixmicro-servlet-compress.kit.version>1.0.0.RC2</mixmicro-servlet-compress.kit.version>
         <mixmicro-jre-http-client.kit.version>1.0.0.RC2</mixmicro-jre-http-client.kit.version>
-        <mixmicro-common.kit.version>1.0.0.RC2</mixmicro-common.kit.version>
+        <mixmicro-common.kit.version>1.0.0.RC3</mixmicro-common.kit.version>
         <mixmicro-hessian.kit.version>Antarctica.4x.RC1</mixmicro-hessian.kit.version>
         <mixmicro-queue.kit.version>1.0.0.RC2</mixmicro-queue.kit.version>
         <mixmicro-retry.kit.version>1.0.0.RC2</mixmicro-retry.kit.version>

@@ -1,23 +1,12 @@
 package xyz.vopen.mixmicro.components.authorization.exception;
 
-import lombok.Getter;
-
-import java.util.Date;
-
 /**
- * {@link ExpiredAccessTokenException}
+ * {@link IllegalAccessTokenException}
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020-04-10.
  */
-public class ExpiredAccessTokenException extends AuthorizationException {
-
-  /**
-   * Exported Expired Time
-   *
-   * <p>
-   */
-  @Getter private Date expiredTime;
+public class IllegalAccessTokenException extends AuthorizationException {
 
   /**
    * Constructs a new exception with the specified detail message. The cause is not initialized, and
@@ -26,9 +15,8 @@ public class ExpiredAccessTokenException extends AuthorizationException {
    * @param message the detail message. The detail message is saved for later retrieval by the
    *     {@link #getMessage()} method.
    */
-  public ExpiredAccessTokenException(String message, Date expiredTime) {
+  public IllegalAccessTokenException(String message) {
     super(message);
-    this.expiredTime = expiredTime;
   }
 
   /**
@@ -44,8 +32,7 @@ public class ExpiredAccessTokenException extends AuthorizationException {
    *     unknown.)
    * @since 1.4
    */
-  public ExpiredAccessTokenException(String message, Date expiredTime, Throwable cause) {
+  public IllegalAccessTokenException(String message, Throwable cause) {
     super(message, cause);
-    this.expiredTime = expiredTime;
   }
 }

@@ -15,8 +15,9 @@
  */
 package xyz.vopen.mixmicro.kits.tink;
 
-import java.io.UnsupportedEncodingException;
 import lombok.experimental.UtilityClass;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Base64
@@ -466,7 +467,7 @@ public final class Base64 {
   }
 
   /**
-   * Encode buffer with (\r and \n)
+   * Encode buffer without (\r and \n)
    *
    * @param src byte array
    * @return encode string

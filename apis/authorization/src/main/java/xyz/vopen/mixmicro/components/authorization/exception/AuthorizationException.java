@@ -1,14 +1,14 @@
-package xyz.vopen.mixmicro.components.authorization;
+package xyz.vopen.mixmicro.components.authorization.exception;
 
 import xyz.vopen.mixmicro.components.exception.defined.MixmicroException;
 
 /**
- * {@link AutnorizationException}
+ * {@link AuthorizationException}
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020-04-10.
  */
-public class AutnorizationException extends MixmicroException {
+public class AuthorizationException extends MixmicroException {
 
   /**
    * Constructs a new exception with the specified detail message. The cause is not initialized, and
@@ -17,7 +17,7 @@ public class AutnorizationException extends MixmicroException {
    * @param message the detail message. The detail message is saved for later retrieval by the
    *     {@link #getMessage()} method.
    */
-  public AutnorizationException(String message) {
+  public AuthorizationException(String message) {
     super(message);
   }
 
@@ -34,7 +34,7 @@ public class AutnorizationException extends MixmicroException {
    *     unknown.)
    * @since 1.4
    */
-  public AutnorizationException(String message, Throwable cause) {
+  public AuthorizationException(String message, Throwable cause) {
     super(message, cause);
   }
 
@@ -49,7 +49,7 @@ public class AutnorizationException extends MixmicroException {
    *     unknown.)
    * @since 1.4
    */
-  public AutnorizationException(Throwable cause) {
+  public AuthorizationException(Throwable cause) {
     super(cause);
   }
 }

@@ -9,17 +9,35 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>mixmicro-components-starter-banner</artifactId>
-    <version>1.0.0.RC2</version>
+    <artifactId>mixmicro-components-starter-authorization</artifactId>
+    <version>1.0.0.RC1</version>
 
-    <name>Banner Starter Module :: ${project.version}</name>
-    <description>🏗 Banner Starter Module</description>
+    <name>Authorization Starter Module :: ${project.version}</name>
+    <description>🏗 Authorization Starter Module</description>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>authorization-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>
