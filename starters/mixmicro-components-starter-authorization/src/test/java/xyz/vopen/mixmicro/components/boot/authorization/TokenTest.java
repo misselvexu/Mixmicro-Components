@@ -1,15 +1,19 @@
 package xyz.vopen.mixmicro.components.boot.authorization;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import xyz.vopen.mixmicro.components.authorization.Payload;
-import xyz.vopen.mixmicro.components.authorization.Serialization;
 import xyz.vopen.mixmicro.components.authorization.Token;
 import xyz.vopen.mixmicro.components.authorization.api.AuthorizationService;
+import xyz.vopen.mixmicro.components.authorization.exception.AuthorizationException;
+import xyz.vopen.mixmicro.components.authorization.exception.ExpiredAccessTokenException;
+import xyz.vopen.mixmicro.components.authorization.exception.IllegalAccessTokenException;
 
 /**
  * {@link TokenTest}
@@ -26,21 +30,26 @@ public class TokenTest {
   @Test
   public void token() throws Exception {
 
-    Payload payload = new Payload("user id value", "mobile value");
-
+    // 创建用户信息载体
     MyPayload myPayload = MyPayload.builder().mobile("13910187669").userId("U01").key("K1").build();
 
+    // 创建 Token
     Token token = service.generateToken(myPayload);
 
-    System.out.println(Serialization.toJsonString(token));
+    // 校验 Token 有效性
+    try{
+      service.validateToken(token.getAccessToken());
+    } catch (IllegalAccessTokenException e) {
+      // 无效 Token 异常
+    } catch (ExpiredAccessTokenException e) {
+      // Token 过期异常
+    } catch (AuthorizationException e) {
+      // 其他 Token 处理异常
+    }
 
-    Thread.sleep(10000);
-
-    service.validateToken(token.getAccessToken());
-
+    // 解析 Token 用户信息
     MyPayload decodePayload = service.decodeTokenPayload(token.getAccessToken(), MyPayload.class);
 
-    System.out.println(decodePayload);
   }
 
   @Getter
