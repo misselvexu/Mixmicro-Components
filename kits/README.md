@@ -29,7 +29,7 @@ Mixmicro Framwork Kit (Utils) For Project(s);
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-kits-dependencies</artifactId>
-            <version>Antarctica.RELEASE</version>
+            <version>RELEASE</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>

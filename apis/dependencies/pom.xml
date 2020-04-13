@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>mixmicro-components-apis-dependencies</artifactId>
-    <version>1.0.0.RC3</version>
+    <version>1.0.0.RC4</version>
 
     <packaging>pom</packaging>
 
@@ -35,8 +35,8 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
 
         <!-- Module Version -->
-        <mixmicro-common.api.version>1.0.0.RC4</mixmicro-common.api.version>
-        <mixmicro-exception.api.version>1.0.0.RC4</mixmicro-exception.api.version>
+        <mixmicro-common.api.version>1.0.0.RC5</mixmicro-common.api.version>
+        <mixmicro-exception.api.version>1.0.0.RC5</mixmicro-exception.api.version>
         <mixmicro-logger.api.version>1.0.0.RC2</mixmicro-logger.api.version>
         <mixmicro-authorization.api.version>1.0.0.RC1</mixmicro-authorization.api.version>
 

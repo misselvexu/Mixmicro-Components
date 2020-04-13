@@ -27,9 +27,9 @@
     </modules>
 
     <properties>
-        <mixmicro-apis-common.version>1.0.0.RC4</mixmicro-apis-common.version>
         <mixmicro-apis-authorization.version>1.0.0.RC1</mixmicro-apis-authorization.version>
-        <mixmicro-apis-exception.version>1.0.0.RC4</mixmicro-apis-exception.version>
+        <mixmicro-apis-common.version>1.0.0.RC5</mixmicro-apis-common.version>
+        <mixmicro-apis-exception.version>1.0.0.RC5</mixmicro-apis-exception.version>
         <mixmicro-apis-logger.version>1.0.0.RC2</mixmicro-apis-logger.version>
     </properties>
 
