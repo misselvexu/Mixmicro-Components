@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.exception.defined;
 
 import lombok.Getter;
+import xyz.vopen.mixmicro.kits.lang.Nullable;
 
 /**
  * {@link MixmicroInvokeException}
@@ -19,6 +20,8 @@ public class MixmicroInvokeException extends MixmicroException {
 
   @Getter private Throwable exception;
 
+  @Getter @Nullable protected Object response;
+
   /**
    * Constructs a new exception with the specified detail message. The cause is not initialized, and
    * may subsequently be initialized by a call to {@link #initCause}.
@@ -31,10 +34,10 @@ public class MixmicroInvokeException extends MixmicroException {
     this.httpCode = httpCode;
   }
 
-  public MixmicroInvokeException(int httpCode, Throwable throwable) {
-    super(throwable.getMessage());
+  public MixmicroInvokeException(int httpCode, String message, Object response) {
+    super(message);
     this.httpCode = httpCode;
-    this.exception = throwable;
+    this.response = response;
   }
 
   /**
@@ -55,6 +58,13 @@ public class MixmicroInvokeException extends MixmicroException {
     this.httpCode = httpCode;
   }
 
+  public MixmicroInvokeException(
+      int httpCode, String message, Object response, Throwable cause) {
+    super(message, cause);
+    this.httpCode = httpCode;
+    this.response = response;
+  }
+
   /**
    * Constructs a new runtime exception with the specified cause and a detail message of
    * <tt>(cause==null ? null : cause.toString())</tt> (which typically contains the class and detail
@@ -73,10 +83,18 @@ public class MixmicroInvokeException extends MixmicroException {
   public static MixmicroInvokeException build(
       MixmicroInvokeException exception, boolean isClientSide) {
 
+    return build(exception, isClientSide, null);
+  }
+
+  public static MixmicroInvokeException build(
+      MixmicroInvokeException exception, boolean isClientSide, Object response) {
+
     if (isClientSide) {
-      return new MixmicroInvokeClientException(exception.getHttpCode(), exception.getMessage());
+      return new MixmicroInvokeClientException(
+          exception.getHttpCode(), exception.getMessage(), response);
     } else {
-      return new MixmicroInvokeServerException(exception.getHttpCode(), exception.getMessage());
+      return new MixmicroInvokeServerException(
+          exception.getHttpCode(), exception.getMessage(), response);
     }
   }
 }

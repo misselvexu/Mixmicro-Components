@@ -52,4 +52,13 @@ public class MixmicroInvokeClientException extends MixmicroInvokeException {
   public MixmicroInvokeClientException(Throwable cause) {
     super(cause);
   }
+
+  public MixmicroInvokeClientException(int httpCode, String message, Object response) {
+    super(httpCode, message, response);
+  }
+
+  public MixmicroInvokeClientException(
+      int httpCode, String message, Object response, Throwable cause) {
+    super(httpCode, message, response, cause);
+  }
 }

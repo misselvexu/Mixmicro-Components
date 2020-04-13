@@ -80,12 +80,12 @@ public class OpenFeignInvokeErrorDecoder implements ErrorDecoder {
           if(clazz.isAssignableFrom(Throwable.class)) {
             Constructor<?> constructor = clazz.getConstructor(String.class);
             Object o = constructor.newInstance(metadata.getDetailMessage());
-            throw new MixmicroInvokeException(response.status(), (Throwable) o);
+            throw new MixmicroInvokeException(response.status(), entity.getMessage(), (Throwable) o);
           }
         }
       }
 
-      return build(new MixmicroInvokeException(response.status(), entity.getMessage()), isClientSide);
+      return build(new MixmicroInvokeException(response.status(), entity.getMessage(), entity), isClientSide);
 
     } catch (Exception e) {
       return new MixmicroInvokeException(response.status(), response.reason());
