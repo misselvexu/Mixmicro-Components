@@ -26,6 +26,10 @@ public class MixmicroWebConfigProperties implements Serializable {
 
   private boolean enabled = true;
 
+  private boolean responseWrapAdvice = true;
+
+  private boolean globalExceptionHandlerAdvice = true;
+
   @NestedConfigurationProperty private ExceptionConfig exception = new ExceptionConfig();
 
   @NestedConfigurationProperty private ResponseConfig response = new ResponseConfig();

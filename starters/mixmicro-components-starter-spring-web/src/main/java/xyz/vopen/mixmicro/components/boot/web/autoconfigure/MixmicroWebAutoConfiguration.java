@@ -2,10 +2,12 @@ package xyz.vopen.mixmicro.components.boot.web.autoconfigure;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import xyz.vopen.mixmicro.components.boot.web.Marker;
+import org.springframework.context.annotation.Primary;
 import xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties;
+import xyz.vopen.mixmicro.components.boot.web.core.advice.MixmicroExceptionAdvice;
+import xyz.vopen.mixmicro.components.boot.web.core.advice.MixmicroResponseBodyAdvice;
 
 import static xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties.MIXMICRO_WEB_CONFIG_PROPERTIES_PREFIX;
 
@@ -22,9 +24,27 @@ import static xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties
     havingValue = "true",
     matchIfMissing = true)
 @EnableConfigurationProperties(MixmicroWebConfigProperties.class)
-@ComponentScan(basePackageClasses = Marker.class)
 public class MixmicroWebAutoConfiguration {
 
+  @Bean
+  @Primary
+  @ConditionalOnProperty(
+      prefix = MIXMICRO_WEB_CONFIG_PROPERTIES_PREFIX,
+      value = "response-wrap-advice",
+      havingValue = "true",
+      matchIfMissing = true)
+  MixmicroExceptionAdvice mixmicroExceptionAdvice() {
+    return new MixmicroExceptionAdvice();
+  }
 
-
+  @Bean
+  @Primary
+  @ConditionalOnProperty(
+      prefix = MIXMICRO_WEB_CONFIG_PROPERTIES_PREFIX,
+      value = "global-exception-handler-advice",
+      havingValue = "true",
+      matchIfMissing = true)
+  MixmicroResponseBodyAdvice mixmicroResponseBodyAdvice() {
+    return new MixmicroResponseBodyAdvice();
+  }
 }

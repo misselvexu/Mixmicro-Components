@@ -1,7 +1,6 @@
 package xyz.vopen.mixmicro.components.boot.web.core.advice;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import xyz.vopen.mixmicro.components.boot.web.Marker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -30,7 +29,7 @@ import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SE
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020/3/4
  */
-@RestControllerAdvice(basePackageClasses = {Marker.class})
+@RestControllerAdvice
 public class MixmicroResponseBodyAdvice extends AbstractAdvice implements ResponseBodyAdvice<Object> {
 
   private static final Logger log = LoggerFactory.getLogger(MixmicroResponseBodyAdvice.class);
