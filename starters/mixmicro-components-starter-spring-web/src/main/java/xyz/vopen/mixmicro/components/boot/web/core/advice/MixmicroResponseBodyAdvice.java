@@ -62,6 +62,11 @@ public class MixmicroResponseBodyAdvice extends AbstractAdvice implements Respon
   @Override
   public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
 
+    // check ignore urls .
+    if(checkIgnoreURL(request.getURI().getPath())) {
+      return body;
+    }
+
     if(returnType.hasMethodAnnotation(MixmicroResponseBody.class)) {
       MixmicroResponseBody mixmicroResponseBody = returnType.getMethodAnnotation(MixmicroResponseBody.class);
       if(mixmicroResponseBody != null) {

@@ -173,10 +173,10 @@ public class MultiAppLoggerSpaceManager {
    * @param spaceClassloader 该空间下独立的类加载器；（建议就是 APPClassloader 即可）
    * @return org.slf4j.Logger;
    */
-  public static Logger getLoggerBySpace(
-      String name, SpaceId spaceId, ClassLoader spaceClassloader) {
-    AbstractLoggerSpaceFactory abstractLoggerSpaceFactory =
-        getILoggerFactoryBySpaceName(spaceId, spaceClassloader);
+  public static Logger getLoggerBySpace(String name, SpaceId spaceId, ClassLoader spaceClassloader) {
+
+    AbstractLoggerSpaceFactory abstractLoggerSpaceFactory = getILoggerFactoryBySpaceName(spaceId, spaceClassloader);
+
     return abstractLoggerSpaceFactory.getLogger(name);
   }
 
@@ -202,11 +202,12 @@ public class MultiAppLoggerSpaceManager {
     }
     SpaceInfo spaceInfo = SPACES_MAP.get(spaceId);
     if (isSpaceILoggerFactoryExisted(spaceId)) {
+
       AbstractLoggerSpaceFactory iLoggeriFactory = spaceInfo.getAbstractLoggerSpaceFactory();
       spaceInfo.setAbstractLoggerSpaceFactory(null);
       Logger rootLogger = iLoggeriFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-      rootLogger.warn(
-          "Log Space Name[" + spaceId.toString() + "] is Removed from Current Log Space Manager!");
+      rootLogger.warn("Log Space Name[" + spaceId.toString() + "] is Removed from Current Log Space Manager!");
+
       return iLoggeriFactory;
     }
     return null;

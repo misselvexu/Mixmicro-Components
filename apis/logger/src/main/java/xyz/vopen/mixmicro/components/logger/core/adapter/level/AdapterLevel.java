@@ -59,10 +59,7 @@ public enum AdapterLevel {
         return adapterLevel;
       }
     }
-    throw new IllegalArgumentException(
-        "Input Level Message["
-            + adapterLogLevelMsg
-            + "] can't match any [AdapterLevel]");
+    throw new IllegalArgumentException("Input Level Message[" + adapterLogLevelMsg + "] can't match any [AdapterLevel]");
   }
 
   public String getLogLevelMsg() {

@@ -16,11 +16,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SerializableBean implements SerializableResponse {
 
-  @Override
-  public String toString() {
-    return encode(this);
-  }
-
   /**
    * Encode Object To JSON
    *

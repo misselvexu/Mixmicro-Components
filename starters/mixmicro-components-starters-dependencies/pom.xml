@@ -39,7 +39,7 @@
         <micro-starter-message-queue.version>1.0.0.RC2</micro-starter-message-queue.version>
         <micro-starter-healthy.version>1.0.0.RC1</micro-starter-healthy.version>
         <micro-starter-errors.version>1.0.0.RC1</micro-starter-errors.version>
-        <micro-starter-web.version>1.0.0.RC1</micro-starter-web.version>
+        <micro-starter-web.version>1.0.0.RC2</micro-starter-web.version>
 
         <micro-starter-cache-redis-default.version>1.0.0.RC2</micro-starter-cache-redis-default.version>
         <micro-starter-cache-redis-lettuce.version>1.0.0.RC2</micro-starter-cache-redis-lettuce.version>

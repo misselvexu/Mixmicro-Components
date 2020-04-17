@@ -59,7 +59,6 @@ public final class LogEnvUtils {
     try {
       return (spaceClassloader.loadClass("org.slf4j.impl.Log4jLoggerFactory") != null);
     } catch (ClassNotFoundException e) {
-      //   logger.debug("log4j dependency is not existed.");
       return false;
     }
   }
@@ -80,7 +79,6 @@ public final class LogEnvUtils {
           && (spaceClassloader.loadClass("org.apache.log4j.Logger") != null)
           && (spaceClassloader.loadClass("org.apache.commons.logging.Log") != null));
     } catch (ClassNotFoundException e) {
-      //   logger.debug("log4j dependency is not existed.");
       return false;
     }
   }
@@ -163,8 +161,7 @@ public final class LogEnvUtils {
 
     suffix = (suffix == null) ? StringUtil.EMPTY_STRING : suffix;
     if (!suffix.isEmpty()) {
-      ReportUtil.reportDebug(
-          spaceName + " log configuration: " + LOG_XML_CONFIG_FILE_NAME + suffix);
+      ReportUtil.reportDebug(spaceName + " log configuration: " + LOG_XML_CONFIG_FILE_NAME + suffix);
     }
     return suffix;
   }
@@ -178,8 +175,7 @@ public final class LogEnvUtils {
       return;
     }
     String loggingPath = System.getProperty(LOG_PATH, context.get(LOG_PATH));
-    String fileEncoding =
-        System.getProperty(LOG_ENCODING_PROP_KEY, context.get(LOG_ENCODING_PROP_KEY));
+    String fileEncoding = System.getProperty(LOG_ENCODING_PROP_KEY, context.get(LOG_ENCODING_PROP_KEY));
     System.setProperty(LOG_PATH, loggingPath);
     System.setProperty(OLD_LOG_PATH, System.getProperty(OLD_LOG_PATH, loggingPath));
     System.setProperty(LOG_ENCODING_PROP_KEY, fileEncoding);

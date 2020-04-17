@@ -83,7 +83,7 @@ public class MixmicroInvokeException extends MixmicroException {
   public static MixmicroInvokeException build(
       MixmicroInvokeException exception, boolean isClientSide) {
 
-    return build(exception, isClientSide, null);
+    return build(exception, isClientSide, exception.getResponse());
   }
 
   public static MixmicroInvokeException build(

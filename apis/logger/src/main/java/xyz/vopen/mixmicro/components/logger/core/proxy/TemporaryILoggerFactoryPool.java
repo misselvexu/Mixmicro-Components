@@ -26,9 +26,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /** @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a> on 2016/12/5. */
 public class TemporaryILoggerFactoryPool {
 
-  private static final ConcurrentHashMap<SpaceIdWithClassloader, TemporaryILoggerFactory>
-      temporaryILoggerFactoryMap =
-          new ConcurrentHashMap<SpaceIdWithClassloader, TemporaryILoggerFactory>();
+  private static final ConcurrentHashMap<SpaceIdWithClassloader, TemporaryILoggerFactory> SPACE_CLASSLOADER_TEMPORARY_MAP = new ConcurrentHashMap<SpaceIdWithClassloader, TemporaryILoggerFactory>();
+
   private static final Logger logger = LoggerFactory.getLogger(LoggerSpaceManager.class);
 
   public static TemporaryILoggerFactory get(String space, ClassLoader spaceClassLoader) {
@@ -37,19 +36,19 @@ public class TemporaryILoggerFactoryPool {
 
   public static TemporaryILoggerFactory get(SpaceId spaceId, ClassLoader spaceClassLoader) {
     // get from local cache by key {spaceClassLoader+ spacename};
-    TemporaryILoggerFactory temporaryILoggerFactory =
-        temporaryILoggerFactoryMap.get(new SpaceIdWithClassloader(spaceId, spaceClassLoader));
-    if (temporaryILoggerFactory != null) {
-      return temporaryILoggerFactory;
+
+    TemporaryILoggerFactory factory = SPACE_CLASSLOADER_TEMPORARY_MAP.get(new SpaceIdWithClassloader(spaceId, spaceClassLoader));
+
+    if (factory != null) {
+      return factory;
     }
 
     // create new one
-    temporaryILoggerFactory = new TemporaryILoggerFactory(spaceId, spaceClassLoader, logger);
+    factory = new TemporaryILoggerFactory(spaceId, spaceClassLoader, logger);
 
     // put it to cache ;
-    temporaryILoggerFactoryMap.putIfAbsent(
-        new SpaceIdWithClassloader(spaceId, spaceClassLoader), temporaryILoggerFactory);
-    return temporaryILoggerFactory;
+    SPACE_CLASSLOADER_TEMPORARY_MAP.putIfAbsent(new SpaceIdWithClassloader(spaceId, spaceClassLoader), factory);
+    return factory;
   }
 
   private static class SpaceIdWithClassloader {
@@ -81,12 +80,18 @@ public class TemporaryILoggerFactoryPool {
 
     @Override
     public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
 
       SpaceIdWithClassloader that = (SpaceIdWithClassloader) o;
 
-      if (spaceId != null ? !spaceId.equals(that.spaceId) : that.spaceId != null) return false;
+      if (spaceId != null ? !spaceId.equals(that.spaceId) : that.spaceId != null) {
+        return false;
+      }
       return classLoader != null ? classLoader.equals(that.classLoader) : that.classLoader == null;
     }
 

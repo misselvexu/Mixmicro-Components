@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.vopen.mixmicro.components.common.ResponseEntity;
 
 /**
  * {@link SampleApplication}
@@ -24,13 +25,18 @@ public class SampleApplication {
   static class SampleEndpoint {
 
     @GetMapping("/test01")
-    String test() {
-      return "test01";
+    ResponseEntity test() {
+      return ResponseEntity.ok("test01");
     }
 
     @GetMapping("/test02")
     String test02() {
       throw new SampleException("test02 exception");
+    }
+
+    @GetMapping("/test03")
+    void test03() {
+      System.out.println("test03");
     }
   }
 }

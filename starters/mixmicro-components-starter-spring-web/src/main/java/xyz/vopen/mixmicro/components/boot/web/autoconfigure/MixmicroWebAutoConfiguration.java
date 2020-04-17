@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties;
+import xyz.vopen.mixmicro.components.boot.web.aspect.WebApiAspect;
 import xyz.vopen.mixmicro.components.boot.web.core.advice.MixmicroExceptionAdvice;
 import xyz.vopen.mixmicro.components.boot.web.core.advice.MixmicroResponseBodyAdvice;
 
@@ -46,5 +47,15 @@ public class MixmicroWebAutoConfiguration {
       matchIfMissing = true)
   MixmicroResponseBodyAdvice mixmicroResponseBodyAdvice() {
     return new MixmicroResponseBodyAdvice();
+  }
+
+  @Bean
+  @ConditionalOnProperty(
+      prefix = MIXMICRO_WEB_CONFIG_PROPERTIES_PREFIX + ".log",
+      value = "enabled-request-log",
+      havingValue = "true",
+      matchIfMissing = true)
+  WebApiAspect webApiAspect(MixmicroWebConfigProperties properties) {
+    return new WebApiAspect(properties);
   }
 }

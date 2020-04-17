@@ -1,2 +1,5 @@
 org.springframework.context.ApplicationListener=\
   xyz.vopen.mixmicro.components.boot.logging.CommonLoggingApplicationListener
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  xyz.vopen.mixmicro.components.boot.logging.autoconfigure.MixLoggerAutoConfiguration

@@ -8,14 +8,20 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties;
 import xyz.vopen.mixmicro.components.exception.EntityBody;
 import xyz.vopen.mixmicro.components.exception.defined.BizException;
 import xyz.vopen.mixmicro.components.exception.defined.CompatibleMixmicroException;
 import xyz.vopen.mixmicro.components.exception.defined.MixmicroException;
+import xyz.vopen.mixmicro.kits.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Constructor;
 import java.util.Optional;
+
+import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_INVOKE_HEADER;
 
 /**
  * {@link MixmicroExceptionAdvice}
@@ -44,21 +50,31 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
 
   @Nullable
   private xyz.vopen.mixmicro.components.boot.web.ExceptionHandler getExceptionHandler() {
+
+    if(this.handler != null) {
+      return this.handler;
+    }
+
     MixmicroWebConfigProperties properties = getProperties();
-    Class<?> aClass = properties.getException().getHandlerClass();
-    if (aClass == null) {
-      return getExceptionHandlerFromBeanFactory();
+    try{
+      Class<?> aClass = properties.getException().getHandlerClass();
+      if (aClass != null) {
+        try {
+          Constructor<?> constructor = aClass.getConstructor();
+          Object o = constructor.newInstance();
+          this.handler = (xyz.vopen.mixmicro.components.boot.web.ExceptionHandler) o;
+        } catch (Exception e) {
+          log.warn("@ExceptionHandler extended class must default constructor .");
+        }
+      }
+    } catch (Exception ignored) {
     }
 
-    try {
-      Constructor<?> constructor = aClass.getConstructor();
-      Object o = constructor.newInstance();
-      return (xyz.vopen.mixmicro.components.boot.web.ExceptionHandler) o;
-    } catch (Exception e) {
-      log.warn("@ExceptionHandler extended class must default constructor .");
+    if(this.handler == null) {
+      this.handler = getExceptionHandlerFromBeanFactory();
     }
 
-    return getExceptionHandlerFromBeanFactory();
+    return this.handler;
   }
 
   private Optional<ResponseEntity<?>> handlerException(Exception e) {
@@ -130,7 +146,22 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
       // COMPATIBLE: 兼容性异常
       CompatibleMixmicroException cme = (CompatibleMixmicroException) e;
 
-      return ResponseEntity.status(cme.httpStatusCode())
+      int httpStatusCode = cme.httpStatusCode();
+
+      // Adapt Fix by @Jake : if request invoked by service feign client , revert http code with 500.
+      try{
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attributes != null) {
+          HttpServletRequest request = attributes.getRequest();
+          // check request#header#MIXMICRO_SERVICE_INVOKE_HEADER value
+          if (StringUtils.isNotBlank(request.getHeader(MIXMICRO_SERVICE_INVOKE_HEADER))) {
+            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
+          }
+        }
+      } catch (Exception ignored) {
+      }
+
+      return ResponseEntity.status(httpStatusCode)
           .body(
               xyz.vopen.mixmicro.components.common.ResponseEntity.builder()
                   .message(cme.getMessage())
