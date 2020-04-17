@@ -21,6 +21,7 @@
         <module>common</module>
         <module>exception</module>
         <module>logger</module>
+        <module>security</module>
 
         <!-- dependencies -->
         <module>dependencies</module>
@@ -31,6 +32,7 @@
         <mixmicro-apis-common.version>1.0.0.RC5</mixmicro-apis-common.version>
         <mixmicro-apis-exception.version>1.0.0.RC5</mixmicro-apis-exception.version>
         <mixmicro-apis-logger.version>1.0.0.RC2</mixmicro-apis-logger.version>
+        <mixmicro-apis-security.version>1.0.0.RC1</mixmicro-apis-security.version>
     </properties>
 
 
@@ -67,6 +69,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>logger-api</artifactId>
                 <version>${mixmicro-apis-logger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>security-api</artifactId>
+                <version>${mixmicro-apis-security.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
