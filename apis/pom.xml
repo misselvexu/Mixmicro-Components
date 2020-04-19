@@ -22,6 +22,7 @@
         <module>exception</module>
         <module>logger</module>
         <module>security</module>
+        <module>education</module>
 
         <!-- dependencies -->
         <module>dependencies</module>
