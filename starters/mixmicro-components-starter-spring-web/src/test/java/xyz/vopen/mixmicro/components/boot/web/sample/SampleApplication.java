@@ -26,7 +26,7 @@ public class SampleApplication {
 
     @GetMapping("/test01")
     ResponseEntity test() {
-      return ResponseEntity.ok("test01");
+      return ResponseEntity.ok(null);
     }
 
     @GetMapping("/test02")

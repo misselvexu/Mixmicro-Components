@@ -2,14 +2,13 @@ package xyz.vopen.mixmicro.components.boot.json;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.alibaba.fastjson.serializer.SerializerFeature.WriteNullListAsEmpty;
 
 /**
  * {@link FastjsonTest}
@@ -27,7 +26,7 @@ public class FastjsonTest {
     System.out.println(
         JSON.toJSONString(
             user,
-            SerializerFeature.WriteNullStringAsEmpty
+            SerializerFeature.WriteNullStringAsEmpty, WriteNullListAsEmpty
         ));
 
     System.out.println(
@@ -46,8 +45,10 @@ public class FastjsonTest {
 
   @Getter
   @Setter
+  @Builder
   @NoArgsConstructor
-  public static class User {
+  @AllArgsConstructor
+  public static class User<T> {
 
     private String id;
 
@@ -55,17 +56,11 @@ public class FastjsonTest {
 
     private int age;
 
+    private T body;
+
     private List<String> list;
 
     private Map<String, String> map;
 
-    @Builder
-    public User(String id, String name, int age, List<String> list, Map<String, String> map) {
-      this.id = id;
-      this.name = name;
-      this.age = age;
-      this.list = list;
-      this.map = map;
-    }
   }
 }

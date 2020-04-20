@@ -30,6 +30,11 @@
 
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>mixmicro-components-starter-json</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>common-api</artifactId>
         </dependency>
 

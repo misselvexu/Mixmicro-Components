@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static com.alibaba.fastjson.serializer.SerializerFeature.*;
@@ -41,12 +42,13 @@ public class JsonHttpMessageConverterAutoConfiguration {
       prefix = JSON_PROPERTIES_PREFIX,
       value = "fastjson.enabled",
       havingValue = "true",
-      matchIfMissing = true)
+      matchIfMissing = true
+  )
   public HttpMessageConverters fastJsonHttpMessageConverters(JsonProperties jsonProperties) {
     FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
     FastJsonConfig fastJsonConfig = new FastJsonConfig();
     List<SerializerFeature> features =
-        Lists.newArrayList(WriteDateUseDateFormat, WriteNullBooleanAsFalse, WriteNullNumberAsZero);
+        Lists.newArrayList(WriteDateUseDateFormat, WriteNullBooleanAsFalse, WriteNullNumberAsZero, DisableCircularReferenceDetect);
 
     if (jsonProperties.isWriteNullStringAsEmpty()) {
       features.add(WriteNullStringAsEmpty);
@@ -62,10 +64,12 @@ public class JsonHttpMessageConverterAutoConfiguration {
 
     fastJsonConfig.setSerializerFeatures(features.toArray(new SerializerFeature[0]));
     fastJsonConfig.setDateFormat(jsonProperties.getDefaultDateFormat());
+    fastJsonConfig.setCharset(StandardCharsets.UTF_8);
 
     converter.setFastJsonConfig(fastJsonConfig);
     converter.setSupportedMediaTypes(Lists.newArrayList(MediaType.APPLICATION_JSON));
     log.info(" == Http Message Converter:[{}] is created.", converter);
+
     return new HttpMessageConverters(converter);
   }
 }

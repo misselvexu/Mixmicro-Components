@@ -11,6 +11,8 @@ import xyz.vopen.mixmicro.kits.jackson.JacksonDateFormat;
 
 import java.util.Date;
 
+import static com.alibaba.fastjson.serializer.SerializerFeature.WriteNullListAsEmpty;
+import static com.alibaba.fastjson.serializer.SerializerFeature.WriteNullStringAsEmpty;
 import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_FULL_DATE_FORMATTER;
 
 /**
@@ -40,13 +42,15 @@ public class ResponseEntity<T> extends SerializableBean {
    *
    * <p>
    */
-  @Builder.Default private String message;
+  @JSONField(serialzeFeatures = {WriteNullStringAsEmpty})
+  @Builder.Default private String message = "";
 
   /**
    * Response body serialized content.
    *
    * <p>
    */
+  @JSONField(serialzeFeatures = {WriteNullListAsEmpty, WriteNullStringAsEmpty})
   private T data;
 
   /**
@@ -61,7 +65,6 @@ public class ResponseEntity<T> extends SerializableBean {
   // exception de-Serialize metadata
 
   @JustForTest private ExceptionMetadata ema;
-
 
   /**
    * Defined response body class type.

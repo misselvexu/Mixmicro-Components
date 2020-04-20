@@ -84,7 +84,7 @@ public abstract class AbstractAdvice implements BeanFactoryAware, EnvironmentAwa
       this.contextPath = cleanContextPath(this.contextPath);
     }
 
-    List<String> urls = getProperties().getResponse().getIgnoreUris();
+    List<String> urls = getProperties().getResponse().getIgnoreWrapUris();
     for (String url : urls) {
       if(url.startsWith(this.contextPath.concat(path))) {
         return true;
