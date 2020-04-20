@@ -60,6 +60,6 @@ public class MixSpringWebLoggerFactory {
       spaceId.withTag(APPNAME, appname);
     }
 
-    return LoggerSpaceManager.getLoggerBySpace(name, spaceId, properties);
+    return LoggerSpaceManager.getLoggerBySpace(name, spaceId, properties, LoggerSpaceManager.class.getClassLoader());
   }
 }

@@ -148,13 +148,15 @@ public class WebApiAspect {
     Object[] arguments = joinPoint.getArgs();
     Class<?> targetClass = Class.forName(targetName);
     Method[] methods = targetClass.getMethods();
-    StringBuilder description = new StringBuilder();
+    StringBuilder description = new StringBuilder("");
     for (Method method : methods) {
       if (method.getName().equals(methodName)) {
         Class<?>[] classes = method.getParameterTypes();
         if (classes.length == arguments.length) {
-          description.append(method.getAnnotation(WebApi.class).description());
-          break;
+          if(method.isAnnotationPresent(WebApi.class)) {
+            description.append(method.getAnnotation(WebApi.class).description());
+            break;
+          }
         }
       }
     }

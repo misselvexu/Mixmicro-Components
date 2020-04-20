@@ -1,7 +1,10 @@
 package xyz.vopen.mixmicro.components.boot.web.aspect;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
 import xyz.vopen.mixmicro.components.common.SerializableBean;
+
+import static com.alibaba.fastjson.serializer.SerializerFeature.*;
 
 /**
  * {@link WebApiBean}
@@ -16,16 +19,51 @@ import xyz.vopen.mixmicro.components.common.SerializableBean;
 @AllArgsConstructor
 public class WebApiBean extends SerializableBean {
 
-  private String methodDescription;
   private String url;
-  private String method;
-  private String className;
-  private String methodName;
-  private String remoteAddress;
-  private String params;
-  private Object response;
-  private String exception;
-  private long startTime;
-  private long endTime;
 
+  private String method;
+
+  private String className;
+
+  private String methodName;
+
+  private String methodDescription;
+
+  /**
+   * Remote Address
+   *
+   * <p>
+   */
+  private String remoteAddress;
+
+  /**
+   * Request Params Detail
+   *
+   * <p>
+   */
+  private String params;
+
+  @JSONField(serialzeFeatures = {WriteNullListAsEmpty, WriteNullStringAsEmpty})
+  private Object response;
+
+  /**
+   * Exception Cause
+   *
+   * <p>
+   */
+  private String exception;
+
+  /**
+   * Starting time
+   *
+   * <p>
+   */
+  private long startTime;
+
+  /**
+   * Endpoint time
+   *
+   * <p>
+   */
+  private long endTime;
 }
