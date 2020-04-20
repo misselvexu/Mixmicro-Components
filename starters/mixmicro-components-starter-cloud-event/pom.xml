@@ -49,4 +49,16 @@
 
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>xyz.vopen.opensource</groupId>
+                <artifactId>mixmicro-stream-denpendencies</artifactId>
+                <version>1.0.0.RC3</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>
