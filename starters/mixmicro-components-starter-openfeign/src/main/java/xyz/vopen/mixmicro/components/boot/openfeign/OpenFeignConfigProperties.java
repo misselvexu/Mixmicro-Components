@@ -1,10 +1,10 @@
 package xyz.vopen.mixmicro.components.boot.openfeign;
 
 import com.google.common.collect.Sets;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
@@ -23,15 +23,21 @@ import static xyz.vopen.mixmicro.components.boot.openfeign.OpenFeignConfigProper
 @Getter
 @Setter
 @ConfigurationProperties(prefix = OPENFEIGN_PROPERTIES_PREFIX)
-public class OpenFeignConfigProperties implements Serializable {
+public class OpenFeignConfigProperties implements Serializable, InitializingBean {
 
   public static final String OPENFEIGN_PROPERTIES_PREFIX = "mixmicro.feign";
 
   @NestedConfigurationProperty private TransportMetadata metadata = new TransportMetadata();
 
+  @Override
+  public void afterPropertiesSet() throws Exception {
+    metadata.afterPropertiesSet();
+  }
+
   @Data
   public static class TransportMetadata implements Serializable, InitializingBean {
 
+    @Getter(AccessLevel.PRIVATE)
     private final Set<String> DEFAULT_ENVS = Sets.newHashSet();
 
     /**
@@ -41,16 +47,6 @@ public class OpenFeignConfigProperties implements Serializable {
      */
     private Set<String> envKeys = Sets.newHashSet();
 
-    /**
-     * Invoked by the containing {@code BeanFactory} after it has set all bean properties and
-     * satisfied {@link BeanFactoryAware}, {@code ApplicationContextAware} etc.
-     *
-     * <p>This method allows the bean instance to perform validation of its overall configuration
-     * and final initialization when all bean properties have been set.
-     *
-     * @throws Exception in the event of misconfiguration (such as failure to set an essential
-     *     property) or if initialization fails for any other reason
-     */
     @Override
     public void afterPropertiesSet() throws Exception {
       envKeys.addAll(DEFAULT_ENVS);
