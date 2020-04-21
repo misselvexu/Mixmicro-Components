@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.boot.openfeign;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.Maps;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Map;
 
 import static xyz.vopen.mixmicro.components.boot.openfeign.OpenFeignConfigProperties.OPENFEIGN_PROPERTIES_PREFIX;
 
@@ -38,18 +38,36 @@ public class OpenFeignConfigProperties implements Serializable, InitializingBean
   public static class TransportMetadata implements Serializable, InitializingBean {
 
     @Getter(AccessLevel.PRIVATE)
-    private final Set<String> DEFAULT_ENVS = Sets.newHashSet();
+    private final Map<String, String> DEFAULT_ENVS = Maps.newHashMap();
+
+    /**
+     * Evn Prefix Defined
+     * <p>default: ""</p>
+     */
+    private String prefix = "";
+
+    /**
+     * Env Keys Sensitive
+     */
+    private boolean envKeySensitive = false;
 
     /**
      * Env Properties Keys . Feign Interceptor (Read value from service evn configure properties .)
      *
      * <p>
      */
-    private Set<String> envKeys = Sets.newHashSet();
+    private Map<String, String> envKeys = Maps.newHashMap();
 
     @Override
     public void afterPropertiesSet() throws Exception {
-      envKeys.addAll(DEFAULT_ENVS);
+      if (!DEFAULT_ENVS.isEmpty()) {
+        DEFAULT_ENVS.forEach(
+            (key, value) -> {
+              if (!envKeys.containsKey(key)) {
+                envKeys.put(key, value);
+              }
+            });
+      }
     }
   }
 }

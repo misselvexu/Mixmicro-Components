@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>mixmicro-components-starter-openfeign</artifactId>
-    <version>1.0.0.RC3</version>
+    <version>1.0.0.RC4</version>
 
     <name>Uniform Openfeign Starter Module :: ${project.version}</name>
     <description>🏗 Uniform Openfeign Starter Module</description>
