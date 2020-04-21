@@ -5,7 +5,7 @@ import feign.RequestTemplate;
 import xyz.vopen.mixmicro.components.boot.openfeign.OpenFeignConfigProperties;
 import xyz.vopen.mixmicro.components.boot.openfeign.env.ContextEnvironmentFactory;
 
-import java.util.Set;
+import java.util.Map;
 
 import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_INVOKE_HEADER;
 
@@ -33,11 +33,19 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
 
     OpenFeignConfigProperties.TransportMetadata metadata = properties.getMetadata();
 
-    Set<String> keys = metadata.getEnvKeys();
+    Map<String, String> keys = metadata.getEnvKeys();
 
-    for (String key : keys) {
-      String value = factory.getProperty(key, "");
-      template.header(key, value);
-    }
+    keys.keySet()
+        .parallelStream()
+        .forEach(
+            key -> {
+              String envKey = keys.get(key);
+              String value = factory.getProperty(envKey, "");
+              String headerKey = metadata.getPrefix().concat(key);
+              if(metadata.isEnvKeySensitive()) {
+                headerKey = headerKey.toUpperCase();
+              }
+              template.header(headerKey, value);
+            });
   }
 }

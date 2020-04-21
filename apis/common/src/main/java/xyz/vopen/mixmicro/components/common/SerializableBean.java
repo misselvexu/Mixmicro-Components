@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.common;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,18 @@ public class SerializableBean implements SerializableResponse {
   }
 
   /**
+   * Encode Object To JSON With {@link SerializerFeature}
+   *
+   * @param o object instance
+   * @param features default features array {@link MixmicroConstants#DEFAULT_SERIALIZER_FEATURES}
+   * @return json result
+   * @since RC8
+   */
+  public static String encode(Object o, SerializerFeature... features) {
+    return JSON.toJSONString(o, features);
+  }
+
+  /**
    * Encode Object To JSON Bytes
    *
    * @param o object instance
@@ -34,6 +47,18 @@ public class SerializableBean implements SerializableResponse {
    */
   public static byte[] bytes(Object o) {
     return JSON.toJSONBytes(o);
+  }
+
+  /**
+   * Encode Object To JSON Bytes Array With {@link SerializerFeature}
+   *
+   * @param o object instance
+   * @param features default features array {@link MixmicroConstants#DEFAULT_SERIALIZER_FEATURES}
+   * @return json result
+   * @since RC8
+   */
+  public static byte[] bytes(Object o, SerializerFeature... features) {
+    return JSON.toJSONBytes(o, features);
   }
 
   /**
