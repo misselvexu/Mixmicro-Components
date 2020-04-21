@@ -50,6 +50,12 @@ public class JsonHttpMessageConverterAutoConfiguration {
     List<SerializerFeature> features =
         Lists.newArrayList(WriteDateUseDateFormat, WriteNullBooleanAsFalse, WriteNullNumberAsZero, DisableCircularReferenceDetect);
 
+    // fixed null field no serialize issues .
+    // @since rc4
+    if(jsonProperties.isWriteMapNullValue()) {
+      features.add(WriteMapNullValue);
+    }
+
     if (jsonProperties.isWriteNullStringAsEmpty()) {
       features.add(WriteNullStringAsEmpty);
     }

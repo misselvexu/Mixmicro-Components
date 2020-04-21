@@ -1,5 +1,9 @@
 package xyz.vopen.mixmicro.components.common;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
+import static com.alibaba.fastjson.serializer.SerializerFeature.*;
+
 /**
  * {@link MixmicroConstants}
  *
@@ -37,4 +41,21 @@ public class MixmicroConstants {
    * <p>
    */
   public static final String MIXMICRO_INGRESS_INVOKE_HEADER = "mixmicro.ingress.invoke";
+
+  /**
+   * Default Fastjson Serializer Features .
+   *
+   * <p>
+   * @since rc5
+   */
+  public static final SerializerFeature[] DEFAULT_SERIALIZER_FEATURES = {
+    WriteDateUseDateFormat,
+    WriteNullBooleanAsFalse,
+    WriteNullNumberAsZero,
+    DisableCircularReferenceDetect,
+    WriteMapNullValue,
+    WriteNullStringAsEmpty,
+    WriteNonStringKeyAsString,
+    WriteNullListAsEmpty
+  };
 }

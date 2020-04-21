@@ -26,7 +26,9 @@ public class JsonProperties implements Serializable {
 
   private Fastjson fastjson = new Fastjson();
 
-  @Beta private Jackson jackson = new Jackson();
+  @Deprecated @Beta private Jackson jackson = new Jackson();
+
+  private boolean writeMapNullValue = true;
 
   private boolean writeNullStringAsEmpty = true;
 
@@ -45,6 +47,7 @@ public class JsonProperties implements Serializable {
 
   @Getter
   @Setter
+  @Deprecated
   public static class Jackson implements Serializable {
 
     private boolean enabled;

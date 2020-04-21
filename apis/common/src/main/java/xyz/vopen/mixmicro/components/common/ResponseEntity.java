@@ -6,13 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import xyz.vopen.mixmicro.components.exception.Exceptions;
 import xyz.vopen.mixmicro.kits.annotation.JustForTest;
 import xyz.vopen.mixmicro.kits.jackson.JacksonDateFormat;
 
 import java.util.Date;
 
-import static com.alibaba.fastjson.serializer.SerializerFeature.WriteNullListAsEmpty;
-import static com.alibaba.fastjson.serializer.SerializerFeature.WriteNullStringAsEmpty;
 import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_FULL_DATE_FORMATTER;
 
 /**
@@ -42,15 +41,13 @@ public class ResponseEntity<T> extends SerializableBean {
    *
    * <p>
    */
-  @JSONField(serialzeFeatures = {WriteNullStringAsEmpty})
-  @Builder.Default private String message = "";
+  private String message;
 
   /**
    * Response body serialized content.
    *
    * <p>
    */
-  @JSONField(serialzeFeatures = {WriteNullListAsEmpty, WriteNullStringAsEmpty})
   private T data;
 
   /**
@@ -127,18 +124,93 @@ public class ResponseEntity<T> extends SerializableBean {
     return ResponseEntity.builder().code(code).message(message).build();
   }
 
+  public static ResponseEntity<Object> fail(int code, String message, Throwable e) {
+    return ResponseEntity.builder()
+        .code(code)
+        .message(message)
+        .ema(
+            ExceptionMetadata.builder()
+                .className(e.getClass().getCanonicalName())
+                .exception(e)
+                .detailMessage(Exceptions.toString(e))
+                .build())
+        .build();
+  }
+
+  public static <T> ResponseEntity<T> fail(int code, Throwable e) {
+    return ResponseEntity.<T>builder()
+        .bodyClassType(Void.class)
+        .code(code)
+        .message(e.getMessage())
+        .ema(
+            ExceptionMetadata.builder()
+                .className(e.getClass().getCanonicalName())
+                .exception(e)
+                .detailMessage(Exceptions.toString(e))
+                .build())
+        .build();
+  }
+
   public static <T> ResponseEntity<T> fail(Class<T> clazz, int code, String message) {
     return ResponseEntity.<T>builder().bodyClassType(clazz).code(code).message(message).build();
+  }
+
+  public static <T> ResponseEntity<T> fail(Class<T> clazz, int code, String message, Throwable e) {
+    return ResponseEntity.<T>builder()
+        .bodyClassType(clazz)
+        .code(code)
+        .message(message)
+        .ema(
+            ExceptionMetadata.builder()
+                .className(e.getClass().getCanonicalName())
+                .exception(e)
+                .detailMessage(Exceptions.toString(e))
+                .build())
+        .build();
   }
 
   public static ResponseEntity<Object> fail(int code, Object body, String message) {
     return ResponseEntity.builder().code(code).data(body).message(message).build();
   }
 
-  public static <T> ResponseEntity<T> fail(Class<T> clazz, int code, T body, String message) {
-    return ResponseEntity.<T>builder().bodyClassType(clazz).code(code).data(body).message(message).build();
+  public static ResponseEntity<Object> fail(int code, Object body, String message, Throwable e) {
+    return ResponseEntity.builder()
+        .code(code)
+        .data(body)
+        .message(message)
+        .ema(
+            ExceptionMetadata.builder()
+                .className(e.getClass().getCanonicalName())
+                .exception(e)
+                .detailMessage(Exceptions.toString(e))
+                .build())
+        .build();
   }
 
+  public static <T> ResponseEntity<T> fail(Class<T> clazz, int code, T body, String message) {
+    return ResponseEntity.<T>builder()
+        .bodyClassType(clazz)
+        .code(code)
+        .data(body)
+        .message(message)
+        .build();
+  }
+
+  public static <T> ResponseEntity<T> fail(
+      Class<T> clazz, int code, T body, String message, Throwable e) {
+    return ResponseEntity.<T>builder()
+        .bodyClassType(clazz)
+        .code(code)
+        .data(body)
+        .message(message)
+        .ema(
+            ExceptionMetadata.builder()
+                .className(e.getClass().getCanonicalName())
+                .exception(e)
+                .detailMessage(Exceptions.toString(e))
+                .build())
+        .build();
+  }
 
   @Getter
   @Setter
