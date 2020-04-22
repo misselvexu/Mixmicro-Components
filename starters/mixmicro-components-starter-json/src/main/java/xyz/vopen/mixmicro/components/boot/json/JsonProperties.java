@@ -28,12 +28,33 @@ public class JsonProperties implements Serializable {
 
   @Deprecated @Beta private Jackson jackson = new Jackson();
 
-  private boolean writeMapNullValue = true;
+  /**
+   * 格式化打印，生产环境不建议开启。
+   */
+  private boolean prettyFormat = false;
 
+  /**
+   * 序列化输出NULL字段配置,默认关闭
+   */
+  private boolean writeMapNullValue = false;
+
+  /**
+   * 序列化NULL字符串为blank ""
+   */
   private boolean writeNullStringAsEmpty = true;
+
+  private boolean writeBigDecimalAsPlain = true;
+
+  /**
+   * 序列化Long类型转成String类型
+   */
+  private boolean writeLongAsString = true;
 
   private boolean writeNonStringValueAsString = false;
 
+  /**
+   * 输出空数组
+   */
   private boolean writeNullListAsEmpty = true;
 
   private String defaultDateFormat = "yyyy-MM-dd HH:mm:ss";

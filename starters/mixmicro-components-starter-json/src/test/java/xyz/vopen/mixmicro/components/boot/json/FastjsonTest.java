@@ -1,14 +1,15 @@
 package xyz.vopen.mixmicro.components.boot.json;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static com.alibaba.fastjson.serializer.SerializerFeature.WriteNullListAsEmpty;
+import static com.alibaba.fastjson.serializer.SerializerFeature.*;
 
 /**
  * {@link FastjsonTest}
@@ -21,24 +22,20 @@ public class FastjsonTest {
   @Test
   public void testNullString() {
 
-    User user = User.builder().name(null).id("1").age(0).build();
+    User user = User.builder().name(null).id("1").inner(new Inner()).build();
 
     System.out.println(
         JSON.toJSONString(
             user,
-            SerializerFeature.WriteNullStringAsEmpty, WriteNullListAsEmpty
-        ));
+            PrettyFormat,
+            WriteNonStringValueAsString,
+//            WriteMapNullValue,
+            WriteNullListAsEmpty,
+            WriteBigDecimalAsPlain,
+            WriteDateUseDateFormat
+//            WriteNullNumberAsZero,
+//            WriteNullStringAsEmpty
 
-    System.out.println(
-        JSON.toJSONString(
-            user,
-            SerializerFeature.WriteNonStringValueAsString
-        ));
-
-    System.out.println(
-        JSON.toJSONString(
-            user,
-            SerializerFeature.WriteNullListAsEmpty
         ));
 
   }
@@ -54,13 +51,21 @@ public class FastjsonTest {
 
     private String name;
 
-    private int age;
+    private Integer age;
 
+    @JSONField(serialzeFeatures = {WriteNonStringValueAsString, WriteMapNullValue, WriteNullListAsEmpty, WriteNullNumberAsZero, WriteNullStringAsEmpty})
     private T body;
 
     private List<String> list;
 
     private Map<String, String> map;
 
+    private Inner inner;
+  }
+
+  @Data
+  public static class Inner {
+    private String field;
+    private Date date = new Date();
   }
 }

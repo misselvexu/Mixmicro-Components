@@ -1,5 +1,6 @@
 package xyz.vopen.mixmicro.components.boot.json;
 
+import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
+import xyz.vopen.mixmicro.components.boot.json.serializer.LongToStringSerializer;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -71,6 +73,13 @@ public class JsonHttpMessageConverterAutoConfiguration {
     fastJsonConfig.setSerializerFeatures(features.toArray(new SerializerFeature[0]));
     fastJsonConfig.setDateFormat(jsonProperties.getDefaultDateFormat());
     fastJsonConfig.setCharset(StandardCharsets.UTF_8);
+
+    if (jsonProperties.isWriteLongAsString()) {
+      SerializeConfig serializeConfig = SerializeConfig.globalInstance;
+      serializeConfig.put(Long.class, LongToStringSerializer.instance);
+      serializeConfig.put(Long.TYPE, LongToStringSerializer.instance);
+      fastJsonConfig.setSerializeConfig(serializeConfig);
+    }
 
     converter.setFastJsonConfig(fastJsonConfig);
     converter.setSupportedMediaTypes(Lists.newArrayList(MediaType.APPLICATION_JSON));
