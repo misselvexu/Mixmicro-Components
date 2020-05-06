@@ -2,19 +2,14 @@ package xyz.vopen.mixmicro.components.boot.web.autoconfigure;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import xyz.vopen.mixmicro.components.boot.web.Marker;
 import xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties;
 import xyz.vopen.mixmicro.components.boot.web.aspect.WebApiAspect;
+import xyz.vopen.mixmicro.components.boot.web.core.MixmicroWebMvcConfigurer;
 import xyz.vopen.mixmicro.components.boot.web.core.advice.MixmicroExceptionAdvice;
 import xyz.vopen.mixmicro.components.boot.web.core.advice.MixmicroResponseBodyAdvice;
-
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 import static xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties.MIXMICRO_WEB_CONFIG_PROPERTIES_PREFIX;
 
@@ -31,6 +26,8 @@ import static xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties
     havingValue = "true",
     matchIfMissing = true)
 @EnableConfigurationProperties(MixmicroWebConfigProperties.class)
+@ComponentScan(basePackageClasses = Marker.class)
+@Import(MixmicroWebMvcConfigurer.class)
 public class MixmicroWebAutoConfiguration implements WebMvcConfigurer {
 
   @Bean
@@ -65,16 +62,4 @@ public class MixmicroWebAutoConfiguration implements WebMvcConfigurer {
     return new WebApiAspect(properties);
   }
 
-  // FIX default string http message converter charset.
-
-  @Bean
-  @Primary
-  StringHttpMessageConverter stringHttpMessageConverter() {
-    return new StringHttpMessageConverter(StandardCharsets.UTF_8);
-  }
-
-  @Override
-  public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-    converters.add(stringHttpMessageConverter());
-  }
 }
