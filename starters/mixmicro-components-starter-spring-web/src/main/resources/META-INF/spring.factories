@@ -1,2 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   xyz.vopen.mixmicro.components.boot.web.autoconfigure.MixmicroWebAutoConfiguration
+
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  xyz.vopen.mixmicro.components.boot.web.env.DefaultSpringWebEnvironmentPostProcessor
