@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-all</artifactId>
-        <version>1.0.0.RC3</version>
+        <version>1.0.2.BUILD-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-kits</artifactId>
-    <version>1.0.0.RC2</version>
+    <version>1.0.2.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Kits Module :: ${project.version}</name>
@@ -22,21 +22,21 @@
         <maven.compiler.target>1.7</maven.compiler.target>
 
         <!-- Module Version -->
-        <mixmicro-executor.kit.version>1.0.0.RC2</mixmicro-executor.kit.version>
-        <mixmicro-event.kit.version>1.0.0.RC2</mixmicro-event.kit.version>
-        <mixmicro-compression.kit.version>1.0.0.RC2</mixmicro-compression.kit.version>
-        <mixmicro-timer.kit.version>1.0.0.RC2</mixmicro-timer.kit.version>
-        <mixmicro-spring-context.kit.version>1.0.0.RC2</mixmicro-spring-context.kit.version>
-        <mixmicro-http-client.kit.version>1.0.0.RC2</mixmicro-http-client.kit.version>
-        <mixmicro-servlet-compress.kit.version>1.0.0.RC2</mixmicro-servlet-compress.kit.version>
-        <mixmicro-jre-http-client.kit.version>1.0.0.RC2</mixmicro-jre-http-client.kit.version>
+        <mixmicro-executor.kit.version>1.0.1</mixmicro-executor.kit.version>
+        <mixmicro-event.kit.version>1.0.1</mixmicro-event.kit.version>
+        <mixmicro-compression.kit.version>1.0.1</mixmicro-compression.kit.version>
+        <mixmicro-timer.kit.version>1.0.1</mixmicro-timer.kit.version>
+        <mixmicro-spring-context.kit.version>1.0.1</mixmicro-spring-context.kit.version>
+        <mixmicro-http-client.kit.version>1.0.1</mixmicro-http-client.kit.version>
+        <mixmicro-servlet-compress.kit.version>1.0.1</mixmicro-servlet-compress.kit.version>
+        <mixmicro-jre-http-client.kit.version>1.0.1</mixmicro-jre-http-client.kit.version>
         <mixmicro-common.kit.version>1.0.0.RC3</mixmicro-common.kit.version>
         <mixmicro-hessian.kit.version>Antarctica.4x.RC1</mixmicro-hessian.kit.version>
-        <mixmicro-queue.kit.version>1.0.0.RC2</mixmicro-queue.kit.version>
-        <mixmicro-retry.kit.version>1.0.0.RC2</mixmicro-retry.kit.version>
-        <mixmicro-timed-id.kit.version>1.0.0.RC2</mixmicro-timed-id.kit.version>
-        <mixmicro-qrcode.kit.version>1.0.0.RC2</mixmicro-qrcode.kit.version>
-        <mixmicro-reflect.kit.version>1.0.0.RC2</mixmicro-reflect.kit.version>
+        <mixmicro-queue.kit.version>1.0.1</mixmicro-queue.kit.version>
+        <mixmicro-retry.kit.version>1.0.1</mixmicro-retry.kit.version>
+        <mixmicro-timed-id.kit.version>1.0.1</mixmicro-timed-id.kit.version>
+        <mixmicro-qrcode.kit.version>1.0.1</mixmicro-qrcode.kit.version>
+        <mixmicro-reflect.kit.version>1.0.1</mixmicro-reflect.kit.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
