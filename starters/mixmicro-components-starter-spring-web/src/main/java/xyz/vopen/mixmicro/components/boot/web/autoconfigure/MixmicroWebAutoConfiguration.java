@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import xyz.vopen.mixmicro.components.boot.web.Marker;
 import xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties;
 import xyz.vopen.mixmicro.components.boot.web.aspect.WebApiAspect;
-import xyz.vopen.mixmicro.components.boot.web.core.MixmicroWebMvcConfigurer;
 import xyz.vopen.mixmicro.components.boot.web.core.advice.MixmicroExceptionAdvice;
 import xyz.vopen.mixmicro.components.boot.web.core.advice.MixmicroResponseBodyAdvice;
 

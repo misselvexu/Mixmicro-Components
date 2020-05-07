@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.vopen.mixmicro.components.common.ResponseEntity;
+import xyz.vopen.mixmicro.components.common.rest.MixmicroResponseBody;
 
 /**
  * {@link SampleApplication}
@@ -29,9 +30,10 @@ public class SampleApplication {
       return ResponseEntity.ok(null);
     }
 
+    @MixmicroResponseBody(direct = true, json = false)
     @GetMapping("/test02")
     String test02() {
-      throw new SampleException("test02 exception");
+      return "你好";
     }
 
     @GetMapping("/test03")
