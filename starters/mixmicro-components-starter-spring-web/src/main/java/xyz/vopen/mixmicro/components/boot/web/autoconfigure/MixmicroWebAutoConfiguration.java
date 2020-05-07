@@ -2,9 +2,9 @@ package xyz.vopen.mixmicro.components.boot.web.autoconfigure;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.*;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import xyz.vopen.mixmicro.components.boot.web.Marker;
 import xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties;
 import xyz.vopen.mixmicro.components.boot.web.aspect.WebApiAspect;
 import xyz.vopen.mixmicro.components.boot.web.core.advice.MixmicroExceptionAdvice;
@@ -25,7 +25,9 @@ import static xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties
     havingValue = "true",
     matchIfMissing = true)
 @EnableConfigurationProperties(MixmicroWebConfigProperties.class)
-public class MixmicroWebAutoConfiguration {
+@ComponentScan(basePackageClasses = Marker.class)
+@Import(MixmicroWebMvcConfigurer.class)
+public class MixmicroWebAutoConfiguration implements WebMvcConfigurer {
 
   @Bean
   @Primary
@@ -58,4 +60,5 @@ public class MixmicroWebAutoConfiguration {
   WebApiAspect webApiAspect(MixmicroWebConfigProperties properties) {
     return new WebApiAspect(properties);
   }
+
 }

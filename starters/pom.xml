@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-all</artifactId>
-        <version>1.0.0.RC3</version>
+        <version>1.0.2.BUILD-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starters</artifactId>
-    <version>1.0.0.RC3</version>
+    <version>1.0.2.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Starters Module :: ${project.version}</name>
@@ -38,21 +38,21 @@
     </modules>
 
     <properties>
-        <micro-starter-authorization.version>1.0.0.RC1</micro-starter-authorization.version>
-        <micro-starter-banner.version>1.0.0.RC2</micro-starter-banner.version>
-        <micro-starter-logger.version>1.0.0.RC2</micro-starter-logger.version>
-        <micro-starter-json.version>1.0.0.RC4</micro-starter-json.version>
-        <micro-starter-cors.version>1.0.0.RC2</micro-starter-cors.version>
-        <micro-starter-resteasy.version>1.0.0.RC2</micro-starter-resteasy.version>
-        <micro-starter-snowflake.version>1.0.0.RC2</micro-starter-snowflake.version>
-        <micro-starter-openfeign.version>1.0.0.RC4</micro-starter-openfeign.version>
-        <micro-starter-datasource.version>1.0.0.RC2</micro-starter-datasource.version>
-        <micro-starter-sidecar.version>1.0.0.RC2</micro-starter-sidecar.version>
-        <micro-starter-security.version>1.0.0.RC1</micro-starter-security.version>
-        <micro-starter-cloud-event.version>1.0.0.RC1</micro-starter-cloud-event.version>
-        <micro-starter-message-queue.version>1.0.0.RC2</micro-starter-message-queue.version>
-        <micro-starter-healthy.version>1.0.0.RC1</micro-starter-healthy.version>
-        <micro-starter-errors.version>1.0.0.RC1</micro-starter-errors.version>
+        <micro-starter-authorization.version>1.0.1</micro-starter-authorization.version>
+        <micro-starter-banner.version>1.0.1</micro-starter-banner.version>
+        <micro-starter-logger.version>1.0.1</micro-starter-logger.version>
+        <micro-starter-json.version>1.0.1</micro-starter-json.version>
+        <micro-starter-cors.version>1.0.1</micro-starter-cors.version>
+        <micro-starter-resteasy.version>1.0.1</micro-starter-resteasy.version>
+        <micro-starter-snowflake.version>1.0.1</micro-starter-snowflake.version>
+        <micro-starter-openfeign.version>1.0.1</micro-starter-openfeign.version>
+        <micro-starter-datasource.version>1.0.1</micro-starter-datasource.version>
+        <micro-starter-sidecar.version>1.0.1</micro-starter-sidecar.version>
+        <micro-starter-security.version>1.0.1</micro-starter-security.version>
+        <micro-starter-cloud-event.version>1.0.1</micro-starter-cloud-event.version>
+        <micro-starter-message-queue.version>1.0.1</micro-starter-message-queue.version>
+        <micro-starter-healthy.version>1.0.1</micro-starter-healthy.version>
+        <micro-starter-errors.version>1.0.1</micro-starter-errors.version>
     </properties>
 
     <dependencyManagement>

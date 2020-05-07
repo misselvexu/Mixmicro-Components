@@ -18,16 +18,16 @@
 
 <configuration>
 
-    <property name="LOG_PATH" value="${mixmicro.logging.path:-.}"/>
+    <property name="LOG_PATH" value="${mixmicro.server.home:-${mixmicro.logging.path:-.}}"/>
 
     <appender name="ERROR-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>error</level>
         </filter>
-        <file>${LOG_PATH}/${appname}/spring-web-request/web-request-error.log</file>
+        <file>${LOG_PATH}/logs/spring-web-request/web-request-error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_PATH}/${appname}/spring-web-request/web-request-error.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <FileNamePattern>${LOG_PATH}/logs/spring-web-request/web-request-error.log.%d{yyyy-MM-dd}</FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -42,10 +42,10 @@
             <level>${logging.level.spring.web.request}</level>
         </filter>
 
-        <file>${LOG_PATH}/${appname}/spring-web-request/web-request-default.log</file>
+        <file>${LOG_PATH}/logs/spring-web-request/web-request-default.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_PATH}/${appname}/spring-web-request/web-request-default.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <FileNamePattern>${LOG_PATH}/logs/spring-web-request/web-request-default.log.%d{yyyy-MM-dd}</FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">

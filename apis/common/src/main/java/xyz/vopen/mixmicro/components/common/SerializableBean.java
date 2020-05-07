@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static com.alibaba.fastjson.serializer.SerializerFeature.*;
+
 /**
  * {@link SerializableBean}
  *
@@ -16,6 +18,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SerializableBean implements SerializableResponse {
+
+  @Override
+  public String toString() {
+    return encode(
+        this,
+        WriteNonStringValueAsString,
+        WriteNullListAsEmpty,
+        WriteBigDecimalAsPlain,
+        WriteDateUseDateFormat);
+  }
 
   /**
    * Encode Object To JSON

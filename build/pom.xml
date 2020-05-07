@@ -1,50 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.yunlsp.framework.components</groupId>
-    <artifactId>mixmicro-components-all</artifactId>
-    <version>1.0.2.BUILD-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <groupId>com.yunlsp.framework</groupId>
+    <artifactId>mixmicro-build</artifactId>
+    <version>2020.04.RC1</version>
 
-    <name>Components :: ${project.version}</name>
-    <description>🏗 Components Parent</description>
-    <inceptionYear>2020</inceptionYear>
-    <url>http://git.hgj.net/elve.xu/Mixmicro-Components</url>
-
-    <organization>
-        <name>The YunLSP+ Organization</name>
-        <url>https://www.yunlsp.com</url>
-    </organization>
+    <name>Mixmicro Framework Build Parent ${project.version}</name>
 
     <properties>
-        <!-- Deploy Properties -->
-        <maven.deploy.skip>false</maven.deploy.skip>
-
-        <!-- base properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <!-- Framework's version -->
-        <spring.cloud.version>Hoxton.SR2</spring.cloud.version>
-        <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
-        <spring.framework.version>5.2.2.RELEASE</spring.framework.version>
-
-        <jaeger.opentracing.version>2.0.3</jaeger.opentracing.version>
-        <swagger.version>1.5.14</swagger.version>
-        <springfox.swagger.version>2.8.0</springfox.swagger.version>
-        <mybatis.plus.version>3.1.0</mybatis.plus.version>
-
-        <!-- Components Version -->
-        <mixmicro-components-kits.dependencies.version>1.0.1</mixmicro-components-kits.dependencies.version>
-        <mixmicro-components-apis.dependencies.version>1.0.1</mixmicro-components-apis.dependencies.version>
-        <mixmicro-components-enhance.dependencies.version>1.0.1</mixmicro-components-enhance.dependencies.version>
-        <mixmicro-components-starters.dependencies.version>1.0.1</mixmicro-components-starters.dependencies.version>
-
-        <mixmicro-components-stream.dependencies.version>1.0.0.RC3</mixmicro-components-stream.dependencies.version>
-
-        <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
@@ -55,6 +24,7 @@
         <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     </properties>
+
 
     <prerequisites>
         <maven>3.2.5</maven>
@@ -70,9 +40,9 @@
 
     <developers>
         <developer>
-            <id>YunLSP+</id>
-            <name>Developer</name>
-            <email>developer@yunlsp.com</email>
+            <id>misselvexu</id>
+            <name>Elve.Xu</name>
+            <email>iskp.me@gmail.com</email>
             <roles>
                 <role>Architect</role>
                 <role>Developer</role>
@@ -81,275 +51,7 @@
         </developer>
     </developers>
 
-    <modules>
-        <module>apis</module>
-        <module>kits</module>
-        <module>enhance</module>
-
-        <module>starters</module>
-
-        <module>all</module>
-        <module>build</module>
-    </modules>
-
-
-    <dependencyManagement>
-        <dependencies>
-
-            <!-- Template Lib Defined -->
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-kits-dependencies</artifactId>
-                <version>${mixmicro-components-kits.dependencies.version}</version>
-                <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-apis-dependencies</artifactId>
-                <version>${mixmicro-components-apis.dependencies.version}</version>
-                <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-starters-dependencies</artifactId>
-                <version>${mixmicro-components-starters.dependencies.version}</version>
-                <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-enhance-parent</artifactId>
-                <version>${mixmicro-components-enhance.dependencies.version}</version>
-                <type>pom</type>
-            </dependency>
-
-            <!-- Spring Cloud Dependency  -->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- Spring Cloud Alibaba -->
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2.2.0.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- Spring Boot Dependency  -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- Stream Lib -->
-            <dependency>
-                <groupId>xyz.vopen.opensource</groupId>
-                <artifactId>mixmicro-stream-denpendencies</artifactId>
-                <version>${mixmicro-components-stream.dependencies.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-
-            <!-- Database Libs -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-jdbc</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.zaxxer</groupId>
-                <artifactId>HikariCP</artifactId>
-                <version>3.4.1</version>
-            </dependency>
-
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.18</version>
-            </dependency>
-
-            <!-- Mybatis Libs -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis.plus.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-annotation</artifactId>
-                <version>${mybatis.plus.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-core</artifactId>
-                <version>${mybatis.plus.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-extension</artifactId>
-                <version>${mybatis.plus.version}</version>
-            </dependency>
-
-            <!-- test -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring.boot.version}</version>
-                <scope>test</scope>
-            </dependency>
-
-            <!-- Trace Support -->
-            <dependency>
-                <groupId>io.opentracing.contrib</groupId>
-                <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
-                <version>${jaeger.opentracing.version}</version>
-            </dependency>
-
-            <!-- Commons Kit-->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.8</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.6</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>1.9.3</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-pool2</artifactId>
-                <version>2.6.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-cli</groupId>
-                <artifactId>commons-cli</artifactId>
-                <version>1.4</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>1.11</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>1.2.67</version>
-            </dependency>
-
-            <!-- bouncycastle -->
-            <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
-                <version>1.60</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk16</artifactId>
-                <version>1.46</version>
-            </dependency>
-
-            <!-- Swagger Support -->
-            <dependency>
-                <groupId>xyz.vopen.tiffany</groupId>
-                <artifactId>spring-boot-starter-swagger</artifactId>
-                <version>0.8.1-RELEASE</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${springfox.swagger.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${springfox.swagger.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-bean-validators</artifactId>
-                <version>${springfox.swagger.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-
-            <!-- Java Validation Libs -->
-            <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>2.0.1.Final</version>
-            </dependency>
-
-            <!-- Hibernate Implements of Java Validation -->
-            <dependency>
-                <groupId>org.hibernate.validator</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>6.0.14.Final</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>25.1-jre</version>
-            </dependency>
-
-        </dependencies>
-    </dependencyManagement>
-
-    <dependencies>
-
-        <!-- junit support -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- lombok support -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.6</version>
-        </dependency>
-
-    </dependencies>
-
     <build>
-
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -593,5 +295,4 @@
             <uniqueVersion>false</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>
-
 </project>

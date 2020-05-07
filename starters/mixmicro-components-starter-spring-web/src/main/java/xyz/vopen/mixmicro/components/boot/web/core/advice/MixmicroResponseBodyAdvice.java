@@ -20,7 +20,7 @@ import xyz.vopen.mixmicro.components.exception.defined.MixmicroException;
 
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
+import static xyz.vopen.mixmicro.components.boot.web.MediaType.TEXT_PLAIN_VALUE;
 import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_INVOKE_HEADER;
 
 /**

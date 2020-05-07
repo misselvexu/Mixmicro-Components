@@ -38,7 +38,11 @@ public class OpenFeignConfigProperties implements Serializable, InitializingBean
   public static class TransportMetadata implements Serializable, InitializingBean {
 
     @Getter(AccessLevel.PRIVATE)
-    private final Map<String, String> DEFAULT_ENVS = Maps.newHashMap();
+    private static final Map<String, String> DEFAULT_ENVS = Maps.newHashMap();
+
+    static {
+      DEFAULT_ENVS.put("appname","yunlsp.metadata.app-name");
+    }
 
     /**
      * Evn Prefix Defined
