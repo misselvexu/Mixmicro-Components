@@ -43,9 +43,17 @@ public class MixmicroConstants {
   public static final String MIXMICRO_INGRESS_INVOKE_HEADER = "mixmicro.ingress.invoke";
 
   /**
+   * Server Home
+   *
+   * <p>
+   */
+  public static final String FRAMEWORK_RUNTIME_HOME_KEY = "mixmicro.server.home";
+
+  /**
    * Default Fastjson Serializer Features .
    *
    * <p>
+   *
    * @since rc5
    */
   public static final SerializerFeature[] DEFAULT_SERIALIZER_FEATURES = {
