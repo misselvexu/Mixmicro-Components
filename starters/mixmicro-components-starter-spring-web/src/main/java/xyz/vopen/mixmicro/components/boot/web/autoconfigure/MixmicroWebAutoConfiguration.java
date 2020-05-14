@@ -33,7 +33,7 @@ public class MixmicroWebAutoConfiguration implements WebMvcConfigurer {
   @Primary
   @ConditionalOnProperty(
       prefix = MIXMICRO_WEB_CONFIG_PROPERTIES_PREFIX,
-      value = "response-wrap-advice",
+      value = "global-exception-handler-advice",
       havingValue = "true",
       matchIfMissing = true)
   MixmicroExceptionAdvice mixmicroExceptionAdvice() {
@@ -44,7 +44,7 @@ public class MixmicroWebAutoConfiguration implements WebMvcConfigurer {
   @Primary
   @ConditionalOnProperty(
       prefix = MIXMICRO_WEB_CONFIG_PROPERTIES_PREFIX,
-      value = "global-exception-handler-advice",
+      value = "response-wrap-advice",
       havingValue = "true",
       matchIfMissing = true)
   MixmicroResponseBodyAdvice mixmicroResponseBodyAdvice() {
