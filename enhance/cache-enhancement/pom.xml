@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-parent</artifactId>
-        <version>1.0.2.BUILD-SNAPSHOT</version>
+        <version>1.0.2.RC1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-cache</artifactId>
-    <version>1.0.2.BUILD-SNAPSHOT</version>
+    <version>1.0.2.RC1</version>
     <packaging>pom</packaging>
 
     <name>Enhance Cache Module :: ${project.version}</name>

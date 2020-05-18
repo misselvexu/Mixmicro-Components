@@ -62,8 +62,9 @@ public class JsonHttpMessageConverterAutoConfiguration {
       features.add(WriteNullStringAsEmpty);
     }
 
+    // @Gao fix: invalid serialize feature.
     if (jsonProperties.isWriteNonStringValueAsString()) {
-      features.add(WriteNonStringKeyAsString);
+      features.add(WriteNonStringValueAsString);
     }
 
     if (jsonProperties.isWriteNullListAsEmpty()) {

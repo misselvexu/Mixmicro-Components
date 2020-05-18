@@ -23,7 +23,6 @@ public class SerializableBean implements SerializableResponse {
   public String toString() {
     return encode(
         this,
-        WriteNonStringValueAsString,
         WriteNullListAsEmpty,
         WriteBigDecimalAsPlain,
         WriteDateUseDateFormat);

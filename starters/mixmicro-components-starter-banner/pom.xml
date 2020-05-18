@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-starters</artifactId>
-        <version>1.0.2.BUILD-SNAPSHOT</version>
+        <version>1.0.2.RC1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-banner</artifactId>
-    <version>1.0.2.BUILD-SNAPSHOT</version>
+    <version>1.0.2.RC1</version>
 
     <name>Banner Starter Module :: ${project.version}</name>
     <description>🏗 Banner Starter Module</description>

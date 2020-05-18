@@ -42,7 +42,7 @@ public class ResponseEntity<T> extends SerializableBean {
    *
    * <p>
    */
-  @JSONField(serialzeFeatures = {WriteNonStringValueAsString, WriteNullStringAsEmpty})
+  @JSONField(serialzeFeatures = {WriteNullStringAsEmpty})
   @Builder.Default private String message = "";
 
   /**
@@ -50,7 +50,7 @@ public class ResponseEntity<T> extends SerializableBean {
    *
    * <p>
    */
-  @JSONField(serialzeFeatures = {WriteNonStringValueAsString, WriteMapNullValue, WriteNullListAsEmpty, WriteNullNumberAsZero, WriteNullStringAsEmpty})
+  @JSONField(serialzeFeatures = {WriteMapNullValue, WriteNullListAsEmpty, WriteNullNumberAsZero, WriteNullStringAsEmpty})
   private T data;
 
   /**
