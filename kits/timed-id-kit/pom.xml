@@ -5,13 +5,13 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-kits</artifactId>
-        <version>1.0.2.RC1</version>
+        <version>1.0.2.RC2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>timed-id-kit</artifactId>
-    <version>1.0.2.RC1</version>
+    <version>1.0.2.RC2</version>
 
     <name>Timed Id Kit :: ${project.version}</name>
     <description>Mixmicro+ Generates 27-character, time-ordered, k-sortable, URL-safe, globally unique identifiers.</description>

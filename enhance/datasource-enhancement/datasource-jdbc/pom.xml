@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-datasource</artifactId>
-        <version>1.0.2.RC1</version>
+        <version>1.0.2.RC2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-datasource-jdbc</artifactId>
-    <version>1.0.2.RC1</version>
+    <version>1.0.2.RC2</version>
 
     <name>Enhance DataSource JDBC Module :: ${project.version}</name>
     <description>🏗 Enhance DataSource JDBC Module</description>
