@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-cache-extension</artifactId>
-        <version>1.0.2.RC2</version>
+        <version>1.0.2.RC3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-cache-extension-redis-lettuce</artifactId>
-    <version>1.0.2.RC2</version>
+    <version>1.0.2.RC3</version>
 
     <name>Enhance Cache With Lettuce Implements Extension Module :: ${project.version}</name>
     <description>🏗 Enhance Cache Extension's Lettuce Module</description>

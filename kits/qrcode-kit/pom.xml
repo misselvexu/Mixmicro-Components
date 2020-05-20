@@ -5,13 +5,13 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-kits</artifactId>
-        <version>1.0.2.RC2</version>
+        <version>1.0.2.RC3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>qrcode-kit</artifactId>
-    <version>1.0.2.RC2</version>
+    <version>1.0.2.RC3</version>
 
     <name>Qrcode Kit :: ${project.version}</name>
     <description>Mixmicro+ QR-code Kit (mmap)</description>

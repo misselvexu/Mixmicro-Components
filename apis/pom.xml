@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-all</artifactId>
-        <version>1.0.2.RC2</version>
+        <version>1.0.2.RC3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-apis</artifactId>
-    <version>1.0.2.RC2</version>
+    <version>1.0.2.RC3</version>
     <packaging>pom</packaging>
 
     <name>Apis Module :: ${project.version}</name>
@@ -27,10 +27,10 @@
     </modules>
 
     <properties>
-        <mixmicro-apis-authorization.version>1.0.2.RC2</mixmicro-apis-authorization.version>
-        <mixmicro-apis-common.version>1.0.2.RC2</mixmicro-apis-common.version>
-        <mixmicro-apis-exception.version>1.0.2.RC2</mixmicro-apis-exception.version>
-        <mixmicro-apis-logger.version>1.0.2.RC2</mixmicro-apis-logger.version>
+        <mixmicro-apis-authorization.version>1.0.2.RC3</mixmicro-apis-authorization.version>
+        <mixmicro-apis-common.version>1.0.2.RC3</mixmicro-apis-common.version>
+        <mixmicro-apis-exception.version>1.0.2.RC3</mixmicro-apis-exception.version>
+        <mixmicro-apis-logger.version>1.0.2.RC3</mixmicro-apis-logger.version>
     </properties>
 
 

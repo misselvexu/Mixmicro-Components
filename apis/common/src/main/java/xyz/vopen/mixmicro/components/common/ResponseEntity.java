@@ -89,6 +89,15 @@ public class ResponseEntity<T> extends SerializableBean {
   /**
    * Build success body response
    *
+   * @return success instance of {@link ResponseEntity}
+   */
+  public static ResponseEntity<Object> ok() {
+    return ok(0, null);
+  }
+
+  /**
+   * Build success body response
+   *
    * @param body response content
    * @return success instance of {@link ResponseEntity}
    */

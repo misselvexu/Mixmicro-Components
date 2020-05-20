@@ -68,7 +68,7 @@ If you want to build with the regular `mvn` command, you will need [Maven v3.5.0
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-dependencies</artifactId>
-            <version>1.0.2.RC2</version>
+            <version>1.0.2.RC3</version>
             <scope>import</scope>
             <type>pom</type>
         </dependency>               

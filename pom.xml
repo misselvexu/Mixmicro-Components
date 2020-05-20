@@ -4,7 +4,7 @@
 
     <groupId>com.yunlsp.framework.components</groupId>
     <artifactId>mixmicro-components-all</artifactId>
-    <version>1.0.2.RC2</version>
+    <version>1.0.2.RC3</version>
     <packaging>pom</packaging>
 
     <name>Components :: ${project.version}</name>
@@ -37,10 +37,10 @@
         <mybatis.plus.version>3.1.0</mybatis.plus.version>
 
         <!-- Components Version -->
-        <mixmicro-components-kits.dependencies.version>1.0.2.RC2</mixmicro-components-kits.dependencies.version>
-        <mixmicro-components-apis.dependencies.version>1.0.2.RC2</mixmicro-components-apis.dependencies.version>
-        <mixmicro-components-enhance.dependencies.version>1.0.2.RC2</mixmicro-components-enhance.dependencies.version>
-        <mixmicro-components-starters.dependencies.version>1.0.2.RC2</mixmicro-components-starters.dependencies.version>
+        <mixmicro-components-kits.dependencies.version>1.0.2.RC3</mixmicro-components-kits.dependencies.version>
+        <mixmicro-components-apis.dependencies.version>1.0.2.RC3</mixmicro-components-apis.dependencies.version>
+        <mixmicro-components-enhance.dependencies.version>1.0.2.RC3</mixmicro-components-enhance.dependencies.version>
+        <mixmicro-components-starters.dependencies.version>1.0.2.RC3</mixmicro-components-starters.dependencies.version>
 
         <mixmicro-components-stream.dependencies.version>1.0.0.RC3</mixmicro-components-stream.dependencies.version>
 
