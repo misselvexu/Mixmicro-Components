@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-apis</artifactId>
-        <version>1.0.2.RC3</version>
+        <version>1.0.2.RC4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>authorization-api</artifactId>
-    <version>1.0.2.RC3</version>
+    <version>1.0.2.RC4</version>
 
     <name>Authorization Api Module :: ${project.version}</name>
     <description>🔐 Authorization Api Module</description>

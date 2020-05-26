@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-all</artifactId>
-        <version>1.0.2.RC3</version>
+        <version>1.0.2.RC4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-parent</artifactId>
-    <version>1.0.2.RC3</version>
+    <version>1.0.2.RC4</version>
     <packaging>pom</packaging>
 
     <name>Enhance Module :: ${project.version}</name>
@@ -18,21 +18,21 @@
 
     <properties>
 
-        <mixmicro-enhance-cache.version>1.0.2.RC3</mixmicro-enhance-cache.version>
+        <mixmicro-enhance-cache.version>1.0.2.RC4</mixmicro-enhance-cache.version>
 
-        <mixmicro-enhance-cache-api.version>1.0.2.RC3</mixmicro-enhance-cache-api.version>
-        <mixmicro-enhance-cache-context.version>1.0.2.RC3</mixmicro-enhance-cache-context.version>
-        <mixmicro-enhance-cache-core.version>1.0.2.RC3</mixmicro-enhance-cache-core.version>
-        <mixmicro-enhance-cache-extension.version>1.0.2.RC3</mixmicro-enhance-cache-extension.version>
-        <mixmicro-enhance-cache-load.version>1.0.2.RC3</mixmicro-enhance-cache-load.version>
-        <mixmicro-enhance-cache-extension-redis.version>1.0.2.RC3</mixmicro-enhance-cache-extension-redis.version>
-        <mixmicro-enhance-cache-extension-lettuce.version>1.0.2.RC3</mixmicro-enhance-cache-extension-lettuce.version>
-        <mixmicro-enhance-cache-extension-springdata.version>1.0.2.RC3</mixmicro-enhance-cache-extension-springdata.version>
+        <mixmicro-enhance-cache-api.version>1.0.2.RC4</mixmicro-enhance-cache-api.version>
+        <mixmicro-enhance-cache-context.version>1.0.2.RC4</mixmicro-enhance-cache-context.version>
+        <mixmicro-enhance-cache-core.version>1.0.2.RC4</mixmicro-enhance-cache-core.version>
+        <mixmicro-enhance-cache-extension.version>1.0.2.RC4</mixmicro-enhance-cache-extension.version>
+        <mixmicro-enhance-cache-load.version>1.0.2.RC4</mixmicro-enhance-cache-load.version>
+        <mixmicro-enhance-cache-extension-redis.version>1.0.2.RC4</mixmicro-enhance-cache-extension-redis.version>
+        <mixmicro-enhance-cache-extension-lettuce.version>1.0.2.RC4</mixmicro-enhance-cache-extension-lettuce.version>
+        <mixmicro-enhance-cache-extension-springdata.version>1.0.2.RC4</mixmicro-enhance-cache-extension-springdata.version>
 
 
-        <mixmicro-enhance-security-api.version>1.0.2.RC3</mixmicro-enhance-security-api.version>
-        <mixmicro-enhance-event-api.version>1.0.2.RC3</mixmicro-enhance-event-api.version>
-        <mixmicro-enhance-datasource.version>1.0.2.RC3</mixmicro-enhance-datasource.version>
+        <mixmicro-enhance-security-api.version>1.0.2.RC4</mixmicro-enhance-security-api.version>
+        <mixmicro-enhance-event-api.version>1.0.2.RC4</mixmicro-enhance-event-api.version>
+        <mixmicro-enhance-datasource.version>1.0.2.RC4</mixmicro-enhance-datasource.version>
     </properties>
 
     <modules>
