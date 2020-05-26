@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-starters</artifactId>
-        <version>1.0.2.RC4</version>
+        <version>1.0.2.RC5</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-cache</artifactId>
-    <version>1.0.2.RC4</version>
+    <version>1.0.2.RC5</version>
 
     <name>Cache Starter Module :: ${project.version}</name>
     <description>🏗 Cache Starter Module</description>
