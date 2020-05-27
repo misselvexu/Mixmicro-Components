@@ -6,12 +6,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-apis</artifactId>
-        <version>1.0.2.RC5</version>
+        <version>1.0.3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-apis-dependencies</artifactId>
-    <version>1.0.2.RC5</version>
+    <version>1.0.3</version>
 
     <packaging>pom</packaging>
 
@@ -35,10 +35,10 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
 
         <!-- Module Version -->
-        <mixmicro-common.api.version>1.0.2.RC5</mixmicro-common.api.version>
-        <mixmicro-exception.api.version>1.0.2.RC5</mixmicro-exception.api.version>
-        <mixmicro-logger.api.version>1.0.2.RC5</mixmicro-logger.api.version>
-        <mixmicro-authorization.api.version>1.0.2.RC5</mixmicro-authorization.api.version>
+        <mixmicro-common.api.version>1.0.3</mixmicro-common.api.version>
+        <mixmicro-exception.api.version>1.0.3</mixmicro-exception.api.version>
+        <mixmicro-logger.api.version>1.0.3</mixmicro-logger.api.version>
+        <mixmicro-authorization.api.version>1.0.3</mixmicro-authorization.api.version>
 
     </properties>
 

@@ -41,7 +41,9 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
       Map<String, String> keys = metadata.getEnvKeys();
 
       keys.keySet()
-          .parallelStream()
+          //fix: CPU 100% RISK
+          // removed.
+//          .parallelStream()
           .forEach(
               key -> {
                 String envKey = keys.get(key);

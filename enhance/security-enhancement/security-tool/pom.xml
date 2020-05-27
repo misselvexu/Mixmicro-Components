@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-security</artifactId>
-        <version>1.0.2.RC5</version>
+        <version>1.0.3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-security-tool</artifactId>
-    <version>1.0.2.RC5</version>
+    <version>1.0.3</version>
 
     <name>Enhance Security Tool Module :: ${project.version}</name>
     <description>🏗 Enhance Security Tool Module</description>
