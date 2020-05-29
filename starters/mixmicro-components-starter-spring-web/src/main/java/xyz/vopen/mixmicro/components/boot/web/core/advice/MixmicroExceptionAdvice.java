@@ -15,6 +15,7 @@ import xyz.vopen.mixmicro.components.exception.EntityBody;
 import xyz.vopen.mixmicro.components.exception.defined.BizException;
 import xyz.vopen.mixmicro.components.exception.defined.CompatibleMixmicroException;
 import xyz.vopen.mixmicro.components.exception.defined.MixmicroException;
+import xyz.vopen.mixmicro.components.exception.defined.MixmicroInvokeServerException;
 import xyz.vopen.mixmicro.kits.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -167,6 +168,30 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
                   .message(cme.getMessage())
                   .code(cme.code())
                   .build());
+    }
+
+    if (e instanceof MixmicroInvokeServerException) {
+      MixmicroInvokeServerException mise = (MixmicroInvokeServerException) e;
+      HttpStatus httpStatus = HttpStatus.OK;
+      // Adapt Fix by @Jake : if request invoked by service feign client , revert http code with 500.
+      try{
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attributes != null) {
+          HttpServletRequest request = attributes.getRequest();
+          // check request#header#MIXMICRO_SERVICE_INVOKE_HEADER value
+          if (StringUtils.isNotBlank(request.getHeader(MIXMICRO_SERVICE_INVOKE_HEADER))) {
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+          }
+        }
+      } catch (Exception ignored) {
+      }
+      xyz.vopen.mixmicro.components.common.ResponseEntity<?> responseEntity = (xyz.vopen.mixmicro.components.common.ResponseEntity<?>) mise.getResponse();
+      return ResponseEntity.status(httpStatus)
+              .body(
+                      xyz.vopen.mixmicro.components.common.ResponseEntity.builder()
+                              .message(mise.getMessage())
+                              .code(responseEntity != null ? responseEntity.getCode() : getProperties().getException().getDefaultExceptionResponseCode())
+                              .build());
     }
 
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(EntityBody.exception(e));
