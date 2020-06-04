@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-starter-cache</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4.BUILD-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-cache-redis-lettuce</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4.BUILD-SNAPSHOT</version>
 
     <name>Cache Starter With Default Redis(lettuce) Implements Module :: ${project.version}</name>
     <description>🏗 Cache Starter With Default Redis(lettuce) Implements Module</description>

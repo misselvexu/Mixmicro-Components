@@ -57,7 +57,7 @@ import static org.springframework.core.BridgeMethodResolver.isVisibilityBridgeMe
  * injected-object.
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @since 1.0.3
+ * @since 1.0.4.BUILD-SNAPSHOT
  */
 public abstract class AbstractAnnotationBeanPostProcessor
     extends InstantiationAwareBeanPostProcessorAdapter

@@ -10,7 +10,7 @@
 <dependency>
     <groupId>com.yunlsp.framework.components</groupId>
     <artifactId>mixmicro-components-starter-snowflake</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4.BUILD-SNAPSHOT</version>
 </dependency>
 
 ```
