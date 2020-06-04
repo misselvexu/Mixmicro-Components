@@ -34,6 +34,7 @@
         <module>mixmicro-components-starter-healthy</module>
         <module>mixmicro-components-starter-errors</module>
         <module>mixmicro-components-starter-spring-web</module>
+        <module>mixmicro-components-starter-scheduler</module>
         <module>mixmicro-components-starters-dependencies</module>
     </modules>
 
@@ -53,6 +54,7 @@
         <micro-starter-message-queue.version>1.0.4.BUILD-SNAPSHOT</micro-starter-message-queue.version>
         <micro-starter-healthy.version>1.0.4.BUILD-SNAPSHOT</micro-starter-healthy.version>
         <micro-starter-errors.version>1.0.4.BUILD-SNAPSHOT</micro-starter-errors.version>
+        <micro-starter-scheduler.version>1.0.4.BUILD-SNAPSHOT</micro-starter-scheduler.version>
     </properties>
 
     <dependencyManagement>
@@ -178,6 +180,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-errors</artifactId>
                 <version>${micro-starter-errors.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-scheduler</artifactId>
+                <version>${micro-starter-scheduler.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
