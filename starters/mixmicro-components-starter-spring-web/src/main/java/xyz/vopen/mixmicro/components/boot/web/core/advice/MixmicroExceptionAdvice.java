@@ -166,10 +166,13 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
           .body(
               xyz.vopen.mixmicro.components.common.ResponseEntity.builder()
                   .message(cme.getMessage())
+                  // fix: carry biz custom exception data object
+                  .data(cme.data())
                   .code(cme.code())
                   .build());
     }
 
+    // features: supported service invoke service exception transport.
     if (e instanceof MixmicroInvokeServerException) {
       MixmicroInvokeServerException mise = (MixmicroInvokeServerException) e;
       HttpStatus httpStatus = HttpStatus.OK;
