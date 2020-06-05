@@ -143,9 +143,8 @@ public class CompatibleMixmicroException extends MixmicroException {
    * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).
    *     (A <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or
    *     unknown.)
-   * @since 1.4
+   * @since 1.0.4
    */
-  @Builder(builderClassName = "CompatibleMixmicroExceptionFullBuilder")
   public <T> CompatibleMixmicroException(HttpStatus httpStatus, int code, @Nullable T data, String message, Throwable cause) {
     super(message, cause);
     this.httpStatus = httpStatus;
