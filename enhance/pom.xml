@@ -34,6 +34,7 @@
         <mixmicro-enhance-event-api.version>1.0.4.BUILD-SNAPSHOT</mixmicro-enhance-event-api.version>
         <mixmicro-enhance-datasource.version>1.0.4.BUILD-SNAPSHOT</mixmicro-enhance-datasource.version>
         <mixmicro-enhance-schedule.version>1.0.4.BUILD-SNAPSHOT</mixmicro-enhance-schedule.version>
+        <mixmicro-enhance-spi.version>1.0.4.BUILD-SNAPSHOT</mixmicro-enhance-spi.version>
     </properties>
 
     <modules>
@@ -42,6 +43,7 @@
         <module>event-enhancement</module>
         <module>datasource-enhancement</module>
         <module>schedule-enhancement</module>
+        <module>spi-enhancement</module>
     </modules>
 
 
@@ -183,6 +185,13 @@
                 <artifactId>mixmicro-components-enhance-schedule-core</artifactId>
                 <version>${mixmicro-enhance-schedule.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-spi-core</artifactId>
+                <version>${mixmicro-enhance-spi.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
