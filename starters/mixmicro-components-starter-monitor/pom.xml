@@ -13,7 +13,7 @@
     <version>1.0.4.BUILD-SNAPSHOT</version>
 
     <name>Monitor Starter Module :: ${project.version}</name>
-    <description>🏗 Message Queue Starter Module</description>
+    <description>🏗 Monitor Starter Module</description>
 
     <properties>
         <mixmicro.monitor.version>1.0.0-RELEASE</mixmicro.monitor.version>
