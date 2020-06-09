@@ -1,0 +1,6 @@
+org.springframework.context.ApplicationContextInitializer=\
+  xyz.vopen.mixmicro.components.enhance.spi.spring.context.MixmicroExtensionApplicationContextInitializer
+
+
+org.springframework.context.ApplicationListener=\
+  xyz.vopen.mixmicro.components.enhance.spi.spring.context.listener.SpringContextEventListener
