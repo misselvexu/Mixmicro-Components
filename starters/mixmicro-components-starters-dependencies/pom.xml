@@ -41,6 +41,7 @@
         <micro-starter-errors.version>1.0.4.BUILD-SNAPSHOT</micro-starter-errors.version>
         <micro-starter-web.version>1.0.4.BUILD-SNAPSHOT</micro-starter-web.version>
         <micro-starter-scheduler.version>1.0.4.BUILD-SNAPSHOT</micro-starter-scheduler.version>
+        <micro-starter-monitor.version>1.0.4.BUILD-SNAPSHOT</micro-starter-monitor.version>
 
         <micro-starter-cache-redis-default.version>1.0.4.BUILD-SNAPSHOT</micro-starter-cache-redis-default.version>
         <micro-starter-cache-redis-lettuce.version>1.0.4.BUILD-SNAPSHOT</micro-starter-cache-redis-lettuce.version>
@@ -170,6 +171,11 @@
                 <version>${micro-starter-scheduler.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-monitor</artifactId>
+                <version>${micro-starter-monitor.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
