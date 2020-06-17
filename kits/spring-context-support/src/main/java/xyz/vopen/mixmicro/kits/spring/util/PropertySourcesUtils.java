@@ -68,7 +68,7 @@ public abstract class PropertySourcesUtils {
    * @param prefix the prefix of property name
    * @return Map
    * @see Properties
-   * @since 1.0.4.BUILD-SNAPSHOT
+   * @since 1.0.4
    */
   public static Map<String, Object> getSubProperties(
       PropertySources propertySources, String prefix) {
@@ -84,7 +84,7 @@ public abstract class PropertySourcesUtils {
    * @param prefix the prefix of property name
    * @return Map
    * @see Properties
-   * @since 1.0.4.BUILD-SNAPSHOT
+   * @since 1.0.4
    */
   public static Map<String, Object> getSubProperties(
       PropertySources propertySources, PropertyResolver propertyResolver, String prefix) {

@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-starters</artifactId>
-        <version>1.0.4.BUILD-SNAPSHOT</version>
+        <version>1.0.4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-healthy</artifactId>
-    <version>1.0.4.BUILD-SNAPSHOT</version>
+    <version>1.0.4</version>
 
     <name>Health Check Starter Module :: ${project.version}</name>
     <description>🏗 Json Starter Module</description>

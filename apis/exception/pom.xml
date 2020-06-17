@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-apis</artifactId>
-        <version>1.0.4.BUILD-SNAPSHOT</version>
+        <version>1.0.4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>exception-api</artifactId>
-    <version>1.0.4.BUILD-SNAPSHOT</version>
+    <version>1.0.4</version>
 
     <name>Exception Api Module :: ${project.version}</name>
     <description>🏗 Exception Api Module</description>
