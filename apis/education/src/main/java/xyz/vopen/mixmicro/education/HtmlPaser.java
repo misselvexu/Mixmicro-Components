@@ -23,19 +23,24 @@ public class HtmlPaser {
   private static final String basePath =
       "/Users/misselvexu/Documents/yunlsp.gitlab.com/Mixmicro-Components/apis/education/src/main/resources/";
 
-  private static final String[] courseIds = {"FFA6A251-0022-412A-9135-8344DA5548FF" ,"9AD679E6-F350-4EFD-B617-B81C50D0396E", "24D5A2A5-59CC-40E5-B4B7-5D93FB0A4C8E","38E8ECD9-8DF7-48E4-8F83-E4962024E93C"};
-  private static final String[] items = {"gltj.html" , "c.html", "szlj.html", "en.html"};
+  // 信管
+//  private static final String[] courseIds = {"FFA6A251-0022-412A-9135-8344DA5548FF" ,"9AD679E6-F350-4EFD-B617-B81C50D0396E", /*"24D5A2A5-59CC-40E5-B4B7-5D93FB0A4C8E" ,*/"38E8ECD9-8DF7-48E4-8F83-E4962024E93C", "8A85D05E-A65B-4B31-8E81-0D6B07CA3F36"};
+//  private static final String[] items = {"gltj.html" , "c.html", /*"szlj.html" , */"en.html", "glxyl.html"};
+
+  // 计科
+  private static final String[] courseIds = {"FFA6A251-0022-412A-9135-8344DA5548FF" ,"9AD679E6-F350-4EFD-B617-B81C50D0396E", "24D5A2A5-59CC-40E5-B4B7-5D93FB0A4C8E" ,"38E8ECD9-8DF7-48E4-8F83-E4962024E93C"/*, "8A85D05E-A65B-4B31-8E81-0D6B07CA3F36"*/};
+  private static final String[] items = {"gltj.html" , "c.html", "szlj.html"  , "en.html"/*, "glxyl.html" */};
 
   public static void main (String[] args) throws Exception {
-    map()
-        .forEach(
-            (s, courses) -> {
-              System.out.println(s);
+        map()
+            .forEach(
+                (s, courses) -> {
+                  System.out.println(s);
 
-              for (Course cours : courses) {
-                System.out.println("\t\t" + JSON.toJSONString(cours));
-              }
-            });
+                  for (Course cours : courses) {
+                    System.out.println("\t\t" + JSON.toJSONString(cours));
+                  }
+                });
   }
 
   public static Map<String, List<Course>> map() throws Exception{
