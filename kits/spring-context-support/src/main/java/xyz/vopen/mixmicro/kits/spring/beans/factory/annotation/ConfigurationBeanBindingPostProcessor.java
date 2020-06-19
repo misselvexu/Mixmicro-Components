@@ -39,7 +39,7 @@ import static org.springframework.util.ObjectUtils.nullSafeEquals;
  * The {@link BeanPostProcessor} class to bind the configuration bean
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @since 1.0.4
+ * @since 1.0.4.BUILD-SNAPSHOT
  */
 public class ConfigurationBeanBindingPostProcessor
     implements BeanFactoryPostProcessor, BeanPostProcessor {

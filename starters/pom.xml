@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-all</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.4.BUILD-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starters</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.4.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Starters Module :: ${project.version}</name>
@@ -42,25 +42,25 @@
     </modules>
 
     <properties>
-        <micro-starter-annotation-processor.version>1.0.4</micro-starter-annotation-processor.version>
-        <micro-starter-authorization.version>1.0.4</micro-starter-authorization.version>
-        <micro-starter-banner.version>1.0.4</micro-starter-banner.version>
-        <micro-starter-logger.version>1.0.4</micro-starter-logger.version>
-        <micro-starter-json.version>1.0.4</micro-starter-json.version>
-        <micro-starter-cors.version>1.0.4</micro-starter-cors.version>
-        <micro-starter-resteasy.version>1.0.4</micro-starter-resteasy.version>
-        <micro-starter-snowflake.version>1.0.4</micro-starter-snowflake.version>
-        <micro-starter-openfeign.version>1.0.4</micro-starter-openfeign.version>
-        <micro-starter-datasource.version>1.0.4</micro-starter-datasource.version>
-        <micro-starter-sidecar.version>1.0.4</micro-starter-sidecar.version>
-        <micro-starter-security.version>1.0.4</micro-starter-security.version>
-        <micro-starter-cloud-event.version>1.0.4</micro-starter-cloud-event.version>
-        <micro-starter-message-queue.version>1.0.4</micro-starter-message-queue.version>
-        <micro-starter-healthy.version>1.0.4</micro-starter-healthy.version>
-        <micro-starter-errors.version>1.0.4</micro-starter-errors.version>
-        <micro-starter-scheduler.version>1.0.4</micro-starter-scheduler.version>
-        <micro-starter-monitor.version>1.0.4</micro-starter-monitor.version>
-        <micro-starter-spi.version>1.0.4</micro-starter-spi.version>
+        <micro-starter-annotation-processor.version>1.0.4.BUILD-SNAPSHOT</micro-starter-annotation-processor.version>
+        <micro-starter-authorization.version>1.0.4.BUILD-SNAPSHOT</micro-starter-authorization.version>
+        <micro-starter-banner.version>1.0.4.BUILD-SNAPSHOT</micro-starter-banner.version>
+        <micro-starter-logger.version>1.0.4.BUILD-SNAPSHOT</micro-starter-logger.version>
+        <micro-starter-json.version>1.0.4.BUILD-SNAPSHOT</micro-starter-json.version>
+        <micro-starter-cors.version>1.0.4.BUILD-SNAPSHOT</micro-starter-cors.version>
+        <micro-starter-resteasy.version>1.0.4.BUILD-SNAPSHOT</micro-starter-resteasy.version>
+        <micro-starter-snowflake.version>1.0.4.BUILD-SNAPSHOT</micro-starter-snowflake.version>
+        <micro-starter-openfeign.version>1.0.4.BUILD-SNAPSHOT</micro-starter-openfeign.version>
+        <micro-starter-datasource.version>1.0.4.BUILD-SNAPSHOT</micro-starter-datasource.version>
+        <micro-starter-sidecar.version>1.0.4.BUILD-SNAPSHOT</micro-starter-sidecar.version>
+        <micro-starter-security.version>1.0.4.BUILD-SNAPSHOT</micro-starter-security.version>
+        <micro-starter-cloud-event.version>1.0.4.BUILD-SNAPSHOT</micro-starter-cloud-event.version>
+        <micro-starter-message-queue.version>1.0.4.BUILD-SNAPSHOT</micro-starter-message-queue.version>
+        <micro-starter-healthy.version>1.0.4.BUILD-SNAPSHOT</micro-starter-healthy.version>
+        <micro-starter-errors.version>1.0.4.BUILD-SNAPSHOT</micro-starter-errors.version>
+        <micro-starter-scheduler.version>1.0.4.BUILD-SNAPSHOT</micro-starter-scheduler.version>
+        <micro-starter-monitor.version>1.0.4.BUILD-SNAPSHOT</micro-starter-monitor.version>
+        <micro-starter-spi.version>1.0.4.BUILD-SNAPSHOT</micro-starter-spi.version>
     </properties>
 
     <dependencyManagement>

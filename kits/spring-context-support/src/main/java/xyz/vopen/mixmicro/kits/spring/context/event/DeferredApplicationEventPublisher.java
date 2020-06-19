@@ -49,7 +49,7 @@ import static org.springframework.util.ReflectionUtils.findMethod;
  * #DeferredApplicationEventPublisher(ApplicationEventPublisher) constructor}.
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @since 1.0.4
+ * @since 1.0.4.BUILD-SNAPSHOT
  */
 public class DeferredApplicationEventPublisher
     implements ApplicationEventPublisher, ApplicationListener<ContextRefreshedEvent> {

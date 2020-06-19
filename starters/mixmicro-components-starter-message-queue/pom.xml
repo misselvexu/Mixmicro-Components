@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-starters</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.4.BUILD-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-message-queue</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.4.BUILD-SNAPSHOT</version>
 
     <name>Message Queue Starter Module :: ${project.version}</name>
     <description>🏗 Message Queue Starter Module</description>

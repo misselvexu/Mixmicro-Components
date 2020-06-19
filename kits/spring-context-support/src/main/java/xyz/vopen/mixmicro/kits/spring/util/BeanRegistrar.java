@@ -29,7 +29,7 @@ import static org.springframework.util.StringUtils.hasText;
 /**
  * Bean Registrar
  *
- * @since 1.0.4
+ * @since 1.0.4.BUILD-SNAPSHOT
  */
 public abstract class BeanRegistrar {
 
