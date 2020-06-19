@@ -4,9 +4,14 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import xyz.vopen.mixmicro.components.boot.openfeign.OpenFeignConfigProperties;
+import xyz.vopen.mixmicro.components.boot.openfeign.core.FeignAttributes;
 import xyz.vopen.mixmicro.components.boot.openfeign.env.ContextEnvironmentFactory;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_INVOKE_HEADER;
@@ -31,12 +36,61 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
   @Override
   public void apply(RequestTemplate template) {
 
+    OpenFeignConfigProperties properties0 = factory.openFeignConfigProperties();
+
+    // Process Sensitive Headers
+    if(!properties0.getSensitiveHeaders().isEmpty()) {
+      try{
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attributes != null) {
+          HttpServletRequest request = attributes.getRequest();
+          for (String header : properties0.getSensitiveHeaders()) {
+            template.header(header, request.getHeader(header));
+          }
+        }
+      } catch (Exception ignored) {}
+    }
+
+    // Process Attributes
+
+    List<OpenFeignConfigProperties.TransportAttribute> attributes = properties0.getAttributes();
+
+    if(!attributes.isEmpty()) {
+
+      try{
+        for (OpenFeignConfigProperties.TransportAttribute attribute : attributes) {
+          String name = attribute.getName();
+          switch (attribute.getType()) {
+            case MANUAL:
+              Map<String, String> temp = FeignAttributes.getAttributes();
+              if(temp.containsKey(name)) {
+                template.header(name, temp.get(name));
+              }
+              break;
+            case REQUEST_HEADER:
+              try{
+                ServletRequestAttributes attributes0 = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+                if (attributes0 != null) {
+                  HttpServletRequest request = attributes0.getRequest();
+                  template.header(name, request.getHeader(name));
+                }
+              } catch (Exception ignored) {}
+              break;
+            default:
+              break;
+          }
+        }
+      } finally{
+        FeignAttributes.remove();
+      }
+    }
+
+
+    // Process Customer Metadata(s)
     try{
       template.header(MIXMICRO_SERVICE_INVOKE_HEADER, "true");
 
-      OpenFeignConfigProperties properties = factory.openFeignConfigProperties();
-
-      OpenFeignConfigProperties.TransportMetadata metadata = properties.getMetadata();
+      OpenFeignConfigProperties.TransportMetadata metadata = properties0.getMetadata();
 
       Map<String, String> keys = metadata.getEnvKeys();
 
