@@ -17,6 +17,7 @@
     <description>🏗 Starters Module</description>
 
     <modules>
+        <module>mixmicro-components-starter-annotation-processor</module>
         <module>mixmicro-components-starter-authorization</module>
         <module>mixmicro-components-starter-logger</module>
         <module>mixmicro-components-starter-banner</module>
@@ -41,6 +42,7 @@
     </modules>
 
     <properties>
+        <micro-starter-annotation-processor.version>1.0.4</micro-starter-annotation-processor.version>
         <micro-starter-authorization.version>1.0.4</micro-starter-authorization.version>
         <micro-starter-banner.version>1.0.4</micro-starter-banner.version>
         <micro-starter-logger.version>1.0.4</micro-starter-logger.version>
@@ -94,6 +96,12 @@
                 <artifactId>mixmicro-components-starters-dependencies</artifactId>
                 <version>${mixmicro-components-starters.dependencies.version}</version>
                 <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-annotation-processor</artifactId>
+                <version>${micro-starter-annotation-processor.version}</version>
             </dependency>
 
             <dependency>
