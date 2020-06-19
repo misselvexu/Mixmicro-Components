@@ -23,6 +23,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
+        <micro-starter-annotation-processor.version>1.0.4</micro-starter-annotation-processor.version>
         <micro-starter-authorization.version>1.0.4</micro-starter-authorization.version>
         <micro-starter-banner.version>1.0.4</micro-starter-banner.version>
         <micro-starter-logger.version>1.0.4</micro-starter-logger.version>
@@ -50,6 +51,12 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-annotation-processor</artifactId>
+                <version>${micro-starter-annotation-processor.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
