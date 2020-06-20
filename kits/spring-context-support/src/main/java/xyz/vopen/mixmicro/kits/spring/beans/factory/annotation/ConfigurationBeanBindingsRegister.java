@@ -29,7 +29,7 @@ import org.springframework.util.Assert;
  * The {@link ImportBeanDefinitionRegistrar Registrar class} for {@link
  * EnableConfigurationBeanBindings}
  *
- * @since 1.0.4.BUILD-SNAPSHOT
+ * @since 1.0.5.BUILD-SNAPSHOT
  */
 public class ConfigurationBeanBindingsRegister
     implements ImportBeanDefinitionRegistrar, EnvironmentAware {

@@ -198,7 +198,7 @@ public abstract class AnnotationUtils {
    * @param propertyResolver {@link PropertyResolver} instance, e.g {@link Environment}
    * @param ignoreAttributeNames the attribute names of annotation should be ignored
    * @return non-null
-   * @since 1.0.4.BUILD-SNAPSHOT
+   * @since 1.0.5.BUILD-SNAPSHOT
    */
   public static Map<String, Object> getAttributes(
       Map<String, Object> annotationAttributes,
@@ -250,7 +250,7 @@ public abstract class AnnotationUtils {
    * @param attributeName the name of attribute
    * @param <T> the type of attribute value
    * @return the attribute value if found
-   * @since 1.0.4.BUILD-SNAPSHOT
+   * @since 1.0.5.BUILD-SNAPSHOT
    */
   public static <T> T getAttribute(Annotation annotation, String attributeName) {
     return getAttribute(
@@ -265,7 +265,7 @@ public abstract class AnnotationUtils {
    * @param attributeName the name of attribute
    * @param <T> the type of attribute value
    * @return the attribute value if found
-   * @since 1.0.4.BUILD-SNAPSHOT
+   * @since 1.0.5.BUILD-SNAPSHOT
    */
   public static <T> T getAttribute(Map<String, Object> attributes, String attributeName) {
     return (T) attributes.get(attributeName);
@@ -279,7 +279,7 @@ public abstract class AnnotationUtils {
    * @param ignoreAttributeNames the attribute names of annotation should be ignored
    * @return non-null
    * @see #getAnnotationAttributes(Annotation, PropertyResolver, boolean, String...)
-   * @since 1.0.4.BUILD-SNAPSHOT
+   * @since 1.0.5.BUILD-SNAPSHOT
    */
   public static AnnotationAttributes getAnnotationAttributes(
       Annotation annotation, boolean ignoreDefaultValue, String... ignoreAttributeNames) {
@@ -296,7 +296,7 @@ public abstract class AnnotationUtils {
    * @return non-null
    * @see #getAttributes(Annotation, PropertyResolver, boolean, String...)
    * @see #getAnnotationAttributes(AnnotatedElement, Class, PropertyResolver, boolean, String...)
-   * @since 1.0.4.BUILD-SNAPSHOT
+   * @since 1.0.5.BUILD-SNAPSHOT
    */
   public static AnnotationAttributes getAnnotationAttributes(
       Annotation annotation,
@@ -317,7 +317,7 @@ public abstract class AnnotationUtils {
    * @param ignoreAttributeNames the attribute names of annotation should be ignored
    * @return if <code>annotatedElement</code> can't be found in <code>annotatedElement</code>,
    *     return <code>null</code>
-   * @since 1.0.4.BUILD-SNAPSHOT
+   * @since 1.0.5.BUILD-SNAPSHOT
    */
   public static AnnotationAttributes getAnnotationAttributes(
       AnnotatedElement annotatedElement,
@@ -348,7 +348,7 @@ public abstract class AnnotationUtils {
    * @param ignoreAttributeNames the attribute names of annotation should be ignored
    * @return if <code>annotatedElement</code> can't be found in <code>annotatedElement</code>,
    *     return <code>null</code>
-   * @since 1.0.4.BUILD-SNAPSHOT
+   * @since 1.0.5.BUILD-SNAPSHOT
    */
   public static AnnotationAttributes getAnnotationAttributes(
       AnnotatedElement annotatedElement,
@@ -388,7 +388,7 @@ public abstract class AnnotationUtils {
    * @param annotatedElement {@link AnnotatedElement the annotated element}
    * @param annotationType the {@link Class tyoe} pf {@link Annotation annotation}
    * @return If current version of Spring Framework is below 4.2, return <code>null</code>
-   * @since 1.0.4.BUILD-SNAPSHOT
+   * @since 1.0.5.BUILD-SNAPSHOT
    */
   public static Annotation tryGetMergedAnnotation(
       AnnotatedElement annotatedElement, Class<? extends Annotation> annotationType) {
@@ -427,7 +427,7 @@ public abstract class AnnotationUtils {
    * @param ignoreDefaultValue whether ignore default value or not
    * @param ignoreAttributeNames the attribute names of annotation should be ignored
    * @return If the specified annotation type is not found, return <code>null</code>
-   * @since 1.0.4.BUILD-SNAPSHOT
+   * @since 1.0.5.BUILD-SNAPSHOT
    */
   public static AnnotationAttributes tryGetMergedAnnotationAttributes(
       AnnotatedElement annotatedElement,
