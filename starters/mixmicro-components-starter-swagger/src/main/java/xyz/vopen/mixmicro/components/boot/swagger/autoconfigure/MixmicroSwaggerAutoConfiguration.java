@@ -10,6 +10,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -46,6 +47,7 @@ import static xyz.vopen.mixmicro.components.boot.swagger.MixmicroSwaggerProperti
     name = "enabled",
     matchIfMissing = true)
 @Import({Swagger2DocumentationConfiguration.class, BeanValidatorPluginsConfiguration.class})
+@EnableConfigurationProperties(MixmicroSwaggerProperties.class)
 public class MixmicroSwaggerAutoConfiguration implements BeanFactoryAware {
 
   private static final String BASIC_AUTH_TYPE = "BasicAuth";
