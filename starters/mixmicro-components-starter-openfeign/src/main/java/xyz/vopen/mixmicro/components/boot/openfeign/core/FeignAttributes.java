@@ -14,7 +14,12 @@ import java.util.Map;
  */
 public final class FeignAttributes {
 
-  private static final TransmittableThreadLocal<Map<String, String>> FEIGN_TRANSPORT_ATTRIBUTES = new TransmittableThreadLocal<>();
+  private static final TransmittableThreadLocal<Map<String, String>> FEIGN_TRANSPORT_ATTRIBUTES = new TransmittableThreadLocal<Map<String, String>>() {
+    @Override
+    protected Map<String, String> initialValue() {
+      return Maps.newConcurrentMap();
+    }
+  };
 
   public static Map<String, String> getAttributes() {
     return FEIGN_TRANSPORT_ATTRIBUTES.get();

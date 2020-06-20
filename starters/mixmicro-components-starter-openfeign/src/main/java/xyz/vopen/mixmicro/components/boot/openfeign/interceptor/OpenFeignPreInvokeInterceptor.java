@@ -13,6 +13,7 @@ import xyz.vopen.mixmicro.components.boot.openfeign.env.ContextEnvironmentFactor
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_INVOKE_HEADER;
 
@@ -27,6 +28,8 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
   private static final Logger log = LoggerFactory.getLogger(OpenFeignPreInvokeInterceptor.class);
 
   private final ContextEnvironmentFactory factory = ContextEnvironmentFactory.instance();
+
+  private static final String EMPTY_STRING = "";
 
   /**
    * Called for every request. Add data using methods on the supplied {@link RequestTemplate}.
@@ -45,7 +48,7 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
         if (attributes != null) {
           HttpServletRequest request = attributes.getRequest();
           for (String header : properties0.getSensitiveHeaders()) {
-            template.header(header, request.getHeader(header));
+            template.header(header, Optional.ofNullable(request.getHeader(header)).orElse(EMPTY_STRING));
           }
         }
       } catch (Exception ignored) {}
@@ -60,24 +63,28 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
       try{
         for (OpenFeignConfigProperties.TransportAttribute attribute : attributes) {
           String name = attribute.getName();
-          switch (attribute.getType()) {
-            case MANUAL:
-              Map<String, String> temp = FeignAttributes.getAttributes();
-              if(temp.containsKey(name)) {
-                template.header(name, temp.get(name));
-              }
-              break;
-            case REQUEST_HEADER:
-              try{
-                ServletRequestAttributes attributes0 = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-                if (attributes0 != null) {
-                  HttpServletRequest request = attributes0.getRequest();
-                  template.header(name, request.getHeader(name));
+          try{
+            switch (attribute.getType()) {
+              case MANUAL:
+                Map<String, String> temp = FeignAttributes.getAttributes();
+                if(temp.containsKey(name)) {
+                  template.header(name, Optional.ofNullable(temp.get(name)).orElse(EMPTY_STRING));
                 }
-              } catch (Exception ignored) {}
-              break;
-            default:
-              break;
+                break;
+              case REQUEST_HEADER:
+                try{
+                  ServletRequestAttributes attributes0 = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+                  if (attributes0 != null) {
+                    HttpServletRequest request = attributes0.getRequest();
+                    template.header(name, Optional.ofNullable(request.getHeader(name)).orElse(EMPTY_STRING));
+                  }
+                } catch (Exception ignored) {}
+                break;
+              default:
+                break;
+            }
+          } catch (Exception e) {
+            log.warn("[Feign Interceptor] key name: {} process failed. " , name, e);
           }
         }
       } finally{
