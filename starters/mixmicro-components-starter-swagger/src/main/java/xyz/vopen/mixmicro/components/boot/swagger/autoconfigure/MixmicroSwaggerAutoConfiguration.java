@@ -112,7 +112,7 @@ public class MixmicroSwaggerAutoConfiguration implements BeanFactoryAware {
       if (swaggerProperties.getBasePath().isEmpty()) {
         swaggerProperties.getBasePath().add("/**");
       }
-      List<Predicate<String>> basePath = new ArrayList();
+      List<Predicate<String>> basePath = Lists.newArrayList();
       for (String path : swaggerProperties.getBasePath()) {
         basePath.add(PathSelectors.ant(path));
       }
@@ -212,13 +212,13 @@ public class MixmicroSwaggerAutoConfiguration implements BeanFactoryAware {
       if (docketInfo.getBasePath().isEmpty()) {
         docketInfo.getBasePath().add("/**");
       }
-      List<Predicate<String>> basePath = new ArrayList();
+      List<Predicate<String>> basePath = Lists.newArrayList();
       for (String path : docketInfo.getBasePath()) {
         basePath.add(PathSelectors.ant(path));
       }
 
       // exclude-path处理
-      List<Predicate<String>> excludePath = new ArrayList();
+      List<Predicate<String>> excludePath = Lists.newArrayList();
       for (String path : docketInfo.getExcludePath()) {
         excludePath.add(PathSelectors.ant(path));
       }
