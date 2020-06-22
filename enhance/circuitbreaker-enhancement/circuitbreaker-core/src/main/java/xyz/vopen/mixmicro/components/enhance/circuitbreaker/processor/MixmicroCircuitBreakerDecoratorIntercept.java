@@ -4,11 +4,13 @@ import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.github.resilience4j.circuitbreaker.event.CircuitBreakerEvent;
+import io.github.resilience4j.circuitbreaker.internal.InMemoryCircuitBreakerRegistry;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import xyz.vopen.mixmicro.components.circuitbreaker.exception.MixmicroCircuitBreakerException;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -36,20 +38,20 @@ public class MixmicroCircuitBreakerDecoratorIntercept implements MethodIntercept
                 || method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT)
                 || method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT_DIRECT_FALLBACK)) {
 
-            CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker(invocation.getThis().getClass().getSimpleName());
-
+            String simpleName = invocation.getThis().getClass().getSimpleName();
+            CircuitBreakerConfig circuitBreakerConfig = circuitBreakerRegistry.getConfiguration(simpleName).get();
+            CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker(simpleName);
             if (circuitBreaker == null)
                 circuitBreaker = circuitBreakerRegistry.circuitBreaker(CIRCUIT_BREAKER_DEFAULT);
 
             long start = System.nanoTime();
             long durationInNanos = 0L;
 
-            if (method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT))
+            if (method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT)) {
                 circuitBreaker.onError(System.nanoTime() - start,
                         TimeUnit.MICROSECONDS,
-                        MixmicroCircuitBreakerException.createCallNotPermittedException(circuitBreaker));
-
-            else if(method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT_DIRECT_FALLBACK)){
+                        new ExecutionException("ee",new RuntimeException()));
+            } else if (method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT_DIRECT_FALLBACK)) {
 
                 circuitBreaker.onError(System.nanoTime() - start,
                         TimeUnit.MICROSECONDS,
@@ -57,31 +59,29 @@ public class MixmicroCircuitBreakerDecoratorIntercept implements MethodIntercept
 
                 invokeFallBack(invocation);
             }
+            else if (method.getName().equals(CIRCUIT_BREAKER_EXECUTE_METHOD_NAME)) {
+                boolean allowed = circuitBreaker.tryAcquirePermission();
 
-            boolean allowed = circuitBreaker.tryAcquirePermission();
-
-            if (allowed) {
-                circuitBreaker.acquirePermission();
-                try {
-                    Object proceed = invocation.proceed();
-                    durationInNanos = System.nanoTime() - start;
-                } catch (MixmicroCircuitBreakerException e) {
-                    circuitBreaker.onError(durationInNanos, TimeUnit.NANOSECONDS, e);
+                if (allowed) {
+                    circuitBreaker.acquirePermission();
+                    try {
+                        Object proceed = invocation.proceed();
+                        durationInNanos = System.nanoTime() - start;
+                        circuitBreaker.onSuccess(durationInNanos, TimeUnit.NANOSECONDS);
+                        return proceed;
+                    } catch (Exception e) {
+                        circuitBreaker.onError(durationInNanos, TimeUnit.NANOSECONDS, e);
+                        return invokeFallBack(invocation);
+                    }
+                } else {
+                    // fallback
+                    return invokeFallBack(invocation);
                 }
-                boolean success = true;
-                if (success)
-                    circuitBreaker.onSuccess(durationInNanos, TimeUnit.NANOSECONDS);
-                else
-                    circuitBreaker.onError(
-                            durationInNanos,
-                            TimeUnit.NANOSECONDS,
-                            MixmicroCircuitBreakerException.createCallNotPermittedException(circuitBreaker));
-            } else {
-                // fallback
-                invokeFallBack(invocation);
             }
+            if (!circuitBreaker.tryAcquirePermission())
+                return invokeFallBack(invocation);
         }
-        return invocation.proceed();
+        return invocation;
     }
 
     private Object invokeFallBack(MethodInvocation invocation) throws Throwable {

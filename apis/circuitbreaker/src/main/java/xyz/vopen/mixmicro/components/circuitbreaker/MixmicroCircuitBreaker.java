@@ -8,7 +8,8 @@ import xyz.vopen.mixmicro.components.circuitbreaker.exception.MixmicroCircuitBre
  * @author: siran.yao
  * @date: 2020/6/20 14:24
  */
-public interface MixmicroCircuitBreaker<T> {
+public interface MixmicroCircuitBreaker<T>  {
+    void setSelf(Object proxyBean);
 
     /**
      * wrapper method support fallback
@@ -16,10 +17,9 @@ public interface MixmicroCircuitBreaker<T> {
      * @param args
      * @return
      * @throws MixmicroCircuitBreakerException
-     *
      * @see MixmicroCircuitBreakerException
      */
-     T executeWrapper(Object...args) throws MixmicroCircuitBreakerException;
+    T executeWrapper(Object... args) throws MixmicroCircuitBreakerException;
 
     /**
      * encounter exception will invoke this method
@@ -33,16 +33,11 @@ public interface MixmicroCircuitBreaker<T> {
      * you can invoke this. will add circuitBreaker fail count. when reach the fail ratio you set
      * will invoke fallback
      */
-    default void publisherFailEvent(){
-        throw MixmicroCircuitBreakerException
-                .createFallBackException("encounter exception. certain probability fallback");
-    }
+     void publisherFailEvent();
+
 
     /**
      * compare method.publisherFailEvent , forced perform fallback.
      */
-    default void publisherFailEventDirectFallBack(){
-        throw MixmicroCircuitBreakerException
-                .createFallBackException("encounter fallback. direct fallback");
-    }
+     void publisherFailEventDirectFallBack();
 }
