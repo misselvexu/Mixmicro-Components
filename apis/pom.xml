@@ -24,6 +24,7 @@
 
         <!-- dependencies -->
         <module>dependencies</module>
+        <module>circuitbreaker</module>
     </modules>
 
     <properties>

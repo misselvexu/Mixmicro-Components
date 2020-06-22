@@ -38,6 +38,7 @@
         <module>mixmicro-components-starter-monitor</module>
         <module>mixmicro-components-starter-spi</module>
         <module>mixmicro-components-starters-dependencies</module>
+        <module>mixmicro-components-starter-circuitbreaker</module>
     </modules>
 
     <properties>

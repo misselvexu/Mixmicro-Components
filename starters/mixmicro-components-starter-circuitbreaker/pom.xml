@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>mixmicro-components-starters</artifactId>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <version>1.0.4</version>
+    </parent>
+
+    <artifactId>mixmicro-components-starter-circuitbreaker</artifactId>
+    <version>1.0.4</version>
+
+    <name>Circuitbreaker Starter Module :: ${project.version}</name>
+    <description>🏗 Circuitbreaker Starter Module</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>common-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>mixmicro-components-enhance-circuitbreaker</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>mixmicro-components-enhance-circuitbreaker-core</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>xyz.vopen.opensource</groupId>
+                <artifactId>mixmicro-stream-denpendencies</artifactId>
+                <version>1.0.0.RC3</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

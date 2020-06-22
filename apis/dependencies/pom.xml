@@ -39,7 +39,7 @@
         <mixmicro-exception.api.version>1.0.4</mixmicro-exception.api.version>
         <mixmicro-logger.api.version>1.0.4</mixmicro-logger.api.version>
         <mixmicro-authorization.api.version>1.0.4</mixmicro-authorization.api.version>
-
+        <mixmicro-circuitbreaker.api.version>1.0.4</mixmicro-circuitbreaker.api.version>
     </properties>
 
     <dependencyManagement>
@@ -74,6 +74,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>logger-api</artifactId>
                 <version>${mixmicro-logger.api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>circuitbreaker-api</artifactId>
+                <version>${mixmicro-circuitbreaker.api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
