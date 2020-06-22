@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
+import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.*;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.*;
@@ -143,14 +144,22 @@ public class MixmicroSwaggerAutoConfiguration implements BeanFactoryAware {
         buildGlobalResponseMessage(swaggerProperties, docketForBuilder);
       }
 
-      Docket docket =
-          docketForBuilder
-              .select()
-              .apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
-              .paths(
-                  Predicates.and(
-                      Predicates.not(Predicates.or(excludePath)), Predicates.or(basePath)))
-              .build();
+      ApiSelectorBuilder builder = docketForBuilder.select();
+
+      if(!swaggerProperties.getBasePackage().isEmpty()) {
+        Predicate<RequestHandler> temp = null;
+        for (String aPackage : swaggerProperties.getBasePackage()) {
+          temp = temp == null ? Predicates.and(RequestHandlerSelectors.basePackage(aPackage)) : Predicates.or(temp, RequestHandlerSelectors.basePackage(aPackage));
+        }
+
+        builder.apis(temp);
+      }
+
+      builder.paths(
+          Predicates.and(
+              Predicates.not(Predicates.or(excludePath)), Predicates.or(basePath)));
+
+      Docket docket = builder.build();
 
       /* ignoredParameterTypes **/
       Class<?>[] array = new Class[swaggerProperties.getIgnoredParameterTypes().size()];
@@ -244,20 +253,22 @@ public class MixmicroSwaggerAutoConfiguration implements BeanFactoryAware {
         buildGlobalResponseMessage(swaggerProperties, docketForBuilder);
       }
 
-      ApiSelectorBuilder apiSelectorBuilder = docketForBuilder.select();
+      ApiSelectorBuilder builder = docketForBuilder.select();
 
-      if(!docketInfo.getBasePackage().isEmpty()) {
-        for (String aPackage : docketInfo.getBasePackage()) {
-          apiSelectorBuilder.apis(RequestHandlerSelectors.basePackage(aPackage));
+      if(!swaggerProperties.getBasePackage().isEmpty()) {
+        Predicate<RequestHandler> temp = null;
+        for (String aPackage : swaggerProperties.getBasePackage()) {
+          temp = temp == null ? Predicates.and(RequestHandlerSelectors.basePackage(aPackage)) : Predicates.or(temp, RequestHandlerSelectors.basePackage(aPackage));
         }
+
+        builder.apis(temp);
       }
 
-      apiSelectorBuilder.paths(
+      builder.paths(
           Predicates.and(
               Predicates.not(Predicates.or(excludePath)), Predicates.or(basePath)));
 
-      Docket docket = apiSelectorBuilder.build();
-
+      Docket docket = builder.build();
 
       /* ignoredParameterTypes **/
       Class<?>[] array = new Class[docketInfo.getIgnoredParameterTypes().size()];

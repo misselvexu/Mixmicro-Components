@@ -51,7 +51,7 @@ public class MixmicroSwaggerProperties implements Serializable {
   private Contact contact = new Contact();
 
   /** swagger会解析的包路径 */
-  private String basePackage = "";
+  private List<String> basePackage = Lists.newArrayList();
 
   /** swagger会解析的url规则 */
   private List<String> basePath = new ArrayList<>();
