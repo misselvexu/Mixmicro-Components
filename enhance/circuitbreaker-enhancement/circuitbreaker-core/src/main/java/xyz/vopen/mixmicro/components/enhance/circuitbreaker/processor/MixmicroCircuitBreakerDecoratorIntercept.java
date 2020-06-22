@@ -38,9 +38,8 @@ public class MixmicroCircuitBreakerDecoratorIntercept implements MethodIntercept
                 || method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT)
                 || method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT_DIRECT_FALLBACK)) {
 
-            String simpleName = invocation.getThis().getClass().getSimpleName();
-            CircuitBreakerConfig circuitBreakerConfig = circuitBreakerRegistry.getConfiguration(simpleName).get();
-            CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker(simpleName);
+            String circuitBreakerName = invocation.getThis().getClass().getSimpleName();
+            CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker(circuitBreakerName);
             if (circuitBreaker == null)
                 circuitBreaker = circuitBreakerRegistry.circuitBreaker(CIRCUIT_BREAKER_DEFAULT);
 

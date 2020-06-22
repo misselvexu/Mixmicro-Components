@@ -41,7 +41,7 @@ public class CircuitBreakerAutoConfiguration {
                             entry.getValue(),
                             new CompositeCustomizer<>(Collections.emptyList()));
 
-            registry.addConfiguration(entry.getKey(),circuitBreakerConfig);
+            registry.circuitBreaker(entry.getKey(),circuitBreakerConfig);
         }
         return registry;
     }
