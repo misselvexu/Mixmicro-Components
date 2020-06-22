@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import springfox.documentation.swagger.web.DocExpansion;
 import springfox.documentation.swagger.web.ModelRendering;
 import springfox.documentation.swagger.web.OperationsSorter;
@@ -48,7 +49,7 @@ public class MixmicroSwaggerProperties implements Serializable {
   /** 忽略的参数类型 */
   private List<Class<?>> ignoredParameterTypes = new ArrayList<>();
 
-  private Contact contact = new Contact();
+  @NestedConfigurationProperty private Contact contact = new Contact();
 
   /** swagger会解析的包路径 */
   private List<String> basePackage = Lists.newArrayList();
@@ -68,16 +69,16 @@ public class MixmicroSwaggerProperties implements Serializable {
   private List<GlobalOperationParameter> globalOperationParameters;
 
   /** 页面功能配置 */
-  private UiConfig uiConfig = new UiConfig();
+  @NestedConfigurationProperty private UiConfig uiConfig = new UiConfig();
 
   /** 是否使用默认预定义的响应消息 ，默认 true */
   private Boolean applyDefaultResponseMessages = true;
 
   /** 全局响应消息 */
-  private GlobalResponseMessage globalResponseMessage;
+  @NestedConfigurationProperty private GlobalResponseMessage globalResponseMessage;
 
   /** 全局统一鉴权配置 */
-  private Authorization authorization = new Authorization();
+  @NestedConfigurationProperty private Authorization authorization = new Authorization();
 
   @Data
   @NoArgsConstructor
@@ -115,7 +116,7 @@ public class MixmicroSwaggerProperties implements Serializable {
     /** 服务条款URL */
     private String termsOfServiceUrl = "";
 
-    private Contact contact = new Contact();
+    @NestedConfigurationProperty private Contact contact = new Contact();
 
     /** swagger会解析的包路径 */
     private List<String> basePackage = Lists.newArrayList();
