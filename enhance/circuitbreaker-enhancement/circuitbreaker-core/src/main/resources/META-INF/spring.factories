@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  xyz.vopen.mixmicro.components.enhance.circuitbreaker.autoconfigure.CircuitBreakerAutoConfiguration
+  xyz.vopen.mixmicro.components.enhance.circuitbreaker.autoconfigure.CircuitBreakerAutoConfiguration,\
+  xyz.vopen.mixmicro.components.enhance.circuitbreaker.v2.autoconfigure.MixmicroCircuitBreakerAutoConfiguration

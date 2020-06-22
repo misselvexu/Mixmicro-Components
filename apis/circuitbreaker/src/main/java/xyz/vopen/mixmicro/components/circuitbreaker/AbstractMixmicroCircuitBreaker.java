@@ -7,6 +7,7 @@ import xyz.vopen.mixmicro.components.circuitbreaker.exception.MixmicroCircuitBre
  * @date: 2020/6/22 19:49
  */
 public class AbstractMixmicroCircuitBreaker implements MixmicroCircuitBreaker{
+
     private MixmicroCircuitBreaker mixmicroCircuitBreaker;
 
     @Override

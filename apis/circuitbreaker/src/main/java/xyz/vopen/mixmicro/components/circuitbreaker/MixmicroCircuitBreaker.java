@@ -3,12 +3,13 @@ package xyz.vopen.mixmicro.components.circuitbreaker;
 import xyz.vopen.mixmicro.components.circuitbreaker.exception.MixmicroCircuitBreakerException;
 
 /**
- * mixmicro circuitbreaker proxy interface {@link MixmicroCircuitBreaker}
+ * mixmicro circuit breaker proxy interface {@link MixmicroCircuitBreaker}
  *
  * @author: siran.yao
  * @date: 2020/6/20 14:24
  */
 public interface MixmicroCircuitBreaker<T>  {
+
     void setSelf(Object proxyBean);
 
     /**

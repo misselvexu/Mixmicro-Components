@@ -1,92 +1,111 @@
 package xyz.vopen.mixmicro.components.enhance.circuitbreaker.processor;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
-import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
-import io.github.resilience4j.circuitbreaker.event.CircuitBreakerEvent;
-import io.github.resilience4j.circuitbreaker.internal.InMemoryCircuitBreakerRegistry;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.circuitbreaker.exception.MixmicroCircuitBreakerException;
+import xyz.vopen.mixmicro.kits.Assert;
+import xyz.vopen.mixmicro.kits.lang.NonNull;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author: siran.yao
- * @date: 2020/6/20 16:26
+ * Mixmicro CircuitBreaker Intercept
+ *
+ * @author siran.yao
+ * @date 2020/6/20 16:26
  */
 public class MixmicroCircuitBreakerDecoratorIntercept implements MethodInterceptor {
 
-    private static final String CIRCUIT_BREAKER_EXECUTE_METHOD_NAME = "executeWrapper";
-    private static final String CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT = "publisherFailEvent";
-    private static final String CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT_DIRECT_FALLBACK = "publisherFailEventDirectFallBack";
-    private static final String CIRCUIT_BREAKER_FALLBACK_METHOD_NAME = "fallback";
-    private static final String CIRCUIT_BREAKER_DEFAULT = "default";
+  private static final Logger log = LoggerFactory.getLogger(MixmicroCircuitBreakerDecoratorIntercept.class);
 
-    private CircuitBreakerRegistry circuitBreakerRegistry;
+  private static final String CIRCUIT_BREAKER_EXECUTE_METHOD_NAME = "executeWrapper";
+  private static final String CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT = "publisherFailEvent";
+  private static final String CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT_DIRECT_FALLBACK = "publisherFailEventDirectFallBack";
+  private static final String CIRCUIT_BREAKER_FALLBACK_METHOD_NAME = "fallback";
+  private static final String CIRCUIT_BREAKER_DEFAULT = "default";
 
-    public MixmicroCircuitBreakerDecoratorIntercept(CircuitBreakerRegistry circuitBreakerRegistry) {
-        this.circuitBreakerRegistry = circuitBreakerRegistry;
-    }
+  final private CircuitBreakerRegistry circuitBreakerRegistry;
 
-    @Override
-    public Object invoke(MethodInvocation invocation) throws Throwable {
-        Method method = invocation.getMethod();
-        if (method.getName().equals(CIRCUIT_BREAKER_EXECUTE_METHOD_NAME)
-                || method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT)
-                || method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT_DIRECT_FALLBACK)) {
+  public MixmicroCircuitBreakerDecoratorIntercept(@NonNull CircuitBreakerRegistry circuitBreakerRegistry) {
+    this.circuitBreakerRegistry = circuitBreakerRegistry;
+    Assert.notNull(this.circuitBreakerRegistry, "mixmciro circuit breaker registry must not be null.");
+  }
 
-            String circuitBreakerName = invocation.getThis().getClass().getSimpleName();
-            CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker(circuitBreakerName);
-            if (circuitBreaker == null)
-                circuitBreaker = circuitBreakerRegistry.circuitBreaker(CIRCUIT_BREAKER_DEFAULT);
+  @Override
+  public Object invoke(MethodInvocation invocation) throws Throwable {
 
-            long start = System.nanoTime();
-            long durationInNanos = 0L;
+    Method method = invocation.getMethod();
+    if (method.getName().equals(CIRCUIT_BREAKER_EXECUTE_METHOD_NAME)
+        || method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT)
+        || method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT_DIRECT_FALLBACK)) {
 
-            if (method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT)) {
-                circuitBreaker.onError(System.nanoTime() - start,
-                        TimeUnit.MICROSECONDS,
-                        new ExecutionException("ee",new RuntimeException()));
-            } else if (method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT_DIRECT_FALLBACK)) {
+      String circuitBreakerName = invocation.getThis().getClass().getSimpleName();
+      CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker(circuitBreakerName);
 
-                circuitBreaker.onError(System.nanoTime() - start,
-                        TimeUnit.MICROSECONDS,
-                        MixmicroCircuitBreakerException.createCallNotPermittedException(circuitBreaker));
+      Assert.notNull(circuitBreaker, "mixmicro circuit breaker instance must not be null with name: " + circuitBreakerName);
 
-                invokeFallBack(invocation);
-            }
-            else if (method.getName().equals(CIRCUIT_BREAKER_EXECUTE_METHOD_NAME)) {
-                boolean allowed = circuitBreaker.tryAcquirePermission();
+      long start = System.nanoTime();
+      long durationInNanos = 0L;
 
-                if (allowed) {
-                    circuitBreaker.acquirePermission();
-                    try {
-                        Object proceed = invocation.proceed();
-                        durationInNanos = System.nanoTime() - start;
-                        circuitBreaker.onSuccess(durationInNanos, TimeUnit.NANOSECONDS);
-                        return proceed;
-                    } catch (Exception e) {
-                        circuitBreaker.onError(durationInNanos, TimeUnit.NANOSECONDS, e);
-                        return invokeFallBack(invocation);
-                    }
-                } else {
-                    // fallback
-                    return invokeFallBack(invocation);
-                }
-            }
-            if (!circuitBreaker.tryAcquirePermission())
-                return invokeFallBack(invocation);
+      if (method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT)) {
+
+        circuitBreaker.onError(System.nanoTime() - start, TimeUnit.MICROSECONDS, new ExecutionException("ee", new RuntimeException()));
+
+      } else if (method.getName().equals(CIRCUIT_BREAKER_PUBLISHER_FAIL_EVENT_DIRECT_FALLBACK)) {
+
+        circuitBreaker.onError(System.nanoTime() - start, TimeUnit.MICROSECONDS, MixmicroCircuitBreakerException.createCallNotPermittedException(circuitBreaker));
+
+        invokeFallBack(invocation);
+
+      } else if (method.getName().equals(CIRCUIT_BREAKER_EXECUTE_METHOD_NAME)) {
+
+        boolean allowed = circuitBreaker.tryAcquirePermission();
+
+        if (allowed) {
+          circuitBreaker.acquirePermission();
+          try {
+
+            Object proceed = invocation.proceed();
+            durationInNanos = System.nanoTime() - start;
+            circuitBreaker.onSuccess(durationInNanos, TimeUnit.NANOSECONDS);
+
+            return proceed;
+          } catch (Exception e) {
+            circuitBreaker.onError(durationInNanos, TimeUnit.NANOSECONDS, e);
+            return invokeFallBack(invocation);
+          }
+        } else {
+          // fallback
+          return invokeFallBack(invocation);
         }
-        return invocation;
+      }
+      if (!circuitBreaker.tryAcquirePermission()) {
+
+        return invokeFallBack(invocation);
+      }
     }
 
-    private Object invokeFallBack(MethodInvocation invocation) throws Throwable {
-        Class<?> aClass = invocation.getThis().getClass();
-        Method method1 = aClass.getMethod(CIRCUIT_BREAKER_FALLBACK_METHOD_NAME);
+    return invocation;
+  }
 
-        return method1.invoke(aClass.newInstance());
-    }
+  /**
+   * Invoke CircuitBreaker Service Fallback Method.
+   * @param invocation target object instance
+   * @return execute result .
+   * @throws Throwable maybe thrown exception .
+   */
+  private Object invokeFallBack(MethodInvocation invocation) throws Throwable {
+
+    Class<?> aClass = invocation.getThis().getClass();
+
+    Method fallbackMethod = aClass.getMethod(CIRCUIT_BREAKER_FALLBACK_METHOD_NAME);
+
+    return fallbackMethod.invoke(aClass.newInstance());
+  }
 }
