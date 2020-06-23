@@ -1,9 +1,9 @@
 package test.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import test.service.CircuitBreakerTestImpl;
+import test.service.CircuitBreakerTestImpl2;
 
 /**
  * @author: siran.yao
@@ -12,16 +12,27 @@ import test.service.CircuitBreakerTestImpl;
 @RestController
 @RequestMapping("/")
 public class CircuitBreakerController {
-    @Autowired
-    private CircuitBreakerTestImpl circuitBreakerTest;
 
-    @RequestMapping("/test1")
-    public Object test1(){
-        return circuitBreakerTest.executeWrapper("normal");
-    }
+  private final CircuitBreakerTestImpl circuitBreakerTest;
+  private final CircuitBreakerTestImpl2 circuitBreakerTest2;
 
-    @RequestMapping("/test2")
-    public Object test2(){
-        return circuitBreakerTest.executeWrapper("abnormal");
-    }
+  public CircuitBreakerController(CircuitBreakerTestImpl circuitBreakerTest, CircuitBreakerTestImpl2 circuitBreakerTest2) {
+    this.circuitBreakerTest = circuitBreakerTest;
+    this.circuitBreakerTest2 = circuitBreakerTest2;
+  }
+
+  @RequestMapping("/t1")
+  public void test1() {
+    circuitBreakerTest.doSomething("normal");
+  }
+
+  @RequestMapping("/exception")
+  public void test2() {
+    circuitBreakerTest.doSomething("exception");
+  }
+
+  @RequestMapping("/t3")
+  public void test3() {
+    circuitBreakerTest2.doSomething("exception");
+  }
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import xyz.vopen.mixmicro.components.circuitbreaker.MixmicroCircuitBreaker;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakable;
 import xyz.vopen.mixmicro.components.enhance.circuitbreaker.v2.autoconfigure.MixmicroCircuitBreakerProperties;
 import xyz.vopen.mixmicro.components.enhance.circuitbreaker.v2.proxy.MixmicroResilience4jCircuitBreakerActionMethodInterceptor;
@@ -47,7 +46,7 @@ public class MixmicroCircuitBreakerBeanPostProcessor implements BeanPostProcesso
     if (bean instanceof MixmicroCircuitBreakable) {
       ProxyFactory factory = new ProxyFactory(bean);
       factory.setProxyTargetClass(true);
-      factory.addInterface(MixmicroCircuitBreaker.class);
+      factory.addInterface(MixmicroCircuitBreakable.class);
       factory.setExposeProxy(true);
 
       switch (properties.getType()) {

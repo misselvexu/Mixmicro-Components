@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import lombok.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.CircuitBreakerType;
-import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerConfig;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -19,9 +18,6 @@ import static xyz.vopen.mixmicro.components.enhance.circuitbreaker.v2.autoconfig
  */
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @ConfigurationProperties(prefix = MIXMICRO_CIRCUIT_BREAKER)
 public class MixmicroCircuitBreakerProperties implements Serializable {
 
@@ -30,5 +26,11 @@ public class MixmicroCircuitBreakerProperties implements Serializable {
   private CircuitBreakerType type = CircuitBreakerType.R4J;
 
   private Map<String, MixmicroCircuitBreakerConfig> instances = Maps.newHashMap();
+
+  @Getter
+  @Setter
+  public static class MixmicroCircuitBreakerConfig extends xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerConfig {
+    // empty implements
+  }
 
 }

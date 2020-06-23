@@ -1,10 +1,9 @@
 package xyz.vopen.mixmicro.components.circuitbreaker.v2;
 
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.Duration;
-import java.util.function.Predicate;
 
 /**
  * {@link MixmicroCircuitBreakerConfig}
@@ -12,58 +11,48 @@ import java.util.function.Predicate;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020/6/22
  */
-@Data
+@Getter
+@Setter
 public class MixmicroCircuitBreakerConfig implements Serializable {
 
-  private Duration waitDurationInOpenState;
+  //
+  private Duration waitDurationInOpenState = Duration.ofSeconds(50);
 
-  private Duration slowCallDurationThreshold;
+  //
+  private Float failureRateThreshold = 50.0f;
 
-  private Float failureRateThreshold;
+  //
+  private Integer slidingWindowSize = 3;
 
-  private Float slowCallRateThreshold;
+  //
+  private Integer minimumNumberOfCalls = 3;
 
-  private Integer slidingWindowSize;
+  //
+  private Integer permittedNumberOfCallsInHalfOpenState = 3;
 
-  private Integer minimumNumberOfCalls;
+  //
+  private Integer eventConsumerBufferSize = 5;
 
-  private Integer permittedNumberOfCallsInHalfOpenState;
+  private SlidingWindowType slidingWindowType = SlidingWindowType.COUNT_BASED;
 
-  private Boolean automaticTransitionFromOpenToHalfOpenEnabled;
-
-  private Boolean writableStackTraceEnabled;
-
-  private Boolean allowHealthIndicatorToFail;
-
-  private Integer eventConsumerBufferSize;
-
-  private Boolean registerHealthIndicator;
-
-  private Class<Predicate<Throwable>> recordFailurePredicate;
-
-  private Class<? extends Throwable>[] recordExceptions;
-
-  private Class<? extends Throwable>[] ignoreExceptions;
-
-  private String baseConfig;
-
-  /*
-   * flag to enable Exponential backoff policy or not for retry policy delay
+  /**
+   * Type Defined
+   *
+   * <p>
    */
+  public enum SlidingWindowType {
+    /**
+     * Time Based
+     *
+     * <p>
+     */
+    TIME_BASED,
 
-  private Boolean enableExponentialBackoff;
-  /*
-   * exponential backoff multiplier value
-   */
-  private Double exponentialBackoffMultiplier;
-
-  /*
-   * flag to enable randomized delay  policy or not for retry policy delay
-   */
-
-  private Boolean enableRandomizedWait;
-  /*
-   * randomized delay factor value
-   */
-  private Double randomizedWaitFactor;
+    /**
+     * Count Based
+     *
+     * <p>
+     */
+    COUNT_BASED
+  }
 }

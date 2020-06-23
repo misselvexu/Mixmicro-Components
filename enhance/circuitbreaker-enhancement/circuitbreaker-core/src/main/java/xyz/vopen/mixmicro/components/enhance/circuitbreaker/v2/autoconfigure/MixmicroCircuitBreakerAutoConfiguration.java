@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerConfig;
+import xyz.vopen.mixmicro.components.enhance.circuitbreaker.v2.spring.MixmicroCircuitBreakerBeanPostProcessor;
 
 import java.util.Collections;
 import java.util.Map;
@@ -42,10 +42,10 @@ public class MixmicroCircuitBreakerAutoConfiguration {
 
     log.info("[==MCB==] starting create r4j CircuitBreakerRegistry instance .");
 
-    Map<String, MixmicroCircuitBreakerConfig> instances = properties.getInstances();
+    Map<String, MixmicroCircuitBreakerProperties.MixmicroCircuitBreakerConfig> instances = properties.getInstances();
     CircuitBreakerRegistry registry = CircuitBreakerRegistry.ofDefaults();
 
-    for (Map.Entry<String, MixmicroCircuitBreakerConfig> entry : instances.entrySet()) {
+    for (Map.Entry<String, MixmicroCircuitBreakerProperties.MixmicroCircuitBreakerConfig> entry : instances.entrySet()) {
       CircuitBreakerConfigurationProperties temp = new CircuitBreakerConfigurationProperties();
       CircuitBreakerConfigurationProperties.InstanceProperties instanceProperties = new CircuitBreakerConfigurationProperties.InstanceProperties();
       BeanUtils.copyProperties(entry.getValue(), instanceProperties);
@@ -55,6 +55,11 @@ public class MixmicroCircuitBreakerAutoConfiguration {
     }
 
     return registry;
+  }
+
+  @Bean
+  public MixmicroCircuitBreakerBeanPostProcessor mixmicroCircuitBreakerBeanPostProcessor(MixmicroCircuitBreakerProperties properties) {
+    return new MixmicroCircuitBreakerBeanPostProcessor(properties);
   }
 
 }

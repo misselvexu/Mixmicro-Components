@@ -6,6 +6,7 @@
         <artifactId>mixmicro-components-all</artifactId>
         <groupId>com.yunlsp.framework.components</groupId>
         <version>1.0.4</version>
+        <relativePath>../</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
@@ -17,12 +18,22 @@
     <name>Test Module :: ${project.version}</name>
     <description>🏗 Test Module</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-test</artifactId>
-                <version>2.2.6.RELEASE</version>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-dependencies</artifactId>
+                <version>${project.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -9,7 +9,7 @@ import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerAct
  * @date: 2020/6/22 17:43
  */
 @Service
-public class CircuitBreakerTestImpl extends AbstractMixmicroResilience4jCircuitBreaker {
+public class CircuitBreakerTestImpl2 extends AbstractMixmicroResilience4jCircuitBreaker {
 
   @MixmicroCircuitBreakerAction(fallbackMethod = "fallback")
   public void doSomething(String args) {
@@ -21,7 +21,7 @@ public class CircuitBreakerTestImpl extends AbstractMixmicroResilience4jCircuitB
     System.out.println("executed with :" + args);
   }
 
-  public void fallback(String args) {
-    System.out.println("circuit breaker process : " + args);
+  public void fallback() {
+    System.out.println("circuit breaker process fail");
   }
 }

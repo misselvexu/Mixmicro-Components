@@ -30,7 +30,6 @@
                 <artifactId>mixmicro-components-enhance-circuitbreaker-core</artifactId>
                 <version>${mixmicro-enhance-circuitbreaker-core.version}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 </project>

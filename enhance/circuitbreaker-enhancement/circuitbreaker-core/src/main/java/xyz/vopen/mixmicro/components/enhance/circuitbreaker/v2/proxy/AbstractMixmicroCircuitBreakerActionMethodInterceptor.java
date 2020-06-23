@@ -34,7 +34,7 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
   protected AbstractMixmicroCircuitBreakerActionMethodInterceptor(MixmicroCircuitBreakable breakable) {
     this.breakable = breakable;
     Assert.notNull(this.breakable, "Mixmicro Circuit Breakable Instance Object Must not be null .");
-    fallbackMethod = ReflectionKit.getAccessibleMethod(breakable, DEFAULT_FALLBACK_METHOD_NAME, Throwable.class);
+    fallbackMethod = ReflectionKit.getAccessibleMethod(this.breakable, DEFAULT_FALLBACK_METHOD_NAME, Throwable.class);
   }
 
   @Override
@@ -66,9 +66,11 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
             Class<?>[] parameterTypes = method.getParameterTypes();
             Method customFallbackMethod = ReflectionKit.getAccessibleMethod(breakable, methodName, parameterTypes);
             isFallbackMethodOverride = customFallbackMethod != null;
-            fallbackMethod = customFallbackMethod;
+            if (customFallbackMethod != null) {
+              fallbackMethod = customFallbackMethod;
+            }
           } catch (Exception e) {
-            log.warn("[==MCB==] found fallback method with name : [" + methodName + "] failed.", e);
+            log.warn("[==MCB==] found fallback method with name : [" + methodName + "] failed , fallback method must has the same signature with origin service method ", e);
           }
         }
 
@@ -116,6 +118,7 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
       method.setAccessible(true);
       return method.invoke(instance, args);
     } catch (Exception e) {
+      e.printStackTrace();
       log.warn("[==MCB==] fallback method execute failed, just return null.");
       return null;
     }

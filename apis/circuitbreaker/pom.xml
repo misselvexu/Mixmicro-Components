@@ -24,13 +24,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.2</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>common-kits</artifactId>
         </dependency>

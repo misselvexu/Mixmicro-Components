@@ -2,6 +2,8 @@ package xyz.vopen.mixmicro.components.circuitbreaker.v2;
 
 import java.lang.annotation.*;
 
+import static xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakable.DEFAULT_FALLBACK_METHOD_NAME;
+
 /**
  * {@link MixmicroCircuitBreakerAction}
  *
@@ -26,5 +28,5 @@ public @interface MixmicroCircuitBreakerAction {
    * Target Fallback Method Name
    * @return method name
    */
-  String fallbackMethod() default "fallback0";
+  String fallbackMethod() default DEFAULT_FALLBACK_METHOD_NAME;
 }

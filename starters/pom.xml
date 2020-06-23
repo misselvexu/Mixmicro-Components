@@ -60,6 +60,7 @@
         <micro-starter-scheduler.version>1.0.4</micro-starter-scheduler.version>
         <micro-starter-monitor.version>1.0.4</micro-starter-monitor.version>
         <micro-starter-spi.version>1.0.4</micro-starter-spi.version>
+        <micro-starter-circuitbreaker.version>1.0.4</micro-starter-circuitbreaker.version>
     </properties>
 
     <dependencyManagement>
@@ -203,6 +204,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-spi</artifactId>
                 <version>${micro-starter-spi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-circuitbreaker</artifactId>
+                <version>${micro-starter-circuitbreaker.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

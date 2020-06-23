@@ -35,10 +35,8 @@
         <mixmicro-enhance-datasource.version>1.0.4</mixmicro-enhance-datasource.version>
         <mixmicro-enhance-schedule.version>1.0.4</mixmicro-enhance-schedule.version>
         <mixmicro-enhance-spi.version>1.0.4</mixmicro-enhance-spi.version>
-
-
         <mixmicro-enhance-circuitbreaker.version>1.0.4</mixmicro-enhance-circuitbreaker.version>
-        <mixmicro-enhance-circuitbreaker-core.version>1.0.4</mixmicro-enhance-circuitbreaker-core.version>
+
     </properties>
 
     <modules>
@@ -208,7 +206,7 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-circuitbreaker-core</artifactId>
-                <version>${mixmicro-enhance-circuitbreaker-core.version}</version>
+                <version>${mixmicro-enhance-circuitbreaker.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

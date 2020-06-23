@@ -32,6 +32,7 @@
         <mixmicro-apis-common.version>1.0.4</mixmicro-apis-common.version>
         <mixmicro-apis-exception.version>1.0.4</mixmicro-apis-exception.version>
         <mixmicro-apis-logger.version>1.0.4</mixmicro-apis-logger.version>
+        <mixmicro-apis-circuitbreaker.version>1.0.4</mixmicro-apis-circuitbreaker.version>
     </properties>
 
 
@@ -68,6 +69,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>logger-api</artifactId>
                 <version>${mixmicro-apis-logger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>circuitbreaker-api</artifactId>
+                <version>${mixmicro-apis-circuitbreaker.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

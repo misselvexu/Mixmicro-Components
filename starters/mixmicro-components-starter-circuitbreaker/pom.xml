@@ -9,6 +9,7 @@
         <artifactId>mixmicro-components-starters</artifactId>
         <groupId>com.yunlsp.framework.components</groupId>
         <version>1.0.4</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-circuitbreaker</artifactId>
@@ -26,7 +27,7 @@
 
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
-            <artifactId>mixmicro-components-enhance-circuitbreaker</artifactId>
+            <artifactId>circuitbreaker-api</artifactId>
         </dependency>
 
         <dependency>
@@ -35,16 +36,4 @@
         </dependency>
 
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>xyz.vopen.opensource</groupId>
-                <artifactId>mixmicro-stream-denpendencies</artifactId>
-                <version>1.0.0.RC3</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>
