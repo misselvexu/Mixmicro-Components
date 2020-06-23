@@ -68,4 +68,12 @@ public abstract class AbstractMixmicroResilience4jCircuitBreaker implements Mixm
   public void ack(long duration) {
     this.ack(duration, DEFAULT_TIMEUNIT);
   }
+
+  @Override
+  public Object $fallback0(Throwable throwable) throws MixmicroCircuitBreakerException {
+    if(throwable != null) {
+      throwable.printStackTrace();
+    }
+    return null;
+  }
 }

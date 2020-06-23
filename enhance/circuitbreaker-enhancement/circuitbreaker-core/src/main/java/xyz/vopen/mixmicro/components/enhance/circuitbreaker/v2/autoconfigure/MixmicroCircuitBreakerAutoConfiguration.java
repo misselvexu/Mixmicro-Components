@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerConfig;
+import xyz.vopen.mixmicro.components.enhance.circuitbreaker.v2.spring.MixmicroCircuitBreakerBeanPostProcessor;
 
 import java.util.Collections;
 import java.util.Map;
@@ -37,7 +38,7 @@ public class MixmicroCircuitBreakerAutoConfiguration {
   @Primary
   @ConditionalOnClass(CircuitBreakerRegistry.class)
   @ConditionalOnProperty(prefix = MIXMICRO_CIRCUIT_BREAKER, value = "type", havingValue = "r4j")
-  @ConditionalOnBean(MixmicroCircuitBreakerProperties.class)
+//  @ConditionalOnBean(MixmicroCircuitBreakerProperties.class)
   public CircuitBreakerRegistry circuitBreakerRegistry(MixmicroCircuitBreakerProperties properties) {
 
     log.info("[==MCB==] starting create r4j CircuitBreakerRegistry instance .");
@@ -49,6 +50,7 @@ public class MixmicroCircuitBreakerAutoConfiguration {
       CircuitBreakerConfigurationProperties temp = new CircuitBreakerConfigurationProperties();
       CircuitBreakerConfigurationProperties.InstanceProperties instanceProperties = new CircuitBreakerConfigurationProperties.InstanceProperties();
       BeanUtils.copyProperties(entry.getValue(), instanceProperties);
+
       CircuitBreakerConfig circuitBreakerConfig = temp.createCircuitBreakerConfig(entry.getKey(), instanceProperties, new CompositeCustomizer<>(Collections.emptyList()));
       log.info("[==MCB==] registry [{}] info r4j registry .", entry.getKey());
       registry.circuitBreaker(entry.getKey(), circuitBreakerConfig);
@@ -57,4 +59,8 @@ public class MixmicroCircuitBreakerAutoConfiguration {
     return registry;
   }
 
+  @Bean
+  public MixmicroCircuitBreakerBeanPostProcessor circuitBreakerBeanPostProcessor(MixmicroCircuitBreakerProperties properties){
+    return new MixmicroCircuitBreakerBeanPostProcessor(properties);
+  }
 }

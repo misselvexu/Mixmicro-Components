@@ -13,6 +13,10 @@ import xyz.vopen.mixmicro.kits.lang.Nullable;
 import xyz.vopen.mixmicro.kits.reflect.ReflectionKit;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.Arrays;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakable.DEFAULT_FALLBACK_METHOD_NAME;
@@ -25,116 +29,119 @@ import static xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBre
  */
 public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor implements MethodInterceptor {
 
-  private static final Logger log = LoggerFactory.getLogger(AbstractMixmicroCircuitBreakerActionMethodInterceptor.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractMixmicroCircuitBreakerActionMethodInterceptor.class);
 
-  protected final MixmicroCircuitBreakable breakable;
+    protected final MixmicroCircuitBreakable breakable;
 
-  private Method fallbackMethod;
+    private Method fallbackMethod;
 
-  protected AbstractMixmicroCircuitBreakerActionMethodInterceptor(MixmicroCircuitBreakable breakable) {
-    this.breakable = breakable;
-    Assert.notNull(this.breakable, "Mixmicro Circuit Breakable Instance Object Must not be null .");
-    fallbackMethod = ReflectionKit.getAccessibleMethod(breakable, DEFAULT_FALLBACK_METHOD_NAME, Throwable.class);
-  }
-
-  @Override
-  public Object invoke(MethodInvocation invocation) {
-
-    Object[] args = invocation.getArguments();
-
-    boolean isFallbackMethodOverride = false;
-
-
-    try {
-      Method method = invocation.getMethod();
-
-      if (method.isAnnotationPresent(MixmicroCircuitBreakerAction.class)) {
-
-        MixmicroCircuitBreakerAction action = method.getAnnotation(MixmicroCircuitBreakerAction.class);
-
-        String resourceName = action.name();
-
-        // register first
-        this.registry(resourceName);
-
-        String methodName = action.fallbackMethod();
-
-        if (DEFAULT_FALLBACK_METHOD_NAME.equalsIgnoreCase(methodName)) {
-          throw new MixmicroCircuitBreakerException(String.format("[==MCB==] custom fallback method name must not named : '%s'", DEFAULT_FALLBACK_METHOD_NAME));
-        } else {
-          try {
-            Class<?>[] parameterTypes = method.getParameterTypes();
-            Method customFallbackMethod = ReflectionKit.getAccessibleMethod(breakable, methodName, parameterTypes);
-            isFallbackMethodOverride = customFallbackMethod != null;
-            fallbackMethod = customFallbackMethod;
-          } catch (Exception e) {
-            log.warn("[==MCB==] found fallback method with name : [" + methodName + "] failed.", e);
-          }
-        }
-
-        Assert.notNull(fallbackMethod, "CircuitBreaker s fallback method must not be null .");
-
-        long start = System.nanoTime();
-
-        boolean acquired = this.tryAcquire(resourceName);
-
-        if(acquired) {
-          try{
-            Object result = invocation.proceed();
-            this.breakable.ack((System.nanoTime() - start), NANOSECONDS);
-            return result;
-
-          } catch (Exception e) {
-            this.breakable.firing((System.nanoTime() - start), NANOSECONDS, e);
-            // if invoked happened exception , just return-ed fallback result
-            return this.invokedFallbackMethod(breakable, fallbackMethod, isFallbackMethodOverride ? args : e);
-          }
-        }
-
-        // DEFAULT RETURN NULL.
-        // ONLY WHEN INVOKED HAPPENED EXCEPTION & FAILED ATTEMPTED MAX COUNTS .
-        return this.invokedFallbackMethod(breakable, fallbackMethod, isFallbackMethodOverride ? args : null);
-      } else {
-        // execute real method directly
-        return invocation.proceed();
-      }
-
-    } catch (Throwable e) {
-      // exception.
-      return this.invokedFallbackMethod(
-          breakable,
-          fallbackMethod,
-          isFallbackMethodOverride
-              ? args
-              : new MixmicroCircuitBreakerException(
-                  "CircuitBreaker s proxy method execute failed ", e));
+    protected AbstractMixmicroCircuitBreakerActionMethodInterceptor(MixmicroCircuitBreakable breakable) {
+        this.breakable = breakable;
+        Assert.notNull(this.breakable, "Mixmicro Circuit Breakable Instance Object Must not be null .");
+        fallbackMethod = ReflectionKit.getAccessibleMethod(breakable, DEFAULT_FALLBACK_METHOD_NAME, Throwable.class);
     }
-  }
 
-  private Object invokedFallbackMethod(@NonNull Object instance, @NonNull Method method, @Nullable Object... args) {
-    try{
-      method.setAccessible(true);
-      return method.invoke(instance, args);
-    } catch (Exception e) {
-      log.warn("[==MCB==] fallback method execute failed, just return null.");
-      return null;
+    @Override
+    public Object invoke(MethodInvocation invocation) {
+
+        Object[] args = invocation.getArguments();
+
+        boolean isFallbackMethodOverride = false;
+
+        try {
+            Method method = invocation.getMethod();
+
+            if (method.isAnnotationPresent(MixmicroCircuitBreakerAction.class)) {
+
+                MixmicroCircuitBreakerAction action = method.getAnnotation(MixmicroCircuitBreakerAction.class);
+
+                String resourceName = action.name();
+
+                // register first
+                this.registry(resourceName);
+
+                String methodName = action.fallbackMethod();
+
+                if (DEFAULT_FALLBACK_METHOD_NAME.equalsIgnoreCase(methodName)) {
+                    throw new MixmicroCircuitBreakerException(String.format("[==MCB==] custom fallback method name must not named : '%s'", DEFAULT_FALLBACK_METHOD_NAME));
+                } else {
+                    try {
+                        Class<?>[] parameterTypes = method.getParameterTypes();
+                        Method customFallbackMethod = ReflectionKit.getAccessibleMethod(breakable, methodName, parameterTypes);
+                        isFallbackMethodOverride = customFallbackMethod != null;
+
+                        if (isFallbackMethodOverride) {
+                            fallbackMethod = customFallbackMethod;
+                        }
+                    } catch (Exception e) {
+                        log.warn("[==MCB==] found fallback method with name : [" + methodName + "] failed.", e);
+                    }
+                }
+
+                Assert.notNull(fallbackMethod, "CircuitBreaker s fallback method must not be null .");
+
+                long start = System.nanoTime();
+
+                boolean acquired = this.tryAcquire(resourceName);
+
+                if (acquired) {
+                    try {
+                        Object result = invocation.proceed();
+                        this.breakable.ack((System.nanoTime() - start), NANOSECONDS);
+                        return result;
+
+                    } catch (Exception e) {
+                        this.breakable.firing((System.nanoTime() - start), NANOSECONDS, e);
+                        // if invoked happened exception , just return-ed fallback result
+                        return this.invokedFallbackMethod(breakable, fallbackMethod, isFallbackMethodOverride ? args : e);
+                    }
+                }
+
+                // DEFAULT RETURN NULL.
+                // ONLY WHEN INVOKED HAPPENED EXCEPTION & FAILED ATTEMPTED MAX COUNTS .
+                return this.invokedFallbackMethod(breakable, fallbackMethod, isFallbackMethodOverride ? args : null);
+            } else {
+                // execute real method directly
+                return invocation.proceed();
+            }
+
+        } catch (Throwable e) {
+            // exception.
+            return this.invokedFallbackMethod(
+                    breakable,
+                    fallbackMethod,
+                    isFallbackMethodOverride
+                            ? args
+                            : new MixmicroCircuitBreakerException(
+                            "CircuitBreaker s proxy method execute failed ", e));
+        }
     }
-  }
 
-  /**
-   * Try to Register Context Instance
-   *
-   * @param resourceName action resource name
-   * @throws MixmicroCircuitBreakerException maybe thrown {@link MixmicroCircuitBreakerException}
-   */
-  protected abstract void registry(String resourceName) throws MixmicroCircuitBreakerException;
+    private Object invokedFallbackMethod(@NonNull Object instance, @NonNull Method method, @NonNull Object... args) {
+        try {
+            method.setAccessible(true);
+            return method.invoke(instance, args);
 
-  /**
-   * Try to required access permission
-   *
-   * @param resourceName action resource name
-   * @return true / false , if return true , thread will execute real target service method .
-   * @throws MixmicroCircuitBreakerException maybe thrown {@link MixmicroCircuitBreakerException}
-   */
-  protected abstract boolean tryAcquire(String resourceName) throws MixmicroCircuitBreakerException;
+        } catch (Exception e) {
+            log.warn("[==MCB==] fallback method execute failed, just return null.");
+            return null;
+        }
+    }
+
+    /**
+     * Try to Register Context Instance
+     *
+     * @param resourceName action resource name
+     * @throws MixmicroCircuitBreakerException maybe thrown {@link MixmicroCircuitBreakerException}
+     */
+    protected abstract void registry(String resourceName) throws MixmicroCircuitBreakerException;
+
+    /**
+     * Try to required access permission
+     *
+     * @param resourceName action resource name
+     * @return true / false , if return true , thread will execute real target service method .
+     * @throws MixmicroCircuitBreakerException maybe thrown {@link MixmicroCircuitBreakerException}
+     */
+    protected abstract boolean tryAcquire(String resourceName) throws MixmicroCircuitBreakerException;
 }

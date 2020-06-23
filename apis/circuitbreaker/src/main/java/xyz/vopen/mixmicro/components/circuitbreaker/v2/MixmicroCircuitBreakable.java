@@ -41,11 +41,5 @@ public interface MixmicroCircuitBreakable {
    * @return fallback return result object.
    * @throws MixmicroCircuitBreakerException maybe thrown {@link MixmicroCircuitBreakerException}
    */
-  default Object $fallback0(@Nullable Throwable throwable) throws MixmicroCircuitBreakerException {
-    // default implements
-    if(throwable != null) {
-      throwable.printStackTrace();
-    }
-    return null;
-  }
+   Object $fallback0(@Nullable Throwable throwable) throws MixmicroCircuitBreakerException;
 }
