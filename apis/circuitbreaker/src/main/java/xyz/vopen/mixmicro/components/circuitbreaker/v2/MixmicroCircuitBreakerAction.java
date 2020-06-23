@@ -20,7 +20,7 @@ public @interface MixmicroCircuitBreakerAction {
    *
    * @return name of action for circuit breaker
    */
-  String name() default "";
+  String name() default "default";
 
   /**
    * Target Fallback Method Name
