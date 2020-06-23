@@ -5,7 +5,7 @@
 
     <groupId>com.yunlsp.framework.components</groupId>
     <artifactId>mixmicro-components-dependencies</artifactId>
-    <version>1.0.5.BUILD-SNAPSHOT</version>
+    <version>1.0.5.RC1</version>
 
     <packaging>pom</packaging>
 
@@ -16,10 +16,10 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <mixmicro-components-apis.dependencies.version>1.0.5.BUILD-SNAPSHOT</mixmicro-components-apis.dependencies.version>
-        <mixmicro-components-kits.dependencies.version>1.0.5.BUILD-SNAPSHOT</mixmicro-components-kits.dependencies.version>
-        <mixmicro-components-starters.dependencies.version>1.0.5.BUILD-SNAPSHOT</mixmicro-components-starters.dependencies.version>
-        <mixmicro-components-enhance.dependencies.version>1.0.5.BUILD-SNAPSHOT</mixmicro-components-enhance.dependencies.version>
+        <mixmicro-components-apis.dependencies.version>1.0.5.RC1</mixmicro-components-apis.dependencies.version>
+        <mixmicro-components-kits.dependencies.version>1.0.5.RC1</mixmicro-components-kits.dependencies.version>
+        <mixmicro-components-starters.dependencies.version>1.0.5.RC1</mixmicro-components-starters.dependencies.version>
+        <mixmicro-components-enhance.dependencies.version>1.0.5.RC1</mixmicro-components-enhance.dependencies.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>

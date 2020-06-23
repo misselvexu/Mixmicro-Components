@@ -29,7 +29,7 @@ import java.lang.annotation.*;
  * @see ConfigurationBeanBindingRegistrar
  * @see ConfigurationBeanBindingPostProcessor
  * @see ConfigurationBeanCustomizer
- * @since 1.0.5.BUILD-SNAPSHOT
+ * @since 1.0.5.RC1
  */
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
