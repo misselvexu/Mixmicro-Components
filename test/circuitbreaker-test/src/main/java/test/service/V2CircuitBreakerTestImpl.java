@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.AbstractMixmicroResilience4jCircuitBreaker;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerAction;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author: siran.yao
  * @date: 2020/6/23 10:40
@@ -13,7 +15,12 @@ public class V2CircuitBreakerTestImpl extends AbstractMixmicroResilience4jCircui
 
     @MixmicroCircuitBreakerAction(name = "test1",fallbackMethod = "v2fallback")
     public Object test1() {
-        int i = 1 / 0;
+//        int i = 1 / 0;
+        try {
+            TimeUnit.SECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return "hello";
     }
 

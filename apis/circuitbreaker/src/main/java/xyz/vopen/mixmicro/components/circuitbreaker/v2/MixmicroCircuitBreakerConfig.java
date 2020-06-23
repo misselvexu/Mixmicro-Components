@@ -1,9 +1,13 @@
 package xyz.vopen.mixmicro.components.circuitbreaker.v2;
 
+import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+import java.util.concurrent.TimeUnit;
 
 /**
  * {@link MixmicroCircuitBreakerConfig}
@@ -15,6 +19,11 @@ import java.time.Duration;
 @Setter
 public class MixmicroCircuitBreakerConfig implements Serializable {
 
+  private Float slowCallRateThreshold = 100.0f;
+
+  private Duration slowCallDurationThreshold = Duration.ofMillis(60000);
+
+  private Boolean automaticTransitionFromOpenToHalfOpenEnabled = true;
   //
   private Duration waitDurationInOpenState = Duration.ofSeconds(50);
 
@@ -33,26 +42,5 @@ public class MixmicroCircuitBreakerConfig implements Serializable {
   //
   private Integer eventConsumerBufferSize = 5;
 
-  private SlidingWindowType slidingWindowType = SlidingWindowType.COUNT_BASED;
-
-  /**
-   * Type Defined
-   *
-   * <p>
-   */
-  public enum SlidingWindowType {
-    /**
-     * Time Based
-     *
-     * <p>
-     */
-    TIME_BASED,
-
-    /**
-     * Count Based
-     *
-     * <p>
-     */
-    COUNT_BASED
-  }
+  private CircuitBreakerConfig.SlidingWindowType slidingWindowType = CircuitBreakerConfig.SlidingWindowType.COUNT_BASED;
 }
