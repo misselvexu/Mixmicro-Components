@@ -23,9 +23,11 @@ import static xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBre
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020/6/23
  */
-public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor implements MethodInterceptor {
+public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor
+    implements MethodInterceptor {
 
-  private static final Logger log = LoggerFactory.getLogger(AbstractMixmicroCircuitBreakerActionMethodInterceptor.class);
+  private static final Logger log =
+      LoggerFactory.getLogger(AbstractMixmicroCircuitBreakerActionMethodInterceptor.class);
 
   protected final MixmicroCircuitBreakable breakable;
 
@@ -43,7 +45,6 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
     Object[] args = invocation.getArguments();
 
     boolean isFallbackMethodOverride = false;
-
 
     try {
       Method method = invocation.getMethod();
@@ -66,7 +67,8 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
             Class<?>[] parameterTypes = method.getParameterTypes();
             Method customFallbackMethod = ReflectionKit.getAccessibleMethod(breakable, methodName, parameterTypes);
             isFallbackMethodOverride = customFallbackMethod != null;
-            if (customFallbackMethod != null) {
+
+            if (isFallbackMethodOverride) {
               fallbackMethod = customFallbackMethod;
             }
           } catch (Exception e) {
@@ -80,8 +82,8 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
 
         boolean acquired = this.tryAcquire(resourceName);
 
-        if(acquired) {
-          try{
+        if (acquired) {
+          try {
             Object result = invocation.proceed();
             this.breakable.ack((System.nanoTime() - start), NANOSECONDS);
             return result;
@@ -89,13 +91,15 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
           } catch (Exception e) {
             this.breakable.firing((System.nanoTime() - start), NANOSECONDS, e);
             // if invoked happened exception , just return-ed fallback result
-            return this.invokedFallbackMethod(breakable, fallbackMethod, isFallbackMethodOverride ? args : e);
+            return this.invokedFallbackMethod(
+                breakable, fallbackMethod, isFallbackMethodOverride ? args : e);
           }
         }
 
         // DEFAULT RETURN NULL.
         // ONLY WHEN INVOKED HAPPENED EXCEPTION & FAILED ATTEMPTED MAX COUNTS .
         return this.invokedFallbackMethod(breakable, fallbackMethod, isFallbackMethodOverride ? args : null);
+
       } else {
         // execute real method directly
         return invocation.proceed();
@@ -106,15 +110,13 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
       return this.invokedFallbackMethod(
           breakable,
           fallbackMethod,
-          isFallbackMethodOverride
-              ? args
-              : new MixmicroCircuitBreakerException(
-                  "CircuitBreaker s proxy method execute failed ", e));
+          isFallbackMethodOverride ? args : new MixmicroCircuitBreakerException("CircuitBreaker s proxy method execute failed ", e));
     }
   }
 
-  private Object invokedFallbackMethod(@NonNull Object instance, @NonNull Method method, @Nullable Object... args) {
-    try{
+  private Object invokedFallbackMethod(
+      @NonNull Object instance, @NonNull Method method, @Nullable Object... args) {
+    try {
       method.setAccessible(true);
       return method.invoke(instance, args);
     } catch (Exception e) {

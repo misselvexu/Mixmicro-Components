@@ -49,6 +49,7 @@ public class MixmicroCircuitBreakerAutoConfiguration {
       CircuitBreakerConfigurationProperties temp = new CircuitBreakerConfigurationProperties();
       CircuitBreakerConfigurationProperties.InstanceProperties instanceProperties = new CircuitBreakerConfigurationProperties.InstanceProperties();
       BeanUtils.copyProperties(entry.getValue(), instanceProperties);
+
       CircuitBreakerConfig circuitBreakerConfig = temp.createCircuitBreakerConfig(entry.getKey(), instanceProperties, new CompositeCustomizer<>(Collections.emptyList()));
       log.info("[==MCB==] registry [{}] info r4j registry .", entry.getKey());
       registry.circuitBreaker(entry.getKey(), circuitBreakerConfig);
@@ -61,5 +62,4 @@ public class MixmicroCircuitBreakerAutoConfiguration {
   public MixmicroCircuitBreakerBeanPostProcessor mixmicroCircuitBreakerBeanPostProcessor(MixmicroCircuitBreakerProperties properties) {
     return new MixmicroCircuitBreakerBeanPostProcessor(properties);
   }
-
 }
