@@ -3,6 +3,7 @@ package xyz.vopen.mixmicro.components.enhance.circuitbreaker.v2.autoconfigure;
 import com.google.common.collect.Maps;
 import lombok.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import xyz.vopen.mixmicro.components.circuitbreaker.v2.CircuitBreakerType;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerConfig;
 
 import java.io.Serializable;
@@ -30,20 +31,4 @@ public class MixmicroCircuitBreakerProperties implements Serializable {
 
   private Map<String, MixmicroCircuitBreakerConfig> instances = Maps.newHashMap();
 
-  public enum CircuitBreakerType {
-
-    /**
-     * Resilience4j Implements
-     *
-     * <p>
-     */
-    R4J,
-
-    /**
-     * Alibaba Sentinel Implements
-     *
-     * <p>
-     */
-    STL
-  }
 }

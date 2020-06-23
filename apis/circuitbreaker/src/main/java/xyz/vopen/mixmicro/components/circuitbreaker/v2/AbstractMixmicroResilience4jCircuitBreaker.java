@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.circuitbreaker.v2;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerException;
 import xyz.vopen.mixmicro.kits.lang.NonNull;
 
 import java.util.concurrent.TimeUnit;
@@ -11,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020/6/22
  */
-public abstract class AbstractMixmicroResilience4jCircuitBreaker implements MixmicroCircuitBreakable {
+public abstract class AbstractMixmicroResilience4jCircuitBreaker implements MixmicroCircuitBreakerContext<CircuitBreaker>, MixmicroCircuitBreakable {
 
   private final TimeUnit DEFAULT_TIMEUNIT = TimeUnit.NANOSECONDS;
 
@@ -21,7 +22,8 @@ public abstract class AbstractMixmicroResilience4jCircuitBreaker implements Mixm
    * Register {@link CircuitBreaker} With Proxy Service
    * @param circuitBreaker instance of {@link CircuitBreaker}
    */
-  public final void register(@NonNull CircuitBreaker circuitBreaker) {
+  @Override
+  public final void register(@NonNull CircuitBreaker circuitBreaker) throws MixmicroCircuitBreakerException {
     this.circuitBreaker = circuitBreaker;
   }
 
