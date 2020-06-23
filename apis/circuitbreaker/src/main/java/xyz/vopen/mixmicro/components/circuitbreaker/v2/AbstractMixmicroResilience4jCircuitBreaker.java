@@ -6,12 +6,12 @@ import xyz.vopen.mixmicro.kits.lang.NonNull;
 import java.util.concurrent.TimeUnit;
 
 /**
- * {@link MixmicroResilience4jCircuitBreaker}
+ * {@link AbstractMixmicroResilience4jCircuitBreaker}
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020/6/22
  */
-public abstract class MixmicroResilience4jCircuitBreaker implements MixmicroCircuitBreakable {
+public abstract class AbstractMixmicroResilience4jCircuitBreaker implements MixmicroCircuitBreakable {
 
   private final TimeUnit DEFAULT_TIMEUNIT = TimeUnit.NANOSECONDS;
 

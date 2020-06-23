@@ -4,7 +4,7 @@ import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import org.springframework.beans.factory.ObjectProvider;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakable;
-import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroResilience4jCircuitBreaker;
+import xyz.vopen.mixmicro.components.circuitbreaker.v2.AbstractMixmicroResilience4jCircuitBreaker;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerException;
 
 /**
@@ -30,8 +30,8 @@ public class MixmicroResilience4jCircuitBreakerActionMethodInterceptor extends A
     CircuitBreakerRegistry registry = circuitBreakerRegistryObjectProvider.getIfAvailable();
 
     if(registry != null) {
-      if(breakable instanceof MixmicroResilience4jCircuitBreaker) {
-        MixmicroResilience4jCircuitBreaker breaker = (MixmicroResilience4jCircuitBreaker) breakable;
+      if(breakable instanceof AbstractMixmicroResilience4jCircuitBreaker) {
+        AbstractMixmicroResilience4jCircuitBreaker breaker = (AbstractMixmicroResilience4jCircuitBreaker) breakable;
         breaker.register(registry.circuitBreaker(resourceName));
       }
     }

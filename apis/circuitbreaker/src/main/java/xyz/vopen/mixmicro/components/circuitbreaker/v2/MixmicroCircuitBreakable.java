@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 public interface MixmicroCircuitBreakable {
 
-  String DEFAULT_FALLBACK_METHOD_NAME = "fallback0";
+  String DEFAULT_FALLBACK_METHOD_NAME = "$fallback0";
 
   /**
    * Records a failed call. This method must be invoked when a call failed.
@@ -35,13 +35,13 @@ public interface MixmicroCircuitBreakable {
   void ack(long duration, TimeUnit durationUnit) throws MixmicroCircuitBreakerException;
 
   /**
-   * Service Method Execute Failed, Framework will call {@link MixmicroCircuitBreakable#fallback0(Throwable)} finally .
+   * Service Method Execute Failed, Framework will call {@link MixmicroCircuitBreakable#$fallback0(Throwable)} finally .
    *
    * @param throwable fallback with throwable .
    * @return fallback return result object.
    * @throws MixmicroCircuitBreakerException maybe thrown {@link MixmicroCircuitBreakerException}
    */
-  default Object fallback0(@Nullable Throwable throwable) throws MixmicroCircuitBreakerException {
+  default Object $fallback0(@Nullable Throwable throwable) throws MixmicroCircuitBreakerException {
     // default implements
     if(throwable != null) {
       throwable.printStackTrace();
