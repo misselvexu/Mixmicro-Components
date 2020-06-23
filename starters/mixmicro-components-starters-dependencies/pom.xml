@@ -45,6 +45,7 @@
         <micro-starter-monitor.version>1.0.5.BUILD-SNAPSHOT</micro-starter-monitor.version>
         <micro-starter-spi.version>1.0.5.BUILD-SNAPSHOT</micro-starter-spi.version>
         <micro-starter-swagger.version>1.0.5.BUILD-SNAPSHOT</micro-starter-swagger.version>
+        <micro-starter-circuitbreaker.version>1.0.5.BUILD-SNAPSHOT</micro-starter-circuitbreaker.version>
 
         <micro-starter-cache-redis-default.version>1.0.5.BUILD-SNAPSHOT</micro-starter-cache-redis-default.version>
         <micro-starter-cache-redis-lettuce.version>1.0.5.BUILD-SNAPSHOT</micro-starter-cache-redis-lettuce.version>
@@ -196,6 +197,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-swagger</artifactId>
                 <version>${micro-starter-swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-circuitbreaker</artifactId>
+                <version>${micro-starter-circuitbreaker.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

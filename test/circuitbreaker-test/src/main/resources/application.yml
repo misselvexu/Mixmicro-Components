@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+mixmicro:
+  circuit-breaker:
+   type: r4j
+   instances:
+     test1:
+       slowCallRateThreshold: 100   # 慢请求比例达到100% 发生熔断
+       slowCallDurationThreshold: 60000   #一个请求持续60000ms 算是慢请求
+       slidingWindowSize: 3 # 滑动窗口的统计数量
+       permittedNumberOfCallsInHalfOpenState: 3  #在半开模式下允许通过的请求数
+       slidingWindowType: COUNT_BASED   # 滑动窗口的统计方式  COUNT_BASED 计数        TIME_BASED 这是基于时间
+       minimumNumberOfCalls: 3   #最小请求次数用于计算，也就是说只有请求次数达到这个配置后才开始计算是否要熔断
+       waitDurationInOpenState: 50s #熔断开启后等待的时间
+       failureRateThreshold: 50  # 请求失败的比例
+       eventConsumerBufferSize: 5   #用于消费事件的配置
+       automaticTransitionFromOpenToHalfOpenEnabled: true  #如果设置为true，则表示断路器将自动从开到半开状态转换，不需要调用触发转换。

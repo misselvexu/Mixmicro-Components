@@ -24,6 +24,7 @@
 
         <!-- dependencies -->
         <module>dependencies</module>
+        <module>circuitbreaker</module>
     </modules>
 
     <properties>
@@ -31,6 +32,7 @@
         <mixmicro-apis-common.version>1.0.5.BUILD-SNAPSHOT</mixmicro-apis-common.version>
         <mixmicro-apis-exception.version>1.0.5.BUILD-SNAPSHOT</mixmicro-apis-exception.version>
         <mixmicro-apis-logger.version>1.0.5.BUILD-SNAPSHOT</mixmicro-apis-logger.version>
+        <mixmicro-apis-circuitbreaker.version>1.0.5.BUILD-SNAPSHOT</mixmicro-apis-circuitbreaker.version>
     </properties>
 
 
@@ -67,6 +69,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>logger-api</artifactId>
                 <version>${mixmicro-apis-logger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>circuitbreaker-api</artifactId>
+                <version>${mixmicro-apis-circuitbreaker.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
