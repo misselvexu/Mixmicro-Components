@@ -7,7 +7,6 @@ import io.github.resilience4j.common.circuitbreaker.configuration.CircuitBreaker
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -37,7 +36,6 @@ public class MixmicroCircuitBreakerAutoConfiguration {
   @Primary
   @ConditionalOnClass(CircuitBreakerRegistry.class)
   @ConditionalOnProperty(prefix = MIXMICRO_CIRCUIT_BREAKER, value = "type", havingValue = "r4j")
-  @ConditionalOnBean(MixmicroCircuitBreakerProperties.class)
   public CircuitBreakerRegistry circuitBreakerRegistry(MixmicroCircuitBreakerProperties properties) {
 
     log.info("[==MCB==] starting create r4j CircuitBreakerRegistry instance .");
