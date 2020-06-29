@@ -30,7 +30,7 @@ import org.springframework.core.Ordered;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @see ConfigurationBeanBinder
  * @see ConfigurationBeanBindingPostProcessor
- * @since 1.0.5.RC2
+ * @since 1.0.5.RC3
  */
 public interface ConfigurationBeanCustomizer extends Ordered {
 

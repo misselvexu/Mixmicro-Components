@@ -8,12 +8,12 @@
     <parent>
         <artifactId>mixmicro-components-starters</artifactId>
         <groupId>com.yunlsp.framework.components</groupId>
-        <version>1.0.5.RC2</version>
+        <version>1.0.5.RC3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-circuitbreaker</artifactId>
-    <version>1.0.5.RC2</version>
+    <version>1.0.5.RC3</version>
 
     <name>Circuitbreaker Starter Module :: ${project.version}</name>
     <description>🏗 Circuitbreaker Starter Module</description>

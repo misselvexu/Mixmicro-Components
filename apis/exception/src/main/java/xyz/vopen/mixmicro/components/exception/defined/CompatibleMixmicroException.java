@@ -48,7 +48,7 @@ public class CompatibleMixmicroException extends MixmicroException {
    *
    * <p>
    *
-   * @since 1.0.5.RC2
+   * @since 1.0.5.RC3
    */
   @Nullable private Object data;
 
@@ -143,7 +143,7 @@ public class CompatibleMixmicroException extends MixmicroException {
    * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).
    *     (A <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or
    *     unknown.)
-   * @since 1.0.5.RC2
+   * @since 1.0.5.RC3
    */
   public <T> CompatibleMixmicroException(HttpStatus httpStatus, int code, @Nullable T data, String message, Throwable cause) {
     super(message, cause);
@@ -217,7 +217,7 @@ public class CompatibleMixmicroException extends MixmicroException {
    * @param code biz error code
    * @param data exception extensional data object
    * @see ErrorCode error code instance
-   * @since 1.0.5.RC2
+   * @since 1.0.5.RC3
    */
   public <T> CompatibleMixmicroException(ErrorCode code, @Nullable T data) {
     super(code.reasonPhrase());
@@ -252,7 +252,7 @@ public class CompatibleMixmicroException extends MixmicroException {
    * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).
    *     (A <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or
    *     unknown.)
-   * @since 1.0.5.RC2
+   * @since 1.0.5.RC3
    */
   public <T> CompatibleMixmicroException(ErrorCode code, @Nullable T data, Throwable cause) {
     super(code.reasonPhrase(), cause);
