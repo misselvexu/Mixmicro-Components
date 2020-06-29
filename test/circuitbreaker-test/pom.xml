@@ -5,13 +5,13 @@
     <parent>
         <artifactId>mixmicro-components-test</artifactId>
         <groupId>com.yunlsp.framework.components</groupId>
-        <version>1.0.5.RC1</version>
+        <version>1.0.5.RC2</version>
         <relativePath>../</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mixmicro-components-circuitbreaker-test</artifactId>
-    <version>1.0.5.RC1</version>
+    <version>1.0.5.RC2</version>
 
     <name>CircuitBreaker Test Module :: ${project.version}</name>
     <description>🏗 CircuitBreaker Test Module</description>

@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-apis</artifactId>
-        <version>1.0.5.RC1</version>
+        <version>1.0.5.RC2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>common-api</artifactId>
-    <version>1.0.5.RC1</version>
+    <version>1.0.5.RC2</version>
 
     <name>Common Api Module :: ${project.version}</name>
     <description>🏗 Common Api Module</description>
