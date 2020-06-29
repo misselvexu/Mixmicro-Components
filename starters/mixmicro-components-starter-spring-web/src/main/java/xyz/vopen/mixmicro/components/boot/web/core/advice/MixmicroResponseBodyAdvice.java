@@ -21,6 +21,7 @@ import xyz.vopen.mixmicro.components.exception.defined.MixmicroException;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static xyz.vopen.mixmicro.components.boot.web.MediaType.TEXT_PLAIN_VALUE;
+import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_FEIGN_INVOKE_HEADER;
 import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_INVOKE_HEADER;
 
 /**
@@ -94,7 +95,7 @@ public class MixmicroResponseBodyAdvice extends AbstractAdvice implements Respon
       }
     }
 
-    if(request.getHeaders().containsKey(MIXMICRO_SERVICE_INVOKE_HEADER)) {
+    if(request.getHeaders().containsKey(MIXMICRO_SERVICE_INVOKE_HEADER) || request.getHeaders().containsKey(MIXMICRO_SERVICE_FEIGN_INVOKE_HEADER) ) {
       if(log.isDebugEnabled()) {
         log.debug("[Request] from openfeign client , req: {}", request);
       }
