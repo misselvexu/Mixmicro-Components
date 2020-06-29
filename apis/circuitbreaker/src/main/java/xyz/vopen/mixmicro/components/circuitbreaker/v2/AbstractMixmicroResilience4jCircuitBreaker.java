@@ -40,9 +40,15 @@ public abstract class AbstractMixmicroResilience4jCircuitBreaker implements Mixm
     circuitBreaker.onError(duration, durationUnit, throwable);
   }
 
+  /**
+   * Biz Service Throw Custom Biz Exception .
+   *
+   * @param exception custom biz exception , WARN: sub-exception must extends {@link RuntimeException}
+   * @throws MixmicroCircuitBreakerException maybe thrown {@link MixmicroCircuitBreakerException}
+   */
   @Override
-  public void firingDirectThrow(Throwable throwable) throws MixmicroCircuitBreakerDirectThrowException {
-    throw new MixmicroCircuitBreakerDirectThrowException(throwable);
+  public void firing(RuntimeException exception) throws MixmicroCircuitBreakerDirectThrowException {
+    throw new MixmicroCircuitBreakerDirectThrowException(exception.getMessage(), exception);
   }
 
   /**

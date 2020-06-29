@@ -90,14 +90,18 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor
                         return result;
 
                     } catch (Exception e) {
+
                         this.breakable.firing((System.nanoTime() - start), NANOSECONDS, e);
                         // if invoked happened exception , just return-ed fallback result
                         if (e instanceof MixmicroCircuitBreakerDirectThrowException){
-                            log.error("encounter direct throw exception : {}", e.getCause());
-                            return e.getCause();
+
+                            MixmicroCircuitBreakerDirectThrowException e0 = (MixmicroCircuitBreakerDirectThrowException) e;
+
+                            log.error("encounter direct throw exception : {}", e0.getException().getMessage(), e0.getException());
+                            // throw exception direct .
+                            throw e;
                         }
-                        return this.invokedFallbackMethod(
-                                breakable, fallbackMethod, isFallbackMethodOverride ? args : e);
+                        return this.invokedFallbackMethod(breakable, fallbackMethod, isFallbackMethodOverride ? args : e);
                     }
                 }
 
@@ -111,16 +115,25 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor
             }
 
         } catch (Throwable e) {
+
             // exception.
             if (e instanceof MixmicroCircuitBreakerException) {
-                return this.invokedFallbackMethod(
-                        breakable,
-                        fallbackMethod,
-                        isFallbackMethodOverride ? args : new MixmicroCircuitBreakerException("CircuitBreaker s proxy method execute failed ", e));
-            }else {
-                log.error("Not AnnotationMethod encounter exception : {}", e.getCause());
-                return e.getCause();
+
+              if (e instanceof MixmicroCircuitBreakerDirectThrowException) {
+
+                MixmicroCircuitBreakerDirectThrowException e0 = (MixmicroCircuitBreakerDirectThrowException) e;
+
+                log.error("Not AnnotationMethod encounter exception : {}", e0.getException().getMessage(), e0.getException());
+
+                throw e0.getException();
+              }
             }
+
+            //
+            return this.invokedFallbackMethod(
+                breakable,
+                fallbackMethod,
+                isFallbackMethodOverride ? args : new MixmicroCircuitBreakerException("CircuitBreaker s proxy method execute failed ", e));
         }
     }
 
