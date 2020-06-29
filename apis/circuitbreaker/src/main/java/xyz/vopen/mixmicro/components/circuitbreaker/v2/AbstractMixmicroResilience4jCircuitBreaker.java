@@ -1,7 +1,6 @@
 package xyz.vopen.mixmicro.components.circuitbreaker.v2;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
-import io.github.resilience4j.circuitbreaker.CircuitBreaker.State;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerException;
 import xyz.vopen.mixmicro.kits.lang.NonNull;
 
@@ -68,8 +67,9 @@ public abstract class AbstractMixmicroResilience4jCircuitBreaker implements Mixm
    * @return the state of this CircuitBreaker
    */
   @Override
-  public State getStatus() {
-    return circuitBreaker.getState();
+  public CircuitBreakerStatus getStatus() {
+    CircuitBreaker.State state = circuitBreaker.getState();
+    return convertEnum(state,CircuitBreakerStatus.class);
   }
 
   /**
@@ -87,5 +87,19 @@ public abstract class AbstractMixmicroResilience4jCircuitBreaker implements Mixm
       throwable.printStackTrace();
     }
     return null;
+  }
+
+  private static <enumFrom,enumTo> enumTo convertEnum(enumFrom from,Class<enumTo> to){
+    enumTo rReturn = null;
+    if (to.isEnum()){
+      enumTo[] array = to.getEnumConstants();
+      for (enumTo enu : array) {
+        if (enu.toString().equals(from.toString())){
+          rReturn = enu;
+          break;
+        }
+      }
+    }
+    return rReturn;
   }
 }
