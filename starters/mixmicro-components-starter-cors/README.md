@@ -9,7 +9,7 @@
 <dependency>
     <groupId>com.yunlsp.framework.components</groupId>
     <artifactId>mixmicro-components-starter-cors</artifactId>
-    <version>1.0.5.RC1</version>
+    <version>1.0.6.BUILD-SNAPSHOT</version>
 </dependency>
 
 ```

@@ -49,7 +49,7 @@ import static org.springframework.core.annotation.AnnotationAttributes.fromMap;
  * EnableConfigurationBeanBinding @EnableConfigurationBinding}
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @since 1.0.5.RC1
+ * @since 1.0.6.BUILD-SNAPSHOT
  */
 public class ConfigurationBeanBindingRegistrar
     implements ImportBeanDefinitionRegistrar, EnvironmentAware {

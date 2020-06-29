@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @see ConfigurationBeanBinder
- * @since 1.0.5.RC1
+ * @since 1.0.6.BUILD-SNAPSHOT
  */
 public class DefaultConfigurationBeanBinder implements ConfigurationBeanBinder {
 
