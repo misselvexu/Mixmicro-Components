@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.circuitbreaker.v2;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerDirectThrowException;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerException;
 import xyz.vopen.mixmicro.kits.lang.NonNull;
 
@@ -37,6 +38,11 @@ public abstract class AbstractMixmicroResilience4jCircuitBreaker implements Mixm
   @Override
   public void firing(long duration, TimeUnit durationUnit, Throwable throwable) {
     circuitBreaker.onError(duration, durationUnit, throwable);
+  }
+
+  @Override
+  public void firingDirectThrow(Throwable throwable) throws MixmicroCircuitBreakerDirectThrowException {
+    throw new MixmicroCircuitBreakerDirectThrowException(throwable);
   }
 
   /**

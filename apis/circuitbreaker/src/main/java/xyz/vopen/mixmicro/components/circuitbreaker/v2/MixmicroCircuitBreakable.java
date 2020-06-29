@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.circuitbreaker.v2;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerDirectThrowException;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerException;
 import xyz.vopen.mixmicro.kits.lang.Nullable;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +25,8 @@ public interface MixmicroCircuitBreakable {
    * @throws MixmicroCircuitBreakerException maybe thrown {@link MixmicroCircuitBreakerException}
    */
   void firing(long duration, TimeUnit durationUnit, Throwable throwable) throws MixmicroCircuitBreakerException;
+
+  void firingDirectThrow(Throwable throwable) throws MixmicroCircuitBreakerDirectThrowException;
 
   /**
    * Records a successful call. This method must be invoked when a call was successful.
