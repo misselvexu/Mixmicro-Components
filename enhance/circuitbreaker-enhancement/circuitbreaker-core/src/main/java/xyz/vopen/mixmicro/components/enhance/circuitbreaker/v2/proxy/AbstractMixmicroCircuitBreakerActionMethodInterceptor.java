@@ -4,6 +4,7 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.circuitbreaker.exception.MixmicroNonCircuitBreakerException;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakable;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerAction;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerDirectThrowException;
@@ -24,11 +25,9 @@ import static xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBre
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020/6/23
  */
-public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor
-        implements MethodInterceptor {
+public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor implements MethodInterceptor {
 
-    private static final Logger log =
-            LoggerFactory.getLogger(AbstractMixmicroCircuitBreakerActionMethodInterceptor.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractMixmicroCircuitBreakerActionMethodInterceptor.class);
 
     protected final MixmicroCircuitBreakable breakable;
 
@@ -41,7 +40,7 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor
     }
 
     @Override
-    public Object invoke(MethodInvocation invocation) {
+    public Object invoke(MethodInvocation invocation) throws Throwable {
 
         Object[] args = invocation.getArguments();
 
@@ -110,11 +109,21 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor
                 return this.invokedFallbackMethod(breakable, fallbackMethod, isFallbackMethodOverride ? args : null);
 
             } else {
-                // execute real method directly
-                return invocation.proceed();
+
+                try{
+                  // execute real method directly
+                  return invocation.proceed();
+                } catch (Throwable e) {
+                  throw new MixmicroNonCircuitBreakerException(e);
+                }
             }
 
         } catch (Throwable e) {
+
+            if (e instanceof MixmicroNonCircuitBreakerException) {
+              MixmicroNonCircuitBreakerException e0 = (MixmicroNonCircuitBreakerException) e;
+              throw e0.getCause();
+            }
 
             // exception.
             if (e instanceof MixmicroCircuitBreakerException) {
