@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.circuitbreaker.v2;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import io.github.resilience4j.circuitbreaker.CircuitBreaker.State;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerException;
 import xyz.vopen.mixmicro.kits.lang.NonNull;
 
@@ -58,6 +59,17 @@ public abstract class AbstractMixmicroResilience4jCircuitBreaker implements Mixm
   @Override
   public void ack(long duration, TimeUnit durationUnit) {
     circuitBreaker.onSuccess(duration, durationUnit);
+  }
+
+
+  /**
+   * Returns the state of this CircuitBreaker.
+   *
+   * @return the state of this CircuitBreaker
+   */
+  @Override
+  public State getStatus() {
+    return circuitBreaker.getState();
   }
 
   /**

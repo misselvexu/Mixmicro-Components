@@ -1,8 +1,9 @@
 package xyz.vopen.mixmicro.components.circuitbreaker.v2;
 
+import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerException;
 import xyz.vopen.mixmicro.kits.lang.Nullable;
-
+import io.github.resilience4j.circuitbreaker.CircuitBreaker.State;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,6 +34,13 @@ public interface MixmicroCircuitBreakable {
    * @throws MixmicroCircuitBreakerException maybe thrown {@link MixmicroCircuitBreakerException}
    */
   void ack(long duration, TimeUnit durationUnit) throws MixmicroCircuitBreakerException;
+
+  /**
+   * Returns the state of this CircuitBreaker
+   *
+   * @return the state of this CircuitBreaker
+   */
+  State getStatus();
 
   /**
    * Service Method Execute Failed, Framework will call {@link MixmicroCircuitBreakable#$fallback0(Throwable)} finally .
