@@ -9,7 +9,7 @@
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-dependencies</artifactId>
-            <version>1.0.5.RC3</version>
+            <version>1.0.5.RC4</version>
             <scope>import</scope>
             <type>pom</type>
         </dependency>               

@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-starters</artifactId>
-        <version>1.0.5.RC3</version>
+        <version>1.0.5.RC4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-scheduler</artifactId>
-    <version>1.0.5.RC3</version>
+    <version>1.0.5.RC4</version>
 
     <name>Scheduler Starter Module :: ${project.version}</name>
     <description>🏗 Scheduler Starter Module</description>

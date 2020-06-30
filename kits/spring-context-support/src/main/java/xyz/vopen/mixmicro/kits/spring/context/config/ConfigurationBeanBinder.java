@@ -25,7 +25,7 @@ import java.util.Map;
  * The binder for the configuration bean
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @since 1.0.5.RC3
+ * @since 1.0.5.RC4
  */
 public interface ConfigurationBeanBinder {
 
