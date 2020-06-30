@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.AbstractMixmicroResilience4jCircuitBreaker;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.CircuitBreakerStatus;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerAction;
-import xyz.vopen.mixmicro.components.circuitbreaker.v2.metrics.MixmicroCircuitBreakerResilience4jMetrics;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
