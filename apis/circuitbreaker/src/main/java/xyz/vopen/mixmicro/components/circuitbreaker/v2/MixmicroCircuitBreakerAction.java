@@ -1,5 +1,7 @@
 package xyz.vopen.mixmicro.components.circuitbreaker.v2;
 
+import xyz.vopen.mixmicro.components.circuitbreaker.v2.event.DefaultEventConsumer;
+
 import java.lang.annotation.*;
 
 import static xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakable.DEFAULT_FALLBACK_METHOD_NAME;
@@ -39,4 +41,14 @@ public @interface MixmicroCircuitBreakerAction {
    * @return
    */
   Class<? extends Throwable>[] customExceptions() default {};
+
+  /**
+   * Action Custom Event Consumer.
+   *
+   * If nothing is set, it is not turned on by {@link DefaultEventConsumer}
+   * Conversely, an Event publish by CircuitBreaker published will be caught {@link io.github.resilience4j.core.EventConsumer}
+   *
+   * @return
+   */
+  Class customEventConsumer() default DefaultEventConsumer.class;
 }

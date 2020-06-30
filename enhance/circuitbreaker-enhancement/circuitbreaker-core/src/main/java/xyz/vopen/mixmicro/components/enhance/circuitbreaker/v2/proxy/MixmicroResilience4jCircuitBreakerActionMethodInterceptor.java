@@ -2,6 +2,9 @@ package xyz.vopen.mixmicro.components.enhance.circuitbreaker.v2.proxy;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
+import io.github.resilience4j.circuitbreaker.event.CircuitBreakerEvent;
+import io.github.resilience4j.core.EventConsumer;
+import io.github.resilience4j.core.EventProcessor;
 import org.springframework.beans.factory.ObjectProvider;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakable;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.AbstractMixmicroResilience4jCircuitBreaker;
@@ -32,10 +35,32 @@ public class MixmicroResilience4jCircuitBreakerActionMethodInterceptor extends A
     if(registry != null) {
       if(breakable instanceof AbstractMixmicroResilience4jCircuitBreaker) {
         AbstractMixmicroResilience4jCircuitBreaker breaker = (AbstractMixmicroResilience4jCircuitBreaker) breakable;
-        breaker.register(registry.circuitBreaker(resourceName));
+        CircuitBreaker circuitBreaker = registry.circuitBreaker(resourceName);
+        breaker.register(circuitBreaker);
       }
     }
 
+  }
+
+  @Override
+  protected void registry(String resourceName, Class eventConsumer) throws MixmicroCircuitBreakerException {
+    CircuitBreakerRegistry registry = circuitBreakerRegistryObjectProvider.getIfAvailable();
+
+    if(registry != null) {
+      if(breakable instanceof AbstractMixmicroResilience4jCircuitBreaker) {
+        AbstractMixmicroResilience4jCircuitBreaker breaker = (AbstractMixmicroResilience4jCircuitBreaker) breakable;
+        CircuitBreaker circuitBreaker = registry.circuitBreaker(resourceName);
+        try {
+          EventConsumer consumer = (EventConsumer) eventConsumer.newInstance();
+          circuitBreaker.getEventPublisher().onCallNotPermitted(consumer);
+          circuitBreaker.getEventPublisher().onFailureRateExceeded(consumer);
+          circuitBreaker.getEventPublisher().onSlowCallRateExceeded(consumer);
+          breaker.register(circuitBreaker);
+        } catch (Exception e){
+
+        }
+      }
+    }
   }
 
   /**

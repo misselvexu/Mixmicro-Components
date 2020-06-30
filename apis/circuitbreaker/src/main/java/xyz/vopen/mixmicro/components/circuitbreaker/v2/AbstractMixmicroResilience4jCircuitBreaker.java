@@ -1,6 +1,8 @@
 package xyz.vopen.mixmicro.components.circuitbreaker.v2;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import io.github.resilience4j.circuitbreaker.CircuitBreaker.Metrics;
+import io.github.resilience4j.core.EventConsumer;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerDirectThrowException;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerException;
 import xyz.vopen.mixmicro.kits.lang.NonNull;
@@ -13,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020/6/22
  */
-public abstract class AbstractMixmicroResilience4jCircuitBreaker implements MixmicroCircuitBreakerContext<CircuitBreaker>, MixmicroCircuitBreakable {
+public abstract class AbstractMixmicroResilience4jCircuitBreaker implements MixmicroCircuitBreakerContext<CircuitBreaker>, MixmicroCircuitBreakable, EventConsumer {
 
   private final TimeUnit DEFAULT_TIMEUNIT = TimeUnit.NANOSECONDS;
 
@@ -82,6 +84,11 @@ public abstract class AbstractMixmicroResilience4jCircuitBreaker implements Mixm
   public CircuitBreakerStatus getStatus() {
     CircuitBreaker.State state = circuitBreaker.getState();
     return convertEnum(state,CircuitBreakerStatus.class);
+  }
+
+  @Override
+  public void consumeEvent(Object event) {
+
   }
 
   /**
