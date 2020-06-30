@@ -352,17 +352,6 @@
                 <artifactId>resilience4j-circuitbreaker</artifactId>
                 <version>${circuitbreaker.version}</version>
             </dependency>
-            <dependency>
-                <groupId>io.github.resilience4j</groupId>
-                <artifactId>resilience4j-framework-common</artifactId>
-                <version>${circuitbreaker.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>io.github.resilience4j</groupId>
-                        <artifactId>resilience4j-timelimiter</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
 
         </dependencies>
     </dependencyManagement>
