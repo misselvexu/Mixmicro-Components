@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Constructor;
 import java.util.Optional;
 
+import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_FEIGN_INVOKE_HEADER;
 import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_INVOKE_HEADER;
 
 /**
@@ -155,7 +156,7 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
         if (attributes != null) {
           HttpServletRequest request = attributes.getRequest();
           // check request#header#MIXMICRO_SERVICE_INVOKE_HEADER value
-          if (StringUtils.isNotBlank(request.getHeader(MIXMICRO_SERVICE_INVOKE_HEADER))) {
+          if (StringUtils.isNotBlank(request.getHeader(MIXMICRO_SERVICE_INVOKE_HEADER)) || StringUtils.isNotBlank(request.getHeader(MIXMICRO_SERVICE_FEIGN_INVOKE_HEADER))) {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
           }
         }
@@ -182,7 +183,7 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
         if (attributes != null) {
           HttpServletRequest request = attributes.getRequest();
           // check request#header#MIXMICRO_SERVICE_INVOKE_HEADER value
-          if (StringUtils.isNotBlank(request.getHeader(MIXMICRO_SERVICE_INVOKE_HEADER))) {
+          if (StringUtils.isNotBlank(request.getHeader(MIXMICRO_SERVICE_INVOKE_HEADER)) || StringUtils.isNotBlank(request.getHeader(MIXMICRO_SERVICE_FEIGN_INVOKE_HEADER))) {
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
           }
         }
