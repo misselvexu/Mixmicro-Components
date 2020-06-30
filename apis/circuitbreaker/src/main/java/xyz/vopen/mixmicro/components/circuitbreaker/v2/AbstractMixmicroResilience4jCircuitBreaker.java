@@ -60,6 +60,18 @@ public abstract class AbstractMixmicroResilience4jCircuitBreaker implements Mixm
     circuitBreaker.onSuccess(duration, durationUnit);
   }
 
+
+  /**
+   * Returns the state of this CircuitBreaker.
+   *
+   * @return the state of this CircuitBreaker
+   */
+  @Override
+  public CircuitBreakerStatus getStatus() {
+    CircuitBreaker.State state = circuitBreaker.getState();
+    return convertEnum(state,CircuitBreakerStatus.class);
+  }
+
   /**
    * Records a successful call. This method must be invoked when a call was successful.
    *
@@ -75,5 +87,19 @@ public abstract class AbstractMixmicroResilience4jCircuitBreaker implements Mixm
       throwable.printStackTrace();
     }
     return null;
+  }
+
+  private static <enumFrom,enumTo> enumTo convertEnum(enumFrom from,Class<enumTo> to){
+    enumTo rReturn = null;
+    if (to.isEnum()){
+      enumTo[] array = to.getEnumConstants();
+      for (enumTo enu : array) {
+        if (enu.toString().equals(from.toString())){
+          rReturn = enu;
+          break;
+        }
+      }
+    }
+    return rReturn;
   }
 }

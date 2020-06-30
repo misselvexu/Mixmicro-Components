@@ -1,7 +1,9 @@
 package test.service;
 
+import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import org.springframework.stereotype.Service;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.AbstractMixmicroResilience4jCircuitBreaker;
+import xyz.vopen.mixmicro.components.circuitbreaker.v2.CircuitBreakerStatus;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerAction;
 
 import java.util.concurrent.TimeUnit;
@@ -33,6 +35,8 @@ public class V2CircuitBreakerTestImpl extends AbstractMixmicroResilience4jCircui
     @MixmicroCircuitBreakerAction(name = "test1",fallbackMethod = "v2fallback")
     public String test3(){
         firing(121,new Throwable());
+        CircuitBreakerStatus status = getStatus();
+        System.out.println(status.toString());
         return "hello";
     }
 

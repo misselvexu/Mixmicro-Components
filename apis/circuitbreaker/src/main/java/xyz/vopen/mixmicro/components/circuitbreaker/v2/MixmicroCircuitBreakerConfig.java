@@ -8,6 +8,7 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 /**
  * {@link MixmicroCircuitBreakerConfig}
@@ -24,23 +25,23 @@ public class MixmicroCircuitBreakerConfig implements Serializable {
   private Duration slowCallDurationThreshold = Duration.ofMillis(60000);
 
   private Boolean automaticTransitionFromOpenToHalfOpenEnabled = true;
-  //
+
   private Duration waitDurationInOpenState = Duration.ofSeconds(50);
 
-  //
   private Float failureRateThreshold = 50.0f;
 
-  //
   private Integer slidingWindowSize = 3;
 
-  //
   private Integer minimumNumberOfCalls = 3;
 
-  //
   private Integer permittedNumberOfCallsInHalfOpenState = 3;
 
-  //
   private Integer eventConsumerBufferSize = 5;
+
+  private Class<? extends Throwable>[] recordExceptions;
+
+  private Class<? extends Throwable>[] ignoreExceptions;
+
 
   private CircuitBreakerConfig.SlidingWindowType slidingWindowType = CircuitBreakerConfig.SlidingWindowType.COUNT_BASED;
 }
