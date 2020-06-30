@@ -16,7 +16,7 @@ mixmicro:
        failureRateThreshold: 50  # 请求失败的比例
        eventConsumerBufferSize: 5   #用于消费事件的配置
        automaticTransitionFromOpenToHalfOpenEnabled: true  #如果设置为true，则表示断路器将自动从开到半开状态转换，不需要调用触发转换。
-       ignoreExceptions:
-         - java.io.IOException  # 需要忽略的异常
-       recordExceptions:
-         - java.io.IOException  # 需要记录的异常
+#       ignoreExceptions:
+#         - java.io.IOException  # 需要忽略的异常
+#       recordExceptions:
+#         - java.io.IOException  # 需要记录的异常

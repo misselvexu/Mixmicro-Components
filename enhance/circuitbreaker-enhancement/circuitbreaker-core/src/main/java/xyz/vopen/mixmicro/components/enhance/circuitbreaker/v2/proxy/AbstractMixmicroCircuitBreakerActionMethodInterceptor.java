@@ -15,6 +15,7 @@ import xyz.vopen.mixmicro.kits.lang.Nullable;
 import xyz.vopen.mixmicro.kits.reflect.ReflectionKit;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakable.DEFAULT_FALLBACK_METHOD_NAME;
@@ -45,12 +46,13 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
         Object[] args = invocation.getArguments();
 
         boolean isFallbackMethodOverride = false;
-
+        boolean assignableFrom = false;
+        boolean isAnnotationMethod = false;
         try {
             Method method = invocation.getMethod();
 
             if (method.isAnnotationPresent(MixmicroCircuitBreakerAction.class)) {
-
+                isAnnotationMethod = true;
                 MixmicroCircuitBreakerAction action = method.getAnnotation(MixmicroCircuitBreakerAction.class);
 
                 String resourceName = action.name();
@@ -59,6 +61,8 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
                 this.registry(resourceName);
 
                 String methodName = action.fallbackMethod();
+
+                Class<? extends Throwable>[] classes = action.customExceptions();
 
                 if (DEFAULT_FALLBACK_METHOD_NAME.equalsIgnoreCase(methodName)) {
                     throw new MixmicroCircuitBreakerException(String.format("[==MCB==] custom fallback method name must not named : '%s'", DEFAULT_FALLBACK_METHOD_NAME));
@@ -91,15 +95,16 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
                     } catch (Exception e) {
 
                         this.breakable.firing((System.nanoTime() - start), NANOSECONDS, e);
-                        // if invoked happened exception , just return-ed fallback result
-                        if (e instanceof MixmicroCircuitBreakerDirectThrowException){
 
-                            MixmicroCircuitBreakerDirectThrowException e0 = (MixmicroCircuitBreakerDirectThrowException) e;
-
-                            log.error("encounter direct throw exception : {}", e0.getException().getMessage(), e0.getException());
-                            // throw exception direct .
-                            throw e;
+                        // if invoked happened custom exception , just throw exception
+                        for (Class<? extends Throwable> aClass : classes) {
+                            assignableFrom = e.getClass().isAssignableFrom(aClass);
+                            if (assignableFrom) {
+                                log.error("encounter custom exception : {}",e.getMessage());
+                                throw e;
+                            }
                         }
+
                         return this.invokedFallbackMethod(breakable, fallbackMethod, isFallbackMethodOverride ? args : e);
                     }
                 }
@@ -109,40 +114,26 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
                 return this.invokedFallbackMethod(breakable, fallbackMethod, isFallbackMethodOverride ? args : null);
 
             } else {
-
-                try{
-                  // execute real method directly
-                  return invocation.proceed();
-                } catch (Throwable e) {
-                  throw new MixmicroNonCircuitBreakerException(e);
-                }
+                // execute real method directly
+                return invocation.proceed();
             }
 
         } catch (Throwable e) {
 
-            if (e instanceof MixmicroNonCircuitBreakerException) {
-              MixmicroNonCircuitBreakerException e0 = (MixmicroNonCircuitBreakerException) e;
-              throw e0.getCause();
+            if (assignableFrom || !isAnnotationMethod) {
+                throw e;
             }
 
             // exception.
             if (e instanceof MixmicroCircuitBreakerException) {
 
-              if (e instanceof MixmicroCircuitBreakerDirectThrowException) {
-
-                MixmicroCircuitBreakerDirectThrowException e0 = (MixmicroCircuitBreakerDirectThrowException) e;
-
-                log.error("Not AnnotationMethod encounter exception : {}", e0.getException().getMessage(), e0.getException());
-
-                throw e0.getException();
-              }
             }
 
             //
             return this.invokedFallbackMethod(
-                breakable,
-                fallbackMethod,
-                isFallbackMethodOverride ? args : new MixmicroCircuitBreakerException("CircuitBreaker s proxy method execute failed ", e));
+                    breakable,
+                    fallbackMethod,
+                    isFallbackMethodOverride ? args : new MixmicroCircuitBreakerException("CircuitBreaker s proxy method execute failed ", e));
         }
     }
 

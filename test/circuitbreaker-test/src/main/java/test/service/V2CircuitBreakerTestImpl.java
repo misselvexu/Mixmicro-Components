@@ -5,6 +5,7 @@ import xyz.vopen.mixmicro.components.circuitbreaker.v2.AbstractMixmicroResilienc
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.CircuitBreakerStatus;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerAction;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,9 +48,8 @@ public class V2CircuitBreakerTestImpl extends AbstractMixmicroResilience4jCircui
         return "服务降级";
     }
 
-    @MixmicroCircuitBreakerAction(name = "test1",fallbackMethod = "v2fallback")
+    @MixmicroCircuitBreakerAction(name = "test1",fallbackMethod = "v2fallback",customExceptions = {IOException.class})
     public Object test4() throws Exception {
-        firing(new RuntimeException("1212121"));
-        return "1";
+        throw new IOException("11");
     }
 }

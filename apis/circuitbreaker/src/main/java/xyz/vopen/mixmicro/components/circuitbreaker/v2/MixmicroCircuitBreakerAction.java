@@ -29,4 +29,14 @@ public @interface MixmicroCircuitBreakerAction {
    * @return method name
    */
   String fallbackMethod() default DEFAULT_FALLBACK_METHOD_NAME;
+
+  /**
+   * Action Custom Exceptions Defined.
+   *
+   * If nothing is set, it is not turned on by default.
+   * Conversely, an exception is thrown when an exception is encountered in the Settings
+   *
+   * @return
+   */
+  Class<? extends Throwable>[] customExceptions() default {};
 }
