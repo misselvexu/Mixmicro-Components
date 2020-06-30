@@ -40,7 +40,7 @@ public class MixmicroConstants {
    *
    * <p>
    */
-  public static final String MIXMICRO_SERVICE_FEIGN_INVOKE_HEADER = "mixmicro.service.feign.invoke";
+  public static final String MIXMICRO_SERVICE_FEIGN_INVOKE_HEADER = "mixmicro-service-feign-invoke";
 
   /**
    * Micro Ingress Invoke Flag
