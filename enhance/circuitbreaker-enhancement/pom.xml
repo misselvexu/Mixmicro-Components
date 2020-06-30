@@ -28,7 +28,7 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-circuitbreaker-core</artifactId>
-                <version>${mixmicro-enhance-circuitbreaker-core.version}</version>
+                <version>${version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
