@@ -2,11 +2,13 @@ package xyz.vopen.mixmicro.components.enhance.circuitbreaker.v2.proxy;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.circuitbreaker.exception.MixmicroNonCircuitBreakerException;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakable;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.MixmicroCircuitBreakerAction;
+import xyz.vopen.mixmicro.components.circuitbreaker.v2.event.DefaultEventConsumer;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerDirectThrowException;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.exception.MixmicroCircuitBreakerException;
 import xyz.vopen.mixmicro.kits.Assert;
@@ -57,12 +59,20 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
 
                 String resourceName = action.name();
 
+                Class customEventConsumer = action.customEventConsumer();
                 // register first
-                this.registry(resourceName);
+                if (!customEventConsumer.isAssignableFrom(DefaultEventConsumer.class)){
+                    this.registry(resourceName,customEventConsumer);
+                }else {
+                    this.registry(resourceName);
+                }
+
 
                 String methodName = action.fallbackMethod();
 
                 Class<? extends Throwable>[] classes = action.customExceptions();
+
+
 
                 if (DEFAULT_FALLBACK_METHOD_NAME.equalsIgnoreCase(methodName)) {
                     throw new MixmicroCircuitBreakerException(String.format("[==MCB==] custom fallback method name must not named : '%s'", DEFAULT_FALLBACK_METHOD_NAME));
@@ -156,6 +166,10 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
      * @throws MixmicroCircuitBreakerException maybe thrown {@link MixmicroCircuitBreakerException}
      */
     protected abstract void registry(String resourceName) throws MixmicroCircuitBreakerException;
+
+
+    protected abstract void registry(String resourceName,Class eventConsumer) throws MixmicroCircuitBreakerException;
+
 
     /**
      * Try to required access permission
