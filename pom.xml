@@ -36,6 +36,8 @@
         <springfox.swagger.version>2.8.0</springfox.swagger.version>
         <mybatis.plus.version>3.1.0</mybatis.plus.version>
 
+        <circuitbreaker.version>1.5.0</circuitbreaker.version>
+
         <!-- Components Version -->
         <mixmicro-components-kits.dependencies.version>1.0.5.RC4</mixmicro-components-kits.dependencies.version>
         <mixmicro-components-apis.dependencies.version>1.0.5.RC4</mixmicro-components-apis.dependencies.version>
@@ -348,12 +350,12 @@
             <dependency>
                 <groupId>io.github.resilience4j</groupId>
                 <artifactId>resilience4j-circuitbreaker</artifactId>
-                <version>1.5.0</version>
+                <version>${circuitbreaker.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.resilience4j</groupId>
                 <artifactId>resilience4j-framework-common</artifactId>
-                <version>1.5.0</version>
+                <version>${circuitbreaker.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>io.github.resilience4j</groupId>
