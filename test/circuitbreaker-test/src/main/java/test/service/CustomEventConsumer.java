@@ -1,5 +1,6 @@
 package test.service;
 
+import io.github.resilience4j.circuitbreaker.event.CircuitBreakerOnStateTransitionEvent;
 import xyz.vopen.mixmicro.components.circuitbreaker.v2.AbstractMixmicroResilience4jCircuitBreaker;
 
 /**
@@ -13,7 +14,8 @@ public class CustomEventConsumer extends AbstractMixmicroResilience4jCircuitBrea
 
     @Override
     public void consumeEvent(Object event) {
+        System.out.println("=++++++++++++++++++++++++++++++++++++++++++++++++" + event.getClass());
+        if (event instanceof CircuitBreakerOnStateTransitionEvent)
         System.out.println("111" + event);
-
     }
 }
