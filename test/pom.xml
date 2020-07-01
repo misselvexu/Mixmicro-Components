@@ -5,7 +5,7 @@
     <parent>
         <artifactId>mixmicro-components-all</artifactId>
         <groupId>com.yunlsp.framework.components</groupId>
-        <version>1.0.5.RC4</version>
+        <version>1.0.5.RC5</version>
         <relativePath>../</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>

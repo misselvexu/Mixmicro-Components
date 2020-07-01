@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-cache</artifactId>
-        <version>1.0.5.RC4</version>
+        <version>1.0.5.RC5</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-cache-load</artifactId>
-    <version>1.0.5.RC4</version>
+    <version>1.0.5.RC5</version>
 
     <name>Enhance Cache Spring Load Module :: ${project.version}</name>
     <description>🏗 Enhance Cache Spring Load Module</description>
