@@ -36,6 +36,7 @@
         <mixmicro-enhance-schedule.version>1.0.5.RC5</mixmicro-enhance-schedule.version>
         <mixmicro-enhance-spi.version>1.0.5.RC5</mixmicro-enhance-spi.version>
         <mixmicro-enhance-circuitbreaker.version>1.0.5.RC5</mixmicro-enhance-circuitbreaker.version>
+        <mixmicro-enhance-metrics.version>1.0.5.RC5</mixmicro-enhance-metrics.version>
     </properties>
 
     <modules>
@@ -46,6 +47,7 @@
         <module>schedule-enhancement</module>
         <module>spi-enhancement</module>
         <module>circuitbreaker-enhancement</module>
+        <module>metrics-enhancement</module>
     </modules>
 
 
