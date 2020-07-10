@@ -41,6 +41,7 @@
         <module>mixmicro-components-starter-swagger</module>
         <module>mixmicro-components-starters-dependencies</module>
         <module>mixmicro-components-starter-circuitbreaker</module>
+        <module>mixmicro-components-starter-metrics-3x</module>
     </modules>
 
     <properties>
@@ -65,6 +66,7 @@
         <micro-starter-spi.version>1.0.5.RC5</micro-starter-spi.version>
         <micro-starter-swagger.version>1.0.5.RC5</micro-starter-swagger.version>
         <micro-starter-circuitbreaker.version>1.0.5.RC5</micro-starter-circuitbreaker.version>
+        <micro-starter-metrics-3x.version>1.0.5.RC5</micro-starter-metrics-3x.version>
     </properties>
 
     <dependencyManagement>
@@ -226,6 +228,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-circuitbreaker</artifactId>
                 <version>${micro-starter-circuitbreaker.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-metrics-3x</artifactId>
+                <version>${micro-starter-metrics-3x.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

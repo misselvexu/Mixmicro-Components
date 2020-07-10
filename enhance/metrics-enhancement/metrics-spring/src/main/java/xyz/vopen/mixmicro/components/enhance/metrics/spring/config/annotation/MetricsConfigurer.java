@@ -20,10 +20,10 @@ import com.codahale.metrics.health.HealthCheckRegistry;
 
 /**
  * Defines callback methods to customize the Java-based configuration
- * for Spring Metrics enabled via {@link EnableMetrics @EnableMetrics}.
+ * for Spring Metrics enabled via {@link EnableMixmicroMetrics @EnableMetrics}.
  *
- * @see EnableMetrics
- * @author Ryan Tenney
+ * @see EnableMixmicroMetrics
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @since 3.0
  */
 public interface MetricsConfigurer {

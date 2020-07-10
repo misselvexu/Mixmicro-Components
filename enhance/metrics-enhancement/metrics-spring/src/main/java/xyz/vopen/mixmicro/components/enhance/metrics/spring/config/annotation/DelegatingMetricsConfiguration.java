@@ -24,11 +24,11 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 /**
- * This is the class imported by {@link EnableMetrics @EnableMetrics}.
+ * This is the class imported by {@link EnableMixmicroMetrics @EnableMetrics}.
  *
  * @see MetricsConfigurer
  * @see MetricsConfigurationSupport
- * @author Ryan Tenney
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @since 3.0
  */
 @Configuration

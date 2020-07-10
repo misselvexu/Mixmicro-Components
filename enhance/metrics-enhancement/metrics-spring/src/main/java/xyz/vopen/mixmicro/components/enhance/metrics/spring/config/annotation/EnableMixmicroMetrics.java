@@ -15,13 +15,9 @@
  */
 package xyz.vopen.mixmicro.components.enhance.metrics.spring.config.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.*;
 
 /**
  * Add this annotation to an {@code @Configuration} class to have the Spring MVC
@@ -30,14 +26,14 @@ import org.springframework.context.annotation.Import;
  * @see MetricsConfigurer
  * @see MetricsConfigurerAdapter
  *
- * @author Ryan Tenney
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @since 3.0
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Import(DelegatingMetricsConfiguration.class)
-public @interface EnableMetrics {
+public @interface EnableMixmicroMetrics {
 
 	/**
 	 * Set whether the proxy should be exposed by the AOP framework as a

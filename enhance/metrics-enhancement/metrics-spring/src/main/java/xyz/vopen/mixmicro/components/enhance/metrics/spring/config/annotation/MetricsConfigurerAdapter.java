@@ -15,24 +15,23 @@
  */
 package xyz.vopen.mixmicro.components.enhance.metrics.spring.config.annotation;
 
-import java.io.Closeable;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.health.HealthCheckRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 
-import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.health.HealthCheckRegistry;
+import java.io.Closeable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * An implementation of {@link MetricsConfigurer} with empty methods allowing
  * sub-classes to override only the methods they're interested in.
  *
- * @see EnableMetrics
+ * @see EnableMixmicroMetrics
  * @see MetricsConfigurer
- * @author Ryan Tenney
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @since 3.0
  */
 public abstract class MetricsConfigurerAdapter implements MetricsConfigurer, DisposableBean {

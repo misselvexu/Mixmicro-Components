@@ -26,7 +26,7 @@ import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.annotation.Metered;
 import com.google.caliper.Benchmark;
 import com.google.caliper.runner.CaliperMain;
-import xyz.vopen.mixmicro.components.enhance.metrics.spring.config.annotation.EnableMetrics;
+import xyz.vopen.mixmicro.components.enhance.metrics.spring.config.annotation.EnableMixmicroMetrics;
 
 public class MeterBenchmark  {
 
@@ -71,7 +71,7 @@ public class MeterBenchmark  {
 	}
 
 	@Configuration
-	@EnableMetrics
+	@EnableMixmicroMetrics
 	public static class BenchmarkConfig {
 
 		@Bean

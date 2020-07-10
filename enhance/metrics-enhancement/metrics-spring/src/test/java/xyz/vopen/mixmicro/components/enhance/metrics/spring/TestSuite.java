@@ -27,7 +27,7 @@ import com.codahale.metrics.SharedMetricRegistries;
 @SuiteClasses({
 		AopFieldInjectionInteractionTest.class,
 		CovariantReturnTypeTest.class,
-		EnableMetricsTest.class,
+		EnableMixmicroMetricsTest.class,
 		HealthCheckTest.class,
 		LegacyAnnotationMeteredClassTest.class,
 		LegacyMetricAnnotationTest.class,

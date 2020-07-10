@@ -15,15 +15,12 @@
  */
 package xyz.vopen.mixmicro.components.enhance.metrics.spring;
 
-import static xyz.vopen.mixmicro.components.enhance.metrics.spring.TestUtil.forCountedMethod;
-import static xyz.vopen.mixmicro.components.enhance.metrics.spring.TestUtil.forExceptionMeteredMethod;
-import static xyz.vopen.mixmicro.components.enhance.metrics.spring.TestUtil.forMeteredMethod;
-import static xyz.vopen.mixmicro.components.enhance.metrics.spring.TestUtil.forTimedMethod;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-
+import com.codahale.metrics.*;
+import com.codahale.metrics.annotation.Counted;
+import com.codahale.metrics.annotation.ExceptionMetered;
+import com.codahale.metrics.annotation.Metered;
+import com.codahale.metrics.annotation.Timed;
+import com.codahale.metrics.health.HealthCheckRegistry;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,29 +28,21 @@ import org.springframework.aop.support.AopUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.codahale.metrics.CachedGauge;
-import com.codahale.metrics.Counter;
-import com.codahale.metrics.Gauge;
-import com.codahale.metrics.Meter;
-import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.Timer;
-import com.codahale.metrics.annotation.Counted;
-import com.codahale.metrics.annotation.ExceptionMetered;
-import com.codahale.metrics.annotation.Metered;
-import com.codahale.metrics.annotation.Timed;
-import com.codahale.metrics.health.HealthCheckRegistry;
 import xyz.vopen.mixmicro.components.enhance.metrics.spring.config.annotation.EnableMetrics;
+import xyz.vopen.mixmicro.components.enhance.metrics.spring.config.annotation.EnableMixmicroMetrics;
 import xyz.vopen.mixmicro.components.enhance.metrics.spring.config.annotation.MetricsConfigurer;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.*;
+
 /**
- * Tests use of {@link EnableMetrics @EnableMetrics} on {@code @Configuration} classes.
+ * Tests use of {@link EnableMixmicroMetrics @EnableMetrics} on {@code @Configuration} classes.
  *
- * @author Ryan Tenney
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @since 3.0
  */
 @SuppressWarnings("unchecked")
-public class EnableMetricsTest {
+public class EnableMixmicroMetricsTest {
 
 	private static AnnotationConfigApplicationContext applicationContext;
 	private static MetricRegistry metricRegistry;
@@ -172,7 +161,7 @@ public class EnableMetricsTest {
 	}
 
 	@Configuration
-	@EnableMetrics
+	@EnableMixmicroMetrics
 	public static class MetricsConfig implements MetricsConfigurer {
 
 		public static boolean isConfigureReportersInvoked = false;

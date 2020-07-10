@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mixmicro-components-test</artifactId>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <version>1.0.5.RC5</version>
+        <relativePath>../</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mixmicro-components-metrics-test</artifactId>
+    <version>1.0.5.RC5</version>
+
+    <name>Metrics Test Module :: ${project.version}</name>
+    <description>🏗 Metrics Test Module</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>mixmicro-components-starter-metrics-3x</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+</project>

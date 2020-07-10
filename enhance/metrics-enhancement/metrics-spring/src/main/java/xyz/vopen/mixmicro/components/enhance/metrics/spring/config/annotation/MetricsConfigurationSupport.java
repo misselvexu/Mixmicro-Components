@@ -31,12 +31,12 @@ import xyz.vopen.mixmicro.components.enhance.metrics.spring.MetricsBeanPostProce
 
 /**
  * This is the main class providing the configuration behind the Metrics Java config.
- * It is typically imported by adding {@link EnableMetrics @EnableMetrics} to an
+ * It is typically imported by adding {@link EnableMixmicroMetrics @EnableMetrics} to an
  * application {@link org.springframework.context.annotation.Configuration @Configuration} class.
  *
  * @see MetricsConfigurer
  * @see MetricsConfigurerAdapter
- * @author Ryan Tenney
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @since 3.0
  */
 public class MetricsConfigurationSupport implements ImportAware {
@@ -50,8 +50,8 @@ public class MetricsConfigurationSupport implements ImportAware {
 
 	@Override
 	public void setImportMetadata(AnnotationMetadata importMetadata) {
-		final AnnotationAttributes enableMetrics = AnnotationAttributes.fromMap(importMetadata.getAnnotationAttributes(EnableMetrics.class.getName(), false));
-		Assert.notNull(enableMetrics, "@" + EnableMetrics.class.getSimpleName() + " is not present on importing class " + importMetadata.getClassName());
+		final AnnotationAttributes enableMetrics = AnnotationAttributes.fromMap(importMetadata.getAnnotationAttributes(EnableMixmicroMetrics.class.getName(), false));
+		Assert.notNull(enableMetrics, "@" + EnableMixmicroMetrics.class.getSimpleName() + " is not present on importing class " + importMetadata.getClassName());
 
 		this.proxyConfig = new ProxyConfig();
 		this.proxyConfig.setExposeProxy(enableMetrics.getBoolean("exposeProxy"));

@@ -209,6 +209,21 @@
                 <artifactId>mixmicro-components-enhance-circuitbreaker-core</artifactId>
                 <version>${mixmicro-enhance-circuitbreaker.version}</version>
             </dependency>
+
+            <!-- Metrics -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-metrics</artifactId>
+                <version>${mixmicro-enhance-metrics.version}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-metrics-spring</artifactId>
+                <version>${mixmicro-enhance-metrics.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

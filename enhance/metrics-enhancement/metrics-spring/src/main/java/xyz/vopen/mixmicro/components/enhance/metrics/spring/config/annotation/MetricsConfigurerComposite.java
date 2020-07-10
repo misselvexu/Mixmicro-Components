@@ -25,7 +25,7 @@ import com.codahale.metrics.health.HealthCheckRegistry;
 /**
  * A {@link MetricsConfigurer} implementation that delegates to other {@link MetricsConfigurer} instances.
  *
- * @author Ryan Tenney
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @since 3.0
  */
 public class MetricsConfigurerComposite implements MetricsConfigurer {
