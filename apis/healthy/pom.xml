@@ -110,7 +110,7 @@
                 <artifactId>bnd-baseline-maven-plugin</artifactId>
                 <configuration>
                     <base>
-                        <version>2.1</version>
+                        <version>${project.version}</version>
                     </base>
                 </configuration>
                 <executions>
