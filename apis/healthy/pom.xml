@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-apis</artifactId>
+        <version>1.0.5.RC5</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>healthy-api</artifactId>
+    <version>1.0.5.RC5</version>
+
+    <name>Healthy Api Module :: ${project.version}</name>
+    <description>🏗 Healthy Api Module</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <checkstyle.methodNameFormat>^_?[a-z][a-zA-Z0-9]*$</checkstyle.methodNameFormat>
+        <autorelease>false</autorelease>
+        <checkstyle.version>2.17</checkstyle.version>
+        <cdi-api.version>2.0.2</cdi-api.version>
+        <inject.version>1.0</inject.version>
+        <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
+        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <eclipse-jarsigner-plugin.version>1.1.4</eclipse-jarsigner-plugin.version>
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <apache-rat-plugin.version>0.13</apache-rat-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+        <org.osgi.annotation.versioning.version>1.0.0</org.osgi.annotation.versioning.version>
+        <bnd-maven-plugin.version>3.4.0</bnd-maven-plugin.version>
+        <bnd-baseline-maven-plugin.version>4.2.0</bnd-baseline-maven-plugin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>${cdi-api.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>jakarta.el</groupId>
+                    <artifactId>jakarta.el-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jakarta.ejb</groupId>
+                    <artifactId>jakarta.ejb-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>${inject.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.annotation.versioning</artifactId>
+            <version>${org.osgi.annotation.versioning.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+</project>
