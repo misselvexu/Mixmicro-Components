@@ -53,6 +53,7 @@ public class DefaultMixmicroEmailAttachment implements MixmicroEmailAttachment {
 
   private MediaType mediaType;
 
+  @Override
   public MediaType getContentType() throws IOException {
     final InputStream attachmentDataStream = new ByteArrayInputStream(attachmentData);
 
