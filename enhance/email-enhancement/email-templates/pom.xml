@@ -1,0 +1,24 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-enhance-email</artifactId>
+        <version>1.0.5.RC5</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>mixmicro-components-enhance-email-templates</artifactId>
+    <version>1.0.5.RC5</version>
+    <packaging>pom</packaging>
+
+    <name>Enhance Email Templates Module :: ${project.version}</name>
+    <description>🏗 Enhance Email Templates Module</description>
+
+    <modules>
+        <module>email-template-freemarker</module>
+        <module>email-template-thymeleaf</module>
+    </modules>
+
+</project>

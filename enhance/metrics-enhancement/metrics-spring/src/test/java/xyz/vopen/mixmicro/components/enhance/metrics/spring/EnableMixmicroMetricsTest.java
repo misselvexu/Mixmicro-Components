@@ -28,7 +28,6 @@ import org.springframework.aop.support.AopUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import xyz.vopen.mixmicro.components.enhance.metrics.spring.config.annotation.EnableMetrics;
 import xyz.vopen.mixmicro.components.enhance.metrics.spring.config.annotation.EnableMixmicroMetrics;
 import xyz.vopen.mixmicro.components.enhance.metrics.spring.config.annotation.MetricsConfigurer;
 

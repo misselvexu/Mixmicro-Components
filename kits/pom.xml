@@ -37,6 +37,7 @@
         <mixmicro-timed-id.kit.version>1.0.5.RC5</mixmicro-timed-id.kit.version>
         <mixmicro-qrcode.kit.version>1.0.5.RC5</mixmicro-qrcode.kit.version>
         <mixmicro-reflect.kit.version>1.0.5.RC5</mixmicro-reflect.kit.version>
+        <mixmicro-embedded-redis.kit.version>1.0.5.RC5</mixmicro-embedded-redis.kit.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -68,6 +69,7 @@
         <module>retry-kit</module>
         <module>qrcode-kit</module>
         <module>reflect-kit</module>
+        <module>embedded-redis-kit</module>
     </modules>
 
 
@@ -161,6 +163,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>qrcode-kit</artifactId>
                 <version>${mixmicro-qrcode.kit.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>embedded-redis-kit</artifactId>
+                <version>${mixmicro-embedded-redis.kit.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
