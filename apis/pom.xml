@@ -29,12 +29,12 @@
     </modules>
 
     <properties>
-        <mixmicro-apis-authorization.version>1.0.5.RC5</mixmicro-apis-authorization.version>
-        <mixmicro-apis-common.version>1.0.5.RC5</mixmicro-apis-common.version>
-        <mixmicro-apis-exception.version>1.0.5.RC5</mixmicro-apis-exception.version>
-        <mixmicro-apis-logger.version>1.0.5.RC5</mixmicro-apis-logger.version>
-        <mixmicro-apis-circuitbreaker.version>1.0.5.RC5</mixmicro-apis-circuitbreaker.version>
-        <mixmicro-apis-healthy.version>1.0.5.RC5</mixmicro-apis-healthy.version>
+        <mixmicro-apis-authorization.version>1.0.6.RC1</mixmicro-apis-authorization.version>
+        <mixmicro-apis-common.version>1.0.6.RC1</mixmicro-apis-common.version>
+        <mixmicro-apis-exception.version>1.0.6.RC1</mixmicro-apis-exception.version>
+        <mixmicro-apis-logger.version>1.0.6.RC1</mixmicro-apis-logger.version>
+        <mixmicro-apis-circuitbreaker.version>1.0.6.RC1</mixmicro-apis-circuitbreaker.version>
+        <mixmicro-apis-healthy.version>1.0.6.RC1</mixmicro-apis-healthy.version>
     </properties>
 
 
