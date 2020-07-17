@@ -14,6 +14,7 @@
         <module>circuitbreaker-test</module>
         <module>metrics-test</module>
         <module>email-test</module>
+        <module>dbm-master-slave-switch-test</module>
     </modules>
 
     <artifactId>mixmicro-components-test</artifactId>
