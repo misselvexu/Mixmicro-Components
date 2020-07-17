@@ -36,6 +36,7 @@
         <mixmicro-enhance-schedule.version>1.0.5.RC5</mixmicro-enhance-schedule.version>
         <mixmicro-enhance-spi.version>1.0.5.RC5</mixmicro-enhance-spi.version>
         <mixmicro-enhance-circuitbreaker.version>1.0.5.RC5</mixmicro-enhance-circuitbreaker.version>
+        <mixmicro-enhance-socket.version>1.0.5.RC5</mixmicro-enhance-socket.version>
     </properties>
 
     <modules>
@@ -46,6 +47,7 @@
         <module>schedule-enhancement</module>
         <module>spi-enhancement</module>
         <module>circuitbreaker-enhancement</module>
+        <module>socket-enhancement</module>
     </modules>
 
 
@@ -207,6 +209,20 @@
                 <artifactId>mixmicro-components-enhance-circuitbreaker-core</artifactId>
                 <version>${mixmicro-enhance-circuitbreaker.version}</version>
             </dependency>
+
+            <!-- Socket Enhancement -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-socket-api</artifactId>
+                <version>${mixmicro-enhance-socket.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-socket-protocol-websocket</artifactId>
+                <version>${mixmicro-enhance-socket.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
