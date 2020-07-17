@@ -33,6 +33,7 @@
         <micro-starter-snowflake.version>1.0.5.RC5</micro-starter-snowflake.version>
         <micro-starter-openfeign.version>1.0.5.RC5</micro-starter-openfeign.version>
         <micro-starter-datasource.version>1.0.5.RC5</micro-starter-datasource.version>
+        <micro-starter-dbm.version>1.0.5.RC5</micro-starter-dbm.version>
         <micro-starter-sidecar.version>1.0.5.RC5</micro-starter-sidecar.version>
         <micro-starter-security.version>1.0.5.RC5</micro-starter-security.version>
         <micro-starter-cloud-event.version>1.0.5.RC5</micro-starter-cloud-event.version>
@@ -107,6 +108,19 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-datasource</artifactId>
                 <version>${micro-starter-datasource.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-dbm</artifactId>
+                <type>pom</type>
+                <version>${micro-starter-dbm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-dbm-master-slave</artifactId>
+                <version>${micro-starter-dbm.version}</version>
             </dependency>
 
             <dependency>
