@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-spi</artifactId>
-        <version>1.0.5.RC5</version>
+        <version>1.0.6.RC1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-spi-core</artifactId>
-    <version>1.0.5.RC5</version>
+    <version>1.0.6.RC1</version>
 
     <name>Enhance SPI Core Module :: ${project.version}</name>
     <description>🏗 Enhance SPI Module Core</description>

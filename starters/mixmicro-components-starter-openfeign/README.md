@@ -19,7 +19,7 @@ Maven Management Dependency
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-dependencies</artifactId>
-            <version>1.0.5.RC5</version>
+            <version>1.0.6.RC1</version>
             <scope>import</scope>
             <type>pom</type>
         </dependency>

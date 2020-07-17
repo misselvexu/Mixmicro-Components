@@ -5,13 +5,13 @@
     <parent>
         <artifactId>mixmicro-components-test</artifactId>
         <groupId>com.yunlsp.framework.components</groupId>
-        <version>1.0.5.RC5</version>
+        <version>1.0.6.RC1</version>
         <relativePath>../</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mixmicro-components-email-test</artifactId>
-    <version>1.0.5.RC5</version>
+    <version>1.0.6.RC1</version>
 
     <name>Email Test Module :: ${project.version}</name>
     <description>🏗 Metrics Test Module</description>
