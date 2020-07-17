@@ -5,13 +5,13 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-kits</artifactId>
-        <version>1.0.6.RC1</version>
+        <version>1.0.7.BUILD-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>queue-kit</artifactId>
-    <version>1.0.6.RC1</version>
+    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <name>Queue Kit :: ${project.version}</name>
     <description>Mixmicro+ Big Queue Kit (mmap)</description>

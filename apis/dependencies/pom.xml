@@ -6,12 +6,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-apis</artifactId>
-        <version>1.0.6.RC1</version>
+        <version>1.0.7.BUILD-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-apis-dependencies</artifactId>
-    <version>1.0.6.RC1</version>
+    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -35,12 +35,12 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
 
         <!-- Module Version -->
-        <mixmicro-common.api.version>1.0.6.RC1</mixmicro-common.api.version>
-        <mixmicro-exception.api.version>1.0.6.RC1</mixmicro-exception.api.version>
-        <mixmicro-logger.api.version>1.0.6.RC1</mixmicro-logger.api.version>
-        <mixmicro-authorization.api.version>1.0.6.RC1</mixmicro-authorization.api.version>
-        <mixmicro-circuitbreaker.api.version>1.0.6.RC1</mixmicro-circuitbreaker.api.version>
-        <mixmicro-healthy.api.version>1.0.6.RC1</mixmicro-healthy.api.version>
+        <mixmicro-common.api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-common.api.version>
+        <mixmicro-exception.api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-exception.api.version>
+        <mixmicro-logger.api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-logger.api.version>
+        <mixmicro-authorization.api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-authorization.api.version>
+        <mixmicro-circuitbreaker.api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-circuitbreaker.api.version>
+        <mixmicro-healthy.api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-healthy.api.version>
     </properties>
 
     <dependencyManagement>

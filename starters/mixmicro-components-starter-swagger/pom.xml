@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-starters</artifactId>
-        <version>1.0.6.RC1</version>
+        <version>1.0.7.BUILD-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-swagger</artifactId>
-    <version>1.0.6.RC1</version>
+    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <name>Swagger 2.x Starter Module :: ${project.version}</name>
     <description>🏗 Swagger 2.x Starter Module</description>
