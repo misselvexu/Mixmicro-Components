@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>circuitbreaker-test</module>
+        <module>metrics-test</module>
     </modules>
 
     <artifactId>mixmicro-components-test</artifactId>

@@ -1,0 +1,3 @@
+http\://vopen.xyz/schema/metrics/metrics.xsd=xyz/vopen/mixmicro/components/enhance/metrics/spring/config/metrics.xsd
+http\://vopen.xyz/schema/metrics/metrics-3.0.xsd=xyz/vopen/mixmicro/components/enhance/metrics/spring/config/metrics-3.0.xsd
+http\://vopen.xyz/schema/metrics/metrics-3.1.xsd=xyz/vopen/mixmicro/components/enhance/metrics/spring/config/metrics-3.1.xsd

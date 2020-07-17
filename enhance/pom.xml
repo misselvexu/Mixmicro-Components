@@ -37,6 +37,7 @@
         <mixmicro-enhance-spi.version>1.0.5.RC5</mixmicro-enhance-spi.version>
         <mixmicro-enhance-circuitbreaker.version>1.0.5.RC5</mixmicro-enhance-circuitbreaker.version>
         <mixmicro-enhance-socket.version>1.0.5.RC5</mixmicro-enhance-socket.version>
+        <mixmicro-enhance-metrics.version>1.0.5.RC5</mixmicro-enhance-metrics.version>
     </properties>
 
     <modules>
@@ -48,6 +49,7 @@
         <module>spi-enhancement</module>
         <module>circuitbreaker-enhancement</module>
         <module>socket-enhancement</module>
+        <module>metrics-enhancement</module>
     </modules>
 
 
@@ -217,10 +219,24 @@
                 <version>${mixmicro-enhance-socket.version}</version>
             </dependency>
 
+            <!-- Metrics -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-metrics</artifactId>
+                <version>${mixmicro-enhance-metrics.version}</version>
+                <type>pom</type>
+            </dependency>
+
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-socket-protocol-websocket</artifactId>
                 <version>${mixmicro-enhance-socket.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-metrics-spring</artifactId>
+                <version>${mixmicro-enhance-metrics.version}</version>
             </dependency>
 
         </dependencies>

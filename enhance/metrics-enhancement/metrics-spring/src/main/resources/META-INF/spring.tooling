@@ -1,0 +1,4 @@
+# Tooling related information for the metrics namespace
+http\://vopen.xyz/schema/metrics@name=metrics Namespace
+http\://vopen.xyz/schema/metrics@prefix=metrics
+http\://vopen.xyz/schema/metrics@icon=xyz/vopen/mixmicro/components/enhance/metrics/spring/config/metrics.gif

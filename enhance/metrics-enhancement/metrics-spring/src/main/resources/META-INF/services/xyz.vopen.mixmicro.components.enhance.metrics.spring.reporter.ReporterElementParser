@@ -1,0 +1,10 @@
+xyz.vopen.mixmicro.components.enhance.metrics.spring.reporter.JmxReporterElementParser
+xyz.vopen.mixmicro.components.enhance.metrics.spring.reporter.Slf4jReporterElementParser
+xyz.vopen.mixmicro.components.enhance.metrics.spring.reporter.ConsoleReporterElementParser
+xyz.vopen.mixmicro.components.enhance.metrics.spring.reporter.CsvReporterElementParser
+xyz.vopen.mixmicro.components.enhance.metrics.spring.reporter.GraphiteReporterElementParser
+xyz.vopen.mixmicro.components.enhance.metrics.spring.reporter.GangliaReporterElementParser
+xyz.vopen.mixmicro.components.enhance.metrics.spring.reporter.LibratoReporterElementParser
+xyz.vopen.mixmicro.components.enhance.metrics.spring.reporter.NewRelicReporterElementParser
+xyz.vopen.mixmicro.components.enhance.metrics.spring.reporter.DatadogReporterElementParser
+xyz.vopen.mixmicro.components.enhance.metrics.spring.reporter.ElasticSearchReporterElementParser

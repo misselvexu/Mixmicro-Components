@@ -1,0 +1,91 @@
+/*
+ * Copyright (C) 2018 VOPEN.XYZ (iskp.me@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package xyz.vopen.mixmicro.components.enhance.metrics.spring.benchmarks;
+
+import com.google.caliper.AfterExperiment;
+import com.google.caliper.BeforeExperiment;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.codahale.metrics.Meter;
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.annotation.Metered;
+import com.google.caliper.Benchmark;
+import com.google.caliper.runner.CaliperMain;
+import xyz.vopen.mixmicro.components.enhance.metrics.spring.config.annotation.EnableMixmicroMetrics;
+
+public class MeterBenchmark  {
+
+	public static void main(String[] args) throws Exception {
+		CaliperMain.main(MeterBenchmark.class, args);
+	}
+
+	private AnnotationConfigApplicationContext ctx;
+	private BenchmarkTarget targetBean;
+
+	private Meter meter;
+	private BenchmarkTarget targetObj;
+
+	@BeforeExperiment
+	protected void setUp() throws Exception {
+		ctx = new AnnotationConfigApplicationContext(BenchmarkConfig.class);
+		ctx.start();
+		targetBean = ctx.getBean(BenchmarkTarget.class);
+
+		meter = new MetricRegistry().meter("foobar");
+		targetObj = new BenchmarkTarget();
+	}
+
+	@AfterExperiment
+	protected void tearDown() throws Exception {
+		ctx.stop();
+	}
+
+	@Benchmark
+	public void timeBean(int reps) {
+		for (int i = 0; i < reps; i++) {
+			targetBean.mark();
+		}
+	}
+
+	@Benchmark
+	public void timeNormal(int reps) {
+		for (int i = 0; i < reps; i++) {
+			meter.mark();
+			targetObj.mark();
+		}
+	}
+
+	@Configuration
+	@EnableMixmicroMetrics
+	public static class BenchmarkConfig {
+
+		@Bean
+		public BenchmarkTarget createTarget() {
+			return new BenchmarkTarget();
+		}
+
+	}
+
+	public static class BenchmarkTarget {
+		@Metered
+		public Object mark() {
+			return null;
+		}
+	}
+
+}
