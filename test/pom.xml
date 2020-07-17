@@ -13,6 +13,7 @@
     <modules>
         <module>circuitbreaker-test</module>
         <module>metrics-test</module>
+        <module>email-test</module>
     </modules>
 
     <artifactId>mixmicro-components-test</artifactId>

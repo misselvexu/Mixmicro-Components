@@ -43,6 +43,7 @@
         <module>mixmicro-components-starter-circuitbreaker</module>
         <module>mixmicro-components-starter-graceful-shutdown</module>
         <module>mixmicro-components-starter-metrics-3x</module>
+        <module>mixmicro-components-starter-email</module>
     </modules>
 
     <properties>
@@ -69,6 +70,7 @@
         <micro-starter-circuitbreaker.version>1.0.5.RC5</micro-starter-circuitbreaker.version>
         <micro-starter-metrics-3x.version>1.0.5.RC5</micro-starter-metrics-3x.version>
         <micro-starter-graceful-shutdown.version>1.0.5.RC5</micro-starter-graceful-shutdown.version>
+        <micro-starter-email.version>1.0.5.RC5</micro-starter-email.version>
     </properties>
 
     <dependencyManagement>
@@ -242,6 +244,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-metrics-3x</artifactId>
                 <version>${micro-starter-metrics-3x.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-email</artifactId>
+                <version>${micro-starter-email.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

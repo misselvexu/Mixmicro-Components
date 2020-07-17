@@ -1,0 +1,26 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-enhance-parent</artifactId>
+        <version>1.0.5.RC5</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>mixmicro-components-enhance-healthy</artifactId>
+    <version>1.0.5.RC5</version>
+    <packaging>pom</packaging>
+
+    <name>Enhance Healthy Module :: ${project.version}</name>
+    <description>🏗 Enhance Healthy Module</description>
+
+
+    <modules>
+        <module>healthy-core</module>
+        <module>healthy-spring</module>
+    </modules>
+
+
+</project>

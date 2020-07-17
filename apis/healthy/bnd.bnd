@@ -1,0 +1,5 @@
+-exportcontents: \
+    xyz.vopen.mixmicro.components.*
+Bundle-SymbolicName: xyz.vopen.mixmicro.components.health
+Bundle-Name: Mixmicro Health Check Bundle
+Bundle-License: MIT License

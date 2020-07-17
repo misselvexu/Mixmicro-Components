@@ -21,7 +21,7 @@ import static xyz.vopen.mixmicro.components.boot.health.HealthProperties.HEALTH_
 @ConfigurationProperties(prefix = HEALTH_PROPERTIES_PREFIX)
 public class HealthProperties implements Serializable {
 
-  public static final String HEALTH_PROPERTIES_PREFIX = "mimicro.health";
+  public static final String HEALTH_PROPERTIES_PREFIX = "mixmicro.health";
 
   private boolean enabled = true;
 
