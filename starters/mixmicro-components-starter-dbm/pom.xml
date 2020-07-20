@@ -18,6 +18,7 @@
 
     <modules>
         <module>mixmicro-components-starter-dbm-master-slave</module>
+        <module>mixmicro-components-starter-dbm-multi-datasource</module>
     </modules>
 
 </project>
