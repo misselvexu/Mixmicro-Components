@@ -1,7 +1,6 @@
 package xyz.vopen.mixmicro.components.enhancement.http.client;
 
 import xyz.vopen.mixmicro.components.enhancement.http.*;
-import org.httpkit.*;
 import xyz.vopen.mixmicro.components.enhancement.http.ProtocolException;
 import xyz.vopen.mixmicro.components.enhancement.http.logger.ContextLogger;
 import xyz.vopen.mixmicro.components.enhancement.http.logger.EventLogger;

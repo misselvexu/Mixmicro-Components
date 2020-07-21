@@ -1,6 +1,5 @@
 package xyz.vopen.mixmicro.components.enhancement.http.client;
 
-import org.httpkit.*;
 import xyz.vopen.mixmicro.components.enhancement.http.*;
 
 import java.nio.ByteBuffer;

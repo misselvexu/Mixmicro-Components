@@ -1,6 +1,5 @@
 package xyz.vopen.mixmicro.components.enhancement.http.client;
 
-import org.httpkit.*;
 import xyz.vopen.mixmicro.components.enhancement.http.*;
 
 import java.io.IOException;
@@ -35,6 +34,7 @@ class Handler implements Runnable {
     this(handler, 0, null, e);
   }
 
+  @Override
   public void run() {
     try {
       if (body instanceof Throwable) {
