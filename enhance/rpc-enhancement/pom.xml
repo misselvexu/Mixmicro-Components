@@ -1,0 +1,32 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-enhance-parent</artifactId>
+        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>mixmicro-components-enhance-rpc</artifactId>
+    <version>1.0.7.BUILD-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Enhance RPC Module :: ${project.version}</name>
+    <description>🏗 Enhance RPC Module</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+    </properties>
+
+    <modules>
+        <!-- Default RPC Implement -->
+        <module>rpc-json-default</module>
+    </modules>
+
+
+</project>
