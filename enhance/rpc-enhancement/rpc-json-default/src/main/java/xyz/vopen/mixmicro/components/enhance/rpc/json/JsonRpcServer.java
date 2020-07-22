@@ -3,6 +3,7 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.StreamEndedException;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;

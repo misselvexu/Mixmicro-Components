@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json.spring;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcService;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;

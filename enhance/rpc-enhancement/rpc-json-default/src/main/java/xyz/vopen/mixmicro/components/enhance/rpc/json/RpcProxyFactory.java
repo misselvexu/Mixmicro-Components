@@ -1,8 +1,10 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json;
 
+import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcMethod;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.spring.rest.JsonRpcRestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.utils.ReflectionUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,9 +23,9 @@ import java.util.Set;
  * Utilities for create client proxies.
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-public abstract class ProxyUtil {
+public abstract class RpcProxyFactory {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ProxyUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(RpcProxyFactory.class);
 	
 	/**
 	 * Creates a composite service using all of the given

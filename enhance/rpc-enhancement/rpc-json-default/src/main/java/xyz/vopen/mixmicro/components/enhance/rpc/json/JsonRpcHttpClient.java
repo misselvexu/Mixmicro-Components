@@ -2,6 +2,7 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.HttpException;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;

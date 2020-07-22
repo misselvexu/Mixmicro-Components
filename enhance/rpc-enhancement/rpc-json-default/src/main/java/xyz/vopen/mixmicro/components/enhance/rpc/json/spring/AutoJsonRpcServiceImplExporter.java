@@ -11,6 +11,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.*;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcService;
 
 import java.util.*;
 import java.util.Map.Entry;

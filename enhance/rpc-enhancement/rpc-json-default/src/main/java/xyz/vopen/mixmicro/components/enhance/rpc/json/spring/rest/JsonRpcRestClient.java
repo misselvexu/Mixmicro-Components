@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.DefaultHttpStatusCodeProvider;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.IJsonRpcClient;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcClient;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcClientException;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.JsonRpcClientException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.http.converter.HttpMessageConverter;

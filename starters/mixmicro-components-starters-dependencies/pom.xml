@@ -50,6 +50,7 @@
         <micro-starter-graceful-shutdown.version>1.0.5.RC2</micro-starter-graceful-shutdown.version>
         <micro-starter-metrics-3x.version>1.0.7.BUILD-SNAPSHOT</micro-starter-metrics-3x.version>
         <micro-starter-email.version>1.0.7.BUILD-SNAPSHOT</micro-starter-email.version>
+        <micro-starter-rpc-json.version>1.0.7.BUILD-SNAPSHOT</micro-starter-rpc-json.version>
 
         <micro-starter-cache-redis-default.version>1.0.7.BUILD-SNAPSHOT</micro-starter-cache-redis-default.version>
         <micro-starter-cache-redis-lettuce.version>1.0.7.BUILD-SNAPSHOT</micro-starter-cache-redis-lettuce.version>
@@ -238,6 +239,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-email</artifactId>
                 <version>${micro-starter-email.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-rpc-json-default</artifactId>
+                <version>${micro-starter-rpc-json.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

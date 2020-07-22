@@ -45,6 +45,7 @@
         <module>mixmicro-components-starter-graceful-shutdown</module>
         <module>mixmicro-components-starter-metrics-3x</module>
         <module>mixmicro-components-starter-email</module>
+        <module>mixmicro-components-starter-rpc</module>
     </modules>
 
     <properties>
@@ -73,6 +74,7 @@
         <micro-starter-metrics-3x.version>1.0.7.BUILD-SNAPSHOT</micro-starter-metrics-3x.version>
         <micro-starter-graceful-shutdown.version>1.0.7.BUILD-SNAPSHOT</micro-starter-graceful-shutdown.version>
         <micro-starter-email.version>1.0.7.BUILD-SNAPSHOT</micro-starter-email.version>
+        <micro-starter-rpc-json.version>1.0.7.BUILD-SNAPSHOT</micro-starter-rpc-json.version>
     </properties>
 
     <dependencyManagement>
@@ -266,6 +268,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-email</artifactId>
                 <version>${micro-starter-email.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-rpc-json-default</artifactId>
+                <version>${micro-starter-rpc-json.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.*;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.utils.ReflectionUtil;
 
 /**
  * Abstract class for exposing composite services via spring.
@@ -62,7 +63,7 @@ abstract class AbstractCompositeJsonServiceExporter implements InitializingBean,
 		}
 
 		// create the service
-		Object service = ProxyUtil.createCompositeServiceProxy(
+		Object service = RpcProxyFactory.createCompositeServiceProxy(
 				getClass().getClassLoader(), services,
 				serviceInterfaces, allowMultipleInheritance);
 

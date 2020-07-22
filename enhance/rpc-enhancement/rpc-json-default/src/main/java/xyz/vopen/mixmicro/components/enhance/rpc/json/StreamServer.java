@@ -2,6 +2,7 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.StreamEndedException;
 
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLException;
@@ -205,7 +206,8 @@ public class StreamServer {
 		/**
 		 * {@inheritDoc}
 		 */
-		public void run() {
+		@Override
+    public void run() {
 			ServerSocket serverSocket = StreamServer.this.serverSocket;
 			Socket clientSocket = null;
 			while (StreamServer.this.keepRunning.get()) {

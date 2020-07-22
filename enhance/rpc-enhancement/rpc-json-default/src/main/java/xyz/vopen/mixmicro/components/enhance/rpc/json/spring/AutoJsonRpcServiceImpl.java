@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json.spring;
 
 import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcServer;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcService;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcService;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

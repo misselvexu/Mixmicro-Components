@@ -39,6 +39,7 @@ import org.apache.http.protocol.RequestTargetHost;
 import org.apache.http.protocol.RequestUserAgent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.JsonRpcClientException;
 
 import javax.net.ssl.SSLContext;
 import java.io.ByteArrayOutputStream;

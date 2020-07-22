@@ -2,7 +2,7 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json.spring;
 
 import xyz.vopen.mixmicro.components.enhance.rpc.json.StreamServer;
 import org.springframework.beans.factory.DisposableBean;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.Util;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.utils.Util;
 
 import javax.net.ServerSocketFactory;
 import java.net.InetAddress;

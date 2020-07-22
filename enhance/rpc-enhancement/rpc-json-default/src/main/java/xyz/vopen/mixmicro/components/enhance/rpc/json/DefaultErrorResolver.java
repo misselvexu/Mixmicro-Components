@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.ErrorData;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -19,7 +20,8 @@ public enum DefaultErrorResolver implements ErrorResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	public JsonError resolveError(Throwable t, Method method, List<JsonNode> arguments) {
+	@Override
+  public JsonError resolveError(Throwable t, Method method, List<JsonNode> arguments) {
 		return new JsonError(ERROR_NOT_HANDLED.code, t.getMessage(), new ErrorData(t.getClass().getName(), t.getMessage()));
 	}
 	

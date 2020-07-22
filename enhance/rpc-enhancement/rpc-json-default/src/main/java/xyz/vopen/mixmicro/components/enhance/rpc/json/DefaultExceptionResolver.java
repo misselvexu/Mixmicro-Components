@@ -3,12 +3,13 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.JsonRpcClientException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import static xyz.vopen.mixmicro.components.enhance.rpc.json.Util.hasNonNullObjectData;
-import static xyz.vopen.mixmicro.components.enhance.rpc.json.Util.hasNonNullTextualData;
+import static xyz.vopen.mixmicro.components.enhance.rpc.json.utils.Util.hasNonNullObjectData;
+import static xyz.vopen.mixmicro.components.enhance.rpc.json.utils.Util.hasNonNullTextualData;
 
 /**
  * Default implementation of the {@link ExceptionResolver} interface that attempts to re-throw the same exception
@@ -22,7 +23,8 @@ public class DefaultExceptionResolver implements ExceptionResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Throwable resolveException(ObjectNode response) {
+	@Override
+  public Throwable resolveException(ObjectNode response) {
 		ObjectNode errorObject = ObjectNode.class.cast(response.get(JsonRpcBasicServer.ERROR));
 		if (!hasNonNullObjectData(errorObject, JsonRpcBasicServer.DATA))
 			return createJsonRpcClientException(errorObject);

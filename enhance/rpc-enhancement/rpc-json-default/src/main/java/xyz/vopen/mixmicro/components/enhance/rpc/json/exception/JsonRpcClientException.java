@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.exception;
 
 import com.fasterxml.jackson.databind.JsonNode;
 

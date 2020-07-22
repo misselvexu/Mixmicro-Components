@@ -2,6 +2,7 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.StreamEndedException;
 
 import java.io.IOException;
 import java.io.InputStream;

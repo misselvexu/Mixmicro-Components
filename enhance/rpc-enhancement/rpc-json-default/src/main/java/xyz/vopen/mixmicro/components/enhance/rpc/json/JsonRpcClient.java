@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.JsonRpcClientException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +26,7 @@ import static xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcBasicServer.
 import static xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcBasicServer.PARAMS;
 import static xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcBasicServer.RESULT;
 import static xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcBasicServer.VERSION;
-import static xyz.vopen.mixmicro.components.enhance.rpc.json.Util.hasNonNullData;
+import static xyz.vopen.mixmicro.components.enhance.rpc.json.utils.Util.hasNonNullData;
 
 /**
  * A JSON-RPC client.

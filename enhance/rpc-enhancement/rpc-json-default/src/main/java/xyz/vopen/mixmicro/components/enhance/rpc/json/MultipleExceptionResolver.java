@@ -42,7 +42,8 @@ public class MultipleExceptionResolver implements ExceptionResolver {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Throwable resolveException(ObjectNode response) {
+	@Override
+  public Throwable resolveException(ObjectNode response) {
 		for (ExceptionResolver resolver : resolvers) {
 			Throwable resolvedException = resolver.resolveException(response);
 			if (resolvedException != null) {

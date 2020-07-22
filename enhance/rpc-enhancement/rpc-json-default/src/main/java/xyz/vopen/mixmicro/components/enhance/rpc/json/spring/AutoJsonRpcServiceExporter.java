@@ -5,7 +5,7 @@ import xyz.vopen.mixmicro.components.enhance.rpc.json.ConvertedParameterTransfor
 import xyz.vopen.mixmicro.components.enhance.rpc.json.ErrorResolver;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.HttpStatusCodeProvider;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.InvocationListener;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcService;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
