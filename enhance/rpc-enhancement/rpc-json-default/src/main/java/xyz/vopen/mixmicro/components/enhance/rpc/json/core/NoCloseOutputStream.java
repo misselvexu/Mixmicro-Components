@@ -1,10 +1,15 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.core;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * {@link NoCloseOutputStream}
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
-class NoCloseOutputStream extends OutputStream {
+public class NoCloseOutputStream extends OutputStream {
 	
 	private final OutputStream ops;
 	private boolean closeAttempted = false;

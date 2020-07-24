@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A multiple service dispatcher that supports JSON-RPC "method" names
+ * A multiple service dispatcher that supports Mixmicro RPC "method" names
  * that use dot-notation to select a server endpoint.  For example:
  * <pre>
  * {
@@ -35,6 +35,8 @@ import java.util.Map;
  *    "id": 1
  * }
  * </pre>
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class JsonRpcMultiServer extends JsonRpcServer {
@@ -98,7 +100,7 @@ public class JsonRpcMultiServer extends JsonRpcServer {
 	}
 	
 	/**
-	 * Get the service name from the methodNode.  JSON-RPC methods with the form
+	 * Get the service name from the methodNode.  Mixmicro RPC methods with the form
 	 * Service.method will result in "Service" being returned in this case.
 	 *
 	 * @param methodName method name

@@ -3,7 +3,7 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json.spring;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.ConvertedParameterTransformer;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.ErrorResolver;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.HttpStatusCodeProvider;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.HttpStatusCodeProvider;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.InvocationListener;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcService;
 import org.slf4j.Logger;
@@ -26,13 +26,15 @@ import static org.springframework.util.ClassUtils.getAllInterfacesForClass;
 
 /**
  * <p>This exporter class is deprecated because it exposes all beans from a spring context that has the
- * {@link JsonRpcService} annotation.  If that context is also consuming JSON-RPC services from a remote
+ * {@link JsonRpcService} annotation.  If that context is also consuming Mixmicro RPC services from a remote
  * system and has proxy clients instantiated in the same context then those proxy clients will also
  * be (inadvertently) exposed by {@link AutoJsonRpcServiceExporter}.  To avoid this, switch over to use
- * {@link AutoJsonRpcServiceImplExporter} which exposes specific implementations of the JSON-RPC services'
+ * {@link AutoJsonRpcServiceImplExporter} which exposes specific implementations of the Mixmicro RPC services'
  * interfaces rather than all beans that implement {@link JsonRpcService}.</p>
  *
  * @deprecated use {@link AutoJsonRpcServiceImplExporter} instead.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @Deprecated
 @SuppressWarnings("unused")
@@ -65,7 +67,7 @@ public class AutoJsonRpcServiceExporter implements BeanFactoryPostProcessor {
 			JsonRpcService jsonRpcPath = beanFactory.findAnnotationOnBean(beanName, JsonRpcService.class);
 			if (hasServiceAnnotation(jsonRpcPath)) {
 				String pathValue = jsonRpcPath.value();
-				logger.debug("Found JSON-RPC path '{}' for bean [{}].", pathValue, beanName);
+				logger.debug("Found Mixmicro RPC path '{}' for bean [{}].", pathValue, beanName);
 				if (isNotDuplicateService(serviceBeanNames, beanName, pathValue))
 					serviceBeanNames.put(pathValue, beanName);
 			}
@@ -88,7 +90,7 @@ public class AutoJsonRpcServiceExporter implements BeanFactoryPostProcessor {
 	private static boolean isNotDuplicateService(Map<String, String> serviceBeanNames, String beanName, String pathValue) {
 		if (serviceBeanNames.containsKey(pathValue)) {
 			String otherBeanName = serviceBeanNames.get(pathValue);
-			logger.debug("Duplicate JSON-RPC path specification: found {} on both [{}] and [{}].", pathValue, beanName, otherBeanName);
+			logger.debug("Duplicate Mixmicro RPC path specification: found {} on both [{}] and [{}].", pathValue, beanName, otherBeanName);
 			return false;
 		}
 		return true;
@@ -124,7 +126,7 @@ public class AutoJsonRpcServiceExporter implements BeanFactoryPostProcessor {
 		for (Class<?> currentInterface : getBeanInterfaces(serviceBeanDefinition, defaultListableBeanFactory.getBeanClassLoader())) {
 			if (currentInterface.isAnnotationPresent(JsonRpcService.class)) {
 				String serviceInterface = currentInterface.getName();
-				logger.debug("Registering interface '{}' for JSON-RPC bean [{}].", serviceInterface, serviceBeanName);
+				logger.debug("Registering interface '{}' for Mixmicro RPC bean [{}].", serviceInterface, serviceBeanName);
 				builder.addPropertyValue("serviceInterface", serviceInterface);
 				break;
 			}

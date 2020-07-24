@@ -1,6 +1,7 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.resolver;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.ExceptionResolver;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -11,6 +12,8 @@ import java.util.List;
  * of multiple {@link ExceptionResolver} used one
  * after another until one is able to resolve
  * the Exception.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class MultipleExceptionResolver implements ExceptionResolver {

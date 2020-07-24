@@ -1,15 +1,14 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json.spring.rest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.ResponseErrorHandler;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.UnknownHttpStatusCodeException;
+import org.springframework.web.client.*;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.provider.DefaultHttpStatusCodeProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,10 +16,12 @@ import java.net.HttpURLConnection;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.DefaultHttpStatusCodeProvider;
 
+/**
+ * {@link JsonRpcResponseErrorHandler}
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ */
 public class JsonRpcResponseErrorHandler
 		implements ResponseErrorHandler {
 	
@@ -47,7 +48,7 @@ public class JsonRpcResponseErrorHandler
 		final HttpStatus httpStatus = getHttpStatusCode(response);
 		
 		if (JSON_RPC_STATUES.contains(httpStatus.value())) {
-			// Checks the content type. If application/json-rpc then allow handler to read message
+			// Checks the content type. If application/Mixmicro RPC then allow handler to read message
 			final MediaType contentType = response.getHeaders().getContentType();
 			if (MappingJacksonRPC2HttpMessageConverter.APPLICATION_JSON_RPC.isCompatibleWith(contentType))
 				return false;

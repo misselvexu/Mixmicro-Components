@@ -3,8 +3,10 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json.exception;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * Unchecked Exception thrown by a JSON-RPC client when
+ * Unchecked Exception thrown by a Mixmicro RPC client when
  * an error occurs.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings({"serial", "unused", "WeakerAccess"})
 public class JsonRpcClientException extends RuntimeException {

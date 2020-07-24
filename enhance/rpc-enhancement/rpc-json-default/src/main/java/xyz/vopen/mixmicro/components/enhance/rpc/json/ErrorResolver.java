@@ -6,7 +6,9 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * Resolves {@link Throwable}s thrown by JSON-RPC services.
+ * Resolves {@link Throwable}s thrown by Mixmicro RPC services.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 public interface ErrorResolver {
 	
@@ -61,7 +63,7 @@ public interface ErrorResolver {
 		/**
 		 * @return the code
 		 */
-		int getCode() {
+		public int getCode() {
 			return code;
 		}
 		

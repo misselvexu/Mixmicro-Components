@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.client;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JavaType;
@@ -39,7 +39,11 @@ import org.apache.http.protocol.RequestTargetHost;
 import org.apache.http.protocol.RequestUserAgent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.*;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.NoCloseInputStream;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.JsonRpcClientException;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.resolver.DefaultExceptionResolver;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.server.JsonRpcBasicServer;
 
 import javax.net.ssl.SSLContext;
 import java.io.ByteArrayOutputStream;
@@ -62,7 +66,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Implements an asynchronous JSON-RPC 2.0 HTTP client. This class has a
+ * Implements an asynchronous Mixmicro RPC 2.0 HTTP client. This class has a
  * dependency on Apache Commons Codec, Apache
  * <p>
  * Because this implementation uses an HTTP request pool, timeouts are
@@ -87,7 +91,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * IO reactor threads, default is 2 (more than sufficient for most clients)</li>
  * </ul>
  *
- * @author Brett Wooldridge
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class JsonRpcHttpAsyncClient {
@@ -289,7 +293,7 @@ public class JsonRpcHttpAsyncClient {
 			request.set(JsonRpcBasicServer.PARAMS, mapper.valueToTree(arguments));
 		}
 		
-		logger.debug("JSON-RPC Request: {}", request);
+		logger.debug("Mixmicro RPC Request: {}", request);
 		
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(512);
 		mapper.writeValue(byteArrayOutputStream, request);
@@ -363,19 +367,19 @@ public class JsonRpcHttpAsyncClient {
 	}
 	
 	/**
-	 * Reads a JSON-RPC response from the server. This blocks until a response
+	 * Reads a Mixmicro RPC response from the server. This blocks until a response
 	 * is received.
 	 *
 	 * @param returnType the expected return type
 	 * @param ips        the {@link InputStream} to read from
-	 * @return the object returned by the JSON-RPC response
+	 * @return the object returned by the Mixmicro RPC response
 	 * @throws Throwable on error
 	 */
 	private <T> T readResponse(Type returnType, InputStream ips) throws Throwable {
 		JsonNode response = mapper.readTree(new NoCloseInputStream(ips));
-		logger.debug("JSON-RPC Response: {}", response);
+		logger.debug("Mixmicro RPC Response: {}", response);
 		if (!response.isObject()) {
-			throw new JsonRpcClientException(0, "Invalid JSON-RPC response", response);
+			throw new JsonRpcClientException(0, "Invalid Mixmicro RPC response", response);
 		}
 		ObjectNode jsonObject = ObjectNode.class.cast(response);
 		
@@ -468,19 +472,23 @@ public class JsonRpcHttpAsyncClient {
 
 		private final Condition condition = lock.newCondition();
 		
-		public boolean cancel(boolean mayInterruptIfRunning) {
+		@Override
+    public boolean cancel(boolean mayInterruptIfRunning) {
 			return false;
 		}
 		
-		public boolean isCancelled() {
+		@Override
+    public boolean isCancelled() {
 			return false;
 		}
 		
-		public boolean isDone() {
+		@Override
+    public boolean isDone() {
 			return done;
 		}
 		
-		public T get() throws InterruptedException,
+		@Override
+    public T get() throws InterruptedException,
 				ExecutionException {
 
 			lock.lock();
@@ -500,7 +508,8 @@ public class JsonRpcHttpAsyncClient {
 			}
 		}
 		
-		public T get(long timeout, TimeUnit unit)
+		@Override
+    public T get(long timeout, TimeUnit unit)
 				throws InterruptedException, ExecutionException,
 				TimeoutException {
 
@@ -528,7 +537,8 @@ public class JsonRpcHttpAsyncClient {
 
 		}
 		
-		public void onComplete(T result) {
+		@Override
+    public void onComplete(T result) {
 			lock.lock();
 			try {
 				object = result;
@@ -539,7 +549,8 @@ public class JsonRpcHttpAsyncClient {
 			}
 		}
 		
-		public void onError(Throwable t) {
+		@Override
+    public void onError(Throwable t) {
 			lock.lock();
 			try {
 				exception = new ExecutionException(t);
@@ -565,7 +576,8 @@ public class JsonRpcHttpAsyncClient {
 			this.callBack = callBack;
 		}
 		
-		public void completed(final HttpResponse response) {
+		@Override
+    public void completed(final HttpResponse response) {
 			try {
 				StatusLine statusLine = response.getStatusLine();
 				int statusCode = statusLine.getStatusCode();
@@ -590,11 +602,13 @@ public class JsonRpcHttpAsyncClient {
 			}
 		}
 		
-		public void failed(final Exception ex) {
+		@Override
+    public void failed(final Exception ex) {
 			callBack.onError(ex);
 		}
 		
-		public void cancelled() {
+		@Override
+    public void cancelled() {
 			callBack.onError(new RuntimeException("HTTP Request was cancelled"));
 		}
 	}

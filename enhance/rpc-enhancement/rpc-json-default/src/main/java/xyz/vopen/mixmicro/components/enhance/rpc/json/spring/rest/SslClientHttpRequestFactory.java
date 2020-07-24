@@ -11,6 +11,8 @@ import java.net.HttpURLConnection;
 /**
  * Implementation of {@link org.springframework.http.client.ClientHttpRequestFactory} that creates HTTPS connection
  * with specified settings.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 class SslClientHttpRequestFactory
 		extends SimpleClientHttpRequestFactory {

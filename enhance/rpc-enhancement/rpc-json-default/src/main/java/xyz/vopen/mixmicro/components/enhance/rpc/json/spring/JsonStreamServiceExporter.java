@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json.spring;
 
-import xyz.vopen.mixmicro.components.enhance.rpc.json.StreamServer;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.server.StreamServer;
 import org.springframework.beans.factory.DisposableBean;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.utils.Util;
 
@@ -11,10 +11,11 @@ import java.net.ServerSocket;
 
 /**
  * {@link org.springframework.remoting.support.RemoteExporter RemoteExporter}
- * that exports services using Json according to the JSON-RPC proposal specified
+ * that exports services using Json according to the Mixmicro RPC proposal specified
  * at:
- * <a href="http://groups.google.com/group/json-rpc">
- * http://groups.google.com/group/json-rpc</a>.
+ * <a href="http://groups.google.com/group/json-rpc">http://groups.google.com/group/json-rpc</a>.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("unused")
 public class JsonStreamServiceExporter extends AbstractJsonServiceExporter implements DisposableBean {

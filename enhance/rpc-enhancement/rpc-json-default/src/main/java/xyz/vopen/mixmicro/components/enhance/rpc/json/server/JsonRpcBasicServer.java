@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.server;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -7,7 +7,15 @@ import com.fasterxml.jackson.databind.node.*;
 import net.iharder.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.*;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcParam;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.HttpStatusCodeProvider;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcInterceptor;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.NoCloseOutputStream;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.ReadContext;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.resolver.AnnotationsErrorResolver;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.resolver.DefaultErrorResolver;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.resolver.MultipleErrorResolver;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.utils.JsonUtil;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.utils.ReflectionUtil;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.utils.Util;
@@ -24,13 +32,15 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 /**
- * A JSON-RPC request server reads JSON-RPC requests from an input stream and writes responses to an output stream.
+ * A Mixmicro RPC request server reads Mixmicro RPC requests from an input stream and writes responses to an output stream.
  * Can even run on Android system.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class JsonRpcBasicServer {
 	
-	public static final String JSONRPC_CONTENT_TYPE = "application/json-rpc";
+	public static final String JSONRPC_CONTENT_TYPE = "application/mixmicro-json-rpc";
 	public static final String PARAMS = "params";
 	public static final String METHOD = "method";
 	public static final String JSONRPC = "jsonrpc";
@@ -143,7 +153,7 @@ public class JsonRpcBasicServer {
 	 * @return the {@link InputStream}
 	 * @throws IOException on error
 	 */
-	static InputStream createInputStream(String method, String id, String params) throws IOException {
+  public static InputStream createInputStream(String method, String id, String params) throws IOException {
 		
 		StringBuilder envelope = new StringBuilder();
 		
@@ -222,7 +232,7 @@ public class JsonRpcBasicServer {
 	/**
 	 * Handles a single request from the given {@link InputStream},
 	 * that is to say that a single {@link JsonNode} is read from
-	 * the stream and treated as a JSON-RPC request.  All responses
+	 * the stream and treated as a Mixmicro RPC request.  All responses
 	 * are written to the given {@link OutputStream}.
 	 *
 	 * @param input  the {@link InputStream}
@@ -379,7 +389,7 @@ public class JsonRpcBasicServer {
 		Throwable unwrappedException = getException(e);
 		
 		if (shouldLogInvocationErrors) {
-			logger.warn("Error in JSON-RPC Service", unwrappedException);
+			logger.warn("Error in Mixmicro RPC Service", unwrappedException);
 		}
 		
 		ErrorResolver.JsonError error = resolveError(methodArgs, unwrappedException);
@@ -903,7 +913,7 @@ public class JsonRpcBasicServer {
 	
 	/**
 	 * Sets whether or not the server should be backwards
-	 * compatible to JSON-RPC 1.0.  This only includes the
+	 * compatible to Mixmicro RPC 1.0.  This only includes the
 	 * omission of the jsonrpc property on the request object,
 	 * not the class hinting.
 	 *
@@ -969,7 +979,7 @@ public class JsonRpcBasicServer {
 	/**
 	 * Sets the {@link HttpStatusCodeProvider} instance to use for HTTP error results.
 	 *
-	 * @param httpStatusCodeProvider the status code provider to use for translating JSON-RPC error codes into
+	 * @param httpStatusCodeProvider the status code provider to use for translating Mixmicro RPC error codes into
 	 *                               HTTP status messages.
 	 */
 	public void setHttpStatusCodeProvider(HttpStatusCodeProvider httpStatusCodeProvider) {
@@ -987,7 +997,7 @@ public class JsonRpcBasicServer {
 	}
 	
 	/**
-	 * If true, then when errors arise in the invocation of JSON-RPC services, the error will be
+	 * If true, then when errors arise in the invocation of Mixmicro RPC services, the error will be
 	 * logged together with the underlying stack trace.  When false, no error will be logged.
 	 * An alternative mechanism for logging invocation errors is to employ an implementation of
 	 * {@link InvocationListener}.
@@ -1107,14 +1117,14 @@ public class JsonRpcBasicServer {
 			this.methodArgs = methodArgs;
 			this.invocationListener = invocationListener;
 			if (this.invocationListener != null) {
-				this.invocationListener.willInvoke(methodArgs.method, methodArgs.arguments);
+				this.invocationListener.preInvoke(methodArgs.method, methodArgs.arguments);
 			}
 		}
 		
 		@Override
 		public void close() {
 			if (invocationListener != null) {
-				invocationListener.didInvoke(methodArgs.method, methodArgs.arguments, result, error, System.currentTimeMillis() - startMs);
+				invocationListener.postInvoke(methodArgs.method, methodArgs.arguments, result, error, System.currentTimeMillis() - startMs);
 			}
 		}
 	}
@@ -1175,7 +1185,8 @@ public class JsonRpcBasicServer {
 		
 		private JsonRpcParam createNewJsonRcpParamType(final Annotation annotation) {
 			return new JsonRpcParam() {
-				public Class<? extends Annotation> annotationType() {
+				@Override
+        public Class<? extends Annotation> annotationType() {
 					return JsonRpcParam.class;
 				}
 				

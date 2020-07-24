@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation for mapping exceptions in service methods to custom JsonRpc errors.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("WeakerAccess")
 @Target(ElementType.ANNOTATION_TYPE)

@@ -1,7 +1,8 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.client;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcClient;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.HttpException;
 
 import javax.net.ssl.HostnameVerifier;
@@ -24,15 +25,17 @@ import java.util.Map.Entry;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import static xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcBasicServer.ACCEPT_ENCODING;
-import static xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcBasicServer.CONTENT_ENCODING;
-import static xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcBasicServer.JSONRPC_CONTENT_TYPE;
+import static xyz.vopen.mixmicro.components.enhance.rpc.json.server.JsonRpcBasicServer.ACCEPT_ENCODING;
+import static xyz.vopen.mixmicro.components.enhance.rpc.json.server.JsonRpcBasicServer.CONTENT_ENCODING;
+import static xyz.vopen.mixmicro.components.enhance.rpc.json.server.JsonRpcBasicServer.JSONRPC_CONTENT_TYPE;
 
 /**
- * A JSON-RPC client that uses the HTTP protocol.
+ * A Mixmicro RPC client that uses the HTTP protocol.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("unused")
-public class JsonRpcHttpClient extends JsonRpcClient implements IJsonRpcClient {
+public class JsonRpcHttpClient extends xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcClient implements JsonRpcClient {
 	
 	private static final String GZIP = "gzip";
 	

@@ -12,6 +12,9 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.*;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcService;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.HttpStatusCodeProvider;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcInterceptor;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.spring.annotation.AutoJsonRpcServiceImpl;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -23,7 +26,7 @@ import static org.springframework.util.ClassUtils.getAllInterfacesForClass;
 
 /**
  * <p>
- * This class can be instantiated in a spring context in order to simplify the configuration of JSON-RPC
+ * This class can be instantiated in a spring context in order to simplify the configuration of Mixmicro RPC
  * services afforded by beans in the same context.  The services to be configured are identified
  * by the annotation {@link AutoJsonRpcServiceImpl} on the implementation of the service.  Such
  * implementation beans must also have the {@link JsonRpcService} annotation associated with them; either
@@ -119,7 +122,7 @@ public class AutoJsonRpcServiceImplExporter implements BeanFactoryPostProcessor 
   private static boolean isNotDuplicateService(Map<String, String> serviceBeanNames, String beanName, String pathValue) {
     if (serviceBeanNames.containsKey(pathValue)) {
       String otherBeanName = serviceBeanNames.get(pathValue);
-      logger.debug("Duplicate JSON-RPC path specification: found {} on both [{}] and [{}].", pathValue, beanName, otherBeanName);
+      logger.debug("Duplicate Mixmicro RPC path specification: found {} on both [{}] and [{}].", pathValue, beanName, otherBeanName);
       return false;
     }
     return true;
@@ -164,7 +167,7 @@ public class AutoJsonRpcServiceImplExporter implements BeanFactoryPostProcessor 
     for (Class<?> currentInterface : getBeanInterfaces(serviceBeanDefinition, defaultListableBeanFactory.getBeanClassLoader())) {
       if (currentInterface.isAnnotationPresent(JsonRpcService.class)) {
         String serviceInterface = currentInterface.getName();
-        logger.debug("Registering interface '{}' for JSON-RPC bean [{}].", serviceInterface, serviceBeanName);
+        logger.debug("Registering interface '{}' for Mixmicro RPC bean [{}].", serviceInterface, serviceBeanName);
         builder.addPropertyValue("serviceInterface", serviceInterface);
         break;
       }

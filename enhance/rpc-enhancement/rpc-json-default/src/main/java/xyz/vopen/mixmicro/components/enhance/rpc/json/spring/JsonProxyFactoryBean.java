@@ -2,7 +2,7 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json.spring;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.ExceptionResolver;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcHttpClient;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcHttpClient;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.utils.ReflectionUtil;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.remoting.support.UrlBasedRemoteAccessor;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcClient;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcClient;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -26,7 +26,9 @@ import java.util.Map;
 
 /**
  * {@link FactoryBean} for creating a {@link UrlBasedRemoteAccessor}
- * (aka consumer) for accessing an HTTP based JSON-RPC service.
+ * (aka consumer) for accessing an HTTP based Mixmicro RPC service.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("unused")
 public class JsonProxyFactoryBean extends UrlBasedRemoteAccessor implements MethodInterceptor, InitializingBean, FactoryBean<Object>, ApplicationContextAware {

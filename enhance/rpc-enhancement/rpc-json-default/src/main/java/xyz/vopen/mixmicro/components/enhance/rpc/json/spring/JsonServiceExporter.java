@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json.spring;
 
-import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcServer;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.server.JsonRpcServer;
 import org.springframework.web.HttpRequestHandler;
 
 import javax.servlet.ServletException;
@@ -10,9 +10,10 @@ import java.io.IOException;
 
 /**
  * {@link HttpRequestHandler} that exports services using Json
- * according to the JSON-RPC proposal specified at:
- * <a href="http://groups.google.com/group/json-rpc">
- * http://groups.google.com/group/json-rpc</a>.
+ * according to the Mixmicro RPC proposal specified at:
+ * <a href="http://groups.google.com/group/json-rpc">http://groups.google.com/group/json-rpc</a>.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 public class JsonServiceExporter extends AbstractJsonServiceExporter implements HttpRequestHandler {
 

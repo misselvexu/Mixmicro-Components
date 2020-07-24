@@ -1,6 +1,7 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.listener;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.InvocationListener;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -11,7 +12,7 @@ import java.util.List;
  * {@link InvocationListener} that supports the use
  * of multiple {@link InvocationListener}s called one after another.
  *
- * @author Andrew Lindesay
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 
 @SuppressWarnings({"unused", "WeakerAccess"})
@@ -44,18 +45,20 @@ public class MultipleInvocationListener implements InvocationListener {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void willInvoke(Method method, List<JsonNode> arguments) {
+	@Override
+  public void preInvoke(Method method, List<JsonNode> arguments) {
 		for (InvocationListener invocationListener : invocationListeners) {
-			invocationListener.willInvoke(method, arguments);
+			invocationListener.preInvoke(method, arguments);
 		}
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public void didInvoke(Method method, List<JsonNode> arguments, Object result, Throwable t, long duration) {
+	@Override
+  public void postInvoke(Method method, List<JsonNode> arguments, Object result, Throwable t, long duration) {
 		for (InvocationListener invocationListener : invocationListeners) {
-			invocationListener.didInvoke(method, arguments, result, t, duration);
+			invocationListener.postInvoke(method, arguments, result, t, duration);
 		}
 	}
 	

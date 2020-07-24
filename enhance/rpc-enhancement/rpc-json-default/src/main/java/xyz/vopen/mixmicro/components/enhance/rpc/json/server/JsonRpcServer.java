@@ -1,8 +1,10 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.provider.DefaultHttpStatusCodeProvider;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.ErrorResolver;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.StreamEndedException;
 
 import javax.portlet.ResourceRequest;
@@ -18,8 +20,10 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * A JSON-RPC request server reads JSON-RPC requests from an input stream and writes responses to an output stream.
+ * A Mixmicro RPC request server reads Mixmicro RPC requests from an input stream and writes responses to an output stream.
  * Supports handler and servlet requests.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("unused")
 public class JsonRpcServer extends JsonRpcBasicServer {

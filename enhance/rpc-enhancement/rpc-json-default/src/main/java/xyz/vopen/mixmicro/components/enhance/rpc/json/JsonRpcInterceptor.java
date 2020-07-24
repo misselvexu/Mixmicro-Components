@@ -12,8 +12,7 @@ import java.util.List;
  * <p>
  * Interceptors could throw {@link RuntimeException}, in this case JSON RPC standard error will be shown, except preHandleJson.
  * In case preHandleJson throws exception, it will generate HTTP code 400 "Bad Request" with empty body. So be careful.
- * @author pavyazankin
- * @since 21/09/2017
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 public interface JsonRpcInterceptor {
 

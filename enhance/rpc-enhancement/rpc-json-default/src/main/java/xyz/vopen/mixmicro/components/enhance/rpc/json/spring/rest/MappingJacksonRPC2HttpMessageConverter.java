@@ -19,13 +19,15 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
- * JSON-RPC Message converter for Spring RestTemplate
+ * Mixmicro RPC Message converter for Spring RestTemplate
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 class MappingJacksonRPC2HttpMessageConverter extends AbstractHttpMessageConverter<Object> {
 
 	private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
-	public static final MediaType APPLICATION_JSON_RPC = new MediaType("application", "json-rpc", DEFAULT_CHARSET);
+	public static final MediaType APPLICATION_JSON_RPC = new MediaType("application", "mixmicro-json-rpc", DEFAULT_CHARSET);
 
 	private ObjectMapper objectMapper;
 

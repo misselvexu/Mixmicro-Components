@@ -3,8 +3,7 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json.spring.rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.DefaultHttpStatusCodeProvider;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.IJsonRpcClient;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.provider.DefaultHttpStatusCodeProvider;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcClient;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.JsonRpcClientException;
 import org.springframework.http.HttpEntity;
@@ -27,8 +26,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * {@link JsonRpcRestClient}
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ */
 @SuppressWarnings({"unused", "WeakerAccess"})
-public class JsonRpcRestClient extends JsonRpcClient implements IJsonRpcClient {
+public class JsonRpcRestClient extends xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcClient implements JsonRpcClient {
 
 	private final AtomicReference<URL> serviceUrl = new AtomicReference<>();
 	private final RestTemplate restTemplate;
@@ -81,13 +85,13 @@ public class JsonRpcRestClient extends JsonRpcClient implements IJsonRpcClient {
 
 			final List<HttpMessageConverter<?>> restMessageConverters = new ArrayList<>();
 			restMessageConverters.addAll(this.restTemplate.getMessageConverters());
-			// Place JSON-RPC converter on the first place!
+			// Place Mixmicro RPC converter on the first place!
 			restMessageConverters.add(0, messageConverter);
 
 			this.restTemplate.setMessageConverters(restMessageConverters);
 		}
 
-		// use specific JSON-RPC error handler if it has not been changed to custom 
+		// use specific Mixmicro RPC error handler if it has not been changed to custom
 		if (restTemplate.getErrorHandler() instanceof org.springframework.web.client.DefaultResponseErrorHandler) {
 			restTemplate.setErrorHandler(JsonRpcResponseErrorHandler.INSTANCE);
 		}
@@ -228,7 +232,7 @@ public class JsonRpcRestClient extends JsonRpcClient implements IJsonRpcClient {
 			throw new JsonRpcClientException(jsonErrorCode, httpStatusCodeException.getStatusText(), null);
 		} catch (HttpMessageConversionException httpMessageConversionException) {
 			logger.error("Can not convert (request/response)", httpMessageConversionException);
-			throw new JsonRpcClientException(0, "Invalid JSON-RPC response", null);
+			throw new JsonRpcClientException(0, "Invalid Mixmicro RPC response", null);
 		}
 
 		return this.readResponse(returnType, response);

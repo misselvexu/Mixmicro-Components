@@ -1,6 +1,7 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.resolver;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.ErrorResolver;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcError;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcErrors;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.ErrorData;
@@ -11,9 +12,15 @@ import java.util.List;
 
 /**
  * {@link ErrorResolver} that uses annotations.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 public enum AnnotationsErrorResolver implements ErrorResolver {
-	INSTANCE;
+
+  /**
+   *
+   */
+  INSTANCE;
 	
 	/**
 	 * {@inheritDoc}

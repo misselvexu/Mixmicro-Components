@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 /**
  * Annotation for annotating service parameters as
  * JsonRpc params by name.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)

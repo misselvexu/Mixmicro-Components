@@ -26,6 +26,8 @@ import static org.springframework.util.ResourceUtils.CLASSPATH_URL_PREFIX;
 
 /**
  * Auto-creates proxies for service interfaces annotated with {@link JsonRpcService}.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("unused")
 public class AutoJsonRpcClientProxyCreator implements BeanFactoryPostProcessor, ApplicationContextAware {
@@ -42,7 +44,7 @@ public class AutoJsonRpcClientProxyCreator implements BeanFactoryPostProcessor, 
 		SimpleMetadataReaderFactory metadataReaderFactory = new SimpleMetadataReaderFactory(applicationContext);
 		DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) beanFactory;
 		String resolvedPath = resolvePackageToScan();
-		logger.debug("Scanning '{}' for JSON-RPC service interfaces.", resolvedPath);
+		logger.debug("Scanning '{}' for Mixmicro RPC service interfaces.", resolvedPath);
 		try {
 			for (Resource resource : applicationContext.getResources(resolvedPath)) {
 				if (resource.isReadable()) {
@@ -53,7 +55,7 @@ public class AutoJsonRpcClientProxyCreator implements BeanFactoryPostProcessor, 
 					if (annotationMetadata.isAnnotated(jsonRpcPathAnnotation)) {
 						String className = classMetadata.getClassName();
 						String path = (String) annotationMetadata.getAnnotationAttributes(jsonRpcPathAnnotation).get("value");
-						logger.debug("Found JSON-RPC service to proxy [{}] on path '{}'.", className, path);
+						logger.debug("Found Mixmicro RPC service to proxy [{}] on path '{}'.", className, path);
 						registerJsonProxyBean(defaultListableBeanFactory, className, path);
 					}
 				}

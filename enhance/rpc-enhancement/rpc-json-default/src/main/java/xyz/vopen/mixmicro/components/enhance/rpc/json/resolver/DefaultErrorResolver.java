@@ -1,6 +1,7 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.resolver;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.ErrorResolver;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.exception.ErrorData;
 
 import java.lang.reflect.Method;
@@ -12,10 +13,16 @@ import static xyz.vopen.mixmicro.components.enhance.rpc.json.ErrorResolver.JsonE
  * An {@link ErrorResolver} that puts type information into the
  * data portion of the error.  This {@link ErrorResolver} always
  * returns a {@link ErrorResolver.JsonError JsonError}.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("WeakerAccess")
 public enum DefaultErrorResolver implements ErrorResolver {
-	INSTANCE;
+
+  /**
+   *
+   */
+  INSTANCE;
 	
 	/**
 	 * {@inheritDoc}

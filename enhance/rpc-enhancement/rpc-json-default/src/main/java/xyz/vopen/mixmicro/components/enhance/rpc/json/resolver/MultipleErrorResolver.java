@@ -1,6 +1,7 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.resolver;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.ErrorResolver;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -12,6 +13,8 @@ import java.util.List;
  * of multiple {@link ErrorResolver} used one
  * after another until one is able to resolve
  * the error.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class MultipleErrorResolver implements ErrorResolver {

@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json;
 
 import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcMethod;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcHttpClient;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.spring.rest.JsonRpcRestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,8 @@ import java.util.Set;
 
 /**
  * Utilities for create client proxies.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
 public abstract class RpcProxyFactory {
@@ -117,36 +120,36 @@ public abstract class RpcProxyFactory {
 	
 	/**
 	 * Creates a {@link Proxy} of the given {@code proxyInterface}
-	 * that uses the given {@link JsonRpcClient}.
+	 * that uses the given {@link xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcClient}.
 	 *
 	 * @param <T>            the proxy type
 	 * @param classLoader    the {@link ClassLoader}
 	 * @param proxyInterface the interface to proxy
-	 * @param client         the {@link JsonRpcClient}
+	 * @param client         the {@link xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcClient}
 	 * @param socket         the {@link Socket}
 	 * @return the proxied interface
 	 * @throws IOException if an I/O error occurs when creating the input stream,  the output stream, the socket
 	 *                     is closed, the socket is not connected,  or the socket input has been shutdown using shutdownInput()
 	 */
 	@SuppressWarnings("WeakerAccess")
-	public static <T> T createClientProxy(ClassLoader classLoader, Class<T> proxyInterface, final JsonRpcClient client, Socket socket) throws IOException {
+	public static <T> T createClientProxy(ClassLoader classLoader, Class<T> proxyInterface, final xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcClient client, Socket socket) throws IOException {
 		return createClientProxy(classLoader, proxyInterface, client, socket.getInputStream(), socket.getOutputStream());
 	}
 	
 	/**
 	 * Creates a {@link Proxy} of the given {@code proxyInterface}
-	 * that uses the given {@link JsonRpcClient}.
+	 * that uses the given {@link xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcClient}.
 	 *
 	 * @param <T>            the proxy type
 	 * @param classLoader    the {@link ClassLoader}
 	 * @param proxyInterface the interface to proxy
-	 * @param client         the {@link JsonRpcClient}
+	 * @param client         the {@link xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcClient}
 	 * @param input          the {@link InputStream}
 	 * @param output         the {@link OutputStream}
 	 * @return the proxied interface
 	 */
 	@SuppressWarnings({"unchecked", "WeakerAccess"})
-	public static <T> T createClientProxy(ClassLoader classLoader, Class<T> proxyInterface, final JsonRpcClient client, final InputStream input, final OutputStream output) {
+	public static <T> T createClientProxy(ClassLoader classLoader, Class<T> proxyInterface, final xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcClient client, final InputStream input, final OutputStream output) {
 		
 		// create and return the proxy
 		return (T) Proxy.newProxyInstance(classLoader, new Class<?>[]{proxyInterface}, new InvocationHandler() {
@@ -187,13 +190,13 @@ public abstract class RpcProxyFactory {
 	 * @param client         the {@link JsonRpcHttpClient}
 	 * @return the proxied interface
 	 */
-	public static <T> T createClientProxy(ClassLoader classLoader, Class<T> proxyInterface, final IJsonRpcClient client) {
+	public static <T> T createClientProxy(ClassLoader classLoader, Class<T> proxyInterface, final JsonRpcClient client) {
 		return createClientProxy(classLoader, proxyInterface, client, new HashMap<String, String>());
 	}
 	
 	/**
 	 * Creates a {@link Proxy} of the given {@code proxyInterface}
-	 * that uses the given {@link IJsonRpcClient}.
+	 * that uses the given {@link JsonRpcClient}.
 	 *
 	 * @param <T>            the proxy type
 	 * @param classLoader    the {@link ClassLoader}
@@ -203,7 +206,7 @@ public abstract class RpcProxyFactory {
 	 * @return the proxied interface
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> T createClientProxy(ClassLoader classLoader, Class<T> proxyInterface, final IJsonRpcClient client, final Map<String, String> extraHeaders) {
+	private static <T> T createClientProxy(ClassLoader classLoader, Class<T> proxyInterface, final JsonRpcClient client, final Map<String, String> extraHeaders) {
 		
 		return (T) Proxy.newProxyInstance(classLoader, new Class<?>[]{proxyInterface}, new InvocationHandler() {
 			@Override

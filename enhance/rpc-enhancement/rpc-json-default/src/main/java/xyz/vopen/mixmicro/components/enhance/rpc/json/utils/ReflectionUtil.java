@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json.utils;
 
-import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcParamsPassMode;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.JsonRpcParamsPassMode;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcMethod;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.annotation.JsonRpcParam;
 
@@ -36,7 +36,7 @@ public abstract class ReflectionUtil {
 	 * @param name                       the method name
 	 * @return the methods
 	 */
-	static Set<Method> findCandidateMethods(Class<?>[] classes, String name) {
+	public static Set<Method> findCandidateMethods(Class<?>[] classes, String name) {
 		StringBuilder sb = new StringBuilder();
 		for (Class<?> clazz : classes) {
 			sb.append(clazz.getName()).append("::");
@@ -74,7 +74,7 @@ public abstract class ReflectionUtil {
 	 * @param method the {@link Method}
 	 * @return the parameter types
 	 */
-	static List<Class<?>> getParameterTypes(Method method) {
+  public static List<Class<?>> getParameterTypes(Method method) {
 		if (parameterTypeCache.containsKey(method)) {
 			return parameterTypeCache.get(method);
 		}
@@ -153,7 +153,7 @@ public abstract class ReflectionUtil {
 	 * @param method the {@link Method}
 	 * @return the {@link Annotation}s
 	 */
-	static <T extends Annotation> List<List<T>> getParameterAnnotations(Method method, Class<T> type) {
+  public static <T extends Annotation> List<List<T>> getParameterAnnotations(Method method, Class<T> type) {
 		List<List<T>> annotations = new ArrayList<>();
 		for (List<Annotation> paramAnnotations : getParameterAnnotations(method)) {
 			annotations.add(filterAnnotations(paramAnnotations, type));

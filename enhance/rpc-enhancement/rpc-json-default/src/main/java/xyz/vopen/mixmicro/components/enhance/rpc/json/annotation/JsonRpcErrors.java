@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 /**
  * Annotation for holding an array of @JsonRpcError annotations
  * for a method.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("WeakerAccess")
 @Target(ElementType.METHOD)

@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json.annotation;
 
-import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcParamsPassMode;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.JsonRpcParamsPassMode;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
 /**
  * Annotation for annotating service methods as
  * JsonRpc method by name.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

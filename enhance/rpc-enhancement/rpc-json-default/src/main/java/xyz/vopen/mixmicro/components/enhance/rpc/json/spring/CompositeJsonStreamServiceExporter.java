@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json.spring;
 
-import xyz.vopen.mixmicro.components.enhance.rpc.json.StreamServer;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.server.StreamServer;
 import org.springframework.beans.factory.DisposableBean;
 import xyz.vopen.mixmicro.components.enhance.rpc.json.utils.Util;
 
@@ -11,6 +11,8 @@ import java.net.ServerSocket;
 /**
  * A stream service exporter that exports multiple
  * services as a single service.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("unused")
 public class CompositeJsonStreamServiceExporter extends AbstractCompositeJsonServiceExporter implements DisposableBean {

@@ -1,9 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.rpc.json.spring.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.ExceptionResolver;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.JsonRpcClient;
-import xyz.vopen.mixmicro.components.enhance.rpc.json.utils.ReflectionUtil;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.framework.ProxyFactory;
@@ -14,6 +11,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.remoting.support.UrlBasedRemoteAccessor;
 import org.springframework.web.client.RestTemplate;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.ExceptionResolver;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.client.JsonRpcClient;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.utils.ReflectionUtil;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -26,171 +26,170 @@ import java.util.Map;
 
 /**
  * @param <T> the bean type
- * @author toha
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("unused")
 class JsonRestProxyFactoryBean<T> extends UrlBasedRemoteAccessor implements MethodInterceptor, InitializingBean, FactoryBean<T>, ApplicationContextAware {
 
-	private T proxyObject = null;
-	private JsonRpcClient.RequestListener requestListener = null;
-	private ObjectMapper objectMapper = null;
-	private RestTemplate restTemplate = null;
-	private JsonRpcRestClient jsonRpcRestClient = null;
-	private Map<String, String> extraHttpHeaders = new HashMap<>();
+  private T proxyObject = null;
+  private JsonRpcClient.RequestListener requestListener = null;
+  private ObjectMapper objectMapper = null;
+  private RestTemplate restTemplate = null;
+  private JsonRpcRestClient jsonRpcRestClient = null;
+  private Map<String, String> extraHttpHeaders = new HashMap<>();
 
-	private SSLContext sslContext = null;
-	private HostnameVerifier hostNameVerifier = null;
+  private SSLContext sslContext = null;
+  private HostnameVerifier hostNameVerifier = null;
 
-	
-	private ExceptionResolver exceptionResolver;
-	
-	private ApplicationContext applicationContext;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
+  private ExceptionResolver exceptionResolver;
 
-		proxyObject = ProxyFactory.getProxy(getObjectType(), this);
+  private ApplicationContext applicationContext;
 
-		if (jsonRpcRestClient==null) {
-			
-			if (objectMapper == null && applicationContext != null && applicationContext.containsBean("objectMapper")) {
-				objectMapper = (ObjectMapper) applicationContext.getBean("objectMapper");
-			
-			}
-			if (objectMapper == null && applicationContext != null) {
-				try {
-					objectMapper = BeanFactoryUtils.beanOfTypeIncludingAncestors(applicationContext, ObjectMapper.class);
-				} catch (Exception e) {
-					logger.debug(e);
-				}
-			}
-			
-			if (objectMapper == null) {
-				objectMapper = new ObjectMapper();
-			}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void afterPropertiesSet() {
+    super.afterPropertiesSet();
 
-			try {
-				jsonRpcRestClient = new JsonRpcRestClient(new URL(getServiceUrl()), objectMapper, restTemplate, new HashMap<String, String>());
-				jsonRpcRestClient.setRequestListener(requestListener);
-				jsonRpcRestClient.setSslContext(sslContext);
-				jsonRpcRestClient.setHostNameVerifier(hostNameVerifier);
-				
-				if (exceptionResolver!=null) {
-					jsonRpcRestClient.setExceptionResolver(exceptionResolver);
-				}
-				
-			} catch (MalformedURLException mue) {
-				throw new RuntimeException(mue);
-			}
-			
-		}
+    proxyObject = ProxyFactory.getProxy(getObjectType(), this);
 
-		ReflectionUtil.clearCache();
-	}
+    if (jsonRpcRestClient == null) {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Object invoke(MethodInvocation invocation) throws Throwable {
-		Method method = invocation.getMethod();
-		if (method.getDeclaringClass() == Object.class && method.getName().equals("toString")) {
-			return proxyObject.getClass().getName() + "@" + System.identityHashCode(proxyObject);
-		}
+      if (objectMapper == null && applicationContext != null && applicationContext.containsBean("objectMapper")) {
+        objectMapper = (ObjectMapper) applicationContext.getBean("objectMapper");
 
-		Type retType = (invocation.getMethod().getGenericReturnType() != null) ? invocation.getMethod().getGenericReturnType() : invocation.getMethod().getReturnType();
-		Object arguments = ReflectionUtil.parseArguments(invocation.getMethod(), invocation.getArguments());
+      }
+      if (objectMapper == null && applicationContext != null) {
+        try {
+          objectMapper = BeanFactoryUtils.beanOfTypeIncludingAncestors(applicationContext, ObjectMapper.class);
+        } catch (Exception e) {
+          logger.debug(e);
+        }
+      }
 
-		return jsonRpcRestClient.invoke(invocation.getMethod().getName(), arguments, retType, extraHttpHeaders);
-	}
+      if (objectMapper == null) {
+        objectMapper = new ObjectMapper();
+      }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public T getObject() {
-		return proxyObject;
-	}
+      try {
+        jsonRpcRestClient = new JsonRpcRestClient(new URL(getServiceUrl()), objectMapper, restTemplate, new HashMap<String, String>());
+        jsonRpcRestClient.setRequestListener(requestListener);
+        jsonRpcRestClient.setSslContext(sslContext);
+        jsonRpcRestClient.setHostNameVerifier(hostNameVerifier);
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public Class<T> getObjectType() {
-		return (Class<T>) getServiceInterface();
-	}
+        if (exceptionResolver != null) {
+          jsonRpcRestClient.setExceptionResolver(exceptionResolver);
+        }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isSingleton() {
-		return true;
-	}
+      } catch (MalformedURLException mue) {
+        throw new RuntimeException(mue);
+      }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
-	}
+    }
 
-	/**
-	 * @param objectMapper the objectMapper to set
-	 */
-	public void setObjectMapper(ObjectMapper objectMapper) {
-		this.objectMapper = objectMapper;
-	}
+    ReflectionUtil.clearCache();
+  }
 
-	/**
-	 * @param extraHttpHeaders the extraHttpHeaders to set
-	 */
-	public void setExtraHttpHeaders(Map<String, String> extraHttpHeaders) {
-		this.extraHttpHeaders = extraHttpHeaders;
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Object invoke(MethodInvocation invocation) throws Throwable {
+    Method method = invocation.getMethod();
+    if (method.getDeclaringClass() == Object.class && method.getName().equals("toString")) {
+      return proxyObject.getClass().getName() + "@" + System.identityHashCode(proxyObject);
+    }
 
-	/**
-	 * @param requestListener the requestListener to set
-	 */
-	public void setRequestListener(JsonRpcClient.RequestListener requestListener) {
-		this.requestListener = requestListener;
-	}
+    Type retType = (invocation.getMethod().getGenericReturnType() != null) ? invocation.getMethod().getGenericReturnType() : invocation.getMethod().getReturnType();
+    Object arguments = ReflectionUtil.parseArguments(invocation.getMethod(), invocation.getArguments());
 
-	/**
-	 * @param sslContext SSL contest for JsonRpcClient
-	 */
-	public void setSslContext(SSLContext sslContext) {
-		this.sslContext = sslContext;
-	}
+    return jsonRpcRestClient.invoke(invocation.getMethod().getName(), arguments, retType, extraHttpHeaders);
+  }
 
-	/**
-	 * @param hostNameVerifier the hostNameVerifier to pass to JsonRpcClient
-	 */
-	public void setHostNameVerifier(HostnameVerifier hostNameVerifier) {
-		this.hostNameVerifier = hostNameVerifier;
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public T getObject() {
+    return proxyObject;
+  }
 
-	/**
-	 * @param restTemplate external RestTemplate
-	 */
-	public void setRestTemplate(RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public Class<T> getObjectType() {
+    return (Class<T>) getServiceInterface();
+  }
 
-	public void setJsonRpcRestClient(JsonRpcRestClient jsonRpcRestClient) {
-		this.jsonRpcRestClient = jsonRpcRestClient;
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean isSingleton() {
+    return true;
+  }
 
-	public void setExceptionResolver(ExceptionResolver exceptionResolver) {
-		this.exceptionResolver = exceptionResolver;
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void setApplicationContext(ApplicationContext applicationContext) {
+    this.applicationContext = applicationContext;
+  }
 
-	
-	
+  /**
+   * @param objectMapper the objectMapper to set
+   */
+  public void setObjectMapper(ObjectMapper objectMapper) {
+    this.objectMapper = objectMapper;
+  }
+
+  /**
+   * @param extraHttpHeaders the extraHttpHeaders to set
+   */
+  public void setExtraHttpHeaders(Map<String, String> extraHttpHeaders) {
+    this.extraHttpHeaders = extraHttpHeaders;
+  }
+
+  /**
+   * @param requestListener the requestListener to set
+   */
+  public void setRequestListener(JsonRpcClient.RequestListener requestListener) {
+    this.requestListener = requestListener;
+  }
+
+  /**
+   * @param sslContext SSL contest for JsonRpcClient
+   */
+  public void setSslContext(SSLContext sslContext) {
+    this.sslContext = sslContext;
+  }
+
+  /**
+   * @param hostNameVerifier the hostNameVerifier to pass to JsonRpcClient
+   */
+  public void setHostNameVerifier(HostnameVerifier hostNameVerifier) {
+    this.hostNameVerifier = hostNameVerifier;
+  }
+
+  /**
+   * @param restTemplate external RestTemplate
+   */
+  public void setRestTemplate(RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
+  }
+
+  public void setJsonRpcRestClient(JsonRpcRestClient jsonRpcRestClient) {
+    this.jsonRpcRestClient = jsonRpcRestClient;
+  }
+
+  public void setExceptionResolver(ExceptionResolver exceptionResolver) {
+    this.exceptionResolver = exceptionResolver;
+  }
+
+
 }

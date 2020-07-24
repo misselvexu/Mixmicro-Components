@@ -2,6 +2,8 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json.exception;
 
 /**
  * Data that is added to an error.
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class ErrorData {

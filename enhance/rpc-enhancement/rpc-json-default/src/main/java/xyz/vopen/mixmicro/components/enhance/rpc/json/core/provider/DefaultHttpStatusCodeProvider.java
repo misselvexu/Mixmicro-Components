@@ -1,4 +1,7 @@
-package xyz.vopen.mixmicro.components.enhance.rpc.json;
+package xyz.vopen.mixmicro.components.enhance.rpc.json.core.provider;
+
+import xyz.vopen.mixmicro.components.enhance.rpc.json.ErrorResolver;
+import xyz.vopen.mixmicro.components.enhance.rpc.json.core.HttpStatusCodeProvider;
 
 import java.net.HttpURLConnection;
 import java.util.Arrays;
@@ -16,12 +19,17 @@ import static xyz.vopen.mixmicro.components.enhance.rpc.json.ErrorResolver.JsonE
 import static xyz.vopen.mixmicro.components.enhance.rpc.json.ErrorResolver.JsonError.PARSE_ERROR;
 
 /**
- * This default implementation of a {@link HttpStatusCodeProvider} follows the rules defined in the
- * <a href="http://www.jsonrpc.org/historical/json-rpc-over-http.html">JSON-RPC over HTTP</a> document.
+ * This default implementation of a {@link HttpStatusCodeProvider} follows the rules
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("WeakerAccess")
 public enum DefaultHttpStatusCodeProvider implements HttpStatusCodeProvider {
-	INSTANCE;
+
+  /**
+   *
+   */
+  INSTANCE;
 	
 	final Map<Integer, ErrorResolver.JsonError> httpStatus2JsonError = new HashMap<Integer, ErrorResolver.JsonError>();
 	

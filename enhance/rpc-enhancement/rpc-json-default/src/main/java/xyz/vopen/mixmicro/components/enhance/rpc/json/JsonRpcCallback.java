@@ -5,8 +5,8 @@ package xyz.vopen.mixmicro.components.enhance.rpc.json;
  * RPC responses.  When an invocation is made, one of {@code onComplete()}
  * or {@code onError()} is guaranteed to be called.
  *
- * @param <T> the return type of the JSON-RPC call
- * @author Brett Wooldridge
+ * @param <T> the return type of the Mixmicro RPC call
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 public interface JsonRpcCallback<T> {
 	
