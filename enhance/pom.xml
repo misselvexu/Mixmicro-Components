@@ -42,6 +42,7 @@
         <mixmicro-enhance-email.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-email.version>
 
         <mixmicro-enhance-rpc-default.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-rpc-default.version>
+        <mixmicro-enhance-logging.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-logging.version>
     </properties>
 
     <modules>
@@ -57,6 +58,7 @@
         <module>healthy-enhancement</module>
         <module>email-enhancement</module>
         <module>rpc-enhancement</module>
+        <module>logging-enhancement</module>
     </modules>
 
 
@@ -283,6 +285,14 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-rpc-json-default</artifactId>
                 <version>${mixmicro-enhance-rpc-default.version}</version>
+            </dependency>
+
+            <!-- Logging -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-logging</artifactId>
+                <version>${mixmicro-enhance-logging.version}</version>
+                <type>pom</type>
             </dependency>
 
         </dependencies>
