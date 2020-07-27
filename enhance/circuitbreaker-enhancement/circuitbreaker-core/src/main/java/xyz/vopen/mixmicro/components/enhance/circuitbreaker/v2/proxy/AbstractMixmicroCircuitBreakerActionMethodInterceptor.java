@@ -95,7 +95,6 @@ public abstract class AbstractMixmicroCircuitBreakerActionMethodInterceptor impl
                 if (acquired) {
                     try {
                         Object result = invocation.proceed();
-                        this.breakable.ack((System.nanoTime() - start), NANOSECONDS);
                         return result;
 
                     } catch (Exception e) {
