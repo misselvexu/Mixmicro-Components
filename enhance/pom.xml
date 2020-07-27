@@ -295,6 +295,36 @@
                 <type>pom</type>
             </dependency>
 
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-logging-core</artifactId>
+                <version>${mixmicro-enhance-logging.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-logging-client</artifactId>
+                <version>${mixmicro-enhance-logging.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-logging-admin</artifactId>
+                <version>${mixmicro-enhance-logging.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-logging-admin-ui</artifactId>
+                <version>${mixmicro-enhance-logging.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-logging-spring-context</artifactId>
+                <version>${mixmicro-enhance-logging.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
