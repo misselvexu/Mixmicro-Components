@@ -5,13 +5,13 @@
     <parent>
         <artifactId>mixmicro-components-test</artifactId>
         <groupId>com.yunlsp.framework.components</groupId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>1.0.6.RC1.fix</version>
         <relativePath>../</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mixmicro-components-dbm-master-slave-switch-test</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
+    <version>1.0.6.RC1.fix</version>
 
     <name>DBM Master Slave Switch Test Module :: ${project.version}</name>
     <description>🏗 DBM Master Slave Switch Test Module</description>

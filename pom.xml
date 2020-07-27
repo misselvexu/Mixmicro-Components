@@ -4,7 +4,7 @@
 
     <groupId>com.yunlsp.framework.components</groupId>
     <artifactId>mixmicro-components-all</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
+    <version>1.0.6.RC1.fix</version>
     <packaging>pom</packaging>
 
     <name>Components :: ${project.version}</name>
@@ -39,10 +39,10 @@
         <circuitbreaker.version>1.5.0</circuitbreaker.version>
 
         <!-- Components Version -->
-        <mixmicro-components-kits.dependencies.version>1.0.7.BUILD-SNAPSHOT</mixmicro-components-kits.dependencies.version>
-        <mixmicro-components-apis.dependencies.version>1.0.7.BUILD-SNAPSHOT</mixmicro-components-apis.dependencies.version>
-        <mixmicro-components-enhance.dependencies.version>1.0.7.BUILD-SNAPSHOT</mixmicro-components-enhance.dependencies.version>
-        <mixmicro-components-starters.dependencies.version>1.0.7.BUILD-SNAPSHOT</mixmicro-components-starters.dependencies.version>
+        <mixmicro-components-kits.dependencies.version>1.0.6.RC1.fix</mixmicro-components-kits.dependencies.version>
+        <mixmicro-components-apis.dependencies.version>1.0.6.RC1.fix</mixmicro-components-apis.dependencies.version>
+        <mixmicro-components-enhance.dependencies.version>1.0.6.RC1.fix</mixmicro-components-enhance.dependencies.version>
+        <mixmicro-components-starters.dependencies.version>1.0.6.RC1.fix</mixmicro-components-starters.dependencies.version>
 
         <mixmicro-components-stream.dependencies.version>1.0.0.RC3</mixmicro-components-stream.dependencies.version>
 

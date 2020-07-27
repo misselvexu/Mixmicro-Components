@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-socket</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>1.0.6.RC1.fix</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-socket-api</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
+    <version>1.0.6.RC1.fix</version>
 
     <name>Enhance Socket API Module :: ${project.version}</name>
     <description>🏗 Enhance Socket API Module</description>
