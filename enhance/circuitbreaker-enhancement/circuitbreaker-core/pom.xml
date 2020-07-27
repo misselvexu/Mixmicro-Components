@@ -7,12 +7,12 @@
     <parent>
         <artifactId>mixmicro-components-enhance-circuitbreaker</artifactId>
         <groupId>com.yunlsp.framework.components</groupId>
-        <version>1.0.6.RC1.fix</version>
+        <version>1.0.7.BUILD-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-circuitbreaker-core</artifactId>
-    <version>1.0.6.RC1.fix</version>
+    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <name>Enhance CircuitBreaker Core Module :: ${project.version}</name>
     <description>🏗 Enhance CircuitBreaker Core Module</description>

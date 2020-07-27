@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-healthy</artifactId>
-        <version>1.0.6.RC1.fix</version>
+        <version>1.0.7.BUILD-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-healthy-spring</artifactId>
-    <version>1.0.6.RC1.fix</version>
+    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <name>Enhance Healthy Spring Module :: ${project.version}</name>
     <description>🏗 Enhance Healthy Spring Module</description>

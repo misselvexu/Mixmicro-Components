@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-all</artifactId>
-        <version>1.0.6.RC1.fix</version>
+        <version>1.0.7.BUILD-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-parent</artifactId>
-    <version>1.0.6.RC1.fix</version>
+    <version>1.0.7.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Enhance Module :: ${project.version}</name>
@@ -18,30 +18,30 @@
 
     <properties>
 
-        <mixmicro-enhance-cache.version>1.0.6.RC1.fix</mixmicro-enhance-cache.version>
+        <mixmicro-enhance-cache.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache.version>
 
-        <mixmicro-enhance-cache-api.version>1.0.6.RC1.fix</mixmicro-enhance-cache-api.version>
-        <mixmicro-enhance-cache-context.version>1.0.6.RC1.fix</mixmicro-enhance-cache-context.version>
-        <mixmicro-enhance-cache-core.version>1.0.6.RC1.fix</mixmicro-enhance-cache-core.version>
-        <mixmicro-enhance-cache-extension.version>1.0.6.RC1.fix</mixmicro-enhance-cache-extension.version>
-        <mixmicro-enhance-cache-load.version>1.0.6.RC1.fix</mixmicro-enhance-cache-load.version>
-        <mixmicro-enhance-cache-extension-redis.version>1.0.6.RC1.fix</mixmicro-enhance-cache-extension-redis.version>
-        <mixmicro-enhance-cache-extension-lettuce.version>1.0.6.RC1.fix</mixmicro-enhance-cache-extension-lettuce.version>
-        <mixmicro-enhance-cache-extension-springdata.version>1.0.6.RC1.fix</mixmicro-enhance-cache-extension-springdata.version>
+        <mixmicro-enhance-cache-api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-api.version>
+        <mixmicro-enhance-cache-context.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-context.version>
+        <mixmicro-enhance-cache-core.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-core.version>
+        <mixmicro-enhance-cache-extension.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension.version>
+        <mixmicro-enhance-cache-load.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-load.version>
+        <mixmicro-enhance-cache-extension-redis.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension-redis.version>
+        <mixmicro-enhance-cache-extension-lettuce.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension-lettuce.version>
+        <mixmicro-enhance-cache-extension-springdata.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension-springdata.version>
 
 
-        <mixmicro-enhance-security-api.version>1.0.6.RC1.fix</mixmicro-enhance-security-api.version>
-        <mixmicro-enhance-event-api.version>1.0.6.RC1.fix</mixmicro-enhance-event-api.version>
-        <mixmicro-enhance-datasource.version>1.0.6.RC1.fix</mixmicro-enhance-datasource.version>
-        <mixmicro-enhance-schedule.version>1.0.6.RC1.fix</mixmicro-enhance-schedule.version>
-        <mixmicro-enhance-spi.version>1.0.6.RC1.fix</mixmicro-enhance-spi.version>
-        <mixmicro-enhance-circuitbreaker.version>1.0.6.RC1.fix</mixmicro-enhance-circuitbreaker.version>
-        <mixmicro-enhance-socket.version>1.0.6.RC1.fix</mixmicro-enhance-socket.version>
-        <mixmicro-enhance-metrics.version>1.0.6.RC1.fix</mixmicro-enhance-metrics.version>
-        <mixmicro-enhance-healthy.version>1.0.6.RC1.fix</mixmicro-enhance-healthy.version>
-        <mixmicro-enhance-email.version>1.0.6.RC1.fix</mixmicro-enhance-email.version>
+        <mixmicro-enhance-security-api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-security-api.version>
+        <mixmicro-enhance-event-api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-event-api.version>
+        <mixmicro-enhance-datasource.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-datasource.version>
+        <mixmicro-enhance-schedule.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-schedule.version>
+        <mixmicro-enhance-spi.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-spi.version>
+        <mixmicro-enhance-circuitbreaker.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-circuitbreaker.version>
+        <mixmicro-enhance-socket.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-socket.version>
+        <mixmicro-enhance-metrics.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-metrics.version>
+        <mixmicro-enhance-healthy.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-healthy.version>
+        <mixmicro-enhance-email.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-email.version>
 
-        <mixmicro-enhance-rpc-default.version>1.0.6.RC1.fix</mixmicro-enhance-rpc-default.version>
+        <mixmicro-enhance-rpc-default.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-rpc-default.version>
     </properties>
 
     <modules>
