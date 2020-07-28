@@ -16,7 +16,7 @@
     <packaging>pom</packaging>
 
     <name>Starters Dependencies ${project.version}</name>
-    <description>Framwork Starters For Project(s)</description>
+    <description>Framework Starters For Project(s)</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
