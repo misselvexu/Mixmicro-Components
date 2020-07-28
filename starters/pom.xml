@@ -19,7 +19,7 @@
     <modules>
         <module>mixmicro-components-starter-annotation-processor</module>
         <module>mixmicro-components-starter-authorization</module>
-        <module>mixmicro-components-starter-logger</module>
+        <module>mixmicro-components-starter-logging</module>
         <module>mixmicro-components-starter-banner</module>
         <module>mixmicro-components-starter-json</module>
         <module>mixmicro-components-starter-cors</module>
@@ -132,7 +132,13 @@
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-starter-logger</artifactId>
+                <artifactId>mixmicro-components-starter-logging-isolation</artifactId>
+                <version>${micro-starter-logger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-logging-tracing</artifactId>
                 <version>${micro-starter-logger.version}</version>
             </dependency>
 
