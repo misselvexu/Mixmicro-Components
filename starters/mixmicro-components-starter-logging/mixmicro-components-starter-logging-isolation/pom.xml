@@ -4,16 +4,16 @@
 
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
-        <artifactId>mixmicro-components-starters</artifactId>
+        <artifactId>mixmicro-components-starter-logging</artifactId>
         <version>1.0.7.BUILD-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>mixmicro-components-starter-logger</artifactId>
+    <artifactId>mixmicro-components-starter-logging-isolation</artifactId>
     <version>1.0.7.BUILD-SNAPSHOT</version>
 
-    <name>Logger Starter Module :: ${project.version}</name>
-    <description>🏗 Logger Starter Module</description>
+    <name>Logging Isolation Starter Module :: ${project.version}</name>
+    <description>🏗 Logging Isolation Starter Module</description>
 
     <properties>
         <log4j2.version>2.8</log4j2.version>
