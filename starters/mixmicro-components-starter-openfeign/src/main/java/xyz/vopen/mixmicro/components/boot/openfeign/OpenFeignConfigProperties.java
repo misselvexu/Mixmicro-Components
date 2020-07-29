@@ -29,6 +29,8 @@ public class OpenFeignConfigProperties implements Serializable, InitializingBean
 
   public static final String OPENFEIGN_PROPERTIES_PREFIX = "mixmicro.feign";
 
+  private boolean requestOverIngress = false;
+
   /**
    * Metadata Values
    *

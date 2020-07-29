@@ -57,6 +57,12 @@ public class MixmicroConstants {
   public static final String FRAMEWORK_RUNTIME_HOME_KEY = "mixmicro.server.home";
 
   /**
+   * Feign Request Over Ingress
+   * <p></p>
+   */
+  public static final String MIXMICRO_FEIGN_REQUEST_OVER_INGRESS = "mixmicro.feign.request.over.ingress";
+
+  /**
    * Default Fastjson Serializer Features .
    *
    * <p>

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_FEIGN_REQUEST_OVER_INGRESS;
 import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_INVOKE_HEADER;
 
 /**
@@ -40,6 +41,10 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
   public void apply(RequestTemplate template) {
 
     OpenFeignConfigProperties properties0 = factory.openFeignConfigProperties();
+
+    if(properties0.isRequestOverIngress()) {
+      template.header(MIXMICRO_FEIGN_REQUEST_OVER_INGRESS, "true");
+    }
 
     // Process Sensitive Headers
     if(!properties0.getSensitiveHeaders().isEmpty()) {
