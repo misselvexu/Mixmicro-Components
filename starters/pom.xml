@@ -188,6 +188,12 @@
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-dbm-multi-datasource</artifactId>
+                <version>${micro-starter-dbm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-sidecar</artifactId>
                 <version>${micro-starter-sidecar.version}</version>
             </dependency>
