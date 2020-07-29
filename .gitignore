@@ -30,3 +30,7 @@ target/
 
 # logs
 logs
+.flattened-pom.xml
+
+# node npn
+node_modules/

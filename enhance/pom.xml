@@ -40,8 +40,8 @@
         <mixmicro-enhance-metrics.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-metrics.version>
         <mixmicro-enhance-healthy.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-healthy.version>
         <mixmicro-enhance-email.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-email.version>
-
         <mixmicro-enhance-rpc-default.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-rpc-default.version>
+        <mixmicro-enhance-http.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-http.version>
     </properties>
 
     <modules>
@@ -57,6 +57,7 @@
         <module>healthy-enhancement</module>
         <module>email-enhancement</module>
         <module>rpc-enhancement</module>
+        <module>http-enhancement</module>
     </modules>
 
 
@@ -257,6 +258,13 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-healthy-core</artifactId>
                 <version>${mixmicro-enhance-healthy.version}</version>
+            </dependency>
+
+            <!-- Http -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-http</artifactId>
+                <version>${mixmicro-enhance-http.version}</version>
             </dependency>
 
             <!-- Email -->
