@@ -71,6 +71,10 @@ public class JsonHttpMessageConverterAutoConfiguration {
       features.add(WriteNullListAsEmpty);
     }
 
+    if(jsonProperties.isWriteEnumUsingToString()) {
+      features.add(WriteEnumUsingToString);
+    }
+
     fastJsonConfig.setSerializerFeatures(features.toArray(new SerializerFeature[0]));
     fastJsonConfig.setDateFormat(jsonProperties.getDefaultDateFormat());
     fastJsonConfig.setCharset(StandardCharsets.UTF_8);
