@@ -46,7 +46,7 @@ public class SimpleMixmicroEmailSender {
   @Test
   public void testSimpleEmail() throws UnsupportedEncodingException {
     final MixmicroEmail email = DefaultMixmicroMixmicroEmail.builder()
-        .from(new InternetAddress("elve.xu@yunlsp.com", "Elve.Xu "))
+        .from(new InternetAddress("mailservice@yunlsp.com", "苏州海管家物流科技有限公司"))
         .to(Lists.newArrayList(new InternetAddress("x_vivi@yeah.net", "Elve.Xu-Yeah")))
         .subject("Spring Boot Email Starter Unit Test Subject")
         .body("This a test email , do no reply .")
