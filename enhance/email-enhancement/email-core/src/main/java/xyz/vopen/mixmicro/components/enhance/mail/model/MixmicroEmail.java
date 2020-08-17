@@ -42,6 +42,10 @@ public interface MixmicroEmail extends Serializable {
     return StringUtils.EMPTY;
   }
 
+  default ContentType getContentType() {
+    return ContentType.TEXT_PLAIN;
+  }
+
   @NonNull
   default Collection<MixmicroEmailAttachment> getAttachments() {
     return ImmutableList.of();

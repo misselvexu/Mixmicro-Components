@@ -1,15 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.mail.service.impl;
 
 import com.google.common.collect.ImmutableMap;
-import xyz.vopen.mixmicro.components.enhance.mail.logging.EmailLogRenderer;
-import xyz.vopen.mixmicro.components.enhance.mail.model.MixmicroEmail;
-import xyz.vopen.mixmicro.components.enhance.mail.model.MixmicroEmailAttachment;
-import xyz.vopen.mixmicro.components.enhance.mail.model.InlinePicture;
-import xyz.vopen.mixmicro.components.enhance.mail.service.EmailService;
-import xyz.vopen.mixmicro.components.enhance.mail.service.TemplateService;
-import xyz.vopen.mixmicro.components.enhance.mail.service.exception.CannotSendEmailException;
-import xyz.vopen.mixmicro.components.enhance.mail.service.exception.TemplateException;
-import xyz.vopen.mixmicro.components.enhance.mail.utils.EmailToMimeMessage;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,6 +10,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import xyz.vopen.mixmicro.components.enhance.mail.logging.EmailLogRenderer;
+import xyz.vopen.mixmicro.components.enhance.mail.model.InlinePicture;
+import xyz.vopen.mixmicro.components.enhance.mail.model.MixmicroEmail;
+import xyz.vopen.mixmicro.components.enhance.mail.model.MixmicroEmailAttachment;
+import xyz.vopen.mixmicro.components.enhance.mail.service.EmailService;
+import xyz.vopen.mixmicro.components.enhance.mail.service.TemplateService;
+import xyz.vopen.mixmicro.components.enhance.mail.service.exception.CannotSendEmailException;
+import xyz.vopen.mixmicro.components.enhance.mail.service.exception.TemplateException;
+import xyz.vopen.mixmicro.components.enhance.mail.utils.EmailToMimeMessage;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -67,12 +67,46 @@ public class DefaultEmailService implements EmailService {
   }
 
   @Override
-  public MimeMessage send(final @NonNull MixmicroEmail email) {
-    email.setSentAt(new Date());
-    final MimeMessage mimeMessage = toMimeMessage(email);
-    javaMailSender.send(mimeMessage);
-    emailLogRenderer.info("Sent email {}.", email);
-    return mimeMessage;
+  public MimeMessage send(final @NonNull MixmicroEmail email) throws CannotSendEmailException {
+
+    switch (email.getContentType()){
+
+      case HTML:
+        email.setSentAt(new Date());
+        final MimeMessage mimeMessage = toMimeMessage(email);
+        try {
+          final MimeMultipart content = new MimeMultipart("mixed");
+          for (final MixmicroEmailAttachment emailAttachment : email.getAttachments()) {
+            final MimeBodyPart attachmentPart = new MimeBodyPart();
+            DataSource source = new ByteArrayDataSource(emailAttachment.getAttachmentData(), emailAttachment.getContentType().toString());
+            attachmentPart.setDataHandler(new DataHandler(source));
+            attachmentPart.setFileName(MimeUtility.encodeText(emailAttachment.getAttachmentName()));
+            content.addBodyPart(attachmentPart);
+          }
+
+          //Set the HTML text part
+          final MimeBodyPart textPart = new MimeBodyPart();
+          textPart.setText(email.getBody(), email.getEncoding(), "html");
+          content.addBodyPart(textPart);
+
+          mimeMessage.setContent(content);
+          mimeMessage.saveChanges();
+          javaMailSender.send(mimeMessage);
+          emailLogRenderer.info("Sent email {}.", emailWithCompiledBody(email, email.getBody()));
+        } catch (Exception e) {
+          log.error("The mime message cannot be created", e);
+          throw new CannotSendEmailException("Error while sending the email due to problems with the mime content.", e);
+        }
+        return mimeMessage;
+
+      case TEXT_PLAIN:
+      default:
+        email.setSentAt(new Date());
+        final MimeMessage simpleMimeMessage = toMimeMessage(email);
+        javaMailSender.send(simpleMimeMessage);
+        emailLogRenderer.info("Sent email {}.", email);
+        return simpleMimeMessage;
+    }
   }
 
   @Override

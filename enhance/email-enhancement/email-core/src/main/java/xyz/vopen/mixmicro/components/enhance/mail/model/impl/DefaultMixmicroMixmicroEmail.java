@@ -3,6 +3,7 @@ package xyz.vopen.mixmicro.components.enhance.mail.model.impl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import xyz.vopen.mixmicro.components.enhance.mail.model.ContentType;
 import xyz.vopen.mixmicro.components.enhance.mail.model.MixmicroEmail;
 import xyz.vopen.mixmicro.components.enhance.mail.model.MixmicroEmailAttachment;
 import lombok.*;
@@ -48,6 +49,8 @@ public class DefaultMixmicroMixmicroEmail implements MixmicroEmail {
   private Collection<MixmicroEmailAttachment> attachments;
 
   private String encoding = StandardCharsets.UTF_8.name();
+
+  private ContentType contentType = ContentType.TEXT_PLAIN;
 
   private Locale locale;
 

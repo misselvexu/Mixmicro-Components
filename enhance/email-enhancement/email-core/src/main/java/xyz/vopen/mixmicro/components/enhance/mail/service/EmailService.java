@@ -16,7 +16,7 @@ public interface EmailService {
    *
    * @param mimeEmail an email to be send
    */
-  MimeMessage send(MixmicroEmail mimeEmail);
+  MimeMessage send(MixmicroEmail mimeEmail) throws CannotSendEmailException;
 
   /**
    * Send an email message.
