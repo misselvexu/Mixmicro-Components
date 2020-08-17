@@ -52,6 +52,8 @@ public class JsonProperties implements Serializable {
 
   private boolean writeNonStringValueAsString = false;
 
+  private boolean writeEnumUsingToString;
+
   /**
    * 输出空数组
    */
