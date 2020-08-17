@@ -429,6 +429,7 @@ public class PriorityQueueEmailSchedulerService implements EmailSchedulerService
       super(PriorityQueueEmailSchedulerService.class.getSimpleName() + " -- " + Consumer.class.getSimpleName());
     }
 
+    @Override
     public void run() {
       log.info("Email scheduler consumer started");
       while (enabled()) {
@@ -453,9 +454,11 @@ public class PriorityQueueEmailSchedulerService implements EmailSchedulerService
               priorityQueueManager.completeDequeue();
             }
 
-            if (enabled()) deleteFromPersistenceLayer(emailSchedulingData);
+            if (enabled()) {
+              deleteFromPersistenceLayer(emailSchedulingData);
+            }
           }
-        } catch (final InterruptedException e) {
+        } catch (final InterruptedException | CannotSendEmailException e) {
           log.error("Email scheduler consumer interrupted", e);
         }
       }
@@ -505,6 +508,7 @@ public class PriorityQueueEmailSchedulerService implements EmailSchedulerService
       super(PriorityQueueEmailSchedulerService.class.getSimpleName() + " -- " + Resumer.class.getSimpleName());
     }
 
+    @Override
     public void run() {
       if (persistenceServiceOptional.isPresent()) {
         log.info("Email scheduler resumer started");

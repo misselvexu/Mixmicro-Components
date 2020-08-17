@@ -44,7 +44,7 @@ public class SimpleMixmicroEmailSender {
 
 
   @Test
-  public void testSimpleEmail() throws UnsupportedEncodingException {
+  public void testSimpleEmail() throws Exception {
     final MixmicroEmail email = DefaultMixmicroMixmicroEmail.builder()
         .from(new InternetAddress("mailservice@yunlsp.com", "苏州海管家物流科技有限公司"))
         .to(Lists.newArrayList(new InternetAddress("x_vivi@yeah.net", "Elve.Xu-Yeah")))
@@ -73,7 +73,7 @@ public class SimpleMixmicroEmailSender {
 
 
   @Test
-  public void testAttachmentEmail() throws IOException {
+  public void testAttachmentEmail() throws Exception {
 
     DefaultResourceLoader loader = new DefaultResourceLoader();
     loader.setClassLoader(EmailServiceApplication.class.getClassLoader());
