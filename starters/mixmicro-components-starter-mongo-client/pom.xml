@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-starters</artifactId>
+        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>mixmicro-components-starter-mongo-client</artifactId>
+    <version>1.0.7.BUILD-SNAPSHOT</version>
+
+    <name>Mongo Client Starter Module :: ${project.version}</name>
+    <description>🏗 Mongo Client Starter Module</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>mixmicro-components-enhance-mongo-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>common-kits</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+</project>

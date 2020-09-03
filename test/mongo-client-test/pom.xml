@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mixmicro-components-test</artifactId>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mixmicro-components-mongo-clent-test</artifactId>
+    <version>1.0.7.BUILD-SNAPSHOT</version>
+
+    <name>Mongo Client Test Module :: ${project.version}</name>
+    <description>🏗 Mongo Client Test Module</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>mixmicro-components-starter-mongo-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>bson</artifactId>
+                    <groupId>org.mongodb</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mongodb</groupId>
+                    <artifactId>mongodb-driver-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-core</artifactId>
+            <version>4.0.5</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>bson</artifactId>
+                    <groupId>org.mongodb</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>bson</artifactId>
+            <version>4.0.5</version>
+        </dependency>
+
+    </dependencies>
+</project>

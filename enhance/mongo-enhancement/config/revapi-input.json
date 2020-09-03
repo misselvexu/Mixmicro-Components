@@ -1,0 +1,102 @@
+{
+  "java.method.removed": [
+    {
+      "classQualifiedName": "xyz.vopen.mixmicro.components.mongo.client.query.QueryResults",
+      "justification": "These methods were pushed down to Query"
+    },
+    {
+      "class": "com.mongodb..*",
+      "justification": "Driver classes should be ignored"
+    }
+  ],
+  "java.method.numberOfParametersChanged": [
+    {
+      "classQualifiedName": "xyz.vopen.mixmicro.components.mongo.client.converters.LocalDateConverter",
+      "methodName": "<init>",
+      "justification": "These are largely used internally and should rarely be seen in user code"
+    },
+    {
+      "classQualifiedName": "xyz.vopen.mixmicro.components.mongo.client.converters.LocalDateTimeConverter",
+      "methodName": "<init>",
+      "justification": "These are largely used internally and should rarely be seen in user code"
+    }
+  ],
+  "java.method.abstractMethodAdded": [
+    {
+      "classQualifiedName": "xyz.vopen.mixmicro.components.mongo.client.geo.CoordinateReferenceSystem",
+      "justification": "These will be used as transition helpers in 2.0"
+    }
+  ],
+  "java.class.nowFinal": [
+    {
+      "class": "com.mongodb.*",
+      "justification": "Driver classes should be ignored"
+    }
+  ],
+  "java.method.parameterTypeChanged": [
+    {
+      "class": "com.mongodb.*",
+      "justification": "Driver classes should be ignored"
+    }
+  ],
+  "java.method.visibilityReduced": [
+    {
+      "class": "com.mongodb.*",
+      "justification": "Driver classes should be ignored"
+    }
+  ],
+  "java.annotation.added": [
+    {
+      "class": "com.mongodb.*",
+      "justification": "Driver classes should be ignored"
+    }
+  ],
+  "java.method.addedToInterface": [
+    {
+      "class": "com.mongodb.*",
+      "justification": "Driver classes should be ignored"
+    }
+  ],
+  "java.method.returnTypeChanged": [
+    {
+      "class": "xyz.vopen.mixmicro.components.mongo.client.query.QueryImpl",
+      "justification": "Necessary API fixes"
+    }
+  ],
+  "java.annotation.removed": [
+    {
+      "class": "xyz.vopen.mixmicro.components.mongo.client.geo.Point ",
+      "justification": "Necessary API fixes"
+    }
+  ],
+  "java.class.superTypeTypeParametersChanged": [
+    {
+      "class": "xyz.vopen.mixmicro.components.mongo.client.query.FieldEndImpl",
+      "justification": "An internal implementation detail leak"
+    }
+  ],
+  "java.generics.formalTypeParameterChanged": [
+    {
+      "class": "xyz.vopen.mixmicro.components.mongo.client.query.FieldEndImpl",
+      "justification": "An internal implementation detail leak"
+    }
+  ],
+  "java.class.noLongerImplementsInterface": [
+    {
+      "class": "xyz.vopen.mixmicro.components.mongo.client.query.FieldEndImpl",
+      "justification": "An internal implementation detail leak"
+    }
+  ],
+  "java.method.returnTypeTypeParametersChanged": [
+    {
+      "class": "xyz.vopen.mixmicro.components.mongo.client.query.FieldEndImpl",
+      "justification": "An internal implementation detail leak"
+    }
+  ],
+  "java.class.externalClassExposedInAPI": [
+    {
+      "class": "*",
+      "justification": "Necessary API fixes"
+    }
+  ]
+}

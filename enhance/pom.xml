@@ -43,6 +43,7 @@
         <mixmicro-enhance-rpc-default.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-rpc-default.version>
         <mixmicro-enhance-http.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-http.version>
         <mixmicro-enhance-logging.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-logging.version>
+        <mixmicro-enhance-mongo.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-mongo.version>
     </properties>
 
     <modules>
@@ -60,6 +61,7 @@
         <module>rpc-enhancement</module>
         <module>http-enhancement</module>
         <module>logging-enhancement</module>
+        <module>mongo-enhancement</module>
     </modules>
 
 
@@ -331,6 +333,20 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logging-spring-context</artifactId>
                 <version>${mixmicro-enhance-logging.version}</version>
+            </dependency>
+
+            <!-- Mongo -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-mongo</artifactId>
+                <version>${mixmicro-enhance-mongo.version}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-mongo-client</artifactId>
+                <version>${mixmicro-enhance-mongo.version}</version>
             </dependency>
 
         </dependencies>
