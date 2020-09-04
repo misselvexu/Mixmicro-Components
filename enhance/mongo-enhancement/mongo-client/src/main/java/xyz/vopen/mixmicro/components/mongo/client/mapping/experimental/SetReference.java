@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.mongo.client.mapping.experimental;
 
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedClass;
 
 import java.util.LinkedHashSet;
@@ -16,8 +16,8 @@ class SetReference<T> extends CollectionReference<Set<T>> {
   private Set<T> values;
 
   /**  */
-  SetReference(final Datastore datastore, final MappedClass mappedClass, final List ids) {
-    super(datastore, mappedClass, ids);
+  SetReference(final MongoRepository mongoRepository, final MappedClass mappedClass, final List ids) {
+    super(mongoRepository, mappedClass, ids);
   }
 
   SetReference(final Set<T> values) {

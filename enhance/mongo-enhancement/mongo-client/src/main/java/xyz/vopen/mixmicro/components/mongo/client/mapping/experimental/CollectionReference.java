@@ -3,8 +3,8 @@ package xyz.vopen.mixmicro.components.mongo.client.mapping.experimental;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
 import com.mongodb.client.MongoCursor;
-import xyz.vopen.mixmicro.components.mongo.client.AdvancedDatastore;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.AdvancedMongoRepository;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedClass;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedField;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
@@ -29,12 +29,12 @@ public abstract class CollectionReference<C extends Collection> extends MorphiaR
 
   CollectionReference() {}
 
-  CollectionReference(final Datastore datastore, final MappedClass mappedClass, final List ids) {
-    super(datastore, mappedClass);
+  CollectionReference(final MongoRepository mongoRepository, final MappedClass mappedClass, final List ids) {
+    super(mongoRepository, mappedClass);
     List<Object> unwrapped = ids;
     if (ids != null) {
       for (final Object o : ids) {
-        collate(datastore, collections, o);
+        collate(mongoRepository, collections, o);
       }
     }
 
@@ -42,7 +42,7 @@ public abstract class CollectionReference<C extends Collection> extends MorphiaR
   }
 
   static void collate(
-      final Datastore datastore, final Map<String, List<Object>> collections, final Object o) {
+      final MongoRepository mongoRepository, final Map<String, List<Object>> collections, final Object o) {
     final String collectionName;
     final Object id;
     if (o instanceof DBRef) {
@@ -50,7 +50,7 @@ public abstract class CollectionReference<C extends Collection> extends MorphiaR
       collectionName = dbRef.getCollectionName();
       id = dbRef.getId();
     } else {
-      collectionName = datastore.getMapper().getCollectionName(o);
+      collectionName = mongoRepository.getMapper().getCollectionName(o);
       id = o;
     }
 
@@ -92,7 +92,7 @@ public abstract class CollectionReference<C extends Collection> extends MorphiaR
   void query(final String collection, final List<Object> collectionIds, final List<Object> values) {
 
     final MongoCursor<?> cursor =
-        ((AdvancedDatastore) getDatastore())
+        ((AdvancedMongoRepository) getMongoRepository())
             .find(collection, Object.class)
             .disableValidation()
             .filter("_id in ", collectionIds)
@@ -101,7 +101,7 @@ public abstract class CollectionReference<C extends Collection> extends MorphiaR
       final Map<Object, Object> idMap = new HashMap<Object, Object>();
       while (cursor.hasNext()) {
         final Object entity = cursor.next();
-        idMap.put(getDatastore().getMapper().getId(entity), entity);
+        idMap.put(getMongoRepository().getMapper().getId(entity), entity);
       }
 
       for (int i = 0; i < ids.size(); i++) {
@@ -132,7 +132,7 @@ public abstract class CollectionReference<C extends Collection> extends MorphiaR
   /**
    * Decodes a document in to entities
    *
-   * @param datastore the datastore
+   * @param mongoRepository the mongo repository
    * @param mapper the mapper
    * @param mappedField the MappedField
    * @param paramType the type of the underlying entity
@@ -140,7 +140,7 @@ public abstract class CollectionReference<C extends Collection> extends MorphiaR
    * @return the entities
    */
   public static MorphiaReference<?> decode(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Mapper mapper,
       final MappedField mappedField,
       final Class paramType,
@@ -152,9 +152,9 @@ public abstract class CollectionReference<C extends Collection> extends MorphiaR
       final MappedClass mappedClass = mapper.getMappedClass(subType);
 
       if (Set.class.isAssignableFrom(paramType)) {
-        reference = new SetReference(datastore, mappedClass, dbVal);
+        reference = new SetReference(mongoRepository, mappedClass, dbVal);
       } else {
-        reference = new ListReference(datastore, mappedClass, dbVal);
+        reference = new ListReference(mongoRepository, mappedClass, dbVal);
       }
     }
 

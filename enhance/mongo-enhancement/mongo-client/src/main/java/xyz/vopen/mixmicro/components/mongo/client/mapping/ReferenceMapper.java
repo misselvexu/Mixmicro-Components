@@ -3,7 +3,7 @@ package xyz.vopen.mixmicro.components.mongo.client.mapping;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
 import xyz.vopen.mixmicro.components.mongo.client.annotations.Reference;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCache;
@@ -39,7 +39,7 @@ class ReferenceMapper implements CustomMapper {
 
   @Override
   public void fromDBObject(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final DBObject dbObject,
       final MappedField mf,
       final Object entity,
@@ -48,15 +48,15 @@ class ReferenceMapper implements CustomMapper {
     final Class fieldType = mf.getType();
 
     if (mf.getType().equals(MorphiaReference.class) && !mf.getTypeParameters().isEmpty()) {
-      readMorphiaReferenceValues(mapper, datastore, mf, dbObject, entity);
+      readMorphiaReferenceValues(mapper, mongoRepository, mf, dbObject, entity);
     } else {
       final Reference refAnn = mf.getAnnotation(Reference.class);
       if (mf.isMap()) {
-        readMap(datastore, mapper, entity, refAnn, cache, mf, dbObject);
+        readMap(mongoRepository, mapper, entity, refAnn, cache, mf, dbObject);
       } else if (mf.isMultipleValues()) {
-        readCollection(datastore, mapper, dbObject, mf, entity, refAnn, cache);
+        readCollection(mongoRepository, mapper, dbObject, mf, entity, refAnn, cache);
       } else {
-        readSingle(datastore, mapper, entity, fieldType, refAnn, cache, mf, dbObject);
+        readSingle(mongoRepository, mapper, entity, fieldType, refAnn, cache, mf, dbObject);
       }
     }
   }
@@ -102,7 +102,7 @@ class ReferenceMapper implements CustomMapper {
   }
 
   private Object createOrReuseProxy(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Mapper mapper,
       final Class referenceObjClass,
       final Object ref,
@@ -119,7 +119,7 @@ class ReferenceMapper implements CustomMapper {
     final Object newProxy =
         mapper
             .getProxyFactory()
-            .createProxy(datastore, referenceObjClass, key, anntotation.ignoreMissing());
+            .createProxy(mongoRepository, referenceObjClass, key, anntotation.ignoreMissing());
     cache.putProxy(key, newProxy);
     return newProxy;
   }
@@ -142,7 +142,7 @@ class ReferenceMapper implements CustomMapper {
   }
 
   private void readCollection(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Mapper mapper,
       final DBObject dbObject,
       final MappedField mf,
@@ -164,7 +164,7 @@ class ReferenceMapper implements CustomMapper {
         references =
             mapper
                 .getProxyFactory()
-                .createListProxy(datastore, references, referenceObjClass, refAnn.ignoreMissing());
+                .createListProxy(mongoRepository, references, referenceObjClass, refAnn.ignoreMissing());
         final ProxiedEntityReferenceList referencesAsProxy =
             (ProxiedEntityReferenceList) references;
 
@@ -190,7 +190,7 @@ class ReferenceMapper implements CustomMapper {
                 @Override
                 public void eval(final Object val) {
                   final Object ent =
-                      resolveObject(datastore, mapper, cache, mf, refAnn.idOnly(), val);
+                      resolveObject(mongoRepository, mapper, cache, mf, refAnn.idOnly(), val);
                   if (ent == null) {
                     LOG.warn("Null reference found when retrieving value for " + mf.getFullName());
                   } else {
@@ -210,7 +210,7 @@ class ReferenceMapper implements CustomMapper {
   }
 
   private void readMap(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Mapper mapper,
       final Object entity,
       final Reference refAnn,
@@ -227,7 +227,7 @@ class ReferenceMapper implements CustomMapper {
         m =
             mapper
                 .getProxyFactory()
-                .createMapProxy(datastore, m, referenceObjClass, refAnn.ignoreMissing());
+                .createMapProxy(mongoRepository, m, referenceObjClass, refAnn.ignoreMissing());
       }
 
       final Map map = m;
@@ -249,7 +249,7 @@ class ReferenceMapper implements CustomMapper {
                             : mapper.refToKey((DBRef) val));
                   } else {
                     map.put(
-                        objKey, resolveObject(datastore, mapper, cache, mf, refAnn.idOnly(), val));
+                        objKey, resolveObject(mongoRepository, mapper, cache, mf, refAnn.idOnly(), val));
                   }
                 }
               });
@@ -258,7 +258,7 @@ class ReferenceMapper implements CustomMapper {
   }
 
   private void readSingle(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Mapper mapper,
       final Object entity,
       final Class fieldType,
@@ -271,9 +271,9 @@ class ReferenceMapper implements CustomMapper {
     if (ref != null) {
       Object resolvedObject;
       if (annotation.lazy() && LazyFeatureDependencies.assertDependencyFullFilled()) {
-        resolvedObject = createOrReuseProxy(datastore, mapper, fieldType, ref, cache, annotation);
+        resolvedObject = createOrReuseProxy(mongoRepository, mapper, fieldType, ref, cache, annotation);
       } else {
-        resolvedObject = resolveObject(datastore, mapper, cache, mf, annotation.idOnly(), ref);
+        resolvedObject = resolveObject(mongoRepository, mapper, cache, mf, annotation.idOnly(), ref);
       }
 
       if (resolvedObject != null) {
@@ -381,7 +381,7 @@ class ReferenceMapper implements CustomMapper {
   }
 
   Object resolveObject(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Mapper mapper,
       final EntityCache cache,
       final MappedField mf,
@@ -406,10 +406,10 @@ class ReferenceMapper implements CustomMapper {
     Object id;
 
     if (idOnly) {
-      collection = datastore.getCollection(key.getType());
+      collection = mongoRepository.getCollection(key.getType());
       id = ref;
     } else {
-      collection = datastore.getDB().getCollection(dbRef.getCollectionName());
+      collection = mongoRepository.getDB().getCollection(dbRef.getCollectionName());
       id = dbRef.getId();
     }
     if (id instanceof DBObject) {
@@ -420,7 +420,7 @@ class ReferenceMapper implements CustomMapper {
     if (refDbObject != null) {
       Object refObj =
           mapper.getOptions().getObjectFactory().createInstance(mapper, mf, refDbObject);
-      refObj = mapper.fromDb(datastore, refDbObject, refObj, cache);
+      refObj = mapper.fromDb(mongoRepository, refDbObject, refObj, cache);
       cache.putEntity(key, refObj);
       return refObj;
     }
@@ -438,18 +438,18 @@ class ReferenceMapper implements CustomMapper {
 
   void readMorphiaReferenceValues(
       final Mapper mapper,
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final MappedField mappedField,
       final DBObject dbObject,
       final Object entity) {
     final Class paramType = mappedField.getTypeParameters().get(0).getType();
     MorphiaReference<?> reference;
     if (Map.class.isAssignableFrom(paramType)) {
-      reference = MapReference.decode(datastore, mapper, mappedField, dbObject);
+      reference = MapReference.decode(mongoRepository, mapper, mappedField, dbObject);
     } else if (Collection.class.isAssignableFrom(paramType)) {
-      reference = CollectionReference.decode(datastore, mapper, mappedField, paramType, dbObject);
+      reference = CollectionReference.decode(mongoRepository, mapper, mappedField, paramType, dbObject);
     } else {
-      reference = SingleReference.decode(datastore, mapper, mappedField, paramType, dbObject);
+      reference = SingleReference.decode(mongoRepository, mapper, mappedField, paramType, dbObject);
     }
     mappedField.setFieldValue(entity, reference);
   }

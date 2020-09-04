@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.components.mongo.client.mapping;
 
 import com.mongodb.DBObject;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCache;
 
 import java.util.Map;
@@ -11,7 +11,7 @@ public interface CustomMapper {
    * Creates an entity and populates its state based on the dbObject given. This method is primarily
    * an internal method. Reliance on this method may break your application in future releases.
    *
-   * @param datastore the Datastore to use
+   * @param mongoRepository the MongoRepository to use
    * @param dbObject the object state to use
    * @param mf the MappedField with the metadata to use during conversion
    * @param entity the entity to populate
@@ -20,7 +20,7 @@ public interface CustomMapper {
    * @param mapper the Mapper to use
    */
   void fromDBObject(
-      Datastore datastore,
+      MongoRepository mongoRepository,
       DBObject dbObject,
       MappedField mf,
       Object entity,

@@ -32,7 +32,7 @@ class NonFinalizingHotSwappingInvoker<T> extends HotSwappingInvoker<T> {
     /*
      * If the method being invoked is annotated with @IdGetter and the delegate reference is an EntityObjectReference,
      * return the id of the EntityObjectReference's key. This allows us to return the referenced entity's id without
-     * fetching the entity from the datastore.
+     * fetching the entity from the mongo repository.
      */
     if (method.getAnnotation(IdGetter.class) != null) {
       ObjectReference<Object> delegateReference = getDelegateReference();

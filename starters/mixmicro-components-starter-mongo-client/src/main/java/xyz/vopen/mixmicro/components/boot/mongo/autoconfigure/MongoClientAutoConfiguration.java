@@ -5,13 +5,16 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import xyz.vopen.mixmicro.components.boot.mongo.MongoClientProperties;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.MixmicroMongo;
+
+import static xyz.vopen.mixmicro.components.boot.mongo.MongoClientProperties.MONGO_CONFIG_PROPERTIES_PREFIX;
 
 /**
  * {@link MongoClientAutoConfiguration}
@@ -22,6 +25,11 @@ import xyz.vopen.mixmicro.components.mongo.client.MixmicroMongo;
  * @version ${project.version} - 2020/9/3
  */
 @Configuration
+@ConditionalOnProperty(
+    prefix = MONGO_CONFIG_PROPERTIES_PREFIX,
+    name = "enabled",
+    havingValue = "true",
+    matchIfMissing = true)
 @EnableConfigurationProperties(MongoClientProperties.class)
 public class MongoClientAutoConfiguration {
 
@@ -29,7 +37,7 @@ public class MongoClientAutoConfiguration {
 
   @Bean
   @Primary
-  public Datastore datastore(MongoClientProperties properties) {
+  public MongoRepository mongoRepository(MongoClientProperties properties) {
 
     MixmicroMongo mongo = new MixmicroMongo();
 
@@ -37,6 +45,8 @@ public class MongoClientAutoConfiguration {
 
     MongoClientOptions.Builder builder =
         new MongoClientOptions.Builder()
+            .minConnectionsPerHost(properties.getMinConnectionsPerHost())
+            .connectionsPerHost(properties.getMaxConnectionsPerHost())
             .connectTimeout(properties.getConnectionTimeout())
             .maxWaitTime(properties.getMaxWaitTime());
 
@@ -44,15 +54,15 @@ public class MongoClientAutoConfiguration {
 
     MongoClient client = new MongoClient(uri);
 
-    Datastore datastore = mongo.createDatastore(client, properties.getDatabaseName());
+    MongoRepository mongoRepository = mongo.createMongoRepository(client, properties.getDatabaseName());
 
     if (properties.isEnsureIndexes()) {
-      datastore.ensureIndexes();
+      mongoRepository.ensureIndexes();
       log.info("[MIXMICRO-MONGO] mongo model's index is ensured.");
     }
 
-    log.info("[MIXMICRO-MONGO] mongo client is initialized , instance :{}", datastore);
+    log.info("[MIXMICRO-MONGO] mongo client is initialized , instance :{}", mongoRepository);
 
-    return datastore;
+    return mongoRepository;
   }
 }

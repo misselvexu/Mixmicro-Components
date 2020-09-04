@@ -38,7 +38,7 @@ class FieldCriteria extends AbstractCriteria {
       final boolean not) {
     // validate might modify prop string to translate java field name to db field name
     this.query = query;
-    final Mapper mapper = query.getDatastore().getMapper();
+    final Mapper mapper = query.getMongoRepository().getMapper();
     final PathTarget pathTarget =
         new PathTarget(
             mapper,

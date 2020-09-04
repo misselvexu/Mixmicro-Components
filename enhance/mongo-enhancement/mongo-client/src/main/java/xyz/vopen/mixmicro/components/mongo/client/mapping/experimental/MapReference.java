@@ -3,8 +3,8 @@ package xyz.vopen.mixmicro.components.mongo.client.mapping.experimental;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
 import com.mongodb.client.MongoCursor;
-import xyz.vopen.mixmicro.components.mongo.client.AdvancedDatastore;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.AdvancedMongoRepository;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedClass;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedField;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
@@ -26,12 +26,12 @@ public class MapReference<T> extends MorphiaReference<Map<String, T>> {
 
   /**  */
   MapReference(
-      final Datastore datastore, final MappedClass mappedClass, final Map<String, Object> ids) {
-    super(datastore, mappedClass);
+      final MongoRepository mongoRepository, final MappedClass mappedClass, final Map<String, Object> ids) {
+    super(mongoRepository, mappedClass);
     Map<String, Object> unwrapped = ids;
     if (ids != null) {
       for (final Entry<String, Object> entry : ids.entrySet()) {
-        CollectionReference.collate(datastore, collections, entry.getValue());
+        CollectionReference.collate(mongoRepository, collections, entry.getValue());
       }
     }
 
@@ -63,7 +63,7 @@ public class MapReference<T> extends MorphiaReference<Map<String, T>> {
     final Class<?> collectionType = getMappedClass().getClazz();
     final MongoCursor<T> cursor =
         (MongoCursor<T>)
-            ((AdvancedDatastore) getDatastore())
+            ((AdvancedMongoRepository) getMongoRepository())
                 .find(collection, collectionType)
                 .filter("_id in ", collectionIds)
                 .find();
@@ -71,7 +71,7 @@ public class MapReference<T> extends MorphiaReference<Map<String, T>> {
       final Map<Object, T> idMap = new HashMap<Object, T>();
       while (cursor.hasNext()) {
         final T entity = cursor.next();
-        idMap.put(getDatastore().getMapper().getId(entity), entity);
+        idMap.put(getMongoRepository().getMapper().getId(entity), entity);
       }
 
       for (final Entry<String, Object> entry : ids.entrySet()) {
@@ -108,14 +108,14 @@ public class MapReference<T> extends MorphiaReference<Map<String, T>> {
   /**
    * Decodes a document in to entities
    *
-   * @param datastore the datastore
+   * @param mongoRepository the mongo repository
    * @param mapper the mapper
    * @param mappedField the MappedField
    * @param dbObject the DBObject to decode
    * @return the entities
    */
   public static MapReference decode(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Mapper mapper,
       final MappedField mappedField,
       final DBObject dbObject) {
@@ -124,7 +124,7 @@ public class MapReference<T> extends MorphiaReference<Map<String, T>> {
     final Map<String, Object> ids = (Map<String, Object>) mappedField.getDbObjectValue(dbObject);
     MapReference reference = null;
     if (ids != null) {
-      reference = new MapReference(datastore, mapper.getMappedClass(subType), ids);
+      reference = new MapReference(mongoRepository, mapper.getMappedClass(subType), ids);
     }
 
     return reference;

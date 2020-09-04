@@ -8,7 +8,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.ReadPreference;
 import com.mongodb.client.model.UnwindOptions;
-import xyz.vopen.mixmicro.components.mongo.client.DefaultDatastore;
+import xyz.vopen.mixmicro.components.mongo.client.DefaultMongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.query.BucketAutoOptions;
 import xyz.vopen.mixmicro.components.mongo.client.query.BucketOptions;
 import org.slf4j.Logger;
@@ -33,23 +33,23 @@ public class AggregationPipelineImpl implements AggregationPipeline {
   private final Class source;
   private final List<DBObject> stages = new ArrayList<DBObject>();
   private final Mapper mapper;
-  private final DefaultDatastore datastore;
+  private final DefaultMongoRepository repository;
   private boolean firstStage;
 
   /**
    * Creates an AggregationPipeline
    *
-   * @param datastore the datastore to use
+   * @param repository the mongo repository to use
    * @param collection the database collection on which to operate
    * @param source the source type to aggregate
    */
   public AggregationPipelineImpl(
-      final DefaultDatastore datastore,
+      final DefaultMongoRepository repository,
       final DBCollection collection,
       final Class source) {
-    this.datastore = datastore;
+    this.repository = repository;
     this.collection = collection;
-    mapper = datastore.getMapper();
+    mapper = repository.getMapper();
     this.source = source;
   }
 
@@ -76,7 +76,7 @@ public class AggregationPipelineImpl implements AggregationPipeline {
       final Class<U> target,
       final AggregationOptions options,
       final ReadPreference readPreference) {
-    return aggregate(datastore.getCollection(target).getName(), target, options, readPreference);
+    return aggregate(repository.getCollection(target).getName(), target, options, readPreference);
   }
 
   @Override
@@ -88,7 +88,7 @@ public class AggregationPipelineImpl implements AggregationPipeline {
     LOG.debug("stages = " + stages);
 
     Cursor cursor = collection.aggregate(stages, options, readPreference);
-    return new MorphiaCursor<U>(datastore, cursor, mapper, target, mapper.createEntityCache());
+    return new MorphiaCursor<U>(repository, cursor, mapper, target, mapper.createEntityCache());
   }
 
   @Override
@@ -183,12 +183,12 @@ public class AggregationPipelineImpl implements AggregationPipeline {
 
   @Override
   public <U> Iterator<U> out(final Class<U> target) {
-    return out(datastore.getCollection(target).getName(), target);
+    return out(repository.getCollection(target).getName(), target);
   }
 
   @Override
   public <U> Iterator<U> out(final Class<U> target, final AggregationOptions options) {
-    return out(datastore.getCollection(target).getName(), target, options);
+    return out(repository.getCollection(target).getName(), target, options);
   }
 
   @Override

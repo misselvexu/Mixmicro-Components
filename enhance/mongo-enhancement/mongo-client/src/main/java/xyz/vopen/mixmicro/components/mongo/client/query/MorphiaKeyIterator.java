@@ -3,7 +3,7 @@ package xyz.vopen.mixmicro.components.mongo.client.query;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.client.MongoCursor;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
 
@@ -19,19 +19,19 @@ public class MorphiaKeyIterator<T> extends MorphiaIterator<T, Key<T>> {
   /**
    * Create
    *
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param cursor the cursor to use
    * @param mapper the Mapper to use
    * @param clazz the original type being iterated
    * @param collection the mongodb collection
    */
   public MorphiaKeyIterator(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final DBCursor cursor,
       final Mapper mapper,
       final Class<T> clazz,
       final String collection) {
-    super(datastore, cursor, mapper, clazz, collection, null);
+    super(mongoRepository, cursor, mapper, clazz, collection, null);
   }
 
   @Override
@@ -42,7 +42,7 @@ public class MorphiaKeyIterator<T> extends MorphiaIterator<T, Key<T>> {
       Class type = getMapper().getMappedClass(getClazz()).getMappedIdField().getType();
       id =
           getMapper()
-              .fromDBObject(getDatastore(), type, (DBObject) id, getMapper().createEntityCache());
+              .fromDBObject(getMongoRepository(), type, (DBObject) id, getMapper().createEntityCache());
     }
     return new Key<T>(getClazz(), getCollection(), id);
   }

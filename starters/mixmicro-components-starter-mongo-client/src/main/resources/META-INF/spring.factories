@@ -1,2 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   xyz.vopen.mixmicro.components.boot.mongo.autoconfigure.MongoClientAutoConfiguration
+
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  xyz.vopen.mixmicro.components.boot.mongo.env.DefaultMongoEnvironmentPostProcessor

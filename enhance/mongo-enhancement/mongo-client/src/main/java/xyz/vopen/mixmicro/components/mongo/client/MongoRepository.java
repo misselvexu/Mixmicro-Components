@@ -24,11 +24,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Datastore interface to get/delete/save objects
+ * MongoRepository interface to get/delete/save objects
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
-public interface Datastore {
+public interface MongoRepository {
   /**
    * Returns a new query bound to the kind (a specific {@link DBCollection})
    *
@@ -138,7 +138,7 @@ public interface Datastore {
    * @param wc the WriteConcern to use when deleting
    * @param <T> the type to delete
    * @return results of the delete
-   * @deprecated use {@link AdvancedDatastore#delete(Query, DeleteOptions)} instead
+   * @deprecated use {@link AdvancedMongoRepository#delete(Query, DeleteOptions)} instead
    */
   @Deprecated
   <T> WriteResult delete(Query<T> query, WriteConcern wc);
@@ -528,33 +528,33 @@ public interface Datastore {
   <T> long getCount(Query<T> query, CountOptions options);
 
   /**
-   * @return the DB this Datastore uses
+   * @return the DB this MongoRepository uses
    * @see MongoClient#getDB(String)
    * @see MongoDatabase
    * @deprecated use #getDatabase(). In general, should you need a DB reference, please use the
-   *     MongoClient used to create this Datastore to retrieve it.
+   *     MongoClient used to create this MongoRepository to retrieve it.
    */
   @Deprecated
   DB getDB();
 
   /**
-   * @return the MongoDatabase used by this DataStore
+   * @return the MongoDatabase used by this mongo repository
    * @since 1.5
    *
    */
   MongoDatabase getDatabase();
 
   /**
-   * @return the default WriteConcern used by this Datastore
+   * @return the default WriteConcern used by this MongoRepository
    * @deprecated
    */
   @Deprecated
   WriteConcern getDefaultWriteConcern();
 
   /**
-   * Sets the default WriteConcern for this Datastore
+   * Sets the default WriteConcern for this MongoRepository
    *
-   * @param wc the default WriteConcern to be used by this Datastore
+   * @param wc the default WriteConcern to be used by this MongoRepository
    * @deprecated {@link MongoClient#setWriteConcern(WriteConcern)}
    */
   @Deprecated
@@ -575,7 +575,7 @@ public interface Datastore {
   /**
    * Get the underlying MongoClient that allows connection to the MongoDB instance being used.
    *
-   * @return the MongoClient being used by this datastore.
+   * @return the MongoClient being used by this mongo repository.
    * @deprecated no replacement is planned
    */
   @Deprecated
@@ -832,7 +832,7 @@ public interface Datastore {
    * @param wc the WriteConcern to use
    * @param <T> the type of the entity
    * @return the results of the updates
-   * @deprecated use {@link AdvancedDatastore#update(Query, UpdateOperations, UpdateOptions)} with
+   * @deprecated use {@link AdvancedMongoRepository#update(Query, UpdateOperations, UpdateOptions)} with
    *     upsert set to the value of createIfMissing
    */
   @Deprecated
@@ -906,7 +906,7 @@ public interface Datastore {
   <T> UpdateResults updateFirst(Query<T> query, T entity, boolean createIfMissing);
 
   /**
-   * @return the Mapper used by this Datastore
+   * @return the Mapper used by this MongoRepository
    * @since 1.5
    *
    */

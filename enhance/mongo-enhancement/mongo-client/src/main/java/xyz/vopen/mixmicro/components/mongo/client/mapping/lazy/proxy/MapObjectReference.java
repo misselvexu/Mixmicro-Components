@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.mongo.client.mapping.lazy.proxy;
 
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
 
 import java.util.HashMap;
@@ -16,18 +16,18 @@ public class MapObjectReference extends AbstractReference implements ProxiedEnti
   /**
    * Creates a MapObjectReference
    *
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param mapToProxy the map to proxy
    * @param referenceObjClass the referenced objects' Class
    * @param ignoreMissing ignore missing referenced documents
    */
   public MapObjectReference(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Map mapToProxy,
       final Class referenceObjClass,
       final boolean ignoreMissing) {
 
-    super(datastore, referenceObjClass, ignoreMissing);
+    super(mongoRepository, referenceObjClass, ignoreMissing);
     object = mapToProxy;
     keyMap = new LinkedHashMap<Object, Key<?>>();
   }
@@ -61,7 +61,7 @@ public class MapObjectReference extends AbstractReference implements ProxiedEnti
     // TODO us: change to getting them all at once and yell according to
     // ignoreMissing in order to a) increase performance and b) resolve
     // equals keys to the same instance
-    // that should really be done in datastore.
+    // that should really be done in mongo repository.
     for (final Map.Entry<?, Key<?>> e : keyMap.entrySet()) {
       final Key<?> entityKey = e.getValue();
       m.put(e.getKey(), fetch(entityKey));
@@ -71,7 +71,7 @@ public class MapObjectReference extends AbstractReference implements ProxiedEnti
 
   @SuppressWarnings("unchecked")
   private void syncKeys() {
-    final Datastore ds = getDatastore();
+    final MongoRepository ds = getMongoRepository();
 
     keyMap.clear();
     final Map<Object, Object> map = (Map) object;

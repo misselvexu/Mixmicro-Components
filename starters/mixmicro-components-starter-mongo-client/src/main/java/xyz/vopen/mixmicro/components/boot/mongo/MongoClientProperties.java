@@ -22,7 +22,7 @@ import static xyz.vopen.mixmicro.components.boot.mongo.MongoClientProperties.MON
 @ConfigurationProperties(prefix = MONGO_CONFIG_PROPERTIES_PREFIX)
 public class MongoClientProperties implements InitializingBean {
 
-  static final String MONGO_CONFIG_PROPERTIES_PREFIX = "mixmicro.mongodb";
+  public static final String MONGO_CONFIG_PROPERTIES_PREFIX = "mixmicro.mongodb";
 
   private boolean enabled = true;
 
@@ -47,6 +47,18 @@ public class MongoClientProperties implements InitializingBean {
    * <p>default: 10 s
    */
   private int connectionTimeout = 10000;
+
+  /**
+   * Min Connections Pre Host
+   * <p>default: 20</p>
+   */
+  private int minConnectionsPerHost = 20;
+
+  /**
+   * Max Connections Pre Host
+   * <p>default: 100</p>
+   */
+  private int maxConnectionsPerHost = 100;
 
   /**
    * Server Max Wait Timeout, TimeUnit: ms

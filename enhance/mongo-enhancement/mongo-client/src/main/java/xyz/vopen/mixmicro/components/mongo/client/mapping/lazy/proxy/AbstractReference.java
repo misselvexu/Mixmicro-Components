@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.components.mongo.client.mapping.lazy.proxy;
 
 import com.thoughtworks.proxy.kit.ObjectReference;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public abstract class AbstractReference implements Serializable, ObjectReference
 
   private static final long serialVersionUID = 1L;
   // CHECKSTYLE:OFF
-  private final Datastore datastore;
+  private final MongoRepository mongoRepository;
   protected final boolean ignoreMissing;
   protected final Class referenceObjClass;
   protected Object object;
@@ -22,8 +22,8 @@ public abstract class AbstractReference implements Serializable, ObjectReference
   private boolean isFetched;
 
   protected AbstractReference(
-      final Datastore datastore, final Class referenceObjClass, final boolean ignoreMissing) {
-    this.datastore = datastore;
+      final MongoRepository mongoRepository, final Class referenceObjClass, final boolean ignoreMissing) {
+    this.mongoRepository = mongoRepository;
     this.referenceObjClass = referenceObjClass;
     this.ignoreMissing = ignoreMissing;
   }
@@ -69,7 +69,7 @@ public abstract class AbstractReference implements Serializable, ObjectReference
 
   @SuppressWarnings("unchecked")
   protected final Object fetch(final Key<?> id) {
-    return getDatastore().getByKey(referenceObjClass, id);
+    return getMongoRepository().getByKey(referenceObjClass, id);
   }
 
   protected abstract Object fetch();
@@ -83,8 +83,8 @@ public abstract class AbstractReference implements Serializable, ObjectReference
     out.defaultWriteObject();
   }
 
-  /** @return the Datastore to use when fetching this reference */
-  public Datastore getDatastore() {
-    return datastore;
+  /** @return the MongoRepository to use when fetching this reference */
+  public MongoRepository getMongoRepository() {
+    return mongoRepository;
   }
 }

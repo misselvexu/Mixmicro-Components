@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Called before the data has been persisted to the datastore (before mapping is done).
+ * Called before the data has been persisted to the mongo repository (before mapping is done).
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */

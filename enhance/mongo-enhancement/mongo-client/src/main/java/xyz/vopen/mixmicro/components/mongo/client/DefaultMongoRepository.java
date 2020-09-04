@@ -72,8 +72,8 @@ import static java.util.Collections.singletonList;
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
-public class DefaultDatastore implements AdvancedDatastore {
-  private static final Logger LOG = LoggerFactory.getLogger(DefaultDatastore.class);
+public class DefaultMongoRepository implements AdvancedMongoRepository {
+  private static final Logger LOG = LoggerFactory.getLogger(DefaultMongoRepository.class);
 
   private final MixmicroMongo mixmicroMongo;
   private final MongoClient mongoClient;
@@ -87,30 +87,30 @@ public class DefaultDatastore implements AdvancedDatastore {
   private volatile QueryFactory queryFactory = new DefaultQueryFactory();
 
   /**
-   * Create a new DatastoreImpl
+   * Create a new Repository
    *
    * @param mixmicroMongo the Morphia instance
    * @param mongoClient the connection to the MongoDB instance
    * @param dbName the name of the database for this data store.
    * @deprecated This is not meant to be directly instantiated by end user code. Use {@link
-   *     MixmicroMongo#createDatastore(MongoClient, Mapper, String)}
+   *     MixmicroMongo#createMongoRepository(MongoClient, Mapper, String)}
    */
-  public DefaultDatastore(
+  public DefaultMongoRepository(
       final MixmicroMongo mixmicroMongo, final MongoClient mongoClient, final String dbName) {
     this(mixmicroMongo, mixmicroMongo.getMapper(), mongoClient, dbName);
   }
 
   /**
-   * Create a new DatastoreImpl
+   * Create a new Repository
    *
    * @param mixmicroMongo the Morphia instance
    * @param mapper an initialised Mapper
    * @param mongoClient the connection to the MongoDB instance
    * @param dbName the name of the database for this data store.
    * @deprecated This is not meant to be directly instantiated by end user code. Use {@link
-   *     MixmicroMongo#createDatastore(MongoClient, Mapper, String)}
+   *     MixmicroMongo#createMongoRepository(MongoClient, Mapper, String)}
    */
-  public DefaultDatastore(
+  public DefaultMongoRepository(
       final MixmicroMongo mixmicroMongo,
       final Mapper mapper,
       final MongoClient mongoClient,
@@ -118,7 +118,7 @@ public class DefaultDatastore implements AdvancedDatastore {
     this(mixmicroMongo, mapper, mongoClient, mongoClient.getDatabase(dbName));
   }
 
-  private DefaultDatastore(
+  private DefaultMongoRepository(
       final MixmicroMongo mixmicroMongo,
       final Mapper mapper,
       final MongoClient mongoClient,
@@ -137,15 +137,15 @@ public class DefaultDatastore implements AdvancedDatastore {
   }
 
   /**
-   * Creates a copy of this Datastore and all its configuration but with a new database
+   * Creates a copy of this MongoRepository and all its configuration but with a new database
    *
    * @param database the new database to use for operations
-   * @return the new Datastore instance
-   * @deprecated use {@link MixmicroMongo#createDatastore(MongoClient, Mapper, String)}
+   * @return the new MongoRepository instance
+   * @deprecated use {@link MixmicroMongo#createMongoRepository(MongoClient, Mapper, String)}
    */
   @Deprecated
-  public DefaultDatastore copy(final String database) {
-    return new DefaultDatastore(mixmicroMongo, mapper, mongoClient, database);
+  public DefaultMongoRepository copy(final String database) {
+    return new DefaultMongoRepository(mixmicroMongo, mapper, mongoClient, database);
   }
 
   /**
@@ -1277,13 +1277,13 @@ public class DefaultDatastore implements AdvancedDatastore {
     return query.filter(property, value).enableValidation();
   }
 
-  /** @return the Mapper used by this Datastore */
+  /** @return the Mapper used by this MongoRepository */
   public Mapper getMapper() {
     return mapper;
   }
 
   /**
-   * Sets the Mapper this Datastore uses
+   * Sets the Mapper this MongoRepository uses
    *
    * @param mapper the new Mapper
    */
@@ -1569,7 +1569,7 @@ public class DefaultDatastore implements AdvancedDatastore {
   /**
    * Creates and returns a {@link Query} using the underlying {@link QueryFactory}.
    *
-   * @see QueryFactory#createQuery(Datastore, DBCollection, Class, DBObject)
+   * @see QueryFactory#createQuery(MongoRepository, DBCollection, Class, DBObject)
    */
   private <T> Query<T> newQuery(
       final Class<T> type, final DBCollection collection, final DBObject query) {
@@ -1579,7 +1579,7 @@ public class DefaultDatastore implements AdvancedDatastore {
   /**
    * Creates and returns a {@link Query} using the underlying {@link QueryFactory}.
    *
-   * @see QueryFactory#createQuery(Datastore, DBCollection, Class)
+   * @see QueryFactory#createQuery(MongoRepository, DBCollection, Class)
    */
   private <T> Query<T> newQuery(final Class<T> type, final DBCollection collection) {
     return getQueryFactory().createQuery(this, collection, type);
@@ -1748,7 +1748,7 @@ public class DefaultDatastore implements AdvancedDatastore {
   }
 
   /**
-   * Gets the write concern for entity or returns the default write concern for this datastore
+   * Gets the write concern for entity or returns the default write concern for this mongo repository
    *
    * @param clazzOrEntity the class or entity to use when looking up the WriteConcern
    */

@@ -32,7 +32,7 @@ public class MapreduceResults<T> implements Iterable<T> {
   private Class<T> clazz;
   @Transient private Mapper mapper;
   @Transient private EntityCache cache;
-  private Datastore datastore;
+  private MongoRepository mongoRepository;
 
   /**
    * Creates a results instance for the given output
@@ -79,7 +79,7 @@ public class MapreduceResults<T> implements Iterable<T> {
    */
   public Iterator<T> getInlineResults() {
     return new MorphiaIterator<T, T>(
-        datastore, output.results().iterator(), mapper, clazz, null, cache);
+        mongoRepository, output.results().iterator(), mapper, clazz, null, cache);
   }
 
   /**
@@ -142,19 +142,19 @@ public class MapreduceResults<T> implements Iterable<T> {
   /**
    * Sets the required options when the operation type was INLINE
    *
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param clazz the type of the results
    * @param mapper the mapper to use
    * @param cache the cache of entities seen so far
    * @see OutputType
    */
   public void setInlineRequiredOptions(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Class<T> clazz,
       final Mapper mapper,
       final EntityCache cache) {
     this.mapper = mapper;
-    this.datastore = datastore;
+    this.mongoRepository = mongoRepository;
     this.clazz = clazz;
     this.cache = cache;
   }

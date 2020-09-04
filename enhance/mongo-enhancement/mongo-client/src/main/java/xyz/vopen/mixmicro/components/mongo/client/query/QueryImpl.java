@@ -9,8 +9,8 @@ import com.mongodb.ReadPreference;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.DBCollectionFindOptions;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
-import xyz.vopen.mixmicro.components.mongo.client.DefaultDatastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
+import xyz.vopen.mixmicro.components.mongo.client.DefaultMongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
 import xyz.vopen.mixmicro.components.mongo.client.annotations.Entity;
 import xyz.vopen.mixmicro.components.mongo.client.internal.PathTarget;
@@ -46,7 +46,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 @SuppressWarnings("deprecation")
 public class QueryImpl<T> implements CriteriaContainer, Query<T> {
   private static final Logger LOG = LoggerFactory.getLogger(QueryImpl.class);
-  private final DefaultDatastore ds;
+  private final DefaultMongoRepository ds;
   private final DBCollection dbColl;
   private final Class<T> clazz;
   private EntityCache cache;
@@ -69,11 +69,11 @@ public class QueryImpl<T> implements CriteriaContainer, Query<T> {
    *
    * @param clazz the type to return
    * @param coll the collection to query
-   * @param ds the Datastore to use
+   * @param ds the MongoRepository to use
    */
-  public QueryImpl(final Class<T> clazz, final DBCollection coll, final Datastore ds) {
+  public QueryImpl(final Class<T> clazz, final DBCollection coll, final MongoRepository ds) {
     this.clazz = clazz;
-    this.ds = ((DefaultDatastore) ds);
+    this.ds = ((DefaultMongoRepository) ds);
     dbColl = coll;
     cache = this.ds.getMapper().createEntityCache();
 
@@ -690,12 +690,12 @@ public class QueryImpl<T> implements CriteriaContainer, Query<T> {
   }
 
   /**
-   * @return the Datastore
+   * @return the MongoRepository
    * @deprecated this is an internal method that exposes an internal type and will likely go away
    *     soon
    */
   @Deprecated
-  public DefaultDatastore getDatastore() {
+  public DefaultMongoRepository getMongoRepository() {
     return ds;
   }
 

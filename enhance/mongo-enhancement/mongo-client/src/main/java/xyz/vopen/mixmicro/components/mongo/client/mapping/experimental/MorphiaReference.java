@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.components.mongo.client.mapping.experimental;
 
 import com.mongodb.DBRef;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedClass;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedField;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
@@ -18,13 +18,13 @@ import java.util.Set;
  */
 @SuppressWarnings("unchecked")
 public abstract class MorphiaReference<T> {
-  private Datastore datastore;
+  private MongoRepository mongoRepository;
   private MappedClass mappedClass;
 
   MorphiaReference() {}
 
-  MorphiaReference(final Datastore datastore, final MappedClass mappedClass) {
-    this.datastore = datastore;
+  MorphiaReference(final MongoRepository mongoRepository, final MappedClass mappedClass) {
+    this.mongoRepository = mongoRepository;
     this.mappedClass = mappedClass;
   }
 
@@ -57,11 +57,11 @@ public abstract class MorphiaReference<T> {
   public abstract Object encode(Mapper mapper, Object value, MappedField optionalExtraInfo);
 
   /**
-   * @return the datastore
+   * @return the mongo repository
    *
    */
-  Datastore getDatastore() {
-    return datastore;
+  MongoRepository getMongoRepository() {
+    return mongoRepository;
   }
 
   /**

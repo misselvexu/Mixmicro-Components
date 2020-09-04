@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.components.mongo.client.mapping;
 
 import com.mongodb.DBObject;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCache;
 
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.Map;
 class ValueMapper implements CustomMapper {
   @Override
   public void fromDBObject(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final DBObject dbObject,
       final MappedField mf,
       final Object entity,

@@ -2,8 +2,8 @@ package xyz.vopen.mixmicro.components.mongo.client.mapping.experimental;
 
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
-import xyz.vopen.mixmicro.components.mongo.client.AdvancedDatastore;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.AdvancedMongoRepository;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedClass;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedField;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
@@ -19,8 +19,8 @@ public class SingleReference<T> extends MorphiaReference<T> {
   private T value;
 
   /**  */
-  SingleReference(final Datastore datastore, final MappedClass mappedClass, final Object id) {
-    super(datastore, mappedClass);
+  SingleReference(final MongoRepository mongoRepository, final MappedClass mappedClass, final Object id) {
+    super(mongoRepository, mappedClass);
     this.id = id;
   }
 
@@ -41,11 +41,11 @@ public class SingleReference<T> extends MorphiaReference<T> {
     final Query<?> query;
     if (id instanceof DBRef) {
       final Class<?> clazz =
-          getDatastore().getMapper().getClassFromCollection(((DBRef) id).getCollectionName());
-      query = ((AdvancedDatastore) getDatastore()).find(clazz).filter("_id", ((DBRef) id).getId());
+          getMongoRepository().getMapper().getClassFromCollection(((DBRef) id).getCollectionName());
+      query = ((AdvancedMongoRepository) getMongoRepository()).find(clazz).filter("_id", ((DBRef) id).getId());
     } else {
       query =
-          ((AdvancedDatastore) getDatastore()).find(getMappedClass().getClazz()).filter("_id", id);
+          ((AdvancedMongoRepository) getMongoRepository()).find(getMappedClass().getClazz()).filter("_id", id);
     }
     return query;
   }
@@ -73,7 +73,7 @@ public class SingleReference<T> extends MorphiaReference<T> {
   /**
    * Decodes a document in to an entity
    *
-   * @param datastore the datastore
+   * @param mongoRepository the mongo repository
    * @param mapper the mapper
    * @param mappedField the MappedField
    * @param paramType the type of the underlying entity
@@ -81,7 +81,7 @@ public class SingleReference<T> extends MorphiaReference<T> {
    * @return the entity
    */
   public static MorphiaReference<?> decode(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Mapper mapper,
       final MappedField mappedField,
       final Class paramType,
@@ -89,6 +89,6 @@ public class SingleReference<T> extends MorphiaReference<T> {
     final MappedClass mappedClass = mapper.getMappedClass(paramType);
     Object id = dbObject.get(mappedField.getMappedFieldName());
 
-    return new SingleReference(datastore, mappedClass, id);
+    return new SingleReference(mongoRepository, mappedClass, id);
   }
 }

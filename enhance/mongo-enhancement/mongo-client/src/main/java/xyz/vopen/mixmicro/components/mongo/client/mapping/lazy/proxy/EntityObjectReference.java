@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.mongo.client.mapping.lazy.proxy;
 
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
 
 import static java.lang.String.format;
@@ -13,17 +13,17 @@ public class EntityObjectReference extends AbstractReference implements ProxiedE
   /**
    * Creates an object reference
    *
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param targetClass the Class of the referenced item
    * @param key the Key value
    * @param ignoreMissing ignore references that don't exist in the database
    */
   public EntityObjectReference(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Class targetClass,
       final Key key,
       final boolean ignoreMissing) {
-    super(datastore, targetClass, ignoreMissing);
+    super(mongoRepository, targetClass, ignoreMissing);
     this.key = key;
   }
 
@@ -42,12 +42,12 @@ public class EntityObjectReference extends AbstractReference implements ProxiedE
   @Override
   @SuppressWarnings("unchecked")
   protected Object fetch() {
-    final Object entity = getDatastore().getByKey(referenceObjClass, key);
+    final Object entity = getMongoRepository().getByKey(referenceObjClass, key);
     if (entity == null && !ignoreMissing) {
       throw new LazyReferenceFetchingException(
           format(
               "During the lifetime of the proxy, the Entity identified by '%s' "
-                  + "disappeared from the Datastore.",
+                  + "disappeared from the MongoRepository.",
               key));
     }
     return entity;

@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.mongo.client.mapping;
 
-import xyz.vopen.mixmicro.components.mongo.client.DefaultDatastore;
+import xyz.vopen.mixmicro.components.mongo.client.DefaultMongoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,7 @@ public enum DateStorage {
     }
   };
 
-  private static final Logger LOG = LoggerFactory.getLogger(DefaultDatastore.class);
+  private static final Logger LOG = LoggerFactory.getLogger(DefaultMongoRepository.class);
   private static boolean warningLogged;
 
   /** @return the ZoneId for this storage type */

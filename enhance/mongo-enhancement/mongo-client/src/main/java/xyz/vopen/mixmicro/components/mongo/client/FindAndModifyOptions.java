@@ -100,7 +100,7 @@ public final class FindAndModifyOptions {
    *
    * @param remove true if the matching elements should be deleted
    * @return this
-   * @deprecated This will be removed in 2.0. use {@link Datastore#findAndDelete(Query)} to remove
+   * @deprecated This will be removed in 2.0. use {@link MongoRepository#findAndDelete(Query)} to remove
    *     items.
    */
   @Deprecated

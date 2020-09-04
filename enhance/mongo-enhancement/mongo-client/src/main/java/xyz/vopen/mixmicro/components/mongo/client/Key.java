@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * The key object; this class is take from the app-engine datastore (mostly) implementation. It is
+ * The key object; this class is take from the app-engine mongo repository (mostly) implementation. It is
  * also Serializable and GWT-safe, enabling your entity objects to be used for GWT RPC should you so
  * desire.
  *

@@ -3,7 +3,7 @@ package xyz.vopen.mixmicro.components.mongo.client.query;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.client.MongoCursor;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCache;
 
@@ -26,12 +26,12 @@ public class MorphiaIterator<T, V> implements Iterable<V>, Iterator<V> {
   private final EntityCache cache;
   private long driverTime;
   private long mapperTime;
-  private Datastore datastore;
+  private MongoRepository mongoRepository;
 
   /**
    * Creates a MorphiaIterator
    *
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param it the Iterator to use
    * @param mapper the Mapper to use
    * @param clazz the original type being iterated
@@ -39,7 +39,7 @@ public class MorphiaIterator<T, V> implements Iterable<V>, Iterator<V> {
    * @param cache the EntityCache
    */
   public MorphiaIterator(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Iterator<DBObject> it,
       final Mapper mapper,
       final Class<T> clazz,
@@ -50,7 +50,7 @@ public class MorphiaIterator<T, V> implements Iterable<V>, Iterator<V> {
     this.clazz = clazz;
     this.collection = collection;
     this.cache = cache;
-    this.datastore = datastore;
+    this.mongoRepository = mongoRepository;
   }
 
   /** Closes the underlying cursor. */
@@ -124,7 +124,7 @@ public class MorphiaIterator<T, V> implements Iterable<V>, Iterator<V> {
 
   @SuppressWarnings("unchecked")
   protected V convertItem(final DBObject dbObj) {
-    return (V) mapper.fromDBObject(datastore, clazz, dbObj, cache);
+    return (V) mapper.fromDBObject(mongoRepository, clazz, dbObj, cache);
   }
 
   protected DBObject getNext() {
@@ -141,7 +141,7 @@ public class MorphiaIterator<T, V> implements Iterable<V>, Iterator<V> {
     return item;
   }
 
-  Datastore getDatastore() {
-    return datastore;
+  MongoRepository getMongoRepository() {
+    return mongoRepository;
   }
 }

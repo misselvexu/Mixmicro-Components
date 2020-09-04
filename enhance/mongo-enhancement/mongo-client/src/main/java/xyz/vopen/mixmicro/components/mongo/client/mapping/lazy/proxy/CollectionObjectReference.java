@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.mongo.client.mapping.lazy.proxy;
 
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
 
 import java.util.ArrayList;
@@ -27,15 +27,15 @@ public class CollectionObjectReference<T> extends AbstractReference
    * @param type the collection
    * @param referenceObjClass the Class of the referenced objects
    * @param ignoreMissing ignore missing referenced documents
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    */
   public CollectionObjectReference(
       final Collection<T> type,
       final Class<T> referenceObjClass,
       final boolean ignoreMissing,
-      final Datastore datastore) {
+      final MongoRepository mongoRepository) {
 
-    super(datastore, referenceObjClass, ignoreMissing);
+    super(mongoRepository, referenceObjClass, ignoreMissing);
 
     object = type;
     listOfKeys = new ArrayList<Key<?>>();
@@ -85,7 +85,7 @@ public class CollectionObjectReference<T> extends AbstractReference
     // so we do it the lousy way: FIXME
     final List<T> retrievedEntities = new ArrayList<T>(listOfKeys.size());
     for (final Key<?> k : listOfKeys) {
-      T entity = (T) getDatastore().getByKey(referenceObjClass, k);
+      T entity = (T) getMongoRepository().getByKey(referenceObjClass, k);
       if (entity != null) {
         retrievedEntities.add(entity);
       }
@@ -95,7 +95,7 @@ public class CollectionObjectReference<T> extends AbstractReference
       throw new LazyReferenceFetchingException(
           format(
               "During the lifetime of a proxy of type '%s', some referenced Entities"
-                  + " of type '%s' have disappeared from the Datastore.",
+                  + " of type '%s' have disappeared from the MongoRepository.",
               c.getClass().getSimpleName(), referenceObjClass.getSimpleName()));
     }
 
@@ -104,7 +104,7 @@ public class CollectionObjectReference<T> extends AbstractReference
   }
 
   private void syncKeys() {
-    final Datastore ds = getDatastore();
+    final MongoRepository ds = getMongoRepository();
 
     listOfKeys.clear();
     for (final Object e : ((Collection) object)) {

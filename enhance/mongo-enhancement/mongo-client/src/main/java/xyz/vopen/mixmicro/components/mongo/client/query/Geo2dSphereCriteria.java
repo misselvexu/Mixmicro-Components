@@ -67,7 +67,7 @@ final class Geo2dSphereCriteria extends FieldCriteria {
     DBObject query;
     FilterOperator operator = getOperator();
     GeometryQueryConverter geometryQueryConverter =
-        new GeometryQueryConverter(getQuery().getDatastore().getMapper());
+        new GeometryQueryConverter(getQuery().getMongoRepository().getMapper());
     final DBObject geometryAsDBObject = (DBObject) geometryQueryConverter.encode(geometry, null);
 
     switch (operator) {

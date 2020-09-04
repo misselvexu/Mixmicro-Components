@@ -5,7 +5,7 @@ import com.mongodb.DBObject;
 import com.mongodb.ServerAddress;
 import com.mongodb.ServerCursor;
 import com.mongodb.client.MongoCursor;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCache;
 
@@ -19,19 +19,19 @@ public class MorphiaCursor<T> implements MongoCursor<T> {
   private final Mapper mapper;
   private final Class<T> clazz;
   private final EntityCache cache;
-  private final Datastore datastore;
+  private final MongoRepository mongoRepository;
 
   /**
    * Creates a MorphiaCursor
    *
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param cursor the Iterator to use
    * @param mapper the Mapper to use
    * @param clazz the original type being iterated
    * @param cache the EntityCache
    */
   public MorphiaCursor(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Cursor cursor,
       final Mapper mapper,
       final Class<T> clazz,
@@ -43,7 +43,7 @@ public class MorphiaCursor<T> implements MongoCursor<T> {
     this.mapper = mapper;
     this.clazz = clazz;
     this.cache = cache;
-    this.datastore = datastore;
+    this.mongoRepository = mongoRepository;
   }
 
   /**
@@ -84,7 +84,7 @@ public class MorphiaCursor<T> implements MongoCursor<T> {
     if (!hasNext()) {
       throw new NoSuchElementException();
     }
-    return mapper.fromDBObject(datastore, clazz, wrapped.next(), cache);
+    return mapper.fromDBObject(mongoRepository, clazz, wrapped.next(), cache);
   }
 
   @Override

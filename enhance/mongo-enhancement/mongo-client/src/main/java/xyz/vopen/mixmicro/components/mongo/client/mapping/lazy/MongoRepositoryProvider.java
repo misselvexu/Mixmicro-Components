@@ -16,28 +16,28 @@
 
 package xyz.vopen.mixmicro.components.mongo.client.mapping.lazy;
 
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 
 import java.io.Serializable;
 
 /**
  * Lightweight object to be created (hopefully by a factory some day) to create provide a
- * Datastore-reference to a resolving Proxy. If this was created by a common Object factory, it
+ * MongoRepository-reference to a resolving Proxy. If this was created by a common Object factory, it
  * could make use of the current context (like Guice Scopes etc.)
  *
  * @author uwe schaefer
  * @see LazyProxyFactory
- * @deprecated DatastoreProviders are no longer necessary
+ * @deprecated MongoRepositoryProviders are no longer necessary
  */
 @Deprecated
-public interface DatastoreProvider extends Serializable {
-  /** @return the Datastore */
-  Datastore get();
+public interface MongoRepositoryProvider extends Serializable {
+  /** @return the MongoRepository */
+  MongoRepository get();
 
   /**
-   * Registers a Datastore with this provider
+   * Registers a MongoRepository with this provider
    *
-   * @param ds the Datastore
+   * @param ds the MongoRepository
    */
-  void register(Datastore ds);
+  void register(MongoRepository ds);
 }

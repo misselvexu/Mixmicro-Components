@@ -1,9 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.mongo.client.test.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.bson.types.ObjectId;
 import xyz.vopen.mixmicro.components.mongo.client.annotations.*;
 
@@ -19,6 +16,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Entity("employees")
 @Indexes(

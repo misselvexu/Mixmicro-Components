@@ -66,25 +66,25 @@ public class MixmicroMongo {
    *
    * @param mongoClient the representations of the connection to a MongoDB instance
    * @param dbName the name of the database
-   * @return a Datastore that you can use to interact with MongoDB
+   * @return a MongoRepository that you can use to interact with MongoDB
    */
   @SuppressWarnings("deprecation")
-  public Datastore createDatastore(final MongoClient mongoClient, final String dbName) {
-    return new DefaultDatastore(this, mongoClient, dbName);
+  public MongoRepository createMongoRepository(final MongoClient mongoClient, final String dbName) {
+    return new DefaultMongoRepository(this, mongoClient, dbName);
   }
 
   /**
-   * Creates a new Datastore for interacting with MongoDB using POJOs
+   * Creates a new MongoRepository for interacting with MongoDB using POJOs
    *
    * @param mongoClient the representations of the connection to a MongoDB instance
    * @param mapper a pre-configured Mapper for your POJOs
    * @param dbName the name of the database
-   * @return a Datastore that you can use to interact with MongoDB
+   * @return a MongoRepository that you can use to interact with MongoDB
    */
   @SuppressWarnings("deprecation")
-  public Datastore createDatastore(
+  public MongoRepository createMongoRepository(
       final MongoClient mongoClient, final Mapper mapper, final String dbName) {
-    return new DefaultDatastore(this, mapper, mongoClient, dbName);
+    return new DefaultMongoRepository(this, mapper, mongoClient, dbName);
   }
 
   /**
@@ -92,14 +92,14 @@ public class MixmicroMongo {
    * an internal method. Reliance on this method may break your application in future releases.
    *
    * @param <T> type of the entity
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param entityClass type to create
    * @param dbObject the object state to use
    * @return the newly created and populated entity
    */
   public <T> T fromDBObject(
-      final Datastore datastore, final Class<T> entityClass, final DBObject dbObject) {
-    return fromDBObject(datastore, entityClass, dbObject, mapper.createEntityCache());
+      final MongoRepository mongoRepository, final Class<T> entityClass, final DBObject dbObject) {
+    return fromDBObject(mongoRepository, entityClass, dbObject, mapper.createEntityCache());
   }
 
   /**
@@ -107,7 +107,7 @@ public class MixmicroMongo {
    * an internal method. Reliance on this method may break your application in future releases.
    *
    * @param <T> type of the entity
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param entityClass type to create
    * @param dbObject the object state to use
    * @param cache the EntityCache to use to prevent multiple loads of the same entities over and
@@ -115,7 +115,7 @@ public class MixmicroMongo {
    * @return the newly created and populated entity
    */
   public <T> T fromDBObject(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Class<T> entityClass,
       final DBObject dbObject,
       final EntityCache cache) {
@@ -123,7 +123,7 @@ public class MixmicroMongo {
       throw new MappingException("Trying to map to an unmapped class: " + entityClass.getName());
     }
     try {
-      return mapper.fromDBObject(datastore, entityClass, dbObject, cache);
+      return mapper.fromDBObject(mongoRepository, entityClass, dbObject, cache);
     } catch (Exception e) {
       throw new MappingException("Could not map entity from DBObject", e);
     }

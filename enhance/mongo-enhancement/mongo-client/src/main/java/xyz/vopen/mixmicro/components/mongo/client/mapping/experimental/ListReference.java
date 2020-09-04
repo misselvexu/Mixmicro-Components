@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.mongo.client.mapping.experimental;
 
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedClass;
 
 import java.util.Collection;
@@ -14,8 +14,8 @@ class ListReference<T> extends CollectionReference<List<T>> {
   private List<T> values;
 
   /**  */
-  ListReference(final Datastore datastore, final MappedClass mappedClass, final List ids) {
-    super(datastore, mappedClass, ids);
+  ListReference(final MongoRepository mongoRepository, final MappedClass mappedClass, final List ids) {
+    super(mongoRepository, mappedClass, ids);
   }
 
   ListReference(final List<T> values) {

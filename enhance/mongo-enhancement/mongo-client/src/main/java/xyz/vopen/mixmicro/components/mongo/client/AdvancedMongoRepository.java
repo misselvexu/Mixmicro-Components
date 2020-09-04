@@ -15,16 +15,16 @@ import xyz.vopen.mixmicro.components.mongo.client.query.QueryFactory;
 import java.util.List;
 
 /**
- * This interface exposes advanced {@link Datastore} features, like interacting with DBObject and
- * low-level options. It implements matching methods from the {@code Datastore} interface but with a
+ * This interface exposes advanced {@link MongoRepository} features, like interacting with DBObject and
+ * low-level options. It implements matching methods from the {@code MongoRepository} interface but with a
  * specified kind (collection name), or raw types (DBObject).
  *
  * @author ScottHernandez
  */
-public interface AdvancedDatastore extends Datastore {
+public interface AdvancedMongoRepository extends MongoRepository {
 
   /**
-   * Returns the DBDecoderFactory used by this Datastore
+   * Returns the DBDecoderFactory used by this MongoRepository
    *
    * @return the decoder factory
    *
@@ -35,7 +35,7 @@ public interface AdvancedDatastore extends Datastore {
   DBDecoderFactory getDecoderFact();
 
   /**
-   * Sets the DBDecoderFactory to use in this Datastore
+   * Sets the DBDecoderFactory to use in this MongoRepository
    *
    * @param fact the DBDecoderFactory to use
    *

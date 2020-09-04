@@ -9,7 +9,7 @@ import com.mongodb.event.CommandStartedEvent;
 import com.mongodb.event.CommandSucceededEvent;
 import org.bson.types.ObjectId;
 import xyz.vopen.mixmicro.components.enhance.mongo.client.test.model.Employee;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
 import xyz.vopen.mixmicro.components.mongo.client.MixmicroMongo;
 
@@ -56,11 +56,11 @@ public class SimpleMongoClientTest {
 
     MongoClient client = new MongoClient(uri);
 
-    Datastore datastore = mongo.createDatastore(client, "pipeline");
+    MongoRepository mongoRepository = mongo.createMongoRepository(client, "pipeline");
 
-    datastore.ensureIndexes();
+    mongoRepository.ensureIndexes();
 
-    Key key = datastore.save(Employee.builder().id(ObjectId.get()).name("misselvexu").salary(10000d).build());
+    Key key = mongoRepository.save(Employee.builder().id(ObjectId.get()).name("misselvexu").salary(10000d).build());
 
     System.out.println(key);
   }

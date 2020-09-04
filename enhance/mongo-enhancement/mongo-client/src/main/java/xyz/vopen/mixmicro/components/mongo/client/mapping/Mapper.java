@@ -4,7 +4,7 @@ import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.EntityInterceptor;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
 import xyz.vopen.mixmicro.components.mongo.client.annotations.Converters;
@@ -181,7 +181,7 @@ public class Mapper {
    * Converts a DBObject back to a type-safe java object (POJO)
    *
    * @param <T> the type of the entity
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param entityClass The type to return, or use; can be overridden by the @see
    *     Mapper.CLASS_NAME_FIELDNAME in the DBObject
    * @param dbObject the DBObject containing the document from mongodb
@@ -192,7 +192,7 @@ public class Mapper {
    */
   @Deprecated
   public <T> T fromDBObject(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Class<T> entityClass,
       final DBObject dbObject,
       final EntityCache cache) {
@@ -201,7 +201,7 @@ public class Mapper {
     }
 
     return fromDb(
-        datastore, dbObject, opts.getObjectFactory().createInstance(entityClass, dbObject), cache);
+        mongoRepository, dbObject, opts.getObjectFactory().createInstance(entityClass, dbObject), cache);
   }
 
   /**
@@ -226,7 +226,7 @@ public class Mapper {
    * Converts an entity (POJO) to a DBObject. A special field will be added to keep track of the
    * class type.
    *
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param dbObject the DBObject
    * @param <T> the type of the referenced entity
    * @return the entity
@@ -234,10 +234,10 @@ public class Mapper {
    * @deprecated no replacement is planned
    */
   @Deprecated
-  <T> T fromDBObject(final Datastore datastore, final DBObject dbObject) {
+  <T> T fromDBObject(final MongoRepository mongoRepository, final DBObject dbObject) {
     if (dbObject.containsField(opts.getDiscriminatorField())) {
       T entity = opts.getObjectFactory().createInstance(null, dbObject);
-      entity = fromDb(datastore, dbObject, entity, createEntityCache());
+      entity = fromDb(mongoRepository, dbObject, entity, createEntityCache());
 
       return entity;
     } else {
@@ -252,7 +252,7 @@ public class Mapper {
    * Converts a DBObject back to a type-safe java object (POJO)
    *
    * @param <T> the type of the entity
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param dbObject the DBObject containing the document from mongodb
    * @param entity the instance to populate
    * @param cache the EntityCache to use
@@ -262,10 +262,10 @@ public class Mapper {
    */
   @Deprecated
   public <T> T fromDb(
-      final Datastore datastore, final DBObject dbObject, final T entity, final EntityCache cache) {
+      final MongoRepository mongoRepository, final DBObject dbObject, final T entity, final EntityCache cache) {
     // hack to bypass things and just read the value.
     if (entity instanceof MappedField) {
-      readMappedField(datastore, (MappedField) entity, entity, cache, dbObject);
+      readMappedField(mongoRepository, (MappedField) entity, entity, cache, dbObject);
       return entity;
     }
 
@@ -288,19 +288,19 @@ public class Mapper {
       Map<String, Object> map = (Map<String, Object>) entity;
       for (String key : dbObject.keySet()) {
         Object o = dbObject.get(key);
-        map.put(key, (o instanceof DBObject) ? fromDBObject(datastore, (DBObject) o) : o);
+        map.put(key, (o instanceof DBObject) ? fromDBObject(mongoRepository, (DBObject) o) : o);
       }
     } else if (entity instanceof Collection) {
       Collection<Object> collection = (Collection<Object>) entity;
       for (Object o : ((List) dbObject)) {
-        collection.add((o instanceof DBObject) ? fromDBObject(datastore, (DBObject) o) : o);
+        collection.add((o instanceof DBObject) ? fromDBObject(mongoRepository, (DBObject) o) : o);
       }
     } else {
       final MappedClass mc = getMappedClass(entity);
       final DBObject updated = mc.callLifecycleMethods(PreLoad.class, entity, dbObject, this);
       try {
         for (final MappedField mf : mc.getPersistenceFields()) {
-          readMappedField(datastore, mf, entity, cache, updated);
+          readMappedField(mongoRepository, mf, entity, cache, updated);
         }
       } catch (final MappingException e) {
         Object id = dbObject.get("_id");
@@ -308,7 +308,7 @@ public class Mapper {
         throw new MappingException(
             format(
                 "Could not map %s with ID: %s in database '%s'",
-                entityName, id, datastore.getDB().getName()),
+                entityName, id, mongoRepository.getDB().getName()),
             e);
       }
 
@@ -768,13 +768,13 @@ public class Mapper {
    * Updates the @{@link Id} and @{@link Version}
    * fields.
    *
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param dbObj Value to update with; null means skip
    * @param cache the EntityCache
    * @param entity The object to update
    */
   public void updateKeyAndVersionInfo(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final DBObject dbObj,
       final EntityCache cache,
       final Object entity) {
@@ -785,7 +785,7 @@ public class Mapper {
       try {
         final MappedField mf = mc.getMappedIdField();
         final Object oldIdValue = mc.getIdField().get(entity);
-        readMappedField(datastore, mf, entity, cache, dbObj);
+        readMappedField(mongoRepository, mf, entity, cache, dbObj);
         if (oldIdValue != null) {
           // The entity already had an id set. Check to make sure it hasn't changed. That would be
           // unexpected, and could
@@ -808,7 +808,7 @@ public class Mapper {
       }
     }
     if (mc.getMappedVersionField() != null && (dbObj != null)) {
-      readMappedField(datastore, mc.getMappedVersionField(), entity, cache, dbObj);
+      readMappedField(mongoRepository, mc.getMappedVersionField(), entity, cache, dbObj);
     }
   }
 
@@ -904,7 +904,7 @@ public class Mapper {
   }
 
   private void readMappedField(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final MappedField mf,
       final Object entity,
       final EntityCache cache,
@@ -923,7 +923,7 @@ public class Mapper {
     } else {
       mapper = opts.getDefaultMapper();
     }
-    mapper.fromDBObject(datastore, dbObject, mf, entity, cache, this);
+    mapper.fromDBObject(mongoRepository, dbObject, mf, entity, cache, this);
   }
 
   private void writeMappedField(

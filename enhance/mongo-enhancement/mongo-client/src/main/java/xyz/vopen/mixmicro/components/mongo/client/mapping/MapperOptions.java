@@ -4,7 +4,7 @@ import xyz.vopen.mixmicro.components.mongo.client.ObjectFactory;
 import xyz.vopen.mixmicro.components.mongo.client.annotations.Reference;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.DefaultEntityCacheFactory;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCacheFactory;
-import xyz.vopen.mixmicro.components.mongo.client.mapping.lazy.DatastoreProvider;
+import xyz.vopen.mixmicro.components.mongo.client.mapping.lazy.MongoRepositoryProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.mongo.client.annotations.Embedded;
@@ -105,23 +105,23 @@ public class MapperOptions {
   }
 
   /**
-   * @return the DatastoreProvider Morphia should use
+   * @return the MongoRepositoryProvider Morphia should use
    * @deprecated unused
    */
   @Deprecated
-  public DatastoreProvider getDatastoreProvider() {
+  public MongoRepositoryProvider getMongoRepositoryProvider() {
     return null;
   }
 
   /**
-   * Sets the DatastoreProvider Morphia should use
+   * Sets the MongoRepositoryProvider Morphia should use
    *
-   * @param unused the DatastoreProvider to use
+   * @param unused the MongoRepositoryProvider to use
    * @deprecated unused
    */
   @Deprecated
-  public void setDatastoreProvider(final DatastoreProvider unused) {
-    LOG.warn("DatastoreProviders are no longer needed or used.");
+  public void setMongoRepositoryProvider(final MongoRepositoryProvider unused) {
+    LOG.warn("MongoRepositoryProviders are no longer needed or used.");
   }
 
   /** @return the mapper to use for top level entities */
@@ -624,10 +624,10 @@ public class MapperOptions {
     }
 
     /**
-     * @param datastoreProvider the provider to use
+     * @param mongoRepositoryProvider the provider to use
      * @return this
      */
-    public Builder datastoreProvider(final DatastoreProvider datastoreProvider) {
+    public Builder mongoRepositoryProvider(final MongoRepositoryProvider mongoRepositoryProvider) {
       return this;
     }
 

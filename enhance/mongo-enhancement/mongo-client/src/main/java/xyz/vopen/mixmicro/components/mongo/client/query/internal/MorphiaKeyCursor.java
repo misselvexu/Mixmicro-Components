@@ -5,7 +5,7 @@ import com.mongodb.DBObject;
 import com.mongodb.ServerAddress;
 import com.mongodb.ServerCursor;
 import com.mongodb.client.MongoCursor;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
 
@@ -23,24 +23,24 @@ public class MorphiaKeyCursor<T> implements MongoCursor<Key<T>> {
   private final Mapper mapper;
   private final Class<T> clazz;
   private final String collection;
-  private final Datastore datastore;
+  private final MongoRepository mongoRepository;
 
   /**
    * Create
    *
-   * @param datastore the Datastore to use when fetching this reference
+   * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param cursor the cursor to use
    * @param mapper the Mapper to use
    * @param clazz the original type being iterated
    * @param collection the mongodb collection
    */
   public MorphiaKeyCursor(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Cursor cursor,
       final Mapper mapper,
       final Class<T> clazz,
       final String collection) {
-    this.datastore = datastore;
+    this.mongoRepository = mongoRepository;
     this.wrapped = cursor;
     if (wrapped == null) {
       throw new IllegalArgumentException("The wrapped cursor can not be null");
@@ -120,7 +120,7 @@ public class MorphiaKeyCursor<T> implements MongoCursor<Key<T>> {
     Object id = dbObj.get("_id");
     if (id instanceof DBObject) {
       Class type = mapper.getMappedClass(clazz).getMappedIdField().getType();
-      id = mapper.fromDBObject(datastore, type, (DBObject) id, mapper.createEntityCache());
+      id = mapper.fromDBObject(mongoRepository, type, (DBObject) id, mapper.createEntityCache());
     }
     return new Key<T>(clazz, collection, id);
   }

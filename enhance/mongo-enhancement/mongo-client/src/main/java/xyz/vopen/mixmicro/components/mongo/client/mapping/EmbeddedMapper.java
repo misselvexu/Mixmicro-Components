@@ -3,7 +3,7 @@ package xyz.vopen.mixmicro.components.mongo.client.mapping;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import xyz.vopen.mixmicro.components.mongo.client.Datastore;
+import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCache;
 import xyz.vopen.mixmicro.components.mongo.client.utils.IterHelper;
 import xyz.vopen.mixmicro.components.mongo.client.utils.IterHelper.MapIterCallback;
@@ -40,7 +40,7 @@ class EmbeddedMapper implements CustomMapper {
 
   @Override
   public void fromDBObject(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final DBObject dbObject,
       final MappedField mf,
       final Object entity,
@@ -48,9 +48,9 @@ class EmbeddedMapper implements CustomMapper {
       final Mapper mapper) {
     try {
       if (mf.isMap()) {
-        readMap(datastore, mapper, entity, cache, mf, dbObject);
+        readMap(mongoRepository, mapper, entity, cache, mf, dbObject);
       } else if (mf.isMultipleValues()) {
-        readCollection(datastore, mapper, entity, cache, mf, dbObject);
+        readCollection(mongoRepository, mapper, entity, cache, mf, dbObject);
       } else {
         // single element
         final Object dbVal = mf.getDbObjectValue(dbObject);
@@ -73,7 +73,7 @@ class EmbeddedMapper implements CustomMapper {
             } else if (isDBObject) {
               DBObject value = (DBObject) dbVal;
               refObj = mapper.getOptions().getObjectFactory().createInstance(mapper, mf, value);
-              refObj = mapper.fromDb(datastore, value, refObj, cache);
+              refObj = mapper.fromDb(mongoRepository, value, refObj, cache);
             } else {
               refObj = dbVal;
             }
@@ -127,7 +127,7 @@ class EmbeddedMapper implements CustomMapper {
 
   @SuppressWarnings("unchecked")
   private void readCollection(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Mapper mapper,
       final Object entity,
       final EntityCache cache,
@@ -169,7 +169,7 @@ class EmbeddedMapper implements CustomMapper {
           } else {
             newEntity =
                 readMapOrCollectionOrEntity(
-                    datastore, mapper, cache, mf, ephemeralMappedField, (DBObject) o);
+                    mongoRepository, mapper, cache, mf, ephemeralMappedField, (DBObject) o);
           }
         }
 
@@ -189,7 +189,7 @@ class EmbeddedMapper implements CustomMapper {
 
   @SuppressWarnings("unchecked")
   private void readMap(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Mapper mapper,
       final Object entity,
       final EntityCache cache,
@@ -221,7 +221,7 @@ class EmbeddedMapper implements CustomMapper {
                       if (val instanceof DBObject) {
                         newEntity =
                             readMapOrCollectionOrEntity(
-                                datastore, mapper, cache, mf, ephemeralMappedField, (DBObject) val);
+                                mongoRepository, mapper, cache, mf, ephemeralMappedField, (DBObject) val);
                       } else {
                         newEntity = val;
                       }
@@ -240,19 +240,19 @@ class EmbeddedMapper implements CustomMapper {
   }
 
   private Object readMapOrCollectionOrEntity(
-      final Datastore datastore,
+      final MongoRepository mongoRepository,
       final Mapper mapper,
       final EntityCache cache,
       final MappedField mf,
       final EphemeralMappedField ephemeralMappedField,
       final DBObject dbObj) {
     if (ephemeralMappedField != null) {
-      mapper.fromDb(datastore, dbObj, ephemeralMappedField, cache);
+      mapper.fromDb(mongoRepository, dbObj, ephemeralMappedField, cache);
       return ephemeralMappedField.getValue();
     } else {
       final Object newEntity =
           mapper.getOptions().getObjectFactory().createInstance(mapper, mf, dbObj);
-      return mapper.fromDb(datastore, dbObj, newEntity, cache);
+      return mapper.fromDb(mongoRepository, dbObj, newEntity, cache);
     }
   }
 
