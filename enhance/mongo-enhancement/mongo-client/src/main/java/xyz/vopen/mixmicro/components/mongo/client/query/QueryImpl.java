@@ -19,8 +19,8 @@ import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedField;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCache;
 import xyz.vopen.mixmicro.components.mongo.client.query.internal.MappingIterable;
-import xyz.vopen.mixmicro.components.mongo.client.query.internal.MorphiaCursor;
-import xyz.vopen.mixmicro.components.mongo.client.query.internal.MorphiaKeyCursor;
+import xyz.vopen.mixmicro.components.mongo.client.query.internal.MixMongoCursor;
+import xyz.vopen.mixmicro.components.mongo.client.query.internal.MixMongoKeyCursor;
 import org.bson.types.CodeWScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,17 +121,17 @@ public class QueryImpl<T> implements CriteriaContainer, Query<T> {
   }
 
   @Override
-  public MorphiaKeyCursor<T> keys() {
+  public MixMongoKeyCursor<T> keys() {
     return keys(new FindOptions());
   }
 
   @Override
-  public MorphiaKeyCursor<T> keys(final FindOptions options) {
+  public MixMongoKeyCursor<T> keys(final FindOptions options) {
     QueryImpl<T> cloned = cloneQuery();
     cloned.getOptions().projection(new BasicDBObject("_id", 1));
     cloned.includeFields = true;
 
-    return new MorphiaKeyCursor<T>(
+    return new MixMongoKeyCursor<T>(
         ds, cloned.prepareCursor(options), ds.getMapper(), clazz, dbColl.getName());
   }
 
@@ -176,37 +176,37 @@ public class QueryImpl<T> implements CriteriaContainer, Query<T> {
   }
 
   @Override
-  public MorphiaIterator<T, T> fetch() {
+  public MixMongoIterator<T, T> fetch() {
     return fetch(getOptions());
   }
 
   @Override
-  public MorphiaIterator<T, T> fetch(final FindOptions options) {
+  public MixMongoIterator<T, T> fetch(final FindOptions options) {
     final DBCursor cursor = prepareCursor(options);
     if (LOG.isTraceEnabled()) {
       LOG.trace("Getting cursor(" + dbColl.getName() + ")  for query:" + cursor.getQuery());
     }
 
-    return new MorphiaIterator<T, T>(ds, cursor, ds.getMapper(), clazz, dbColl.getName(), cache);
+    return new MixMongoIterator<T, T>(ds, cursor, ds.getMapper(), clazz, dbColl.getName(), cache);
   }
 
   @Override
-  public MorphiaCursor<T> find() {
+  public MixMongoCursor<T> find() {
     return find(getOptions());
   }
 
   @Override
-  public MorphiaCursor<T> find(final FindOptions options) {
-    return new MorphiaCursor<T>(ds, prepareCursor(options), ds.getMapper(), clazz, cache);
+  public MixMongoCursor<T> find(final FindOptions options) {
+    return new MixMongoCursor<T>(ds, prepareCursor(options), ds.getMapper(), clazz, cache);
   }
 
   @Override
-  public MorphiaIterator<T, T> fetchEmptyEntities() {
+  public MixMongoIterator<T, T> fetchEmptyEntities() {
     return fetchEmptyEntities(getOptions());
   }
 
   @Override
-  public MorphiaIterator<T, T> fetchEmptyEntities(final FindOptions options) {
+  public MixMongoIterator<T, T> fetchEmptyEntities(final FindOptions options) {
     QueryImpl<T> cloned = cloneQuery();
     cloned.getOptions().projection(new BasicDBObject("_id", 1));
     cloned.includeFields = true;
@@ -214,18 +214,18 @@ public class QueryImpl<T> implements CriteriaContainer, Query<T> {
   }
 
   @Override
-  public MorphiaKeyIterator<T> fetchKeys() {
+  public MixMongoKeyIterator<T> fetchKeys() {
     return fetchKeys(getOptions());
   }
 
   @Override
-  public MorphiaKeyIterator<T> fetchKeys(final FindOptions options) {
+  public MixMongoKeyIterator<T> fetchKeys(final FindOptions options) {
     QueryImpl<T> cloned = cloneQuery();
     final FindOptions opts = cloned.getOptions();
     opts.projection(new BasicDBObject("_id", 1));
     cloned.includeFields = true;
 
-    return new MorphiaKeyIterator<T>(
+    return new MixMongoKeyIterator<T>(
         ds, cloned.prepareCursor(options), ds.getMapper(), clazz, dbColl.getName());
   }
 
@@ -276,13 +276,13 @@ public class QueryImpl<T> implements CriteriaContainer, Query<T> {
 
   @Override
   @Deprecated
-  public MorphiaIterator<T, T> tail() {
+  public MixMongoIterator<T, T> tail() {
     return tail(true);
   }
 
   @Override
   @Deprecated
-  public MorphiaIterator<T, T> tail(final boolean awaitData) {
+  public MixMongoIterator<T, T> tail(final boolean awaitData) {
     return fetch(getOptions().copy().cursorType(awaitData ? TailableAwait : Tailable));
   }
 

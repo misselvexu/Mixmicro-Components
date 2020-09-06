@@ -15,7 +15,7 @@ import java.util.List;
 public class MultiLineString implements Geometry {
   private final List<LineString> coordinates;
 
-  @SuppressWarnings("UnusedDeclaration") // needed for Morphia
+  @SuppressWarnings("UnusedDeclaration") // needed for MixMongo
   private MultiLineString() {
     this.coordinates = new ArrayList<LineString>();
   }

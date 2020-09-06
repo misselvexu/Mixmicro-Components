@@ -19,12 +19,12 @@ package xyz.vopen.mixmicro.components.mongo.client.converters.experimental;
 import xyz.vopen.mixmicro.components.mongo.client.converters.TypeConverter;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedField;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
-import xyz.vopen.mixmicro.components.mongo.client.mapping.experimental.MorphiaReference;
+import xyz.vopen.mixmicro.components.mongo.client.mapping.experimental.MixMongoReference;
 
 /**
- * A converter for MorphiaReference values
+ * A converter for MixMongoReference values
  *
- * @see MorphiaReference
+ * @see MixMongoReference
  *
  */
 public class ReferenceConverter extends TypeConverter {
@@ -36,7 +36,7 @@ public class ReferenceConverter extends TypeConverter {
    * @param mapper the mapper
    */
   public ReferenceConverter(final Mapper mapper) {
-    super(MorphiaReference.class);
+    super(MixMongoReference.class);
     this.mapper = mapper;
   }
 
@@ -44,7 +44,7 @@ public class ReferenceConverter extends TypeConverter {
   public Object encode(final Object value, final MappedField optionalExtraInfo) {
     return value == null
         ? null
-        : ((MorphiaReference) value).encode(mapper, value, optionalExtraInfo);
+        : ((MixMongoReference) value).encode(mapper, value, optionalExtraInfo);
   }
 
   @Override

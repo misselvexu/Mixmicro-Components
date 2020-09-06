@@ -17,13 +17,13 @@ import java.util.Set;
  * @since 1.5
  */
 @SuppressWarnings("unchecked")
-public abstract class MorphiaReference<T> {
+public abstract class MixMongoReference<T> {
   private MongoRepository mongoRepository;
   private MappedClass mappedClass;
 
-  MorphiaReference() {}
+  MixMongoReference() {}
 
-  MorphiaReference(final MongoRepository mongoRepository, final MappedClass mappedClass) {
+  MixMongoReference(final MongoRepository mongoRepository, final MappedClass mappedClass) {
     this.mongoRepository = mongoRepository;
     this.mappedClass = mappedClass;
   }
@@ -73,20 +73,20 @@ public abstract class MorphiaReference<T> {
   }
 
   /**
-   * Wraps an value in a MorphiaReference to storing on an entity
+   * Wraps an value in a MixMongoReference to storing on an entity
    *
    * @param value the value wrap
    * @param <V> the type of the value
-   * @return the MorphiaReference wrapper
+   * @return the MixMongoReference wrapper
    */
   @SuppressWarnings("unchecked")
-  public static <V> MorphiaReference<V> wrap(final V value) {
+  public static <V> MixMongoReference<V> wrap(final V value) {
     if (value instanceof List) {
-      return (MorphiaReference<V>) new ListReference<V>((List<V>) value);
+      return (MixMongoReference<V>) new ListReference<V>((List<V>) value);
     } else if (value instanceof Set) {
-      return (MorphiaReference<V>) new SetReference<V>((Set<V>) value);
+      return (MixMongoReference<V>) new SetReference<V>((Set<V>) value);
     } else if (value instanceof Map) {
-      return (MorphiaReference<V>) new MapReference<V>((Map<String, V>) value);
+      return (MixMongoReference<V>) new MapReference<V>((Map<String, V>) value);
     } else {
       return new SingleReference<V>(value);
     }

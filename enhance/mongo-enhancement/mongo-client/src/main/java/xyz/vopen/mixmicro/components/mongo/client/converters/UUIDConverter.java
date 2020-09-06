@@ -5,7 +5,7 @@ import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedField;
 import java.util.UUID;
 
 /**
- * provided by http://code.google.com/p/morphia/issues/detail?id=320
+ * provided by http://code.google.com/p/mix-mongo/issues/detail?id=320
  *
  * @author stummb
  * @author scotthernandez

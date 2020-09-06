@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Morphia's logging factory that can return either an slf4j LoggerFactory or a JDK LoggerFactory.
+ * MixMongo's logging factory that can return either an slf4j LoggerFactory or a JDK LoggerFactory.
  */
-public final class MorphiaLoggerFactory {
+public final class MixMongoLoggerFactory {
   private static final List<String> FACTORIES = new ArrayList<String>();
   private static LoggerFactory loggerFactory;
 
   static {
-    FACTORIES.add("dev.morphia.logging.slf4j.SLF4JLoggerImplFactory");
+    FACTORIES.add("xyz.vopen.mixmicro.components.mongo.client.logging.slf4j.SLF4JLoggerImplFactory");
     FACTORIES.add(JDKLoggerFactory.class.getName());
   }
 
-  private MorphiaLoggerFactory() {}
+  private MixMongoLoggerFactory() {}
 
   /**
    * Gets or creates a Logger for the given class.
@@ -41,12 +41,12 @@ public final class MorphiaLoggerFactory {
       loggerFactory = newInstance(f);
       if (loggerFactory != null) {
         loggerFactory
-            .get(MorphiaLoggerFactory.class)
+            .get(MixMongoLoggerFactory.class)
             .info("LoggerImplFactory set to " + loggerFactory.getClass().getName());
         return;
       }
     }
-    throw new IllegalStateException("Cannot instantiate any MorphiaLoggerFactory");
+    throw new IllegalStateException("Cannot instantiate any MixMongoLoggerFactory");
   }
 
   private static LoggerFactory newInstance(final String f) {

@@ -22,7 +22,7 @@ public class GeometryCollection {
   private final String type = "GeometryCollection";
   private final List<Geometry> geometries;
 
-  @SuppressWarnings("UnusedDeclaration") // needed by morphia
+  @SuppressWarnings("UnusedDeclaration") // needed by mix-mongo
   private GeometryCollection() {
     geometries = new ArrayList<Geometry>();
   }

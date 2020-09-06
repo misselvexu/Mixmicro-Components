@@ -16,27 +16,27 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- * {@link MixmicroMongo}
+ * {@link MixMongo}
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @SuppressWarnings("ALL")
-public class MixmicroMongo {
-  private static final Logger LOG = LoggerFactory.getLogger(MixmicroMongo.class);
+public class MixMongo {
+  private static final Logger LOG = LoggerFactory.getLogger(MixMongo.class);
   private final Mapper mapper;
 
-  /** Creates a Morphia instance with a default Mapper and an empty class set. */
-  public MixmicroMongo() {
+  /** Creates a MixMongo instance with a default Mapper and an empty class set. */
+  public MixMongo() {
     this(new Mapper(), Collections.<Class>emptySet());
   }
 
   /**
-   * Creates a Morphia instance with the given Mapper and class set.
+   * Creates a MixMongo instance with the given Mapper and class set.
    *
    * @param mapper the Mapper to use
    * @param classesToMap the classes to map
    */
-  public MixmicroMongo(final Mapper mapper, final Set<Class> classesToMap) {
+  public MixMongo(final Mapper mapper, final Set<Class> classesToMap) {
     this.mapper = mapper;
     for (final Class c : classesToMap) {
       map(c);
@@ -44,20 +44,20 @@ public class MixmicroMongo {
   }
 
   /**
-   * Creates a Morphia instance with the given Mapper
+   * Creates a MixMongo instance with the given Mapper
    *
    * @param mapper the Mapper to use
    */
-  public MixmicroMongo(final Mapper mapper) {
+  public MixMongo(final Mapper mapper) {
     this(mapper, Collections.<Class>emptySet());
   }
 
   /**
-   * Creates a Morphia instance with the given classes
+   * Creates a MixMongo instance with the given classes
    *
    * @param classesToMap the classes to map
    */
-  public MixmicroMongo(final Set<Class> classesToMap) {
+  public MixMongo(final Set<Class> classesToMap) {
     this(new Mapper(), classesToMap);
   }
 
@@ -129,7 +129,7 @@ public class MixmicroMongo {
     }
   }
 
-  /** @return the mapper used by this instance of Morphia */
+  /** @return the mapper used by this instance of MixMongo */
   public Mapper getMapper() {
     return mapper;
   }
@@ -137,7 +137,6 @@ public class MixmicroMongo {
   /**
    * @return false. Setting this value has no value functionally or performance-wise.
    * @deprecated
-   * @see <a href="https://github.com/MorphiaOrg/morphia/issues/1052">Issue #1052</a>
    */
   @Deprecated
   public boolean getUseBulkWriteOperations() {
@@ -157,7 +156,6 @@ public class MixmicroMongo {
   /**
    * @return false. Setting this value has no value functionally or performance-wise.
    * @deprecated
-   * @see <a href="https://github.com/MorphiaOrg/morphia/issues/1052">Issue #1052</a>
    */
   @Deprecated
   public boolean isUseBulkWriteOperations() {
@@ -165,10 +163,9 @@ public class MixmicroMongo {
   }
 
   /**
-   * Configures Morphia to use bulk writes. Only useful with MongoDB 2.6+.
+   * Configures MixMongo to use bulk writes. Only useful with MongoDB 2.6+.
    *
-   * @param useBulkWriteOperations true if Morphia should use bulk writes
-   * @see <a href="https://github.com/MorphiaOrg/morphia/issues/1052">Issue #1052</a>
+   * @param useBulkWriteOperations true if MixMongo should use bulk writes
    * @deprecated Setting this value has no value functionally or performance-wise.
    */
   @Deprecated
@@ -180,7 +177,7 @@ public class MixmicroMongo {
    * @param entityClasses the classes to map
    * @return this
    */
-  public synchronized MixmicroMongo map(final Class... entityClasses) {
+  public synchronized MixMongo map(final Class... entityClasses) {
     if (entityClasses != null && entityClasses.length > 0) {
       for (final Class entityClass : entityClasses) {
         if (!mapper.isMapped(entityClass)) {
@@ -197,7 +194,7 @@ public class MixmicroMongo {
    * @param entityClasses the classes to map
    * @return this
    */
-  public synchronized MixmicroMongo map(final Set<Class> entityClasses) {
+  public synchronized MixMongo map(final Set<Class> entityClasses) {
     if (entityClasses != null && !entityClasses.isEmpty()) {
       for (final Class entityClass : entityClasses) {
         if (!mapper.isMapped(entityClass)) {
@@ -213,9 +210,9 @@ public class MixmicroMongo {
    * mapping.
    *
    * @param packageName the name of the package to process
-   * @return the Morphia instance
+   * @return the MixMongo instance
    */
-  public synchronized MixmicroMongo mapPackage(final String packageName) {
+  public synchronized MixMongo mapPackage(final String packageName) {
     return mapPackage(packageName, false);
   }
 
@@ -225,9 +222,9 @@ public class MixmicroMongo {
    * @param packageName the name of the package to process
    * @param ignoreInvalidClasses specifies whether to ignore classes in the package that cannot be
    *     mapped
-   * @return the Morphia instance
+   * @return the MixMongo instance
    */
-  public synchronized MixmicroMongo mapPackage(
+  public synchronized MixMongo mapPackage(
       final String packageName, final boolean ignoreInvalidClasses) {
     try {
       for (final Class clazz :
@@ -260,7 +257,7 @@ public class MixmicroMongo {
    * @param clazz the class to use when trying to find others to map
    * @return this
    */
-  public MixmicroMongo mapPackageFromClass(final Class clazz) {
+  public MixMongo mapPackageFromClass(final Class clazz) {
     return mapPackage(clazz.getPackage().getName(), false);
   }
 

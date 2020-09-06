@@ -17,7 +17,7 @@ import java.util.List;
 public class MultiPolygon implements Geometry {
   private final List<Polygon> coordinates;
 
-  @SuppressWarnings("UnusedDeclaration") // used by Morphia
+  @SuppressWarnings("UnusedDeclaration") // used by MixMongo
   private MultiPolygon() {
     coordinates = new ArrayList<Polygon>();
   }

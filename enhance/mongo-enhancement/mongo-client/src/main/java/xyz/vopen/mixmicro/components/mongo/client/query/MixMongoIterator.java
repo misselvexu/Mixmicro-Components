@@ -14,11 +14,11 @@ import java.util.NoSuchElementException;
  * @param <T> the original type being iterated
  * @param <V> the type of the values returned
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @see MorphiaKeyIterator
+ * @see MixMongoKeyIterator
  * @deprecated this is being replaced by {@link MongoCursor}
  */
 @Deprecated
-public class MorphiaIterator<T, V> implements Iterable<V>, Iterator<V> {
+public class MixMongoIterator<T, V> implements Iterable<V>, Iterator<V> {
   private final Iterator<DBObject> wrapped;
   private final Mapper mapper;
   private final Class<T> clazz;
@@ -29,7 +29,7 @@ public class MorphiaIterator<T, V> implements Iterable<V>, Iterator<V> {
   private MongoRepository mongoRepository;
 
   /**
-   * Creates a MorphiaIterator
+   * Creates a MixMongoIterator
    *
    * @param mongoRepository the MongoRepository to use when fetching this reference
    * @param it the Iterator to use
@@ -38,7 +38,7 @@ public class MorphiaIterator<T, V> implements Iterable<V>, Iterator<V> {
    * @param collection the mongodb collection
    * @param cache the EntityCache
    */
-  public MorphiaIterator(
+  public MixMongoIterator(
       final MongoRepository mongoRepository,
       final Iterator<DBObject> it,
       final Mapper mapper,

@@ -165,7 +165,7 @@ public class MappedClass {
   }
 
   /**
-   * Adds an annotation for Morphia to retain when mapping.
+   * Adds an annotation for MixMongo to retain when mapping.
    *
    * @param annotation the type to retain
    */

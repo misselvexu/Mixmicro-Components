@@ -3,7 +3,7 @@ package xyz.vopen.mixmicro.components.mongo.client.internal;
 import java.util.List;
 
 /**
- * This class provides a set of utilities for use in Morphia. All these methods should be considered
+ * This class provides a set of utilities for use in MixMongo. All these methods should be considered
  * internal only and should not be used in application code.
  */
 public final class MongoUtils {

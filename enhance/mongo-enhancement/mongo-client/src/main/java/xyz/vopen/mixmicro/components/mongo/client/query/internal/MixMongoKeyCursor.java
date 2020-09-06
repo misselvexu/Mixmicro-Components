@@ -6,62 +6,48 @@ import com.mongodb.ServerAddress;
 import com.mongodb.ServerCursor;
 import com.mongodb.client.MongoCursor;
 import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
+import xyz.vopen.mixmicro.components.mongo.client.Key;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
-import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCache;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-/** @param <T> the original type being iterated */
-public class MorphiaCursor<T> implements MongoCursor<T> {
+/**
+ * Defines an Iterator across the Key values for a given type.
+ *
+ * @param <T> the entity type
+ */
+public class MixMongoKeyCursor<T> implements MongoCursor<Key<T>> {
   private final Cursor wrapped;
   private final Mapper mapper;
   private final Class<T> clazz;
-  private final EntityCache cache;
+  private final String collection;
   private final MongoRepository mongoRepository;
 
   /**
-   * Creates a MorphiaCursor
+   * Create
    *
    * @param mongoRepository the MongoRepository to use when fetching this reference
-   * @param cursor the Iterator to use
+   * @param cursor the cursor to use
    * @param mapper the Mapper to use
    * @param clazz the original type being iterated
-   * @param cache the EntityCache
+   * @param collection the mongodb collection
    */
-  public MorphiaCursor(
+  public MixMongoKeyCursor(
       final MongoRepository mongoRepository,
       final Cursor cursor,
       final Mapper mapper,
       final Class<T> clazz,
-      final EntityCache cache) {
-    wrapped = cursor;
+      final String collection) {
+    this.mongoRepository = mongoRepository;
+    this.wrapped = cursor;
     if (wrapped == null) {
       throw new IllegalArgumentException("The wrapped cursor can not be null");
     }
     this.mapper = mapper;
     this.clazz = clazz;
-    this.cache = cache;
-    this.mongoRepository = mongoRepository;
-  }
-
-  /**
-   * Converts this cursor to a List. Care should be taken on large datasets as OutOfMemoryErrors are
-   * a risk.
-   *
-   * @return the list of Entities
-   */
-  public List<T> toList() {
-    final List<T> results = new ArrayList<T>();
-    try {
-      while (wrapped.hasNext()) {
-        results.add(next());
-      }
-    } finally {
-      wrapped.close();
-    }
-    return results;
+    this.collection = collection;
   }
 
   /** Closes the underlying cursor. */
@@ -80,20 +66,38 @@ public class MorphiaCursor<T> implements MongoCursor<T> {
   }
 
   @Override
-  public T next() {
+  public Key<T> next() {
     if (!hasNext()) {
       throw new NoSuchElementException();
     }
-    return mapper.fromDBObject(mongoRepository, clazz, wrapped.next(), cache);
+    return convertItem(wrapped.next());
   }
 
   @Override
-  public T tryNext() {
+  public Key<T> tryNext() {
     if (hasNext()) {
       return next();
     } else {
       return null;
     }
+  }
+
+  /**
+   * Converts this cursor to a List. Care should be taken on large datasets as OutOfMemoryErrors are
+   * a risk.
+   *
+   * @return the list of Entities
+   */
+  public List<Key<T>> toList() {
+    final List<Key<T>> results = new ArrayList<Key<T>>();
+    try {
+      while (wrapped.hasNext()) {
+        results.add(next());
+      }
+    } finally {
+      wrapped.close();
+    }
+    return results;
   }
 
   @Override
@@ -111,7 +115,13 @@ public class MorphiaCursor<T> implements MongoCursor<T> {
     wrapped.remove();
   }
 
-  protected DBObject getNext() {
-    return wrapped.next();
+  @SuppressWarnings("unchecked")
+  private Key<T> convertItem(final DBObject dbObj) {
+    Object id = dbObj.get("_id");
+    if (id instanceof DBObject) {
+      Class type = mapper.getMappedClass(clazz).getMappedIdField().getType();
+      id = mapper.fromDBObject(mongoRepository, type, (DBObject) id, mapper.createEntityCache());
+    }
+    return new Key<T>(clazz, collection, id);
   }
 }

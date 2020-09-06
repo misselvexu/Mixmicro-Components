@@ -2,7 +2,7 @@ package xyz.vopen.mixmicro.components.mongo.client.validation;
 
 import com.mongodb.DBObject;
 import xyz.vopen.mixmicro.components.mongo.client.AbstractEntityInterceptor;
-import xyz.vopen.mixmicro.components.mongo.client.MixmicroMongo;
+import xyz.vopen.mixmicro.components.mongo.client.MixMongo;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
 
 import javax.validation.Configuration;
@@ -17,9 +17,9 @@ public class ValidationExtension extends AbstractEntityInterceptor {
   /**
    * Creates a ValidationExtension
    *
-   * @param m the Morphia instance to use
+   * @param m the MixMongo instance to use
    */
-  public ValidationExtension(final MixmicroMongo m) {
+  public ValidationExtension(final MixMongo m) {
     final Configuration<?> configuration = Validation.byDefaultProvider().configure();
     validationFactory = configuration.buildValidatorFactory();
 

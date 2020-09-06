@@ -25,7 +25,7 @@ public class Polygon implements Geometry {
   private final LineString exteriorBoundary;
   private final List<LineString> interiorBoundaries;
 
-  @SuppressWarnings("UnusedDeclaration") // used by Morphia
+  @SuppressWarnings("UnusedDeclaration") // used by MixMongo
   private Polygon() {
     exteriorBoundary = null;
     interiorBoundaries = new ArrayList<LineString>();

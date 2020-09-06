@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The ObjectFactory is used by morphia to create instances of classes which can be customized to
+ * The ObjectFactory is used by mix-mongo to create instances of classes which can be customized to
  * fit a particular applications needs.
  */
 public interface ObjectFactory {
@@ -35,7 +35,7 @@ public interface ObjectFactory {
 
   /**
    * Creates an instance of the class defined in the discriminator field in the dbObject passed in.
-   * If that field is missing, morphia attempts to the MappedField to determine which concrete class
+   * If that field is missing, mix-mongo attempts to the MappedField to determine which concrete class
    * to instantiate.
    *
    * @param mapper the Mapper to use
@@ -46,7 +46,7 @@ public interface ObjectFactory {
   Object createInstance(Mapper mapper, MappedField mf, DBObject dbObj);
 
   /**
-   * Defines how morphia creates a List object.
+   * Defines how mix-mongo creates a List object.
    *
    * @param mf the MappedField containing any metadata that might define the type of the List to
    *     create
@@ -55,7 +55,7 @@ public interface ObjectFactory {
   List createList(MappedField mf);
 
   /**
-   * Defines how morphia creates a Map object.
+   * Defines how mix-mongo creates a Map object.
    *
    * @param mf the MappedField containing any metadata that might define the type of the Map to
    *     create
@@ -64,7 +64,7 @@ public interface ObjectFactory {
   Map createMap(MappedField mf);
 
   /**
-   * Defines how morphia creates a Set object.
+   * Defines how mix-mongo creates a Set object.
    *
    * @param mf the MappedField containing any metadata that might define the type of the Set to
    *     create

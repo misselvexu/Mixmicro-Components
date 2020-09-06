@@ -2,7 +2,7 @@ package xyz.vopen.mixmicro.components.mongo.client.geo;
 
 import java.util.List;
 
-/** Enumerates all the GeoJson types that are currently supported by Morphia. */
+/** Enumerates all the GeoJson types that are currently supported by MixMongo. */
 @SuppressWarnings("unchecked") // can't know, or define generics for, the Lists in the factory
 public enum GeoJsonType implements GeometryFactory {
   POINT("Point", Point.class) {

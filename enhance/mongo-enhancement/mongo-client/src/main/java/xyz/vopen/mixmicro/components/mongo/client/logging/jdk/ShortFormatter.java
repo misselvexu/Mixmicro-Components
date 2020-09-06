@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.components.mongo.client.logging.jdk;
 
 import xyz.vopen.mixmicro.components.mongo.client.logging.Logger;
-import xyz.vopen.mixmicro.components.mongo.client.logging.MorphiaLoggerFactory;
+import xyz.vopen.mixmicro.components.mongo.client.logging.MixMongoLoggerFactory;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -14,7 +14,7 @@ import java.util.logging.LogRecord;
 public class ShortFormatter extends Formatter {
   private static final MessageFormat FORMAT =
       new MessageFormat("[{1}|{2}|{3,date,h:mm:ss}]{0} :{4}");
-  private static final Logger LOG = MorphiaLoggerFactory.get(ShortFormatter.class);
+  private static final Logger LOG = MixMongoLoggerFactory.get(ShortFormatter.class);
 
   @Override
   @SuppressWarnings("ThrowableResultOfMethodCallIgnored")

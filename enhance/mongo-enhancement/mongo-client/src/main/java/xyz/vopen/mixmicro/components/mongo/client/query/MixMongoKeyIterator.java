@@ -15,7 +15,7 @@ import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
  * @deprecated this is being replaced by {@link MongoCursor}
  */
 @Deprecated
-public class MorphiaKeyIterator<T> extends MorphiaIterator<T, Key<T>> {
+public class MixMongoKeyIterator<T> extends MixMongoIterator<T, Key<T>> {
   /**
    * Create
    *
@@ -25,7 +25,7 @@ public class MorphiaKeyIterator<T> extends MorphiaIterator<T, Key<T>> {
    * @param clazz the original type being iterated
    * @param collection the mongodb collection
    */
-  public MorphiaKeyIterator(
+  public MixMongoKeyIterator(
       final MongoRepository mongoRepository,
       final DBCursor cursor,
       final Mapper mapper,

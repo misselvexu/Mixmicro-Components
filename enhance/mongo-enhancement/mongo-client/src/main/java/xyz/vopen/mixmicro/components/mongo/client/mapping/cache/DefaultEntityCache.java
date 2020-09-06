@@ -8,7 +8,7 @@ import xyz.vopen.mixmicro.components.mongo.client.ext.ReferenceMap;
 import java.util.HashMap;
 import java.util.Map;
 
-/** This is the default EntityCache for Morphia */
+/** This is the default EntityCache for MixMongo */
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class DefaultEntityCache implements EntityCache {
 

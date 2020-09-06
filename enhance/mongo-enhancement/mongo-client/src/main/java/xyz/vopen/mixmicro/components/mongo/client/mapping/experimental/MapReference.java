@@ -19,7 +19,7 @@ import java.util.Map.Entry;
  * @param <T>
  *
  */
-public class MapReference<T> extends MorphiaReference<Map<String, T>> {
+public class MapReference<T> extends MixMongoReference<Map<String, T>> {
   private Map<String, Object> ids;
   private Map<String, T> values;
   private Map<String, List<Object>> collections = new HashMap<String, List<Object>>();

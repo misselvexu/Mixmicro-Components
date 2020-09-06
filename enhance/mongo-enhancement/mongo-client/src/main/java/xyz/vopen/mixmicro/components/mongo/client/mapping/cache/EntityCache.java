@@ -3,7 +3,7 @@ package xyz.vopen.mixmicro.components.mongo.client.mapping.cache;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
 
 /**
- * A primarily internal class used by MorphiaIterator to track entities loaded from mongo to prevent
+ * A primarily internal class used by MixMongoIterator to track entities loaded from mongo to prevent
  * multiple loads of objects when keys are seen multiple times in a query result.
  */
 public interface EntityCache {

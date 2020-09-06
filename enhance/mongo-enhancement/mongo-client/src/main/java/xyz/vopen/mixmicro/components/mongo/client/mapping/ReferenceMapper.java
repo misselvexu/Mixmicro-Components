@@ -9,7 +9,7 @@ import xyz.vopen.mixmicro.components.mongo.client.annotations.Reference;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCache;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.experimental.CollectionReference;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.experimental.MapReference;
-import xyz.vopen.mixmicro.components.mongo.client.mapping.experimental.MorphiaReference;
+import xyz.vopen.mixmicro.components.mongo.client.mapping.experimental.MixMongoReference;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.experimental.SingleReference;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.lazy.LazyFeatureDependencies;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.lazy.proxy.ProxiedEntityReference;
@@ -47,8 +47,8 @@ class ReferenceMapper implements CustomMapper {
       final Mapper mapper) {
     final Class fieldType = mf.getType();
 
-    if (mf.getType().equals(MorphiaReference.class) && !mf.getTypeParameters().isEmpty()) {
-      readMorphiaReferenceValues(mapper, mongoRepository, mf, dbObject, entity);
+    if (mf.getType().equals(MixMongoReference.class) && !mf.getTypeParameters().isEmpty()) {
+      readReferenceValues(mapper, mongoRepository, mf, dbObject, entity);
     } else {
       final Reference refAnn = mf.getAnnotation(Reference.class);
       if (mf.isMap()) {
@@ -76,8 +76,8 @@ class ReferenceMapper implements CustomMapper {
       return;
     }
 
-    if (fieldValue instanceof MorphiaReference && !mf.getTypeParameters().isEmpty()) {
-      writeMorphiaReferenceValues(dbObject, mf, fieldValue, name, mapper);
+    if (fieldValue instanceof MixMongoReference && !mf.getTypeParameters().isEmpty()) {
+      writeReferenceValues(dbObject, mf, fieldValue, name, mapper);
     } else {
       final Reference refAnn = mf.getAnnotation(Reference.class);
       if (mf.isMap()) {
@@ -436,14 +436,14 @@ class ReferenceMapper implements CustomMapper {
     }
   }
 
-  void readMorphiaReferenceValues(
+  void readReferenceValues(
       final Mapper mapper,
       final MongoRepository mongoRepository,
       final MappedField mappedField,
       final DBObject dbObject,
       final Object entity) {
     final Class paramType = mappedField.getTypeParameters().get(0).getType();
-    MorphiaReference<?> reference;
+    MixMongoReference<?> reference;
     if (Map.class.isAssignableFrom(paramType)) {
       reference = MapReference.decode(mongoRepository, mapper, mappedField, dbObject);
     } else if (Collection.class.isAssignableFrom(paramType)) {
@@ -454,7 +454,7 @@ class ReferenceMapper implements CustomMapper {
     mappedField.setFieldValue(entity, reference);
   }
 
-  void writeMorphiaReferenceValues(
+  void writeReferenceValues(
       final DBObject dbObject,
       final MappedField mf,
       final Object fieldValue,
@@ -463,7 +463,7 @@ class ReferenceMapper implements CustomMapper {
     final Class paramType = mf.getTypeParameters().get(0).getType();
 
     boolean notEmpty = true;
-    final Object value = ((MorphiaReference) fieldValue).encode(mapper, fieldValue, mf);
+    final Object value = ((MixMongoReference) fieldValue).encode(mapper, fieldValue, mf);
     final boolean notNull = value != null;
 
     if (Map.class.isAssignableFrom(paramType)) {

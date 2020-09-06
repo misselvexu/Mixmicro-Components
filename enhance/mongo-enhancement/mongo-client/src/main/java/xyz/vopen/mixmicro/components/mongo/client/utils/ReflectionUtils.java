@@ -322,7 +322,7 @@ public final class ReflectionUtils {
    * @param c the class to check against
    * @return true if the field is parameterized and c is the class that parameterizes the field, or
    *     is an interface that the parameterized class implements, else false
-   * @deprecated this class is unused in morphia and will be removed in a future release
+   * @deprecated this class is unused in mix-mongo and will be removed in a future release
    */
   public static boolean isFieldParameterizedWithClass(final Field field, final Class c) {
     if (field.getGenericType() instanceof ParameterizedType) {
@@ -355,7 +355,7 @@ public final class ReflectionUtils {
    *
    * @param field the field
    * @return true if the field is parameterized with a valid JCR property type, else false
-   * @deprecated this class is unused in morphia and will be removed in a future release
+   * @deprecated this class is unused in mix-mongo and will be removed in a future release
    */
   public static boolean isFieldParameterizedWithPropertyType(final Field field) {
     if (field.getGenericType() instanceof ParameterizedType) {
@@ -608,7 +608,7 @@ public final class ReflectionUtils {
    * @param childClass the child class
    * @param <T> the type of the base class
    * @return a list of the raw classes for the actual type arguments.
-   * @deprecated this class is unused in morphia and will be removed in a future release
+   * @deprecated this class is unused in mix-mongo and will be removed in a future release
    */
   public static <T> List<Class<?>> getTypeArguments(
       final Class<T> baseClass, final Class<? extends T> childClass) {

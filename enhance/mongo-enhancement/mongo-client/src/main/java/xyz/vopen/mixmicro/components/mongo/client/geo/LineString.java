@@ -15,7 +15,7 @@ import java.util.List;
 public class LineString implements Geometry {
   private final List<Point> coordinates;
 
-  @SuppressWarnings("UnusedDeclaration") // used by Morphia
+  @SuppressWarnings("UnusedDeclaration") // used by MixMongo
   private LineString() {
     coordinates = new ArrayList<Point>();
   }

@@ -18,7 +18,7 @@ import xyz.vopen.mixmicro.components.mongo.client.mapping.MappedField;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
 import xyz.vopen.mixmicro.components.mongo.client.query.Query;
 import xyz.vopen.mixmicro.components.mongo.client.query.Sort;
-import xyz.vopen.mixmicro.components.mongo.client.query.internal.MorphiaCursor;
+import xyz.vopen.mixmicro.components.mongo.client.query.internal.MixMongoCursor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -88,7 +88,7 @@ public class AggregationPipelineImpl implements AggregationPipeline {
     LOG.debug("stages = " + stages);
 
     Cursor cursor = collection.aggregate(stages, options, readPreference);
-    return new MorphiaCursor<U>(repository, cursor, mapper, target, mapper.createEntityCache());
+    return new MixMongoCursor<U>(repository, cursor, mapper, target, mapper.createEntityCache());
   }
 
   @Override

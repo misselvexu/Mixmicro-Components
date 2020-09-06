@@ -23,7 +23,7 @@ import static java.util.Arrays.asList;
  * @param <C>
  *
  */
-public abstract class CollectionReference<C extends Collection> extends MorphiaReference<C> {
+public abstract class CollectionReference<C extends Collection> extends MixMongoReference<C> {
   private List<Object> ids;
   private Map<String, List<Object>> collections = new HashMap<String, List<Object>>();
 
@@ -139,13 +139,13 @@ public abstract class CollectionReference<C extends Collection> extends MorphiaR
    * @param dbObject the DBObject to decode
    * @return the entities
    */
-  public static MorphiaReference<?> decode(
+  public static MixMongoReference<?> decode(
       final MongoRepository mongoRepository,
       final Mapper mapper,
       final MappedField mappedField,
       final Class paramType,
       final DBObject dbObject) {
-    MorphiaReference reference = null;
+    MixMongoReference reference = null;
     final List dbVal = (List) mappedField.getDbObjectValue(dbObject);
     if (dbVal != null) {
       final Class subType = mappedField.getTypeParameters().get(0).getSubClass();

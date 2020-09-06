@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import xyz.vopen.mixmicro.components.boot.mongo.MongoClientProperties;
 import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
-import xyz.vopen.mixmicro.components.mongo.client.MixmicroMongo;
+import xyz.vopen.mixmicro.components.mongo.client.MixMongo;
 
 import static xyz.vopen.mixmicro.components.boot.mongo.MongoClientProperties.MONGO_CONFIG_PROPERTIES_PREFIX;
 
@@ -39,7 +39,7 @@ public class MongoClientAutoConfiguration {
   @Primary
   public MongoRepository mongoRepository(MongoClientProperties properties) {
 
-    MixmicroMongo mongo = new MixmicroMongo();
+    MixMongo mongo = new MixMongo();
 
     mongo.mapPackage(properties.getBasePackage());
 

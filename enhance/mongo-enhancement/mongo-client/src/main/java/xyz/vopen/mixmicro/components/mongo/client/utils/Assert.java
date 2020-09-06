@@ -2,7 +2,7 @@ package xyz.vopen.mixmicro.components.mongo.client.utils;
 
 import static java.lang.String.format;
 
-/** Provides various assertions for Morphia during validation */
+/** Provides various assertions for MixMongo during validation */
 public final class Assert {
   private Assert() {}
 
@@ -76,7 +76,7 @@ public final class Assert {
     }
   }
 
-  /** Represents a failed Morphia Assertion */
+  /** Represents a failed MixMongo Assertion */
   public static class AssertionFailedException extends RuntimeException {
 
     private static final long serialVersionUID = 435272532743543854L;

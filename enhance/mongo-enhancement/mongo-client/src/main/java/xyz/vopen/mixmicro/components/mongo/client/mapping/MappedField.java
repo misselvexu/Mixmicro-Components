@@ -17,7 +17,7 @@ import xyz.vopen.mixmicro.components.mongo.client.annotations.Serialized;
 import xyz.vopen.mixmicro.components.mongo.client.annotations.Text;
 import xyz.vopen.mixmicro.components.mongo.client.annotations.Transient;
 import xyz.vopen.mixmicro.components.mongo.client.annotations.Version;
-import xyz.vopen.mixmicro.components.mongo.client.mapping.experimental.MorphiaReference;
+import xyz.vopen.mixmicro.components.mongo.client.mapping.experimental.MixMongoReference;
 import xyz.vopen.mixmicro.components.mongo.client.utils.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
@@ -117,7 +117,7 @@ public class MappedField {
   }
 
   /**
-   * Adds an annotation for Morphia to retain when mapping.
+   * Adds an annotation for MixMongo to retain when mapping.
    *
    * @param annotation the type to retain
    */
@@ -359,7 +359,7 @@ public class MappedField {
     return hasAnnotation(Reference.class)
         || Key.class == getConcreteType()
         || DBRef.class == getConcreteType()
-        || MorphiaReference.class == getConcreteType();
+        || MixMongoReference.class == getConcreteType();
   }
 
   /** @return true if the MappedField is a Set */

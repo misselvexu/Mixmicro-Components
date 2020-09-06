@@ -5,8 +5,8 @@ import com.mongodb.DBObject;
 import com.mongodb.ReadPreference;
 import com.mongodb.client.MongoIterable;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
-import xyz.vopen.mixmicro.components.mongo.client.query.internal.MorphiaCursor;
-import xyz.vopen.mixmicro.components.mongo.client.query.internal.MorphiaKeyCursor;
+import xyz.vopen.mixmicro.components.mongo.client.query.internal.MixMongoCursor;
+import xyz.vopen.mixmicro.components.mongo.client.query.internal.MixMongoKeyCursor;
 import org.bson.types.CodeWScope;
 
 import java.util.List;
@@ -552,20 +552,20 @@ public interface Query<T> extends QueryResults<T>, MongoIterable<T> {
   List<Key<T>> asKeyList(FindOptions options);
 
   /**
-   * Execute the query and get the results (as a {@code MorphiaCursor<Key<T>>})
+   * Execute the query and get the results (as a {@code MixMongoCursor<Key<T>>})
    *
    * @return the keys of the documents returned by this query
    */
-  MorphiaKeyCursor<T> keys();
+  MixMongoKeyCursor<T> keys();
 
   /**
-   * Execute the query and get the results (as a {@code MorphiaCursor<Key<T>>})
+   * Execute the query and get the results (as a {@code MixMongoCursor<Key<T>>})
    *
    * @param options the options to apply to the find operation
    * @return the keys of the documents returned by this query
    * @since 1.4
    */
-  MorphiaKeyCursor<T> keys(FindOptions options);
+  MixMongoKeyCursor<T> keys(FindOptions options);
 
   /**
    * Execute the query and get the results.
@@ -620,7 +620,7 @@ public interface Query<T> extends QueryResults<T>, MongoIterable<T> {
    * @deprecated use {@link #find(FindOptions)} instead
    */
   @Deprecated
-  MorphiaIterator<T, T> fetch();
+  MixMongoIterator<T, T> fetch();
 
   /**
    * Execute the query and get the results.
@@ -631,27 +631,27 @@ public interface Query<T> extends QueryResults<T>, MongoIterable<T> {
    * @deprecated use {@link #find(FindOptions)} instead
    */
   @Deprecated
-  MorphiaIterator<T, T> fetch(FindOptions options);
+  MixMongoIterator<T, T> fetch(FindOptions options);
 
   /**
    * Execute the query and get the results.
    *
    * <p>*note* the return type of this will change in 2.0.
    *
-   * @return a MorphiaCursor
+   * @return a MixMongoCursor
    * @since 1.4
    * @see #find(FindOptions)
    */
-  MorphiaCursor<T> find();
+  MixMongoCursor<T> find();
 
   /**
    * Execute the query and get the results.
    *
    * @param options the options to apply to the find operation
-   * @return a MorphiaCursor
+   * @return a MixMongoCursor
    * @since 1.4
    */
-  MorphiaCursor<T> find(FindOptions options);
+  MixMongoCursor<T> find(FindOptions options);
 
   /**
    * Execute the query and get only the ids of the results. This is more efficient than fetching the
@@ -661,7 +661,7 @@ public interface Query<T> extends QueryResults<T>, MongoIterable<T> {
    * @deprecated use {@link #keys()} instead
    */
   @Deprecated
-  MorphiaIterator<T, T> fetchEmptyEntities();
+  MixMongoIterator<T, T> fetchEmptyEntities();
 
   /**
    * Execute the query and get only the ids of the results. This is more efficient than fetching the
@@ -673,7 +673,7 @@ public interface Query<T> extends QueryResults<T>, MongoIterable<T> {
    * @deprecated use {@link #keys(FindOptions)} instead
    */
   @Deprecated
-  MorphiaIterator<T, T> fetchEmptyEntities(FindOptions options);
+  MixMongoIterator<T, T> fetchEmptyEntities(FindOptions options);
 
   /**
    * Execute the query and get the keys for the objects.
@@ -683,7 +683,7 @@ public interface Query<T> extends QueryResults<T>, MongoIterable<T> {
    * @deprecated use {@link #keys()}
    */
   @Deprecated
-  MorphiaKeyIterator<T> fetchKeys();
+  MixMongoKeyIterator<T> fetchKeys();
 
   /**
    * Execute the query and get the keys for the objects.
@@ -694,7 +694,7 @@ public interface Query<T> extends QueryResults<T>, MongoIterable<T> {
    * @deprecated use {@link #keys(FindOptions)}
    */
   @Deprecated
-  MorphiaKeyIterator<T> fetchKeys(FindOptions options);
+  MixMongoKeyIterator<T> fetchKeys(FindOptions options);
 
   /**
    * Gets the first entity in the result set. Obeys the {@link Query} offset value.
@@ -754,7 +754,7 @@ public interface Query<T> extends QueryResults<T>, MongoIterable<T> {
    *     instead
    */
   @Deprecated
-  MorphiaIterator<T, T> tail();
+  MixMongoIterator<T, T> tail();
 
   /**
    * Returns an tailing iterator over a set of elements of type T. If awaitData is true, this
@@ -769,5 +769,5 @@ public interface Query<T> extends QueryResults<T>, MongoIterable<T> {
    *     TailableAwait : Tailable)}
    */
   @Deprecated
-  MorphiaIterator<T, T> tail(boolean awaitData);
+  MixMongoIterator<T, T> tail(boolean awaitData);
 }

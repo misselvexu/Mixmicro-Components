@@ -14,7 +14,7 @@ import xyz.vopen.mixmicro.components.mongo.client.query.Query;
  *
  */
 @SuppressWarnings("deprecation")
-public class SingleReference<T> extends MorphiaReference<T> {
+public class SingleReference<T> extends MixMongoReference<T> {
   private Object id;
   private T value;
 
@@ -80,7 +80,7 @@ public class SingleReference<T> extends MorphiaReference<T> {
    * @param dbObject the DBObject to decode
    * @return the entity
    */
-  public static MorphiaReference<?> decode(
+  public static MixMongoReference<?> decode(
       final MongoRepository mongoRepository,
       final Mapper mapper,
       final MappedField mappedField,

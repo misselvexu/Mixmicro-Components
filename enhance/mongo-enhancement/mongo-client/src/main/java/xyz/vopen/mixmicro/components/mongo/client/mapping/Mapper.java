@@ -21,7 +21,7 @@ import xyz.vopen.mixmicro.components.mongo.client.converters.CustomConverters;
 import xyz.vopen.mixmicro.components.mongo.client.converters.TypeConverter;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.DefaultEntityCache;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCache;
-import xyz.vopen.mixmicro.components.mongo.client.mapping.experimental.MorphiaReference;
+import xyz.vopen.mixmicro.components.mongo.client.mapping.experimental.MixMongoReference;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.lazy.LazyFeatureDependencies;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.lazy.LazyProxyFactory;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.lazy.proxy.ProxiedEntityReference;
@@ -72,7 +72,7 @@ public class Mapper {
   public static final String IGNORED_FIELDNAME = ".";
 
   /**
-   * Special field used by morphia to support various possibly loading issues; will be replaced when
+   * Special field used by mix-mongo to support various possibly loading issues; will be replaced when
    * discriminators are implemented to support polymorphism
    *
    * @deprecated
@@ -688,7 +688,7 @@ public class Mapper {
                   mappedValue = refAnn.idOnly() ? keyToId(key) : keyToDBRef(key);
                 }
               }
-            } else if (mf.getType().isAssignableFrom(MorphiaReference.class)) {
+            } else if (mf.getType().isAssignableFrom(MixMongoReference.class)) {
               if (!valueIsIdType) {
                 Key<?> key = value instanceof Key ? (Key<?>) value : getKey(value);
                 if (key != null) {
@@ -918,7 +918,7 @@ public class Mapper {
     } else if (mf.hasAnnotation(Embedded.class)) {
       mapper = opts.getEmbeddedMapper();
     } else if (mf.hasAnnotation(Reference.class)
-        || MorphiaReference.class == mf.getConcreteType()) {
+        || MixMongoReference.class == mf.getConcreteType()) {
       mapper = opts.getReferenceMapper();
     } else {
       mapper = opts.getDefaultMapper();
@@ -946,7 +946,7 @@ public class Mapper {
         || (getConverters().hasSimpleValueConverter(mf)
             || (getConverters().hasSimpleValueConverter(mf.getFieldValue(entity))))) {
       opts.getValueMapper().toDBObject(entity, mf, dbObject, involvedObjects, this);
-    } else if (Reference.class.equals(annType) || MorphiaReference.class == mf.getConcreteType()) {
+    } else if (Reference.class.equals(annType) || MixMongoReference.class == mf.getConcreteType()) {
       opts.getReferenceMapper().toDBObject(entity, mf, dbObject, involvedObjects, this);
     } else if (Embedded.class.equals(annType)) {
       opts.getEmbeddedMapper().toDBObject(entity, mf, dbObject, involvedObjects, this);

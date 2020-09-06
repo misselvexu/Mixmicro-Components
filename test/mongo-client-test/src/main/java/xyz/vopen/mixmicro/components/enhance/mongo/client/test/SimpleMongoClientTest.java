@@ -11,7 +11,7 @@ import org.bson.types.ObjectId;
 import xyz.vopen.mixmicro.components.enhance.mongo.client.test.model.Employee;
 import xyz.vopen.mixmicro.components.mongo.client.MongoRepository;
 import xyz.vopen.mixmicro.components.mongo.client.Key;
-import xyz.vopen.mixmicro.components.mongo.client.MixmicroMongo;
+import xyz.vopen.mixmicro.components.mongo.client.MixMongo;
 
 /**
  * {@link SimpleMongoClientTest}
@@ -25,7 +25,7 @@ public class SimpleMongoClientTest {
 
   public static void main(String[] args) {
 
-    MixmicroMongo mongo = new MixmicroMongo();
+    MixMongo mongo = new MixMongo();
     mongo.mapPackage("xyz.vopen.mixmicro.components.enhance.mongo.client.test.model");
 
     MongoClientOptions.Builder builder =

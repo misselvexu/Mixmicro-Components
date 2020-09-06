@@ -26,7 +26,7 @@ public @interface Entity {
   String concern() default "";
 
   /**
-   * @return When true, instructs Morphia to not include when serializing an entity to mongodb.
+   * @return When true, instructs MixMongo to not include when serializing an entity to mongodb.
    * @deprecated to be replaced in 2.0 where the default will be to store the discriminator
    */
   @Deprecated

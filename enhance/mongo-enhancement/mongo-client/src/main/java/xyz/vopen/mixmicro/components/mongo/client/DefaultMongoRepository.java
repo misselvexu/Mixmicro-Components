@@ -75,7 +75,7 @@ import static java.util.Collections.singletonList;
 public class DefaultMongoRepository implements AdvancedMongoRepository {
   private static final Logger LOG = LoggerFactory.getLogger(DefaultMongoRepository.class);
 
-  private final MixmicroMongo mixmicroMongo;
+  private final MixMongo mixMongo;
   private final MongoClient mongoClient;
   private final MongoDatabase database;
   private final IndexHelper indexHelper;
@@ -89,41 +89,41 @@ public class DefaultMongoRepository implements AdvancedMongoRepository {
   /**
    * Create a new Repository
    *
-   * @param mixmicroMongo the Morphia instance
+   * @param mixMongo the MixMongo instance
    * @param mongoClient the connection to the MongoDB instance
    * @param dbName the name of the database for this data store.
    * @deprecated This is not meant to be directly instantiated by end user code. Use {@link
-   *     MixmicroMongo#createMongoRepository(MongoClient, Mapper, String)}
+   *     MixMongo#createMongoRepository(MongoClient, Mapper, String)}
    */
   public DefaultMongoRepository(
-      final MixmicroMongo mixmicroMongo, final MongoClient mongoClient, final String dbName) {
-    this(mixmicroMongo, mixmicroMongo.getMapper(), mongoClient, dbName);
+      final MixMongo mixMongo, final MongoClient mongoClient, final String dbName) {
+    this(mixMongo, mixMongo.getMapper(), mongoClient, dbName);
   }
 
   /**
    * Create a new Repository
    *
-   * @param mixmicroMongo the Morphia instance
+   * @param mixMongo the MixMongo instance
    * @param mapper an initialised Mapper
    * @param mongoClient the connection to the MongoDB instance
    * @param dbName the name of the database for this data store.
    * @deprecated This is not meant to be directly instantiated by end user code. Use {@link
-   *     MixmicroMongo#createMongoRepository(MongoClient, Mapper, String)}
+   *     MixMongo#createMongoRepository(MongoClient, Mapper, String)}
    */
   public DefaultMongoRepository(
-      final MixmicroMongo mixmicroMongo,
+      final MixMongo mixMongo,
       final Mapper mapper,
       final MongoClient mongoClient,
       final String dbName) {
-    this(mixmicroMongo, mapper, mongoClient, mongoClient.getDatabase(dbName));
+    this(mixMongo, mapper, mongoClient, mongoClient.getDatabase(dbName));
   }
 
   private DefaultMongoRepository(
-      final MixmicroMongo mixmicroMongo,
+      final MixMongo mixMongo,
       final Mapper mapper,
       final MongoClient mongoClient,
       final MongoDatabase database) {
-    this.mixmicroMongo = mixmicroMongo;
+    this.mixMongo = mixMongo;
     this.mapper = mapper;
     this.mongoClient = mongoClient;
     this.database =
@@ -141,11 +141,11 @@ public class DefaultMongoRepository implements AdvancedMongoRepository {
    *
    * @param database the new database to use for operations
    * @return the new MongoRepository instance
-   * @deprecated use {@link MixmicroMongo#createMongoRepository(MongoClient, Mapper, String)}
+   * @deprecated use {@link MixMongo#createMongoRepository(MongoClient, Mapper, String)}
    */
   @Deprecated
   public DefaultMongoRepository copy(final String database) {
-    return new DefaultMongoRepository(mixmicroMongo, mapper, mongoClient, database);
+    return new DefaultMongoRepository(mixMongo, mapper, mongoClient, database);
   }
 
   /**

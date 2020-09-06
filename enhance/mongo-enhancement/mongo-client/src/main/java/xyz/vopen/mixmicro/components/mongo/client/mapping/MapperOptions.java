@@ -105,7 +105,7 @@ public class MapperOptions {
   }
 
   /**
-   * @return the MongoRepositoryProvider Morphia should use
+   * @return the MongoRepositoryProvider MixMongo should use
    * @deprecated unused
    */
   @Deprecated
@@ -114,7 +114,7 @@ public class MapperOptions {
   }
 
   /**
-   * Sets the MongoRepositoryProvider Morphia should use
+   * Sets the MongoRepositoryProvider MixMongo should use
    *
    * @param unused the MongoRepositoryProvider to use
    * @deprecated unused
@@ -169,7 +169,7 @@ public class MapperOptions {
   /**
    * Sets the ObjectFactory to use when instantiating entity classes. The default factory is a
    * simple reflection based factory but this could be used, e.g., to provide a Guice-based factory
-   * such as what morphia-guice provides.
+   * such as what mix-mongo-guice provides.
    *
    * @param objectFactory the factory to use
    * @see Builder
@@ -219,7 +219,7 @@ public class MapperOptions {
   }
 
   /**
-   * @return true if Morphia should ignore transient fields
+   * @return true if MixMongo should ignore transient fields
    * @deprecated this is actually the default and proper behavior. this setting is redundant
    */
   @Deprecated
@@ -228,22 +228,22 @@ public class MapperOptions {
   }
 
   /**
-   * Instructs Morphia to follow JDK serialization semantics and ignore values marked up with the
+   * Instructs MixMongo to follow JDK serialization semantics and ignore values marked up with the
    * transient keyword
    *
-   * @param ignored true if Morphia should ignore transient fields
+   * @param ignored true if MixMongo should ignore transient fields
    * @deprecated this is actually the default and proper behavior. this setting is redundant
    */
   @Deprecated
   public void setActLikeSerializer(final boolean ignored) {}
 
-  /** @return true if Morphia should cache entities on lookups */
+  /** @return true if MixMongo should cache entities on lookups */
   public boolean isCachingEnabled() {
     return cachingEnabled;
   }
 
   /**
-   * @param enabled true if Morphia should cache entities on lookups
+   * @param enabled true if MixMongo should cache entities on lookups
    * @return this
    */
   public MapperOptions setCachingEnabled(final boolean enabled) {
@@ -251,13 +251,13 @@ public class MapperOptions {
     return this;
   }
 
-  /** @return true if Morphia should cache name to Class lookups */
+  /** @return true if MixMongo should cache name to Class lookups */
   public boolean isCacheClassLookups() {
     return cacheClassLookups;
   }
 
   /**
-   * Sets whether Morphia should cache name to Class lookups
+   * Sets whether MixMongo should cache name to Class lookups
    *
    * @param cacheClassLookups true if the lookup results should be cached
    * @see Builder
@@ -268,7 +268,7 @@ public class MapperOptions {
     this.cacheClassLookups = cacheClassLookups;
   }
 
-  /** @return true if Morphia should ignore final fields */
+  /** @return true if MixMongo should ignore final fields */
   public boolean isIgnoreFinals() {
     return ignoreFinals;
   }
@@ -276,7 +276,7 @@ public class MapperOptions {
   /**
    * Controls if final fields are stored.
    *
-   * @param ignoreFinals true if Morphia should ignore final fields
+   * @param ignoreFinals true if MixMongo should ignore final fields
    * @see Builder
    * @deprecated use the Builder instead
    */
@@ -285,15 +285,15 @@ public class MapperOptions {
     this.ignoreFinals = ignoreFinals;
   }
 
-  /** @return true if Morphia should store empty values for lists/maps/sets/arrays */
+  /** @return true if MixMongo should store empty values for lists/maps/sets/arrays */
   public boolean isStoreEmpties() {
     return storeEmpties;
   }
 
   /**
-   * Controls if Morphia should store empty values for lists/maps/sets/arrays
+   * Controls if MixMongo should store empty values for lists/maps/sets/arrays
    *
-   * @param storeEmpties true if Morphia should store empty values for lists/maps/sets/arrays
+   * @param storeEmpties true if MixMongo should store empty values for lists/maps/sets/arrays
    * @see Builder
    * @deprecated use the Builder instead
    */
@@ -302,7 +302,7 @@ public class MapperOptions {
     this.storeEmpties = storeEmpties;
   }
 
-  /** @return true if Morphia should store null values */
+  /** @return true if MixMongo should store null values */
   public boolean isStoreNulls() {
     return storeNulls;
   }
@@ -310,7 +310,7 @@ public class MapperOptions {
   /**
    * Controls if null are stored.
    *
-   * @param storeNulls true if Morphia should store null values
+   * @param storeNulls true if MixMongo should store null values
    * @see Builder
    * @deprecated use the Builder instead
    */
@@ -319,7 +319,7 @@ public class MapperOptions {
     this.storeNulls = storeNulls;
   }
 
-  /** @return true if Morphia should use lower case values when calculating collection names */
+  /** @return true if MixMongo should use lower case values when calculating collection names */
   public boolean isUseLowerCaseCollectionNames() {
     return useLowerCaseCollectionNames;
   }
@@ -327,7 +327,7 @@ public class MapperOptions {
   /**
    * Controls if default entity collection name should be lowercase.
    *
-   * @param useLowerCaseCollectionNames true if Morphia should use lower case values when
+   * @param useLowerCaseCollectionNames true if MixMongo should use lower case values when
    *     calculating collection names
    * @see Builder
    * @deprecated use the Builder instead
@@ -338,7 +338,7 @@ public class MapperOptions {
   }
 
   /**
-   * @return true if Morphia should skip scanning @{@link Embedded} fields
+   * @return true if MixMongo should skip scanning @{@link Embedded} fields
    *     for index definitions.
    * @since 1.5
    */
@@ -346,7 +346,7 @@ public class MapperOptions {
     return disableEmbeddedIndexes;
   }
 
-  /** @return true if Morphia should map classes from the sub-packages as well */
+  /** @return true if MixMongo should map classes from the sub-packages as well */
   public boolean isMapSubPackages() {
     return mapSubPackages;
   }
@@ -354,7 +354,7 @@ public class MapperOptions {
   /**
    * Controls if classes from sub-packages should be mapped.
    *
-   * @param mapSubPackages true if Morphia should map classes from the sub-packages as well
+   * @param mapSubPackages true if MixMongo should map classes from the sub-packages as well
    * @see Builder
    * @deprecated use the Builder instead
    */

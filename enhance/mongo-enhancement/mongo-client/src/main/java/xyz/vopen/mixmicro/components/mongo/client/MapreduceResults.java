@@ -10,7 +10,7 @@ import xyz.vopen.mixmicro.components.mongo.client.mapping.Mapper;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.MappingException;
 import xyz.vopen.mixmicro.components.mongo.client.mapping.cache.EntityCache;
 import xyz.vopen.mixmicro.components.mongo.client.query.Query;
-import xyz.vopen.mixmicro.components.mongo.client.query.MorphiaIterator;
+import xyz.vopen.mixmicro.components.mongo.client.query.MixMongoIterator;
 
 import java.util.Iterator;
 
@@ -78,7 +78,7 @@ public class MapreduceResults<T> implements Iterable<T> {
    * @see MapreduceType
    */
   public Iterator<T> getInlineResults() {
-    return new MorphiaIterator<T, T>(
+    return new MixMongoIterator<T, T>(
         mongoRepository, output.results().iterator(), mapper, clazz, null, cache);
   }
 
