@@ -69,7 +69,7 @@ public class MixmicroLoggingTracingAutoConfiguration {
     LoggingFactoryBean factoryBean = new LoggingFactoryBean();
     factoryBean.setIgnorePaths(mixmicroLoggingTracingProperties.getIgnorePaths());
     factoryBean.setIgnoreHttpStatus(mixmicroLoggingTracingProperties.getIgnoreHttpStatus());
-    factoryBean.setReportAway(mixmicroLoggingTracingProperties.getReportAway());
+    factoryBean.setReportAway(mixmicroLoggingTracingProperties.getReportWay());
     factoryBean.setNumberOfRequestLog(mixmicroLoggingTracingProperties.getReportNumberOfRequestLog());
     factoryBean.setReportInitialDelaySecond(mixmicroLoggingTracingProperties.getReportInitialDelaySecond());
     factoryBean.setReportIntervalSecond(mixmicroLoggingTracingProperties.getReportIntervalSecond());

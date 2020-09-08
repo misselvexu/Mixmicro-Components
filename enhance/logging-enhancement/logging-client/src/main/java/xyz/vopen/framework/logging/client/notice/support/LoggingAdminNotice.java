@@ -5,7 +5,7 @@ import xyz.vopen.framework.logging.client.admin.report.LoggingAdminReport;
 import xyz.vopen.framework.logging.client.cache.LoggingCache;
 import xyz.vopen.framework.logging.client.notice.LoggingNotice;
 import xyz.vopen.framework.logging.core.MixmicroLog;
-import xyz.vopen.framework.logging.core.ReportAway;
+import xyz.vopen.framework.logging.core.ReportWay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
@@ -47,8 +47,8 @@ public class LoggingAdminNotice implements LoggingNotice {
    */
   @Override
   public void notice(MixmicroLog mixmicroLog) {
-    ReportAway reportAway = factoryBean.getReportAway();
-    switch (reportAway) {
+    ReportWay reportWay = factoryBean.getReportAway();
+    switch (reportWay) {
       case just:
         LoggingAdminReport loggingAdminReport = factoryBean.getLoggingAdminReport();
         loggingAdminReport.report(Arrays.asList(mixmicroLog));

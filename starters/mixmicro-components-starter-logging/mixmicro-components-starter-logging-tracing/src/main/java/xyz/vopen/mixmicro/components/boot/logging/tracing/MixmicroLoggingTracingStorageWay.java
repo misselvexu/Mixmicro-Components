@@ -11,11 +11,11 @@ import xyz.vopen.framework.logging.client.global.support.MixmicroLoggingMemorySt
  * @see MixmicroLogging
  */
 @Getter
-public enum MixmicroLoggingTracingStorageAway {
+public enum MixmicroLoggingTracingStorageWay {
   /**
    * memory away
    *
    * @see MixmicroLoggingMemoryStorage
    */
-  memory
+  MEMORY
 }

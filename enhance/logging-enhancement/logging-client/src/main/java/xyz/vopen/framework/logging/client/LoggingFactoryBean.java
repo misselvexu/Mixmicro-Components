@@ -24,7 +24,7 @@ import xyz.vopen.framework.logging.client.span.LoggingSpanGenerator;
 import xyz.vopen.framework.logging.client.span.support.LoggingDefaultSpanGenerator;
 import xyz.vopen.framework.logging.client.tracer.LoggingTraceGenerator;
 import xyz.vopen.framework.logging.client.tracer.support.LoggingDefaultTraceGenerator;
-import xyz.vopen.framework.logging.core.ReportAway;
+import xyz.vopen.framework.logging.core.ReportWay;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -60,8 +60,8 @@ public class LoggingFactoryBean
   private LoggingSpanGenerator spanGenerator;
   /** Logging Cache {@link LoggingMemoryCache} */
   private LoggingCache loggingCache;
-  /** Logging Admin Report Away default just report to admin {@link ReportAway} */
-  private ReportAway reportAway = ReportAway.just;
+  /** Logging Admin Report Away default just report to admin {@link ReportWay} */
+  private ReportWay reportWay = ReportWay.just;
   /**
    * report to logging admin {@link
    * LoggingAdminReportSupport}
@@ -197,8 +197,8 @@ public class LoggingFactoryBean
     return loggingCache;
   }
 
-  public ReportAway getReportAway() {
-    return reportAway;
+  public ReportWay getReportAway() {
+    return reportWay;
   }
 
   public LoggingAdminReport getLoggingAdminReport() {
@@ -242,8 +242,8 @@ public class LoggingFactoryBean
     this.loggingCache = loggingCache;
   }
 
-  public void setReportAway(ReportAway reportAway) {
-    this.reportAway = reportAway;
+  public void setReportAway(ReportWay reportWay) {
+    this.reportWay = reportWay;
   }
 
   public void setNumberOfRequestLog(Integer numberOfRequestLog) {
