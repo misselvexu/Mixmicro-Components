@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import xyz.vopen.framework.logging.client.admin.discovery.lb.LoadBalanceStrategy;
 import xyz.vopen.framework.logging.client.admin.discovery.lb.support.RandomWeightedStrategy;
 import xyz.vopen.framework.logging.client.admin.discovery.lb.support.SmoothWeightedRoundRobinStrategy;
-import xyz.vopen.framework.logging.core.ReportAway;
+import xyz.vopen.framework.logging.core.ReportWay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class MixmicroLoggingTracingProperties {
   /**
    * Report Request Log To Admin Away
    */
-  private ReportAway reportAway = ReportAway.just;
+  private ReportWay reportWay = ReportWay.just;
   /**
    * Number of request logs reported once
    */
@@ -73,11 +73,11 @@ public class MixmicroLoggingTracingProperties {
   /**
    * logging cache away
    */
-  private LoggingCacheAway loggingCacheAway = LoggingCacheAway.memory;
+  private LoggingCacheWay loggingCacheWay = LoggingCacheWay.MEMORY;
   /**
    * global logging repository away
    */
-  private MixmicroLoggingTracingStorageAway mixmicroLoggingTracingStorageAway = MixmicroLoggingTracingStorageAway.memory;
+  private MixmicroLoggingTracingStorageWay mixmicroLoggingTracingStorageWay = MixmicroLoggingTracingStorageWay.MEMORY;
   /**
    * Mixmicro Boot Logging Admin Instance
    */
@@ -93,7 +93,7 @@ public class MixmicroLoggingTracingProperties {
    * @see RandomWeightedStrategy
    * @see SmoothWeightedRoundRobinStrategy
    */
-  private LoadBalanceStrategyAway loadBalanceStrategy = LoadBalanceStrategyAway.RANDOM_WEIGHT;
+  private LoadBalanceStrategyWay loadBalanceStrategy = LoadBalanceStrategyWay.RANDOM_WEIGHT;
 
   /**
    * Config Mixmicro Boot Logging Admin Server report every request log to api-boot-logging-admin

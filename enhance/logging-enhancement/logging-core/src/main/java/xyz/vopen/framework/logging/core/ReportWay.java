@@ -25,7 +25,7 @@ import lombok.Getter;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @Getter
-public enum ReportAway {
+public enum ReportWay {
   /** just report to admin */
   just,
   /** timing report to admin with "reportIntervalSecond" config properties */

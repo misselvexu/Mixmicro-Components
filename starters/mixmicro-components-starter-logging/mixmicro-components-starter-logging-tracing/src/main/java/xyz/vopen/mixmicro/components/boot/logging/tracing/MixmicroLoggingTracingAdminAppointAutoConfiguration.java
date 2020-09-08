@@ -49,13 +49,13 @@ public class MixmicroLoggingTracingAdminAppointAutoConfiguration {
   }
 
   /**
-   * Create {@link LoadBalanceStrategy} by {@link LoadBalanceStrategyAway} default is use {@link
+   * Create {@link LoadBalanceStrategy} by {@link LoadBalanceStrategyWay} default is use {@link
    * RandomWeightedStrategy}
    *
    * @return {@link LoadBalanceStrategy} support class instance
    */
   private LoadBalanceStrategy instantiationLoadBalanceStrategy() {
-    LoadBalanceStrategyAway strategyAway = mixmicroLoggingTracingProperties.getLoadBalanceStrategy();
+    LoadBalanceStrategyWay strategyAway = mixmicroLoggingTracingProperties.getLoadBalanceStrategy();
     LoadBalanceStrategy strategy;
     switch (strategyAway) {
       case POLL_WEIGHT:

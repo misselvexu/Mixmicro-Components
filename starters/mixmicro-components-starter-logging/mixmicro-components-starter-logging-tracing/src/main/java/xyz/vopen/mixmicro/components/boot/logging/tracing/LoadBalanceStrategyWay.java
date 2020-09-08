@@ -5,12 +5,12 @@ import xyz.vopen.framework.logging.client.admin.discovery.lb.support.RandomWeigh
 import xyz.vopen.framework.logging.client.admin.discovery.lb.support.SmoothWeightedRoundRobinStrategy;
 
 /**
- * logging strategy load balance away {@link LoadBalanceStrategyAway}
+ * logging strategy load balance away {@link LoadBalanceStrategyWay}
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @Getter
-public enum LoadBalanceStrategyAway {
+public enum LoadBalanceStrategyWay {
   /**
    * random weight {@link
    * RandomWeightedStrategy}

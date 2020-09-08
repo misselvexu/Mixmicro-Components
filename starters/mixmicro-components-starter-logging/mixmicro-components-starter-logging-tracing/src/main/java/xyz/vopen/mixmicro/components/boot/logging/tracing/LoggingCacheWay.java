@@ -8,13 +8,13 @@ import lombok.Getter;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @Getter
-public enum LoggingCacheAway {
+public enum LoggingCacheWay {
   /**
    * cache request log to memory
    */
-  memory,
+  MEMORY,
   /**
    * append request log to file
    */
-  file
+  FILE
 }
