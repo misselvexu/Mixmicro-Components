@@ -32,7 +32,5 @@ public class LoggingAdminBeanDefinitionRegistrar implements ImportBeanDefinition
             AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
         LoggingBeanUtils.registerLoggingAdminBeans(registry);
         logger.info("Logging admin beans register successfully.");
-        LoggingBeanUtils.registerLoggingAdminUiBeans(registry);
-        logger.info("Logging admin ui beans register successfully.");
     }
 }

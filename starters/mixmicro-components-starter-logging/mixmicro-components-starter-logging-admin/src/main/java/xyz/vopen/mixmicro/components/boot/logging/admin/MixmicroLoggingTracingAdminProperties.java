@@ -1,10 +1,10 @@
-package xyz.vopen.mixmicro.components.boot.logging.tracing.admin;
+package xyz.vopen.mixmicro.components.boot.logging.admin;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import static xyz.vopen.mixmicro.components.boot.logging.tracing.admin.MixmicroLoggingTracingAdminProperties.MIXMICRO_BOOT_LOGGING_ADMIN_PREFIX;
+import static xyz.vopen.mixmicro.components.boot.logging.admin.MixmicroLoggingTracingAdminProperties.MIXMICRO_BOOT_LOGGING_ADMIN_PREFIX;
 
 /**
  * Mixmicro Boot Logging Admin Properties
