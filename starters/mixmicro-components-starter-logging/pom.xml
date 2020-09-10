@@ -19,6 +19,7 @@
     <modules>
         <module>mixmicro-components-starter-logging-isolation</module>
         <module>mixmicro-components-starter-logging-tracing</module>
+        <module>mixmicro-components-starter-logging-admin</module>
     </modules>
 
 </project>

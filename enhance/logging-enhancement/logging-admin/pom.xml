@@ -14,15 +14,26 @@
 
     <name>Mixmicro+ Boot :: Spring Boot Starters :: Logging Admin</name>
     <dependencies>
+        <!-- logging core-->
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-enhance-logging-core</artifactId>
         </dependency>
+
+        <!--spring boot starter-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!--spring-data mongodb support-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
 </project>

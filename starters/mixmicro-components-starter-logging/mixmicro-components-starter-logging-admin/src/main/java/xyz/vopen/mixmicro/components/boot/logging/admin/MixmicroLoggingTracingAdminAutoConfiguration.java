@@ -1,22 +1,21 @@
-package xyz.vopen.mixmicro.components.boot.logging.tracing.admin;
+package xyz.vopen.mixmicro.components.boot.logging.admin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import xyz.vopen.framework.logging.admin.LoggingAdminFactoryBean;
 import xyz.vopen.framework.logging.admin.repository.LoggingDataRepository;
 import xyz.vopen.framework.logging.admin.repository.LoggingDataRepositoryImpl;
 import xyz.vopen.framework.logging.spring.context.annotation.admin.EnableLoggingAdmin;
-import xyz.vopen.mixmicro.components.boot.logging.tracing.admin.ui.MixmicroLoggingTracingAdminUiAutoConfiguration;
 
 /**
  * Mixmicro Boot Logging Admin Configuration
@@ -27,9 +26,8 @@ import xyz.vopen.mixmicro.components.boot.logging.tracing.admin.ui.MixmicroLoggi
 @ConditionalOnClass(EnableLoggingAdmin.class)
 @EnableConfigurationProperties(MixmicroLoggingTracingAdminProperties.class)
 @AutoConfigureAfter(DataSourceAutoConfiguration.class)
-@Import({MixmicroLoggingTracingAdminUiAutoConfiguration.class})
-@EnableAsync
-public class MixmicroLoggingTracingAdminAutoConfiguration {
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+public class MixmicroLoggingTracingAdminAutoConfiguration implements WebMvcConfigurer {
     /**
      * logger instance
      */

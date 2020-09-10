@@ -1,4 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  xyz.vopen.mixmicro.components.boot.logging.tracing.MixmicroLoggingTracingAutoConfiguration,\
-  xyz.vopen.mixmicro.components.boot.logging.tracing.admin.MixmicroLoggingTracingAdminAutoConfiguration,\
-  xyz.vopen.mixmicro.components.boot.logging.tracing.admin.MixmicroLoggingTracingAdminSecurityAutoConfiguration
+  xyz.vopen.mixmicro.components.boot.logging.tracing.MixmicroLoggingTracingAutoConfiguration

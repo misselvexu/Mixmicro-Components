@@ -34,8 +34,6 @@ import java.util.List;
 @ConditionalOnWebApplication
 @EnableAsync
 @Import({
-    MixmicroLoggingTracingAdminDiscoveryAutoConfiguration.class,
-    MixmicroLoggingTracingAdminAppointAutoConfiguration.class,
     MixmicroLoggingTracingOpenfeignAutoConfiguration.class,
     MixmicroLoggingTracingRestTemplateAutoConfiguration.class,
     MixmicroLoggingTracingWebAutoConfiguration.class,
