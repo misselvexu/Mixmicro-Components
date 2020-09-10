@@ -6,7 +6,7 @@
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-logging</artifactId>
         <version>1.0.7.BUILD-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mixmicro-components-enhance-logging-core</artifactId>
@@ -17,6 +17,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <optional>true</optional>
+        </dependency>
+        <!--spring-data mongodb support-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
     </dependencies>
 </project>
