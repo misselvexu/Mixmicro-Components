@@ -1,9 +1,9 @@
-package xyz.vopen.framework.logging.core.repository.impl;
+package xyz.vopen.framework.logging.admin.repository.impl;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
-import xyz.vopen.framework.logging.core.model.LogServiceDetailModel;
-import xyz.vopen.framework.logging.core.mongodb.BaseMongoRepositoryImpl;
-import xyz.vopen.framework.logging.core.repository.LogServiceDetailRepository;
+import xyz.vopen.framework.logging.admin.model.LogServiceDetailModel;
+import xyz.vopen.framework.logging.admin.mongodb.BaseMongoRepositoryImpl;
+import xyz.vopen.framework.logging.admin.repository.LogServiceDetailRepository;
 
 /**
  * logging service details repository interface im

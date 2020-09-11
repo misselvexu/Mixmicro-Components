@@ -30,7 +30,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import xyz.vopen.framework.logging.admin.LoggingAdminFactoryBean;
 import xyz.vopen.framework.logging.admin.repository.LoggingDataRepository;
 import xyz.vopen.framework.logging.core.annotation.ApiEndpoint;
-import xyz.vopen.framework.logging.core.model.LogServiceDetailModel;
+import xyz.vopen.framework.logging.admin.model.LogServiceDetailModel;
 import xyz.vopen.framework.logging.core.response.LoggingResponse;
 import xyz.vopen.framework.logging.core.response.ServiceResponse;
 

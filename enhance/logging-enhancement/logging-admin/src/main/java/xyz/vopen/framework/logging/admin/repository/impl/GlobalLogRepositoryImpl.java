@@ -1,9 +1,9 @@
-package xyz.vopen.framework.logging.core.repository.impl;
+package xyz.vopen.framework.logging.admin.repository.impl;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
-import xyz.vopen.framework.logging.core.model.GlobalLogModel;
-import xyz.vopen.framework.logging.core.mongodb.BaseMongoRepositoryImpl;
-import xyz.vopen.framework.logging.core.repository.GlobalLogRepository;
+import xyz.vopen.framework.logging.admin.model.GlobalLogModel;
+import xyz.vopen.framework.logging.admin.mongodb.BaseMongoRepositoryImpl;
+import xyz.vopen.framework.logging.admin.repository.GlobalLogRepository;
 
 /**
  * Global log data repository interface implements

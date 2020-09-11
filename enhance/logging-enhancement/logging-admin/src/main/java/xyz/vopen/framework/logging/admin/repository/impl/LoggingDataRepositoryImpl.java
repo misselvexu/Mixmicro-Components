@@ -1,4 +1,4 @@
-package xyz.vopen.framework.logging.admin.repository;
+package xyz.vopen.framework.logging.admin.repository.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageRequest;
@@ -6,18 +6,16 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.util.CollectionUtils;
+import xyz.vopen.framework.logging.admin.repository.GlobalLogRepository;
+import xyz.vopen.framework.logging.admin.repository.LogServiceDetailRepository;
+import xyz.vopen.framework.logging.admin.repository.LoggingDataRepository;
+import xyz.vopen.framework.logging.admin.repository.RequestLogRepository;
 import xyz.vopen.framework.logging.core.MixmicroGlobalLog;
 import xyz.vopen.framework.logging.core.MixmicroLog;
-import xyz.vopen.framework.logging.core.model.GlobalLogModel;
-import xyz.vopen.framework.logging.core.model.LogServiceDetailModel;
-import xyz.vopen.framework.logging.core.model.RequestLogModel;
-import xyz.vopen.framework.logging.core.mongodb.MongoPageHelper;
-import xyz.vopen.framework.logging.core.repository.GlobalLogRepository;
-import xyz.vopen.framework.logging.core.repository.LogServiceDetailRepository;
-import xyz.vopen.framework.logging.core.repository.RequestLogRepository;
-import xyz.vopen.framework.logging.core.repository.impl.GlobalLogRepositoryImpl;
-import xyz.vopen.framework.logging.core.repository.impl.LogServiceDetailRepositoryImpl;
-import xyz.vopen.framework.logging.core.repository.impl.RequestLogRepositoryImpl;
+import xyz.vopen.framework.logging.admin.model.GlobalLogModel;
+import xyz.vopen.framework.logging.admin.model.LogServiceDetailModel;
+import xyz.vopen.framework.logging.admin.model.RequestLogModel;
+import xyz.vopen.framework.logging.admin.mongodb.MongoPageHelper;
 import xyz.vopen.framework.logging.core.response.LoggingResponse;
 
 import java.sql.Timestamp;
