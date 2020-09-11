@@ -1,7 +1,7 @@
-package xyz.vopen.framework.logging.core.repository;
+package xyz.vopen.framework.logging.admin.repository;
 
-import xyz.vopen.framework.logging.core.model.RequestLogModel;
-import xyz.vopen.framework.logging.core.mongodb.BaseMongoRepository;
+import xyz.vopen.framework.logging.admin.model.RequestLogModel;
+import xyz.vopen.framework.logging.admin.mongodb.BaseMongoRepository;
 
 /**
  * Mixmicro Boot Log repository interface

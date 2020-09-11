@@ -1,4 +1,4 @@
-package xyz.vopen.framework.logging.core.mongodb;
+package xyz.vopen.framework.logging.admin.mongodb;
 
 import org.springframework.data.mongodb.SessionSynchronization;
 import org.springframework.data.mongodb.core.MongoTemplate;

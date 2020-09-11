@@ -9,7 +9,7 @@ import xyz.vopen.framework.logging.admin.endpoint.LoggingEndpoint;
 import xyz.vopen.framework.logging.admin.listener.ReportLogJsonFormatListener;
 import xyz.vopen.framework.logging.admin.listener.ReportLogStorageListener;
 import xyz.vopen.framework.logging.admin.repository.LoggingDataRepository;
-import xyz.vopen.framework.logging.admin.repository.LoggingDataRepositoryImpl;
+import xyz.vopen.framework.logging.admin.repository.impl.LoggingDataRepositoryImpl;
 
 import java.util.List;
 

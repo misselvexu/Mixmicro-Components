@@ -1,9 +1,9 @@
-package xyz.vopen.framework.logging.core.repository.impl;
+package xyz.vopen.framework.logging.admin.repository.impl;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
-import xyz.vopen.framework.logging.core.model.RequestLogModel;
-import xyz.vopen.framework.logging.core.mongodb.BaseMongoRepositoryImpl;
-import xyz.vopen.framework.logging.core.repository.RequestLogRepository;
+import xyz.vopen.framework.logging.admin.model.RequestLogModel;
+import xyz.vopen.framework.logging.admin.mongodb.BaseMongoRepositoryImpl;
+import xyz.vopen.framework.logging.admin.repository.RequestLogRepository;
 
 /**
  * Mixmicro Boot Log repository interface implements

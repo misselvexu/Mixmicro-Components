@@ -20,7 +20,7 @@ public class MixmicroLoggingMemoryStorage extends AbstractMixmicroLogging {
    */
   @Override
   public void debug(String msg) {
-    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.debug, msg);
+    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.DEBUG, msg);
     MixmicroLoggingThreadLocal.addGlobalLogs(mixmicroGlobalLog);
   }
 
@@ -33,20 +33,20 @@ public class MixmicroLoggingMemoryStorage extends AbstractMixmicroLogging {
   @Override
   public void debug(String format, Object... arguments) {
     String log = replacePlaceholder(format, arguments);
-    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.debug, log);
+    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.DEBUG, log);
     MixmicroLoggingThreadLocal.addGlobalLogs(mixmicroGlobalLog);
   }
 
   @Override
   public void info(String msg) {
-    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.info, msg);
+    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.INFO, msg);
     MixmicroLoggingThreadLocal.addGlobalLogs(mixmicroGlobalLog);
   }
 
   @Override
   public void info(String format, Object... arguments) {
     String log = replacePlaceholder(format, arguments);
-    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.info, log);
+    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.INFO, log);
     MixmicroLoggingThreadLocal.addGlobalLogs(mixmicroGlobalLog);
   }
 
@@ -57,7 +57,7 @@ public class MixmicroLoggingMemoryStorage extends AbstractMixmicroLogging {
 
   @Override
   public void error(String msg, Throwable throwable) {
-    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.error, msg);
+    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.ERROR, msg);
     if (!ObjectUtils.isEmpty(throwable)) {
       String exceptionStack = StackTraceUtil.getStackTrace(throwable);
       mixmicroGlobalLog.setExceptionStack(exceptionStack);
@@ -68,7 +68,7 @@ public class MixmicroLoggingMemoryStorage extends AbstractMixmicroLogging {
   @Override
   public void error(String format, Object... arguments) {
     String log = replacePlaceholder(format, arguments);
-    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.error, log);
+    MixmicroGlobalLog mixmicroGlobalLog = buildGlobalLog(MixmicroLogLevel.ERROR, log);
     MixmicroLoggingThreadLocal.addGlobalLogs(mixmicroGlobalLog);
   }
 }

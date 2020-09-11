@@ -1,4 +1,4 @@
-package xyz.vopen.framework.logging.core.model;
+package xyz.vopen.framework.logging.admin.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

@@ -1,4 +1,4 @@
-package xyz.vopen.framework.logging.core.mongodb;
+package xyz.vopen.framework.logging.admin.mongodb;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

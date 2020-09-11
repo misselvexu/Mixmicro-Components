@@ -2,7 +2,7 @@ package xyz.vopen.framework.logging.admin.repository;
 
 import xyz.vopen.framework.logging.core.MixmicroGlobalLog;
 import xyz.vopen.framework.logging.core.MixmicroLog;
-import xyz.vopen.framework.logging.core.model.LogServiceDetailModel;
+import xyz.vopen.framework.logging.admin.model.LogServiceDetailModel;
 import xyz.vopen.framework.logging.core.response.LoggingResponse;
 import xyz.vopen.framework.logging.core.response.ServiceResponse;
 
