@@ -8,11 +8,12 @@
         <version>1.0.7.BUILD-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <artifactId>mixmicro-components-enhance-logging-admin</artifactId>
-
     <name>Mixmicro+ Boot :: Spring Boot Starters :: Logging Admin</name>
+
     <dependencies>
         <!-- logging core-->
         <dependency>

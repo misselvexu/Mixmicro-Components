@@ -62,6 +62,7 @@
         <module>http-enhancement</module>
         <module>logging-enhancement</module>
         <module>mongo-enhancement</module>
+        <module>logback-enhancement</module>
     </modules>
 
 
@@ -347,6 +348,31 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-mongo-client</artifactId>
                 <version>${mixmicro-enhance-mongo.version}</version>
+            </dependency>
+
+            <!--Logback-->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-logback</artifactId>
+                <version>${mixmicro-enhance-logging.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-logback-core</artifactId>
+                <version>${mixmicro-enhance-logging.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-logback-classic</artifactId>
+                <version>${mixmicro-enhance-logging.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-logback-access</artifactId>
+                <version>${mixmicro-enhance-logging.version}</version>
             </dependency>
 
         </dependencies>
