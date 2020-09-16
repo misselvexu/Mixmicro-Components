@@ -22,11 +22,13 @@
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-enhance-logging-client</artifactId>
             <version>${project.version}</version>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-enhance-logback-core</artifactId>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
 
