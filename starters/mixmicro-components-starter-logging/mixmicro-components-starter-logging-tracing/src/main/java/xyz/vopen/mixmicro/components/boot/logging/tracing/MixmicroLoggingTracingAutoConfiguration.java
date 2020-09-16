@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.util.ObjectUtils;
 import xyz.vopen.framework.logging.client.LoggingFactoryBean;
-import xyz.vopen.framework.logging.client.admin.discovery.LoggingAdminDiscovery;
+import xyz.vopen.framework.logging.client.admin.discovery.support.LoggingAppointAdminDiscovery;
 import xyz.vopen.framework.logging.client.admin.report.LoggingReportScheduled;
 import xyz.vopen.framework.logging.spring.context.annotation.client.EnableLoggingClient;
 
@@ -56,13 +56,11 @@ public class MixmicroLoggingTracingAutoConfiguration {
     /**
      * logging factory bean {@link LoggingFactoryBean}
      *
-     * @param loggingAdminDiscoveryObjectProvider Logging Admin Discovery Instance Provider
      * @return LoggingFactoryBean
      */
     @Bean
     @ConditionalOnMissingBean
     public LoggingFactoryBean loggingFactoryBean(
-            ObjectProvider<LoggingAdminDiscovery> loggingAdminDiscoveryObjectProvider,
             ObjectProvider<List<LoggingFactoryBeanCustomizer>> customizerObjectProvider) {
         LoggingFactoryBean factoryBean = new LoggingFactoryBean();
         factoryBean.setIgnorePaths(mixmicroLoggingTracingProperties.getIgnorePaths());
@@ -71,7 +69,9 @@ public class MixmicroLoggingTracingAutoConfiguration {
         factoryBean.setNumberOfRequestLog(mixmicroLoggingTracingProperties.getReportNumberOfRequestLog());
         factoryBean.setReportInitialDelaySecond(mixmicroLoggingTracingProperties.getReportInitialDelaySecond());
         factoryBean.setReportIntervalSecond(mixmicroLoggingTracingProperties.getReportIntervalSecond());
-        factoryBean.setLoggingAdminDiscovery(loggingAdminDiscoveryObjectProvider.getIfAvailable());
+        factoryBean.setLoggingAdminDiscovery(
+                new LoggingAppointAdminDiscovery(new String[]{"user:123456@localhost:8060"})
+        );
         factoryBean.setShowConsoleLog(mixmicroLoggingTracingProperties.isShowConsoleLog());
         factoryBean.setFormatConsoleLog(mixmicroLoggingTracingProperties.isFormatConsoleLogJson());
 
@@ -79,7 +79,6 @@ public class MixmicroLoggingTracingAutoConfiguration {
         if (!ObjectUtils.isEmpty(customizers)) {
             customizers.forEach(customizer -> customizer.customize(factoryBean));
         }
-        logger.info("【LoggingFactoryBean】init successfully.");
         return factoryBean;
     }
 
@@ -101,4 +100,5 @@ public class MixmicroLoggingTracingAutoConfiguration {
     public LoggingReportScheduled loggingReportScheduled(LoggingFactoryBean factoryBean) {
         return new LoggingReportScheduled(factoryBean);
     }
+
 }

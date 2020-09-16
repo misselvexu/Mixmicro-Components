@@ -11,5 +11,6 @@ import lombok.Getter;
 public enum MixmicroLogLevel {
   DEBUG,
   INFO,
-  ERROR
+  ERROR,
+  WARN
 }

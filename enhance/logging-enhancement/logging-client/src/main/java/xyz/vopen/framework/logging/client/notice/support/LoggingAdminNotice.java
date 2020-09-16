@@ -1,15 +1,15 @@
 package xyz.vopen.framework.logging.client.notice.support;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.lang.Nullable;
 import xyz.vopen.framework.logging.client.LoggingFactoryBean;
 import xyz.vopen.framework.logging.client.admin.report.LoggingAdminReport;
+import xyz.vopen.framework.logging.client.admin.report.LoggingReportScheduled;
 import xyz.vopen.framework.logging.client.cache.LoggingCache;
 import xyz.vopen.framework.logging.client.notice.LoggingNotice;
 import xyz.vopen.framework.logging.core.MixmicroLog;
 import xyz.vopen.framework.logging.core.ReportWay;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.lang.Nullable;
-import xyz.vopen.framework.logging.client.admin.report.LoggingReportScheduled;
 
 import java.util.Arrays;
 
@@ -49,13 +49,12 @@ public class LoggingAdminNotice implements LoggingNotice {
   public void notice(MixmicroLog mixmicroLog) {
     ReportWay reportWay = factoryBean.getReportAway();
     switch (reportWay) {
-      case just:
+      case JUST:
         LoggingAdminReport loggingAdminReport = factoryBean.getLoggingAdminReport();
         loggingAdminReport.report(Arrays.asList(mixmicroLog));
         break;
-      case timing:
+      case TIMING:
         factoryBean.getLoggingCache().cache(mixmicroLog);
-        logger.debug("Cache Request Logging Complete.");
         break;
     }
   }
