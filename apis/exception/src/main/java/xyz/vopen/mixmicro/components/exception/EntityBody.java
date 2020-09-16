@@ -16,7 +16,7 @@ import java.util.Date;
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 22/10/2018.
- * @deprecated use ResponseEntity<T> instead of, will removed next release version.
+ * @deprecated use <code>ResponseEntity<T></code> instead of, will removed next release version.
  */
 @Getter
 @Setter
@@ -35,10 +35,10 @@ public class EntityBody<T, M> implements Serializable {
 
   private M message;
 
-  private ExceptionWrapper exception;
+  private ExceptionWrapper<? extends Exception> exception;
 
   @Builder
-  public EntityBody(Status status, Date timestamp, M message, ExceptionWrapper exception, T data) {
+  public EntityBody(Status status, Date timestamp, M message, ExceptionWrapper<? extends Exception> exception, T data) {
     this.timestamp = timestamp;
     if (timestamp == null) {
       this.timestamp = new Date();
