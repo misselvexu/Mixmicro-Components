@@ -61,7 +61,7 @@ public class LoggingFactoryBean
   /** Logging Cache {@link LoggingMemoryCache} */
   private LoggingCache loggingCache;
   /** Logging Admin Report Away default just report to admin {@link ReportWay} */
-  private ReportWay reportWay = ReportWay.just;
+  private ReportWay reportWay = ReportWay.JUST;
   /**
    * report to logging admin {@link
    * LoggingAdminReportSupport}

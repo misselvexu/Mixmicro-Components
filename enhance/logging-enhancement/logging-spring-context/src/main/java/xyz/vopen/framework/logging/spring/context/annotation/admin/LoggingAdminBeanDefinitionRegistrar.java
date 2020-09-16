@@ -1,7 +1,5 @@
 package xyz.vopen.framework.logging.spring.context.annotation.admin;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.type.AnnotationMetadata;
@@ -22,15 +20,10 @@ import xyz.vopen.framework.logging.spring.util.LoggingBeanUtils;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 public class LoggingAdminBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
-    /**
-     * logger instance
-     */
-    static Logger logger = LoggerFactory.getLogger(LoggingAdminBeanDefinitionRegistrar.class);
 
     @Override
     public void registerBeanDefinitions(
             AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
         LoggingBeanUtils.registerLoggingAdminBeans(registry);
-        logger.info("Logging admin beans register successfully.");
     }
 }

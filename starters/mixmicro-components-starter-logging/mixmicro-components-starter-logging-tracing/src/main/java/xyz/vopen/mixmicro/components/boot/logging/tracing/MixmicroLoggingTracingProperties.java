@@ -57,7 +57,7 @@ public class MixmicroLoggingTracingProperties {
   /**
    * Report Request Log To Admin Away
    */
-  private ReportWay reportWay = ReportWay.just;
+  private ReportWay reportWay = ReportWay.JUST;
   /**
    * Number of request logs reported once
    */

@@ -27,7 +27,7 @@ import lombok.Getter;
 @Getter
 public enum ReportWay {
   /** just report to admin */
-  just,
+  JUST,
   /** timing report to admin with "reportIntervalSecond" config properties */
-  timing
+  TIMING
 }

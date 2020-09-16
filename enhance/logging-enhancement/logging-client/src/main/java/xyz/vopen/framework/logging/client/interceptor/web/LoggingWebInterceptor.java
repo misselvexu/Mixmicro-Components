@@ -171,10 +171,8 @@ public class LoggingWebInterceptor extends LoggingAbstractInterceptor
     // if request header don't have traceId
     // create new traceId
     if (ObjectUtils.isEmpty(traceId)) {
-      logger.debug("Request Header Don't Have TraceId，Create New TraceId Now.");
       traceId = factoryBean.getTraceGenerator().createTraceId();
     }
-    logger.debug("Request TraceId：{}", traceId);
     return traceId;
   }
 
@@ -198,7 +196,6 @@ public class LoggingWebInterceptor extends LoggingAbstractInterceptor
   private String extractParentSpanId(HttpServletRequest request) {
     // get spanId from request header
     String spanId = HttpRequestUtil.getHeader(request, LoggingConstant.HEADER_NAME_PARENT_SPAN_ID);
-    logger.debug("Request Parent SpanId：{}", spanId);
     return spanId;
   }
 
