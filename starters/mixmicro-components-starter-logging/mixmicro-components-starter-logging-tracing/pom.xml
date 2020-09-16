@@ -32,6 +32,12 @@
             <artifactId>mixmicro-components-enhance-logging-spring-context</artifactId>
         </dependency>
 
+        <!--Mixmicro Logback-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>mixmicro-components-enhance-logback-classic</artifactId>
+        </dependency>
+
         <!-- Spring Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

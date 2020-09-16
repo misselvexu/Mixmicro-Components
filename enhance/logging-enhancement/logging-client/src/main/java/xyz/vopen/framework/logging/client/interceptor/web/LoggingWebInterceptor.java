@@ -101,7 +101,6 @@ public class LoggingWebInterceptor extends LoggingAbstractInterceptor
       log.setParentSpanId(parentSpanId);
       String spanId = createSpanId();
       log.setSpanId(spanId);
-      logger.debug("Request SpanId：{}", log.getSpanId());
     } catch (Exception e) {
       // set exception stack
       log.setExceptionStack(StackTraceUtil.getStackTrace(e));
@@ -134,7 +133,6 @@ public class LoggingWebInterceptor extends LoggingAbstractInterceptor
       log.setHttpStatus(response.getStatus());
       // set exception stack
       if (!ObjectUtils.isEmpty(ex)) {
-        logger.debug("Request Have Exception，Execute Update HttpStatus.");
         log.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         log.setExceptionStack(StackTraceUtil.getStackTrace(ex));
       }

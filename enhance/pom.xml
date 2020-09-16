@@ -44,6 +44,7 @@
         <mixmicro-enhance-http.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-http.version>
         <mixmicro-enhance-logging.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-logging.version>
         <mixmicro-enhance-mongo.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-mongo.version>
+        <mixmicro-enhance-logback.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-logback.version>
     </properties>
 
     <modules>
@@ -360,25 +361,25 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logback</artifactId>
-                <version>${mixmicro-enhance-logging.version}</version>
+                <version>${mixmicro-enhance-logback.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logback-core</artifactId>
-                <version>${mixmicro-enhance-logging.version}</version>
+                <version>${mixmicro-enhance-logback.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logback-classic</artifactId>
-                <version>${mixmicro-enhance-logging.version}</version>
+                <version>${mixmicro-enhance-logback.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logback-access</artifactId>
-                <version>${mixmicro-enhance-logging.version}</version>
+                <version>${mixmicro-enhance-logback.version}</version>
             </dependency>
 
         </dependencies>
