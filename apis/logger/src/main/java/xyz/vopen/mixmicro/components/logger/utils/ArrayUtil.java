@@ -20,10 +20,6 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.util.Map.Entry;
 
-/**
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @version $Id: ArrayUtil.java, v 0.1 2017年08月01日 下午12:02 luoguimu123 Exp $
- */
 public class ArrayUtil {
   public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
   public static final Class[] EMPTY_CLASS_ARRAY = new Class[0];

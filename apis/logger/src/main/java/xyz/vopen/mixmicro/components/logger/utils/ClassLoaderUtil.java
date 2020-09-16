@@ -21,10 +21,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 
-/**
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @version $Id: ClassLoaderUtil.java, v 0.1 2017年08月01日 下午12:00 luoguimu123 Exp $
- */
 public class ClassLoaderUtil {
   public ClassLoaderUtil() {}
 
