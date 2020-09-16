@@ -92,21 +92,19 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
     if(e != null) {
       // global stack config
       if (getProperties().getException().isPrintStackTrace()) {
-        if(e instanceof MixmicroException) {
-          // global control
-          if(getProperties().getException().isPrintMixmicroStackTrace()) { // true
-            Map<Class<? extends Exception>, Boolean> exceptions = getProperties().getException().getInsensitiveStacks();
-            if(exceptions.containsKey(e.getClass())) { // true
-              Boolean isPrint = exceptions.getOrDefault(e.getClass(), getProperties().getException().isPrintMixmicroStackTrace());
-              if(isPrint) { // true
-                log.error(e.getMessage(), e);
-              }
-            } else {
+        // check exception has custom config ?
+        Map<Class<? extends Exception>, Boolean> exceptions = getProperties().getException().getSensitiveStacks();
+        if (exceptions.containsKey(e.getClass())) { // true
+          Boolean isPrint = exceptions.get(e.getClass());
+          if(isPrint) {
+            log.error(e.getMessage(), e);
+          }
+        } else {
+          if (e instanceof MixmicroException) {
+            if (getProperties().getException().isPrintMixmicroStackTrace()) { // true
               log.error(e.getMessage(), e);
             }
           }
-        } else {
-          log.error(e.getMessage(), e);
         }
       }
     }

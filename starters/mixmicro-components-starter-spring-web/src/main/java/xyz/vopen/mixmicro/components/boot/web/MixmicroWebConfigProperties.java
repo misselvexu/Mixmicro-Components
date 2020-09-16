@@ -9,6 +9,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import xyz.vopen.mixmicro.components.exception.defined.MixmicroException;
 
 import java.io.Serializable;
 import java.util.List;
@@ -82,6 +83,11 @@ public class MixmicroWebConfigProperties implements Serializable, InitializingBe
 
     private boolean printStackTrace = false;
 
+    /**
+     * Print {@link MixmicroException} Stack Trace
+     *
+     * <p>default: true
+     */
     private boolean printMixmicroStackTrace = true;
 
     private Class<?> handlerClass;
@@ -91,12 +97,14 @@ public class MixmicroWebConfigProperties implements Serializable, InitializingBe
     /**
      * Stack Trace Detail .
      *
-     * <p>if {{@link #printMixmicroStackTrace}} is config with <code>false</code>, this map config
-     * will no working .
+     * <p>Checkout Order:
+     * <li>1、Check Sensitive stacks map
+     * <li>2、Check is instance of {@link MixmicroException}
+     * <li>3、Check {{@link #printMixmicroStackTrace}} 's value
      *
      * @since 1.0.7
      */
-    private Map<Class<? extends Exception>, Boolean> insensitiveStacks = Maps.newHashMap();
+    private Map<Class<? extends Exception>, Boolean> sensitiveStacks = Maps.newHashMap();
   }
 
   @Data
