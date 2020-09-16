@@ -20,6 +20,7 @@ import xyz.vopen.mixmicro.kits.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Constructor;
+import java.util.Map;
 import java.util.Optional;
 
 import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_FEIGN_INVOKE_HEADER;
@@ -88,8 +89,26 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
   }
 
   private void printStackTrace(Exception e) {
-    if (getProperties().getException().isPrintStackTrace()) {
-      e.printStackTrace();
+    if(e != null) {
+      // global stack config
+      if (getProperties().getException().isPrintStackTrace()) {
+        if(e instanceof MixmicroException) {
+          // global control
+          if(getProperties().getException().isPrintMixmicroStackTrace()) { // true
+            Map<Class<? extends Exception>, Boolean> exceptions = getProperties().getException().getInsensitiveStacks();
+            if(exceptions.containsKey(e.getClass())) { // true
+              Boolean isPrint = exceptions.getOrDefault(e.getClass(), getProperties().getException().isPrintMixmicroStackTrace());
+              if(isPrint) { // true
+                log.error(e.getMessage(), e);
+              }
+            } else {
+              log.error(e.getMessage(), e);
+            }
+          }
+        } else {
+          log.error(e.getMessage(), e);
+        }
+      }
     }
   }
 
