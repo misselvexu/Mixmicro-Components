@@ -17,8 +17,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.scheduling.annotation.EnableAsync;
 import xyz.vopen.framework.logging.admin.LoggingAdminFactoryBean;
-import xyz.vopen.framework.logging.admin.repository.LoggingDataRepository;
-import xyz.vopen.framework.logging.admin.repository.impl.LoggingDataRepositoryImpl;
+import xyz.vopen.framework.logging.admin.repository.impl.GlobalLogRepositoryImpl;
+import xyz.vopen.framework.logging.admin.repository.impl.LogServiceDetailRepositoryImpl;
+import xyz.vopen.framework.logging.admin.repository.impl.RequestLogRepositoryImpl;
+import xyz.vopen.framework.logging.admin.service.impl.LoggingDataServiceImpl;
 import xyz.vopen.framework.logging.spring.context.annotation.admin.EnableLoggingAdmin;
 
 /**
@@ -58,28 +60,20 @@ public class MixmicroLoggingTracingAdminAutoConfiguration {
     }
 
     /**
-     * mongodb database template
-     *
-     * @param mongoTemplate
-     * @return
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public LoggingDataRepository loggingDataRepository(MongoTemplate mongoTemplate) {
-        return new LoggingDataRepositoryImpl(mongoTemplate);
-    }
-
-    /**
      * instantiation {@link LoggingAdminFactoryBean}
      *
-     * @param loggingDataRepository {@link LoggingDataRepository}
      * @return LoggingAdminFactoryBean
      */
     @Bean
     @ConditionalOnMissingBean
-    public LoggingAdminFactoryBean loggingAdminFactoryBean(LoggingDataRepository loggingDataRepository) {
+    public LoggingAdminFactoryBean loggingAdminFactoryBean(MongoTemplate mongoTemplate) {
         LoggingAdminFactoryBean factoryBean = new LoggingAdminFactoryBean();
-        factoryBean.setLoggingDataRepository(loggingDataRepository);
+        // mongodb data repository
+        factoryBean.setLoggingDataService(new LoggingDataServiceImpl(mongoTemplate));
+        factoryBean.setGlobalLogRepository(new GlobalLogRepositoryImpl(mongoTemplate));
+        factoryBean.setRequestLogRepository(new RequestLogRepositoryImpl(mongoTemplate));
+        factoryBean.setLogServiceDetailRepository(new LogServiceDetailRepositoryImpl(mongoTemplate));
+        // console log config settings
         factoryBean.setShowConsoleReportLog(mixmicroLoggingTracingAdminProperties.isShowConsoleReportLog());
         factoryBean.setFormatConsoleLogJson(mixmicroLoggingTracingAdminProperties.isFormatConsoleLogJson());
         logger.info("【LoggingAdminFactoryBean】init successfully.");

@@ -6,13 +6,13 @@ import org.springframework.core.type.AnnotationMetadata;
 import xyz.vopen.framework.logging.admin.endpoint.LoggingEndpoint;
 import xyz.vopen.framework.logging.admin.listener.ReportLogJsonFormatListener;
 import xyz.vopen.framework.logging.admin.listener.ReportLogStorageListener;
-import xyz.vopen.framework.logging.admin.repository.LoggingDataRepository;
+import xyz.vopen.framework.logging.admin.service.LoggingDataService;
 import xyz.vopen.framework.logging.spring.util.LoggingBeanUtils;
 
 /**
  * Register logging admin beans{@link
  * LoggingBeanUtils#registerLoggingAdminBeans(BeanDefinitionRegistry)} register {@link
- * LoggingDataRepository} register {@link
+ * LoggingDataService} register {@link
  * ReportLogStorageListener} register {@link
  * ReportLogJsonFormatListener} register {@link
  * LoggingEndpoint}
