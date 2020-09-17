@@ -2,7 +2,7 @@ package xyz.vopen.framework.logging.admin.repository;
 
 
 import xyz.vopen.framework.logging.admin.model.LogServiceDetailModel;
-import xyz.vopen.framework.logging.admin.mongodb.BaseMongoRepository;
+import xyz.vopen.framework.logging.admin.mongodb.repository.BaseMongoRepository;
 
 /**
  * logging service details repository interface

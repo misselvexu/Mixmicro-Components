@@ -1,7 +1,7 @@
 package xyz.vopen.framework.logging.admin.repository;
 
 import xyz.vopen.framework.logging.admin.model.GlobalLogModel;
-import xyz.vopen.framework.logging.admin.mongodb.BaseMongoRepository;
+import xyz.vopen.framework.logging.admin.mongodb.repository.BaseMongoRepository;
 
 /**
  * Global log data repository interface

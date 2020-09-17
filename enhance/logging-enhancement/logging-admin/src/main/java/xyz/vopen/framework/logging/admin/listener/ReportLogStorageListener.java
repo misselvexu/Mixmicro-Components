@@ -27,7 +27,7 @@ import org.springframework.util.ObjectUtils;
 import xyz.vopen.framework.logging.admin.LoggingAdminFactoryBean;
 import xyz.vopen.framework.logging.admin.endpoint.LoggingEndpoint;
 import xyz.vopen.framework.logging.admin.event.ReportLogEvent;
-import xyz.vopen.framework.logging.admin.repository.LoggingDataRepository;
+import xyz.vopen.framework.logging.admin.service.LoggingDataService;
 import xyz.vopen.framework.logging.core.LoggingClientNotice;
 import xyz.vopen.framework.logging.core.MixmicroGlobalLog;
 import xyz.vopen.framework.logging.core.MixmicroLog;
@@ -55,9 +55,9 @@ public class ReportLogStorageListener implements SmartApplicationListener {
      */
     ConcurrentMap<String, String> SERVICE_DETAIL_IDS = new ConcurrentHashMap();
     /**
-     * Logging Storage Interface {@link LoggingDataRepository}
+     * Logging Storage Interface {@link LoggingDataService}
      */
-    private LoggingDataRepository loggingDataRepository;
+    private LoggingDataService loggingDataService;
 
     /**
      * init instance method
@@ -66,7 +66,7 @@ public class ReportLogStorageListener implements SmartApplicationListener {
      */
     public ReportLogStorageListener(LoggingAdminFactoryBean adminFactoryBean) {
         Assert.notNull(adminFactoryBean, "[LoggingAdminFactoryBean] Can't be null.");
-        this.loggingDataRepository = adminFactoryBean.getLoggingDataRepository();
+        this.loggingDataService = adminFactoryBean.getLoggingDataService();
     }
 
     /**
@@ -91,7 +91,7 @@ public class ReportLogStorageListener implements SmartApplicationListener {
             if (ObjectUtils.isEmpty(serviceDetailId)) {
                 // select service detail id from database
                 serviceDetailId =
-                        loggingDataRepository.selectLogServiceDetailId(
+                        loggingDataService.selectLogServiceDetailId(
                                 notice.getClientServiceId(),
                                 notice.getClientServiceIp(),
                                 notice.getClientServicePort());
@@ -99,7 +99,7 @@ public class ReportLogStorageListener implements SmartApplicationListener {
                 // create new service detail
                 if (ObjectUtils.isEmpty(serviceDetailId)) {
                     serviceDetailId =
-                            loggingDataRepository.insertLogServiceDetail(
+                            loggingDataService.insertLogServiceDetail(
                                     notice.getClientServiceId(),
                                     notice.getClientServiceIp(),
                                     notice.getClientServicePort());
@@ -111,13 +111,13 @@ public class ReportLogStorageListener implements SmartApplicationListener {
             // save global logs
             if (!ObjectUtils.isEmpty(notice.getLoggers())) {
                 for (MixmicroLog log : notice.getLoggers()) {
-                    String requestLogId = loggingDataRepository.insertRequestLog(serviceDetailId, log);
+                    String requestLogId = loggingDataService.insertRequestLog(serviceDetailId, log);
                     // save global logs
                     saveGlobalLogs(requestLogId, log.getMixmicroGlobalLogs());
                 }
             }
             // update last report time
-            loggingDataRepository.updateLogServiceDetailLastReportTime(serviceDetailId);
+            loggingDataService.updateLogServiceDetailLastReportTime(serviceDetailId);
 
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -135,7 +135,7 @@ public class ReportLogStorageListener implements SmartApplicationListener {
     private void saveGlobalLogs(String requestLogId, List<MixmicroGlobalLog> mixmicroGlobalLogs) {
         if (!ObjectUtils.isEmpty(mixmicroGlobalLogs) && !ObjectUtils.isEmpty(requestLogId)) {
             mixmicroGlobalLogs.forEach(
-                    globalLog -> loggingDataRepository.insertGlobalLog(requestLogId, globalLog));
+                    globalLog -> loggingDataService.insertGlobalLog(requestLogId, globalLog));
         }
     }
 
