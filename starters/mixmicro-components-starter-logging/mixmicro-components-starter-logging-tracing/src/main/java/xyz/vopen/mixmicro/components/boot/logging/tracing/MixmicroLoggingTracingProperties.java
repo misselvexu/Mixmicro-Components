@@ -79,14 +79,6 @@ public class MixmicroLoggingTracingProperties {
    */
   private MixmicroLoggingTracingStorageWay mixmicroLoggingTracingStorageWay = MixmicroLoggingTracingStorageWay.MEMORY;
   /**
-   * Mixmicro Boot Logging Admin Instance
-   */
-  private AdminInstance admin = new AdminInstance();
-  /**
-   * Mixmicro Boot Logging Discovery Instance support eureka
-   */
-  private DiscoveryInstance discovery;
-  /**
    * Choose load balancing strategy for admin report log {@link
    * LoadBalanceStrategy}
    *
@@ -96,33 +88,7 @@ public class MixmicroLoggingTracingProperties {
   private LoadBalanceStrategyWay loadBalanceStrategy = LoadBalanceStrategyWay.RANDOM_WEIGHT;
 
   /**
-   * Config Mixmicro Boot Logging Admin Server report every request log to api-boot-logging-admin
+   * admin trace log report url
    */
-  @Data
-  public static class AdminInstance {
-    /**
-     * Mixmicro Boot Logging Admin Server Address
-     */
-    private String serverAddress;
-  }
-
-  /**
-   * Config Mixmicro Boot Logging Discovery Instance Draw the list of Mixmicro Boot Logging Admin addresses from
-   * the registry and report the request log through load balancing
-   */
-  @Data
-  public static class DiscoveryInstance {
-    /**
-     * Mixmicro Boot Logging Admin Spring Security Username
-     */
-    private String username;
-    /**
-     * Mixmicro Boot Logging Admin Spring Security User Password
-     */
-    private String password;
-    /**
-     * Mixmicro Boot Logging Admin Service ID
-     */
-    private String serviceId;
-  }
+  private String reportUrl= "localhost:8060";
 }

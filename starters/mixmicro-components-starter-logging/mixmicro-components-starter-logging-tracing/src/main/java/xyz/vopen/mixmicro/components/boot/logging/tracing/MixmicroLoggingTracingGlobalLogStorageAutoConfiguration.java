@@ -23,7 +23,7 @@ public class MixmicroLoggingTracingGlobalLogStorageAutoConfiguration {
   @Bean
   @ConditionalOnProperty(
       prefix = MixmicroLoggingTracingProperties.MIXMICRO_BOOT_LOGGING_PREFIX,
-      name = "global-logging-repository-away",
+      name = "global-logging-repository-way",
       havingValue = "memory",
       matchIfMissing = true)
   public MixmicroLogging globalLogging() {

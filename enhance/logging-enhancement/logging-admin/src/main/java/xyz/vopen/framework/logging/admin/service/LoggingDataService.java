@@ -40,8 +40,7 @@ public interface LoggingDataService {
      * @param servicePort ServicePort
      * @return ServiceDetail Pk Value
      */
-    String insertLogServiceDetail(String serviceId, String serviceIp, int servicePort)
-            throws SQLException;
+    String insertLogServiceDetail(String serviceId, String serviceIp, int servicePort);
 
     /**
      * Select ServiceDetails Id

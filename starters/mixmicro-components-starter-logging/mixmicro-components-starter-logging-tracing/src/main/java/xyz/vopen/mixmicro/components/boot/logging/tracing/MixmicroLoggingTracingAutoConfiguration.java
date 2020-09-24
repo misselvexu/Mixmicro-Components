@@ -70,7 +70,7 @@ public class MixmicroLoggingTracingAutoConfiguration {
         factoryBean.setReportInitialDelaySecond(mixmicroLoggingTracingProperties.getReportInitialDelaySecond());
         factoryBean.setReportIntervalSecond(mixmicroLoggingTracingProperties.getReportIntervalSecond());
         factoryBean.setLoggingAdminDiscovery(
-                new LoggingAppointAdminDiscovery(new String[]{"user:123456@localhost:8060"})
+                new LoggingAppointAdminDiscovery(new String[]{mixmicroLoggingTracingProperties.getReportUrl()})
         );
         factoryBean.setShowConsoleLog(mixmicroLoggingTracingProperties.isShowConsoleLog());
         factoryBean.setFormatConsoleLog(mixmicroLoggingTracingProperties.isFormatConsoleLogJson());

@@ -70,7 +70,11 @@ public class LoggingDataServiceImpl implements LoggingDataService {
         globalLogModel.setCallerMethod(log.getCallerMethod());
         globalLogModel.setCallerCodeLineNumber(log.getCallerCodeLineNumber());
         globalLogModel.setExceptionStack(log.getExceptionStack());
-        globalLogModel.setCreateTime(log.getCreateTime());
+        if (null == log.getCreateTime()) {
+            globalLogModel.setCreateTime(System.currentTimeMillis());
+        } else {
+            globalLogModel.setCreateTime(log.getCreateTime());
+        }
         globalLogRepository.insert(globalLogModel);
         return id;
     }
@@ -99,7 +103,7 @@ public class LoggingDataServiceImpl implements LoggingDataService {
         requestLogModel.setRequestIp(log.getRequestIp());
         requestLogModel.setRequestMethod(log.getRequestMethod());
         requestLogModel.setRequestUri(log.getRequestUri());
-        requestLogModel.setRequestBody(log.getResponseBody());
+        requestLogModel.setResponseBody(log.getResponseBody());
         requestLogModel.setResponseHeaders(log.getResponseHeaders());
         requestLogModel.setTimeConsuming(log.getTimeConsuming());
         requestLogModel.setRequestParams(log.getRequestParam());
@@ -122,6 +126,8 @@ public class LoggingDataServiceImpl implements LoggingDataService {
         logServiceDetailModel.setServiceId(serviceId);
         logServiceDetailModel.setServiceIp(serviceIp);
         logServiceDetailModel.setServicePort(servicePort);
+        logServiceDetailModel.setCreateTime(System.currentTimeMillis());
+        logServiceDetailModel.setLastReportTime(System.currentTimeMillis());
         logServiceDetailRepository.insert(logServiceDetailModel);
         return id;
     }
