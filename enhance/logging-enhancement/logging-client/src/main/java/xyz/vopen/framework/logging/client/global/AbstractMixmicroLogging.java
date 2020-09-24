@@ -1,8 +1,8 @@
 package xyz.vopen.framework.logging.client.global;
 
+import org.springframework.util.ObjectUtils;
 import xyz.vopen.framework.logging.core.MixmicroGlobalLog;
 import xyz.vopen.framework.logging.core.MixmicroLogLevel;
-import org.springframework.util.ObjectUtils;
 
 /**
  * GlobalLogging abstract implementation Provide public methods required for log acquisition
@@ -92,7 +92,7 @@ public abstract class AbstractMixmicroLogging implements MixmicroLogging {
   protected String replacePlaceholder(String format, Object[] arguments) {
     if (!ObjectUtils.isEmpty(arguments)) {
       for (int i = 0; i < arguments.length; i++) {
-        format = format.replaceFirst("\\{\\}", String.valueOf(arguments[i]));
+        format = format.replaceFirst("\\{\\}", java.util.regex.Matcher.quoteReplacement(String.valueOf(arguments[i])));
       }
     }
     return format;
