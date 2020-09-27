@@ -68,7 +68,7 @@ import java.util.logging.Logger;
 
 /** Factory for returning serialization methods. */
 public class SerializerFactory extends AbstractSerializerFactory {
-  protected static final HashMap _staticTypeMap;
+  protected static final ConcurrentMap _staticTypeMap;
   private static final Logger log = Logger.getLogger(SerializerFactory.class.getName());
   private static final Deserializer OBJECT_DESERIALIZER =
       new BasicDeserializer(BasicDeserializer.OBJECT);
@@ -78,8 +78,10 @@ public class SerializerFactory extends AbstractSerializerFactory {
   protected static Map<Class, Serializer> jdk8DateSerializeMap =
       new ConcurrentHashMap<Class, Serializer>();
 
+  protected final static boolean isHigherThanJdk8           = isJava8();
+
   static {
-    _staticTypeMap = new HashMap();
+    _staticTypeMap = new ConcurrentHashMap();
 
     addBasic(void.class, "void", BasicSerializer.NULL);
 
@@ -135,7 +137,7 @@ public class SerializerFactory extends AbstractSerializerFactory {
     }
 
     try {
-      if (isJava8()) {
+      if (isHigherThanJdk8) {
         jdk8DateSerializeMap.put(
             Class.forName("java.time.LocalTime"),
             Java8TimeSerializer.create(LocalTimeHandle.class));
@@ -259,7 +261,7 @@ public class SerializerFactory extends AbstractSerializerFactory {
 
   private static boolean isZoneId(Class cl) {
     try {
-      return isJava8() && Class.forName("java.time.ZoneId").isAssignableFrom(cl);
+      return isHigherThanJdk8 && Class.forName("java.time.ZoneId").isAssignableFrom(cl);
     } catch (ClassNotFoundException e) {
       // ignore
     }

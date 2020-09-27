@@ -60,6 +60,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static xyz.vopen.mixmicro.kits.hessian.HessianConstants.HESSIAN_PARENT_CONTEXT_CREATE;
+
 /** The classloader-specific Factory for returning serialization */
 public class ContextSerializerFactory {
   private static final Logger log = Logger.getLogger(ContextSerializerFactory.class.getName());
@@ -201,7 +203,12 @@ public class ContextSerializerFactory {
       if (factory == null) {
         ContextSerializerFactory parent = null;
 
-        if (loader != null) parent = create(loader.getParent());
+        if (loader != null
+            && !Boolean.FALSE
+                .toString()
+                .equalsIgnoreCase(System.getProperty(HESSIAN_PARENT_CONTEXT_CREATE))) {
+          parent = create(loader.getParent());
+        }
 
         factory = new ContextSerializerFactory(parent, loader);
         factoryRef = new SoftReference<ContextSerializerFactory>(factory);
