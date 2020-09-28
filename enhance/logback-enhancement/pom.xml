@@ -10,11 +10,11 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.yunlsp.framework.components</groupId>
     <artifactId>mixmicro-components-enhance-logback</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
+    <groupId>com.yunlsp.framework.components</groupId>
     <packaging>pom</packaging>
     <name>Enhance Logback Module :: ${project.version}</name>
+    <description>🏗 Enhance Log Back Module</description>
 
     <modules>
         <module>logback-core</module>
@@ -23,6 +23,8 @@
     </modules>
 
     <properties>
+        <java.version>1.8</java.version>
+
         <maven.compiler.source>1.6</maven.compiler.source>
         <maven.compiler.target>1.6</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,6 +48,7 @@
         <cobertura.maven.plugin.version>2.7</cobertura.maven.plugin.version>
         <maven-license-plugin.version>3.0</maven-license-plugin.version>
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <mixmicro.framework.version>2020.06.RELEASE</mixmicro.framework.version>
     </properties>
 
     <dependencyManagement>
@@ -66,6 +69,15 @@
                 <artifactId>mixmicro-components-enhance-logback-access</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>xyz.vopen.framework</groupId>
+                <artifactId>mixmicro-dependencies</artifactId>
+                <version>${mixmicro.framework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
@@ -158,7 +170,28 @@
                 <version>2.7.9</version>
             </dependency>
         </dependencies>
+
     </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>maven-snapshots</id>
+            <name>Maven Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>aliyun</id>
+            <name>AliYun Maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
+    </repositories>
 
     <build>
         <plugins>
@@ -181,20 +214,17 @@
                     <source>2.0</source>
                 </configuration>
             </plugin>
+            <!--jdk version-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>nexus.releases</id>
-            <url>http://nexus.hgj.net/repository/releases/</url>
-            <uniqueVersion>false</uniqueVersion>
-        </repository>
-        <snapshotRepository>
-            <id>nexus.snapshots</id>
-            <url>http://nexus.hgj.net/repository/snapshots/</url>
-            <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>
