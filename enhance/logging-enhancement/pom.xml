@@ -12,7 +12,6 @@
     <artifactId>mixmicro-components-enhance-logging</artifactId>
     <version>1.0.7.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
-
     <name>Enhance Logging Module :: ${project.version}</name>
     <description>🏗 Enhance Logging Module</description>
 
