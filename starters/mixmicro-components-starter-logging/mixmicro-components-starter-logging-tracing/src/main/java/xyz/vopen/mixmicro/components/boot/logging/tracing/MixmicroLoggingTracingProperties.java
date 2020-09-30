@@ -130,4 +130,9 @@ public class MixmicroLoggingTracingProperties {
      * admin trace log report url
      */
     private String reportUrl = "localhost:8060";
+
+    /**
+     * global log trace execute domain package name
+     */
+    private List<String> globalLogExecutePackage;
 }
