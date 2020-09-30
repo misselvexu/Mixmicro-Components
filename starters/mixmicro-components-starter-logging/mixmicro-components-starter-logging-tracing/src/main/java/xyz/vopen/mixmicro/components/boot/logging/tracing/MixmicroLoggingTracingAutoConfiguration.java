@@ -73,6 +73,7 @@ public class MixmicroLoggingTracingAutoConfiguration {
                 new LoggingAppointAdminDiscovery(new String[]{mixmicroLoggingTracingProperties.getReportUrl()})
         );
         factoryBean.setShowConsoleLog(mixmicroLoggingTracingProperties.isShowConsoleLog());
+        factoryBean.setGlobalLogExecutePackage(mixmicroLoggingTracingProperties.getGlobalLogExecutePackage());
         factoryBean.setFormatConsoleLog(mixmicroLoggingTracingProperties.isFormatConsoleLogJson());
 
         List<LoggingFactoryBeanCustomizer> customizers = customizerObjectProvider.getIfAvailable();
