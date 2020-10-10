@@ -12,7 +12,7 @@ public class ClientEvent {
     CANCEL
   }
 
-  private ClientEventContext ctx;
+  private final ClientEventContext ctx;
 
   public ClientEvent(ClientEventContext ctx) {
     this.ctx = ctx;

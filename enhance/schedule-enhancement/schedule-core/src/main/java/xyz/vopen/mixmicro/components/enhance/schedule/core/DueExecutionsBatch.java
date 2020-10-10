@@ -4,15 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Supplier;
 
 class DueExecutionsBatch {
 
-  private static final Logger LOG = LoggerFactory.getLogger(DueExecutionsBatch.class);
+  private static final Logger log = LoggerFactory.getLogger(DueExecutionsBatch.class);
   private final int generationNumber;
   private final AtomicInteger executionsLeftInBatch;
-  private int threadpoolSize;
-  private boolean possiblyMoreExecutionsInDb;
+  private final int threadpoolSize;
+  private final boolean possiblyMoreExecutionsInDb;
   private boolean stale = false;
   private boolean triggeredExecuteDue;
 
@@ -31,12 +30,13 @@ class DueExecutionsBatch {
     this.stale = true;
   }
 
-  /** @param triggerCheckForNewBatch may be triggered more than one in racy conditions */
-  public void oneExecutionDone(Supplier<Boolean> triggerCheckForNewBatch) {
+  public void oneExecutionDone(Runnable triggerCheckForNewBatch) {
+
     executionsLeftInBatch.decrementAndGet();
 
-    LOG.trace(
-        "Batch state: stale:{}, triggeredExecuteDue:{}, possiblyMoreExecutionsInDb:{}, executionsLeftInBatch:{}, ratio-trigger:{}",
+    log.trace(
+        "Batch state: generationNumber:{}, stale:{}, triggeredExecuteDue:{}, possiblyMoreExecutionsInDb:{}, executionsLeftInBatch:{}, ratio-trigger:{}",
+        generationNumber,
         stale,
         triggeredExecuteDue,
         possiblyMoreExecutionsInDb,
@@ -47,7 +47,9 @@ class DueExecutionsBatch {
         && possiblyMoreExecutionsInDb
         && executionsLeftInBatch.get()
             <= (threadpoolSize * Scheduler.TRIGGER_NEXT_BATCH_WHEN_AVAILABLE_THREADS_RATIO)) {
-      triggeredExecuteDue = triggerCheckForNewBatch.get();
+      log.trace("Triggering check for new batch.");
+      triggerCheckForNewBatch.run();
+      triggeredExecuteDue = true;
     }
   }
 

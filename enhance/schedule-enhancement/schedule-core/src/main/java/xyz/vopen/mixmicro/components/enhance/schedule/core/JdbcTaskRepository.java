@@ -2,7 +2,6 @@ package xyz.vopen.mixmicro.components.enhance.schedule.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xyz.vopen.mixmicro.components.enhance.schedule.core.TaskResolver.UnresolvedTask;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.jdbc.AutodetectJdbcCustomization;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.jdbc.JdbcCustomization;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.Execution;
@@ -27,14 +26,13 @@ import java.util.function.Supplier;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
-import static xyz.vopen.mixmicro.components.enhance.schedule.core.StringUtils.truncate;
 
 @SuppressWarnings("rawtypes")
 public class JdbcTaskRepository implements TaskRepository {
 
   public static final String DEFAULT_TABLE_NAME = "mixmicro_scheduled_tasks";
 
-  private static final Logger LOG = LoggerFactory.getLogger(JdbcTaskRepository.class);
+  private static final Logger log = LoggerFactory.getLogger(JdbcTaskRepository.class);
   private final TaskResolver taskResolver;
   private final SchedulerName schedulerSchedulerName;
   private final JdbcRunner jdbcRunner;
@@ -92,7 +90,7 @@ public class JdbcTaskRepository implements TaskRepository {
     try {
       Optional<Execution> existingExecution = getExecution(execution.taskInstance);
       if (existingExecution.isPresent()) {
-        LOG.debug(
+        log.debug(
             "Execution not created, it already exists. Due: {}",
             existingExecution.get().executionTime);
         return false;
@@ -113,12 +111,12 @@ public class JdbcTaskRepository implements TaskRepository {
       return true;
 
     } catch (SQLRuntimeException e) {
-      LOG.debug("Exception when inserting execution. Assuming it to be a constraint violation.", e);
+      log.debug("Exception when inserting execution. Assuming it to be a constraint violation.", e);
       Optional<Execution> existingExecution = getExecution(execution.taskInstance);
       if (!existingExecution.isPresent()) {
         throw new RuntimeException("Failed to add new execution.", e);
       }
-      LOG.debug("Execution not created, another thread created it.");
+      log.debug("Execution not created, another thread created it.");
       return false;
     }
   }
@@ -284,7 +282,7 @@ public class JdbcTaskRepository implements TaskRepository {
                 + "and version = ?",
             ps -> {
               ps.setBoolean(1, true);
-              ps.setString(2, truncate(schedulerSchedulerName.getName(), 50));
+              ps.setString(2, StringUtils.truncate(schedulerSchedulerName.getName(), 50));
               jdbcCustomization.setInstant(ps, 3, timePicked);
               ps.setBoolean(4, false);
               ps.setString(5, e.taskInstance.getTaskName());
@@ -293,7 +291,7 @@ public class JdbcTaskRepository implements TaskRepository {
             });
 
     if (updated == 0) {
-      LOG.trace("Failed to pick execution. It must have been picked by another core.", e);
+      log.trace("Failed to pick execution. It must have been picked by another scheduler.", e);
       return Optional.empty();
     } else if (updated == 1) {
       final Optional<Execution> pickedExecution = getExecution(e.taskInstance);
@@ -349,14 +347,14 @@ public class JdbcTaskRepository implements TaskRepository {
             });
 
     if (updated == 0) {
-      LOG.trace("Did not update heartbeat. Execution must have been removed or rescheduled.", e);
+      log.trace("Did not update heartbeat. Execution must have been removed or rescheduled.", e);
     } else {
       if (updated > 1) {
         throw new IllegalStateException(
             "Updated multiple rows updating heartbeat for execution. Should never happen since name and id is primary key. Execution: "
                 + e);
       }
-      LOG.debug("Updated heartbeat for execution: " + e);
+      log.debug("Updated heartbeat for execution: " + e);
     }
   }
 
@@ -445,8 +443,8 @@ public class JdbcTaskRepository implements TaskRepository {
         Optional<Task> task = taskResolver.resolve(taskName);
 
         if (!task.isPresent()) {
-          LOG.warn(
-              "Failed to find implementation for task with name '{}'. Execution will be excluded from due. Either delete the execution from the database, or add an implementation for it. The core may be configured to automatically delete unresolved tasks after a certain period of time.",
+          log.warn(
+              "Failed to find implementation for task with name '{}'. Execution will be excluded from due. Either delete the execution from the database, or add an implementation for it. The scheduler may be configured to automatically delete unresolved tasks after a certain period of time.",
               taskName);
           continue;
         }
@@ -515,9 +513,9 @@ public class JdbcTaskRepository implements TaskRepository {
   }
 
   private static class UnresolvedFilter {
-    private final List<UnresolvedTask> unresolved;
+    private final List<TaskResolver.UnresolvedTask> unresolved;
 
-    public UnresolvedFilter(List<UnresolvedTask> unresolved) {
+    public UnresolvedFilter(List<TaskResolver.UnresolvedTask> unresolved) {
       this.unresolved = unresolved;
     }
 
@@ -531,7 +529,7 @@ public class JdbcTaskRepository implements TaskRepository {
 
     public int setParameters(PreparedStatement p, int index) throws SQLException {
       final List<String> unresolvedTasknames =
-          unresolved.stream().map(UnresolvedTask::getTaskName).collect(toList());
+          unresolved.stream().map(TaskResolver.UnresolvedTask::getTaskName).collect(toList());
       for (String taskName : unresolvedTasknames) {
         p.setString(index++, taskName);
       }

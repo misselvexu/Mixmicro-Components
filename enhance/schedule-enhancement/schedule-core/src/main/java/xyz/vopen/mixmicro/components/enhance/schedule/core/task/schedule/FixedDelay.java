@@ -18,6 +18,11 @@ public class FixedDelay implements Schedule {
     return new FixedDelay(duration);
   }
 
+  public static FixedDelay ofMillis(long millis) {
+    validateDuration(millis);
+    return new FixedDelay(Duration.ofMillis(millis));
+  }
+
   public static FixedDelay ofSeconds(int seconds) {
     validateDuration(seconds);
     return new FixedDelay(Duration.ofSeconds(seconds));
@@ -33,7 +38,7 @@ public class FixedDelay implements Schedule {
     return new FixedDelay(Duration.ofHours(hours));
   }
 
-  private static void validateDuration(int seconds) {
+  private static void validateDuration(long seconds) {
     if (seconds <= 0) {
       throw new IllegalArgumentException("argument must be greater than 0");
     }
@@ -47,6 +52,12 @@ public class FixedDelay implements Schedule {
   @Override
   public Instant getInitialExecutionTime(Instant now) {
     return now;
+  }
+
+  @Override
+  public boolean isDeterministic() {
+    // Only deterministic if relative to a certain instant
+    return false;
   }
 
   @Override

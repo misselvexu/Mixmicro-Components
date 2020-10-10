@@ -12,4 +12,6 @@ public interface Schedule {
   default Instant getInitialExecutionTime(Instant now) {
     return getNextExecutionTime(ExecutionComplete.simulatedSuccess(now));
   }
+
+  boolean isDeterministic();
 }

@@ -11,16 +11,16 @@ import java.util.concurrent.TimeUnit;
 
 public class ExecutorUtils {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ExecutorUtils.class);
+  private static final Logger log = LoggerFactory.getLogger(ExecutorUtils.class);
 
   public static boolean shutdownAndAwaitTermination(
-      ExecutorService executorService, Duration timeout) {
+      ExecutorService executorService, Duration waitBeforeInterrupt, Duration waitAfterInterrupt) {
     executorService.shutdown();
-    boolean successfulShutdown = awaitTermination(executorService, timeout);
+    boolean successfulShutdown = awaitTermination(executorService, waitBeforeInterrupt);
     if (!successfulShutdown) {
-      LOG.info("Failed to shutdown executor service gracefully. Trying interrupt...");
+      log.info("Interrupting executor service threads for shutdown.");
       executorService.shutdownNow();
-      return awaitTermination(executorService, timeout);
+      return awaitTermination(executorService, waitAfterInterrupt);
     } else {
       return true;
     }
@@ -30,7 +30,7 @@ public class ExecutorUtils {
     try {
       return executor.awaitTermination(timeout.toMillis(), TimeUnit.MILLISECONDS);
     } catch (InterruptedException e) {
-      LOG.warn("Interrupted while waiting for termination of executor.", e);
+      log.warn("Interrupted while waiting for termination of executor.", e);
       return false;
     }
   }

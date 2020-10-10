@@ -1,8 +1,8 @@
 package xyz.vopen.mixmicro.components.enhance.schedule.core.task;
 
+import xyz.vopen.mixmicro.components.enhance.schedule.core.task.schedule.Schedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xyz.vopen.mixmicro.components.enhance.schedule.core.task.schedule.Schedule;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -15,7 +15,7 @@ public interface FailureHandler<T> {
   // duration_from_first_failure (minimum 1m, max 1d)
   class OnFailureRetryLater<T> implements FailureHandler<T> {
 
-    private static final Logger LOG =
+    private static final Logger log =
         LoggerFactory.getLogger(CompletionHandler.OnCompleteReschedule.class);
     private final Duration sleepDuration;
 
@@ -27,7 +27,7 @@ public interface FailureHandler<T> {
     public void onFailure(
         ExecutionComplete executionComplete, ExecutionOperations<T> executionOperations) {
       Instant nextTry = Instant.now().plus(sleepDuration);
-      LOG.debug(
+      log.debug(
           "Execution failed. Retrying task {} at {}",
           executionComplete.getExecution().taskInstance,
           nextTry);
@@ -37,7 +37,7 @@ public interface FailureHandler<T> {
 
   class OnFailureReschedule<T> implements FailureHandler<T> {
 
-    private static final Logger LOG =
+    private static final Logger log =
         LoggerFactory.getLogger(CompletionHandler.OnCompleteReschedule.class);
     private final Schedule schedule;
 
@@ -49,7 +49,7 @@ public interface FailureHandler<T> {
     public void onFailure(
         ExecutionComplete executionComplete, ExecutionOperations<T> executionOperations) {
       Instant nextExecution = schedule.getNextExecutionTime(executionComplete);
-      LOG.debug(
+      log.debug(
           "Execution failed. Rescheduling task {} to {}",
           executionComplete.getExecution().taskInstance,
           nextExecution);

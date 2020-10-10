@@ -1,11 +1,11 @@
 package xyz.vopen.mixmicro.components.enhance.schedule.core.stats;
 
+import xyz.vopen.mixmicro.components.enhance.schedule.core.task.ExecutionComplete;
+import xyz.vopen.mixmicro.components.enhance.schedule.core.task.Task;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
-import xyz.vopen.mixmicro.components.enhance.schedule.core.task.ExecutionComplete;
-import xyz.vopen.mixmicro.components.enhance.schedule.core.task.Task;
 
 import java.util.HashMap;
 import java.util.List;
@@ -73,32 +73,32 @@ public class MicrometerStatsRegistry implements StatsRegistry {
     private final Timer durationsForTask;
 
     MetricsHolder(String taskName) {
-      Gauge.builder("dbscheduler_task_last_run_duration", lastDurationForTask::get)
+      Gauge.builder("mixmicro_scheduler_task_last_run_duration", lastDurationForTask::get)
           .description("Duration in seconds for last execution of this task")
           .tag("task", taskName)
           .register(meterRegistry);
 
-      Gauge.builder("dbscheduler_task_last_run_timestamp_seconds", lastRunTimestampForTask::get)
+      Gauge.builder("mixmicro_scheduler_task_last_run_timestamp_seconds", lastRunTimestampForTask::get)
           .description("Time when last run completed")
           .tag("task", taskName)
           .register(meterRegistry);
 
       successesForTask =
-          Counter.builder("dbscheduler_task_completions")
+          Counter.builder("mixmicro_scheduler_task_completions")
               .description("Successes and failures by task")
               .tag("task", taskName)
               .tag("result", RESULT_SUCCESS)
               .register(meterRegistry);
 
       failuresForTask =
-          Counter.builder("dbscheduler_task_completions")
+          Counter.builder("mixmicro_scheduler_task_completions")
               .description("Successes and failures by task")
               .tag("task", taskName)
               .tag("result", RESULT_FAILURE)
               .register(meterRegistry);
 
       durationsForTask =
-          Timer.builder("dbscheduler_task_duration")
+          Timer.builder("mixmicro_scheduler_task_duration")
               .description("Duration of executions")
               .tag("task", taskName)
               .register(meterRegistry);

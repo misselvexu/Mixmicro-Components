@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class TransactionManager {
 
-  private static final Logger LOG = LoggerFactory.getLogger(TransactionManager.class);
+  private static final Logger log = LoggerFactory.getLogger(TransactionManager.class);
 
   ThreadLocal<Connection> currentTransaction = new ThreadLocal<>();
   private final DataSource dataSource;
@@ -76,12 +76,12 @@ public class TransactionManager {
     try {
       connection.rollback();
     } catch (SQLException rollbackException) {
-      LOG.error(
+      log.error(
           "Original application exception overridden by rollback-exception. Throwing rollback-exception. Original application exception: ",
           originalException);
       throw new SQLRuntimeException(rollbackException);
     } catch (RuntimeException rollbackException) {
-      LOG.error(
+      log.error(
           "Original application exception overridden by rollback-exception. Throwing rollback-exception. Original application exception: ",
           originalException);
       throw rollbackException;

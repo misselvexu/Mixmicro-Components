@@ -5,9 +5,9 @@ import com.cronutils.model.CronType;
 import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.model.time.ExecutionTime;
 import com.cronutils.parser.CronParser;
+import xyz.vopen.mixmicro.components.enhance.schedule.core.task.ExecutionComplete;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xyz.vopen.mixmicro.components.enhance.schedule.core.task.ExecutionComplete;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -18,7 +18,7 @@ import java.util.Optional;
 /** Spring-style cron-pattern schedule */
 public class CronSchedule implements Schedule {
 
-  private static final Logger LOG = LoggerFactory.getLogger(CronSchedule.class);
+  private static final Logger log = LoggerFactory.getLogger(CronSchedule.class);
   private final ExecutionTime cronExecutionTime;
   private final ZoneId zoneId;
 
@@ -48,10 +48,15 @@ public class CronSchedule implements Schedule {
     // context of the desired time zone
     Optional<ZonedDateTime> nextTime = cronExecutionTime.nextExecution(lastDone);
     if (!nextTime.isPresent()) {
-      LOG.error(
+      log.error(
           "Cron-pattern did not return any further execution-times. This behavior is currently not supported by the scheduler. Setting next execution-time to far-future.");
       return Instant.now().plus(1000, ChronoUnit.YEARS);
     }
     return nextTime.get().toInstant();
+  }
+
+  @Override
+  public boolean isDeterministic() {
+    return true;
   }
 }

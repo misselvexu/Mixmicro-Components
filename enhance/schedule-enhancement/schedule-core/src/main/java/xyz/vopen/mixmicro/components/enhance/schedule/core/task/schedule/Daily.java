@@ -2,7 +2,11 @@ package xyz.vopen.mixmicro.components.enhance.schedule.core.task.schedule;
 
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.ExecutionComplete;
 
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -46,6 +50,11 @@ public class Daily implements Schedule {
     }
 
     return ZonedDateTime.of(doneDate, times.get(0), zone).plusDays(1).toInstant();
+  }
+
+  @Override
+  public boolean isDeterministic() {
+    return true;
   }
 
   @Override

@@ -7,13 +7,8 @@ import xyz.vopen.mixmicro.components.enhance.schedule.core.SchedulerState;
 
 import java.util.Objects;
 
-/**
- * {@link MixmicroSchedulerHealthIndicator}
- *
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @version ${project.version} - 2020/6/4
- */
 public class MixmicroSchedulerHealthIndicator implements HealthIndicator {
+
   private final SchedulerState state;
 
   public MixmicroSchedulerHealthIndicator(Scheduler scheduler) {

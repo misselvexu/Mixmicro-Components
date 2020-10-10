@@ -2,7 +2,6 @@ package xyz.vopen.mixmicro.components.enhance.schedule.core;
 
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.Execution;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.TaskInstanceId;
-
 import java.time.Instant;
 import java.util.Objects;
 

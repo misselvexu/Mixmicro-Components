@@ -1,7 +1,5 @@
 package xyz.vopen.mixmicro.components.enhance.schedule.core;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.jdbc.DefaultJdbcCustomization;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.jdbc.JdbcCustomization;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.stats.StatsRegistry;
@@ -9,6 +7,8 @@ import xyz.vopen.mixmicro.components.enhance.schedule.core.task.Execution;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.Task;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.TaskInstance;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.TaskInstanceId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.time.Instant;
@@ -39,7 +39,7 @@ public interface SchedulerClient {
   class Builder {
 
     private final DataSource dataSource;
-    private List<Task<?>> knownTasks;
+    private final List<Task<?>> knownTasks;
     private final Serializer serializer = Serializer.DEFAULT_JAVA_SERIALIZER;
     private String tableName = JdbcTaskRepository.DEFAULT_TABLE_NAME;
     private JdbcCustomization jdbcCustomization;
@@ -85,7 +85,7 @@ public interface SchedulerClient {
 
   class StandardSchedulerClient implements SchedulerClient {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StandardSchedulerClient.class);
+    private static final Logger log = LoggerFactory.getLogger(StandardSchedulerClient.class);
     protected final TaskRepository taskRepository;
     private SchedulerClientEventListener schedulerClientEventListener;
 
@@ -197,7 +197,7 @@ public interface SchedulerClient {
             new ClientEvent(
                 new ClientEvent.ClientEventContext(eventType, taskInstanceId, executionTime)));
       } catch (Exception e) {
-        LOG.error("Error when notifying SchedulerClientEventListener.", e);
+        log.error("Error when notifying SchedulerClientEventListener.", e);
       }
     }
   }

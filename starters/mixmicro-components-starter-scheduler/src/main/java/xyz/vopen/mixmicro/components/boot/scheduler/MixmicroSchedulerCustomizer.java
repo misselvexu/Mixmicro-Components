@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.boot.scheduler.config;
+package xyz.vopen.mixmicro.components.boot.scheduler;
 
 import xyz.vopen.mixmicro.components.enhance.schedule.core.SchedulerName;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.Serializer;
@@ -7,11 +7,8 @@ import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 
 /**
- * Provides functionality for customizing various aspects of the db-scheduler configuration that is
- * not easily done with properties.
- *
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @version ${project.version} - 2020/6/4
+ * Provides functionality for customizing various aspects of the mixmicro-scheduler configuration
+ * that is not easily done with properties.
  */
 public interface MixmicroSchedulerCustomizer {
   /** Provide a custom {@link SchedulerName} implementation. */

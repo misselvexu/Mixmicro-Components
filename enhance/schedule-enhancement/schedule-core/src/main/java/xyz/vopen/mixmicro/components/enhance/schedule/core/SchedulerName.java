@@ -24,21 +24,21 @@ public interface SchedulerName {
   }
 
   class Hostname implements SchedulerName {
-    private static final Logger LOG = LoggerFactory.getLogger(Hostname.class);
+    private static final Logger log = LoggerFactory.getLogger(Hostname.class);
     private String cachedHostname;
 
     public Hostname() {
       try {
         long start = System.currentTimeMillis();
-        LOG.debug("Resolving hostname..");
+        log.debug("Resolving hostname..");
         cachedHostname = InetAddress.getLocalHost().getHostName();
-        LOG.debug("Resolved hostname..");
+        log.debug("Resolved hostname..");
         long duration = System.currentTimeMillis() - start;
         if (duration > 1000) {
-          LOG.warn("Hostname-lookup took {}ms", duration);
+          log.warn("Hostname-lookup took {}ms", duration);
         }
       } catch (UnknownHostException e) {
-        LOG.warn("Failed to resolve hostname. Using dummy-name for scheduler.");
+        log.warn("Failed to resolve hostname. Using dummy-name for scheduler.");
         cachedHostname = "failed.hostname.lookup";
       }
     }

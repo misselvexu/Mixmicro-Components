@@ -9,23 +9,23 @@ public interface DeadExecutionHandler<T> {
   void deadExecution(Execution execution, ExecutionOperations<T> executionOperations);
 
   class ReviveDeadExecution<T> implements DeadExecutionHandler<T> {
-    private static final Logger LOG = LoggerFactory.getLogger(ReviveDeadExecution.class);
+    private static final Logger log = LoggerFactory.getLogger(ReviveDeadExecution.class);
 
     @Override
     public void deadExecution(Execution execution, ExecutionOperations<T> executionOperations) {
       final Instant now = Instant.now();
-      LOG.info("Reviving dead execution: " + execution + " to " + now);
+      log.info("Reviving dead execution: " + execution + " to " + now);
       executionOperations.reschedule(
           new ExecutionComplete(execution, now, now, ExecutionComplete.Result.FAILED, null), now);
     }
   }
 
   class CancelDeadExecution<T> implements DeadExecutionHandler<T> {
-    private static final Logger LOG = LoggerFactory.getLogger(ReviveDeadExecution.class);
+    private static final Logger log = LoggerFactory.getLogger(ReviveDeadExecution.class);
 
     @Override
     public void deadExecution(Execution execution, ExecutionOperations<T> executionOperations) {
-      LOG.warn("Cancelling dead execution: " + execution);
+      log.warn("Cancelling dead execution: " + execution);
       executionOperations.stop();
     }
   }

@@ -8,7 +8,8 @@ import xyz.vopen.mixmicro.components.enhance.schedule.core.task.OnStartup;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.Task;
 
 public abstract class CustomTask<T> extends Task<T> implements OnStartup {
-  private ScheduleOnStartup<T> scheduleOnStartup;
+
+  private final ScheduleOnStartup<T> scheduleOnStartup;
 
   public CustomTask(
       String name,

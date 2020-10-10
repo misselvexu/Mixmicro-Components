@@ -37,7 +37,7 @@ public class Tasks {
     private Class<T> dataClass;
     private FailureHandler<T> onFailure;
     private DeadExecutionHandler<T> onDeadExecution;
-    private ScheduleOnStartup<T> scheduleOnStartup;
+    private ScheduleRecurringOnStartup<T> scheduleOnStartup;
 
     public RecurringTaskBuilder(String name, Schedule schedule, Class<T> dataClass) {
       this.name = name;
@@ -46,7 +46,7 @@ public class Tasks {
       this.onFailure = new FailureHandler.OnFailureReschedule<>(schedule);
       this.onDeadExecution = new DeadExecutionHandler.ReviveDeadExecution<>();
       this.scheduleOnStartup =
-          new ScheduleOnStartup<>(RecurringTask.INSTANCE, null, schedule::getInitialExecutionTime);
+          new ScheduleRecurringOnStartup<>(RecurringTask.INSTANCE, null, schedule);
     }
 
     public RecurringTaskBuilder<T> onFailureReschedule() {
@@ -71,8 +71,7 @@ public class Tasks {
 
     public RecurringTaskBuilder<T> initialData(T initialData) {
       this.scheduleOnStartup =
-          new ScheduleOnStartup<>(
-              RecurringTask.INSTANCE, initialData, schedule::getInitialExecutionTime);
+          new ScheduleRecurringOnStartup<>(RecurringTask.INSTANCE, initialData, schedule);
       return this;
     }
 
@@ -168,7 +167,7 @@ public class Tasks {
 
     public TaskBuilder<T> scheduleOnStartup(
         String instance, T initialData, Function<Instant, Instant> firstExecutionTime) {
-      this.onStartup = new ScheduleOnStartup<T>(instance, initialData, firstExecutionTime);
+      this.onStartup = new ScheduleOnceOnStartup<T>(instance, initialData, firstExecutionTime);
       return this;
     }
 

@@ -4,10 +4,5 @@ public interface SchedulerClientEventListener {
 
   void newEvent(ClientEvent event);
 
-  SchedulerClientEventListener NOOP =
-      new SchedulerClientEventListener() {
-
-        @Override
-        public void newEvent(ClientEvent event) {}
-      };
+  SchedulerClientEventListener NOOP = event -> {};
 }

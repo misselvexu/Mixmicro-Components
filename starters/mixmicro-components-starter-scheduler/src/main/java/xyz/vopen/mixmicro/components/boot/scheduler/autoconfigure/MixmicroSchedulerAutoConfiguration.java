@@ -4,7 +4,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.autoconfigure.health.ConditionalOnEnabledHealthIndicator;
-import org.springframework.boot.actuate.autoconfigure.health.HealthIndicatorAutoConfiguration;
+import org.springframework.boot.actuate.autoconfigure.health.HealthContributorAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
 import org.springframework.boot.actuate.health.HealthIndicator;
@@ -19,12 +19,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
+import xyz.vopen.mixmicro.components.boot.scheduler.MixmicroSchedulerCustomizer;
+import xyz.vopen.mixmicro.components.boot.scheduler.MixmicroSchedulerLifecycle;
+import xyz.vopen.mixmicro.components.boot.scheduler.MixmicroSchedulerProperties;
 import xyz.vopen.mixmicro.components.boot.scheduler.actuator.MixmicroSchedulerHealthIndicator;
-import xyz.vopen.mixmicro.components.boot.scheduler.config.MixmicroSchedulerCustomizer;
-import xyz.vopen.mixmicro.components.boot.scheduler.config.MixmicroSchedulerProperties;
-import xyz.vopen.mixmicro.components.boot.scheduler.config.MixmicroSchedulerStarter;
-import xyz.vopen.mixmicro.components.boot.scheduler.config.startup.ContextReadyStart;
-import xyz.vopen.mixmicro.components.boot.scheduler.config.startup.ImmediateStart;
+import xyz.vopen.mixmicro.components.boot.scheduler.listener.ApplicationContextReadyListener;
+import xyz.vopen.mixmicro.components.boot.scheduler.listener.BeanPostInitializedListener;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.Scheduler;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.SchedulerBuilder;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.SchedulerName;
@@ -39,29 +39,21 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-/**
- * {@link MixmicroSchedulerAutoConfiguration}
- *
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @version ${project.version} - 2020/6/4
- */
 @Configuration
 @EnableConfigurationProperties(MixmicroSchedulerProperties.class)
 @AutoConfigurationPackage
 @AutoConfigureAfter({
   DataSourceAutoConfiguration.class,
-  HealthIndicatorAutoConfiguration.class,
+  HealthContributorAutoConfiguration.class,
   MetricsAutoConfiguration.class,
   CompositeMeterRegistryAutoConfiguration.class,
 })
 @ConditionalOnBean(DataSource.class)
-@ConditionalOnProperty(
-    prefix = MixmicroSchedulerProperties.SCHEDULER_CONFIG_PREFIX,
-    value = "enabled",
-    matchIfMissing = true)
+@ConditionalOnProperty(value = "mixmicro.scheduler.enabled", matchIfMissing = true)
 public class MixmicroSchedulerAutoConfiguration {
-  private static final Logger log =
-      LoggerFactory.getLogger(MixmicroSchedulerAutoConfiguration.class);
+
+  private static final Logger log = LoggerFactory.getLogger(MixmicroSchedulerAutoConfiguration.class);
+
   private static final Predicate<Task<?>> shouldBeStarted = task -> task instanceof OnStartup;
 
   private final MixmicroSchedulerProperties config;
@@ -69,13 +61,14 @@ public class MixmicroSchedulerAutoConfiguration {
   private final List<Task<?>> configuredTasks;
 
   public MixmicroSchedulerAutoConfiguration(
-      MixmicroSchedulerProperties mixmicroSchedulerProperties,
+      MixmicroSchedulerProperties schedulerProperties,
       DataSource dataSource,
       List<Task<?>> configuredTasks) {
+
     this.config =
         Objects.requireNonNull(
-            mixmicroSchedulerProperties,
-            "Can't configure db-scheduler without required configuration");
+            schedulerProperties,
+            "Can't configure mixmicro-scheduler without required configuration");
     this.existingDataSource =
         Objects.requireNonNull(dataSource, "An existing javax.sql.DataSource is required");
     this.configuredTasks =
@@ -111,7 +104,7 @@ public class MixmicroSchedulerAutoConfiguration {
   @ConditionalOnMissingBean
   @Bean(destroyMethod = "stop")
   public Scheduler scheduler(MixmicroSchedulerCustomizer customizer, StatsRegistry registry) {
-    log.info("Creating db-scheduler using tasks from Spring context: {}", configuredTasks);
+    log.info("Creating mixmicro-scheduler using tasks from Spring context: {}", configuredTasks);
 
     // Ensure that we are using a transactional aware data source
     DataSource transactionalDataSource = configureDataSource(existingDataSource);
@@ -159,7 +152,7 @@ public class MixmicroSchedulerAutoConfiguration {
     return builder.build();
   }
 
-  @ConditionalOnEnabledHealthIndicator("db-scheduler")
+  @ConditionalOnEnabledHealthIndicator("mixmicro-scheduler")
   @ConditionalOnClass(HealthIndicator.class)
   @ConditionalOnBean(Scheduler.class)
   @Bean
@@ -170,12 +163,12 @@ public class MixmicroSchedulerAutoConfiguration {
   @ConditionalOnBean(Scheduler.class)
   @ConditionalOnMissingBean
   @Bean
-  public MixmicroSchedulerStarter dbSchedulerStarter(Scheduler scheduler) {
+  public MixmicroSchedulerLifecycle dbSchedulerStarter(Scheduler scheduler) {
     if (config.isDelayStartupUntilContextReady()) {
-      return new ContextReadyStart(scheduler);
+      return new ApplicationContextReadyListener(scheduler);
     }
 
-    return new ImmediateStart(scheduler);
+    return new BeanPostInitializedListener(scheduler);
   }
 
   private static DataSource configureDataSource(DataSource existingDataSource) {

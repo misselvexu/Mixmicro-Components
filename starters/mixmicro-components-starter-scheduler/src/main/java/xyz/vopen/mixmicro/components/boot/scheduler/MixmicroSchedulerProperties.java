@@ -1,35 +1,25 @@
-package xyz.vopen.mixmicro.components.boot.scheduler.config;
+package xyz.vopen.mixmicro.components.boot.scheduler;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.convert.DurationUnit;
 import org.springframework.validation.annotation.Validated;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.JdbcTaskRepository;
+import xyz.vopen.mixmicro.components.enhance.schedule.core.SchedulerBuilder;
 
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.util.Optional;
 
 import static java.time.temporal.ChronoUnit.*;
-import static xyz.vopen.mixmicro.components.boot.scheduler.config.MixmicroSchedulerProperties.SCHEDULER_CONFIG_PREFIX;
 
-/**
- * {@link MixmicroSchedulerProperties}
- *
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @version ${project.version} - 2020/6/4
- */
 @Validated
-@ConfigurationProperties(prefix = SCHEDULER_CONFIG_PREFIX)
+@ConfigurationProperties("mixmicro.scheduler")
 public class MixmicroSchedulerProperties {
 
-  public static final String SCHEDULER_CONFIG_PREFIX = "mixmicro.scheduler";
-
-  /** Whether to enable auto configuration of the db-scheduler. */
+  /** Whether to enable auto configuration of the mixmicro-scheduler. */
   private boolean enabled = true;
 
-  /**
-   * *
-   *
+  /***
    * <p>Number of threads.
    */
   private int threads = 10;
@@ -37,7 +27,7 @@ public class MixmicroSchedulerProperties {
   /** How often to update the heartbeat timestamp for running executions. */
   @DurationUnit(MINUTES)
   @NotNull
-  private Duration heartbeatInterval = Duration.ofMinutes(5);
+  private Duration heartbeatInterval = SchedulerBuilder.DEFAULT_HEARTBEAT_INTERVAL;
 
   /**
    * Name of this scheduler-instance. The name is stored in the database when an execution is picked
@@ -66,7 +56,7 @@ public class MixmicroSchedulerProperties {
   /** How often the scheduler checks the database for due executions. */
   @DurationUnit(SECONDS)
   @NotNull
-  private Duration pollingInterval = Duration.ofSeconds(30);
+  private Duration pollingInterval = SchedulerBuilder.DEFAULT_POLLING_INTERVAL;
 
   /** Maximum number of executions to fetch on a check for due executions. */
   private Optional<Integer> pollingLimit = Optional.empty();
@@ -80,7 +70,8 @@ public class MixmicroSchedulerProperties {
   /** The time after which executions with unknown tasks are automatically deleted. */
   @DurationUnit(HOURS)
   @NotNull
-  private Duration deleteUnresolvedAfter = Duration.ofDays(14);
+  private Duration deleteUnresolvedAfter =
+      SchedulerBuilder.DEFAULT_DELETION_OF_UNRESOLVED_TASKS_DURATION;
 
   public boolean isEnabled() {
     return enabled;

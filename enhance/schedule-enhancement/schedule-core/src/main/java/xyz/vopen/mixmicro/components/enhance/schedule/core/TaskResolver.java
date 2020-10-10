@@ -1,13 +1,17 @@
 package xyz.vopen.mixmicro.components.enhance.schedule.core;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.stats.StatsRegistry;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.Task;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -15,7 +19,7 @@ import static java.util.function.Function.identity;
 
 @SuppressWarnings("rawtypes")
 public class TaskResolver {
-  private static final Logger LOG = LoggerFactory.getLogger(TaskResolver.class);
+  private static final Logger log = LoggerFactory.getLogger(TaskResolver.class);
   private final StatsRegistry statsRegistry;
   private final Clock clock;
   private final Map<String, Task> taskMap;
@@ -40,7 +44,7 @@ public class TaskResolver {
     if (task == null) {
       addUnresolved(taskName);
       statsRegistry.register(StatsRegistry.SchedulerStatsEvent.UNRESOLVED_TASK);
-      LOG.info(
+      log.info(
           "Found execution with unknown task-name '{}'. Adding it to the list of known unresolved task-names.",
           taskName);
     }

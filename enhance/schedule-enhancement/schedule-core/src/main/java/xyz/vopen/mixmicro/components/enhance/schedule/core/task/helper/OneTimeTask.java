@@ -2,8 +2,6 @@ package xyz.vopen.mixmicro.components.enhance.schedule.core.task.helper;
 
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.*;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.CompletionHandler.OnCompleteRemove;
-import xyz.vopen.mixmicro.components.enhance.schedule.core.task.DeadExecutionHandler.ReviveDeadExecution;
-import xyz.vopen.mixmicro.components.enhance.schedule.core.task.FailureHandler.OnFailureRetryLater;
 
 import java.time.Duration;
 
@@ -13,8 +11,8 @@ public abstract class OneTimeTask<T> extends Task<T> {
     this(
         name,
         dataClass,
-        new OnFailureRetryLater<>(Duration.ofMinutes(5)),
-        new ReviveDeadExecution<>());
+        new FailureHandler.OnFailureRetryLater<>(Duration.ofMinutes(5)),
+        new DeadExecutionHandler.ReviveDeadExecution<>());
   }
 
   public OneTimeTask(

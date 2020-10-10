@@ -1,8 +1,8 @@
 package xyz.vopen.mixmicro.components.enhance.schedule.core.task;
 
+import xyz.vopen.mixmicro.components.enhance.schedule.core.task.schedule.Schedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xyz.vopen.mixmicro.components.enhance.schedule.core.task.schedule.Schedule;
 
 import java.time.Instant;
 
@@ -21,7 +21,7 @@ public interface CompletionHandler<T> {
 
   class OnCompleteReschedule<T> implements CompletionHandler<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(OnCompleteReschedule.class);
+    private static final Logger log = LoggerFactory.getLogger(OnCompleteReschedule.class);
     private final Schedule schedule;
 
     public OnCompleteReschedule(Schedule schedule) {
@@ -32,7 +32,7 @@ public interface CompletionHandler<T> {
     public void complete(
         ExecutionComplete executionComplete, ExecutionOperations<T> executionOperations) {
       Instant nextExecution = schedule.getNextExecutionTime(executionComplete);
-      LOG.debug(
+      log.debug(
           "Rescheduling task {} to {}",
           executionComplete.getExecution().taskInstance,
           nextExecution);

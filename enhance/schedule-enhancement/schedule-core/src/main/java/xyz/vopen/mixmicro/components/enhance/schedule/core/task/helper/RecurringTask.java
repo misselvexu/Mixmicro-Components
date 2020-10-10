@@ -4,23 +4,22 @@ import xyz.vopen.mixmicro.components.enhance.schedule.core.Clock;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.Scheduler;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.*;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.CompletionHandler.OnCompleteReschedule;
-import xyz.vopen.mixmicro.components.enhance.schedule.core.task.DeadExecutionHandler.ReviveDeadExecution;
 import xyz.vopen.mixmicro.components.enhance.schedule.core.task.schedule.Schedule;
 
 public abstract class RecurringTask<T> extends Task<T> implements OnStartup {
 
   public static final String INSTANCE = "recurring";
   private final OnCompleteReschedule<T> onComplete;
-  private ScheduleOnStartup<T> scheduleOnStartup;
+  private final ScheduleOnStartup<T> scheduleOnStartup;
 
   public RecurringTask(String name, Schedule schedule, Class<T> dataClass) {
     this(
         name,
         schedule,
         dataClass,
-        new ScheduleOnStartup<>(INSTANCE, null, schedule::getInitialExecutionTime),
+        new ScheduleRecurringOnStartup<>(INSTANCE, null, schedule),
         new FailureHandler.OnFailureReschedule<T>(schedule),
-        new ReviveDeadExecution<>());
+        new DeadExecutionHandler.ReviveDeadExecution<>());
   }
 
   public RecurringTask(String name, Schedule schedule, Class<T> dataClass, T initialData) {
@@ -28,16 +27,16 @@ public abstract class RecurringTask<T> extends Task<T> implements OnStartup {
         name,
         schedule,
         dataClass,
-        new ScheduleOnStartup<>(INSTANCE, initialData, schedule::getInitialExecutionTime),
+        new ScheduleRecurringOnStartup<>(INSTANCE, initialData, schedule),
         new FailureHandler.OnFailureReschedule<T>(schedule),
-        new ReviveDeadExecution<>());
+        new DeadExecutionHandler.ReviveDeadExecution<>());
   }
 
   public RecurringTask(
       String name,
       Schedule schedule,
       Class<T> dataClass,
-      ScheduleOnStartup<T> scheduleOnStartup,
+      ScheduleRecurringOnStartup<T> scheduleOnStartup,
       FailureHandler<T> failureHandler,
       DeadExecutionHandler<T> deadExecutionHandler) {
     super(name, dataClass, failureHandler, deadExecutionHandler);

@@ -11,7 +11,6 @@ public interface Serializer {
   Serializer DEFAULT_JAVA_SERIALIZER =
       new Serializer() {
 
-        @Override
         public byte[] serialize(Object data) {
           if (data == null) return null;
           try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -23,11 +22,8 @@ public interface Serializer {
           }
         }
 
-        @Override
         public <T> T deserialize(Class<T> clazz, byte[] serializedData) {
-          if (serializedData == null) {
-            return null;
-          }
+          if (serializedData == null) return null;
           try (ByteArrayInputStream bis = new ByteArrayInputStream(serializedData);
               ObjectInput in = new ObjectInputStream(bis)) {
             return clazz.cast(in.readObject());

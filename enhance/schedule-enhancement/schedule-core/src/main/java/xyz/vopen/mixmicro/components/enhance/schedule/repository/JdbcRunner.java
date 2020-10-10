@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class JdbcRunner {
-  private static final Logger LOG = LoggerFactory.getLogger(JdbcRunner.class);
+  private static final Logger log = LoggerFactory.getLogger(JdbcRunner.class);
   private final DataSource dataSource;
 
   public JdbcRunner(DataSource dataSource) {
@@ -45,13 +45,13 @@ public class JdbcRunner {
             }
 
             try {
-              LOG.trace("Setting parameters of prepared statement.");
+              log.trace("Setting parameters of prepared statement.");
               setParameters.setParameters(preparedStatement);
             } catch (SQLException e) {
               throw new SQLRuntimeException(e);
             }
             try {
-              LOG.trace("Executing prepared statement");
+              log.trace("Executing prepared statement");
               preparedStatement.execute();
               T returnValue = afterExecution.doAfterExecution(preparedStatement);
 
@@ -100,7 +100,7 @@ public class JdbcRunner {
   private <T> T withConnection(Function<Connection, T> doWithConnection) {
     Connection c;
     try {
-      LOG.trace("Getting connection from datasource");
+      log.trace("Getting connection from datasource");
       c = dataSource.getConnection();
     } catch (SQLException e) {
       throw new SQLRuntimeException("Unable to open connection", e);
@@ -157,10 +157,10 @@ public class JdbcRunner {
       return;
     }
     try {
-      LOG.trace("Closing " + toClose.getClass().getSimpleName());
+      log.trace("Closing " + toClose.getClass().getSimpleName());
       toClose.close();
     } catch (Exception e) {
-      LOG.warn("Exception on close of " + toClose.getClass().getSimpleName(), e);
+      log.warn("Exception on close of " + toClose.getClass().getSimpleName(), e);
     }
   }
 
