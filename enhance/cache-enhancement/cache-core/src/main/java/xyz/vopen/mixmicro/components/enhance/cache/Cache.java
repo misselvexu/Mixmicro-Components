@@ -217,6 +217,7 @@ public interface Cache<K, V> extends Closeable {
           while (unlockCount++ < config.getTryLockUnlockCount()) {
             if (System.currentTimeMillis() < expireTimestamp) {
               CacheResult unlockResult = REMOVE(key);
+              logger.debug("[tryLock] unlock result , code: {}, meg = {}", unlockResult.getResultCode(), unlockResult.getMessage());
               if (unlockResult.getResultCode() == CacheResultCode.FAIL
                   || unlockResult.getResultCode() == CacheResultCode.PART_SUCCESS) {
                 logger.info(
@@ -261,6 +262,7 @@ public interface Cache<K, V> extends Closeable {
     Cache cache = this;
     while (lockCount++ < config.getTryLockLockCount()) {
       CacheResult lockResult = cache.PUT_IF_ABSENT(key, uuid, expire, timeUnit);
+      logger.debug("[tryLock] lock result , code: {}, meg = {}", lockResult.getResultCode(), lockResult.getMessage());
       if (lockResult.isSuccess()) {
         logger.debug(
             "[tryLock] [{} of {}] [{}] successfully get a lock. Key={}",
