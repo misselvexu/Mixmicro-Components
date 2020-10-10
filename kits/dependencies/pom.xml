@@ -43,7 +43,7 @@
         <mixmicro-servlet-compress.kit.version>1.0.7.BUILD-SNAPSHOT</mixmicro-servlet-compress.kit.version>
         <mixmicro-jre-http-client.kit.version>1.0.7.BUILD-SNAPSHOT</mixmicro-jre-http-client.kit.version>
         <mixmicro-common.kit.version>1.0.7.BUILD-SNAPSHOT</mixmicro-common.kit.version>
-        <mixmicro-hessian.kit.version>Antarctica.4x.RC1</mixmicro-hessian.kit.version>
+        <mixmicro-hessian.kit.version>Antarctica.4x.RC2</mixmicro-hessian.kit.version>
         <mixmicro-queue.kit.version>1.0.7.BUILD-SNAPSHOT</mixmicro-queue.kit.version>
         <mixmicro-retry.kit.version>1.0.7.BUILD-SNAPSHOT</mixmicro-retry.kit.version>
         <mixmicro-timed-id.kit.version>1.0.7.BUILD-SNAPSHOT</mixmicro-timed-id.kit.version>

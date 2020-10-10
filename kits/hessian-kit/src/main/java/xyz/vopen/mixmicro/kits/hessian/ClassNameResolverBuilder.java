@@ -18,6 +18,9 @@ package xyz.vopen.mixmicro.kits.hessian;
 
 import xyz.vopen.mixmicro.kits.hessian.internal.InternalNameBlackListFilter;
 
+import static xyz.vopen.mixmicro.kits.hessian.HessianConstants.DEFAULT_SERIALIZE_BLACKLIST_ENABLE;
+import static xyz.vopen.mixmicro.kits.hessian.HessianConstants.SERIALIZE_BLACKLIST_ENABLE;
+
 /**
  * 类名处理器的构造器
  *
@@ -31,7 +34,8 @@ public class ClassNameResolverBuilder {
    * @return Default ClassNameResolver
    */
   public static ClassNameResolver buildDefault() {
-    String enable = System.getProperty("serialize.blacklist.enable", "true");
+
+    String enable = System.getProperty(SERIALIZE_BLACKLIST_ENABLE, DEFAULT_SERIALIZE_BLACKLIST_ENABLE);
     if (Boolean.TRUE.toString().equalsIgnoreCase(enable)) {
       ClassNameResolver resolver = new ClassNameResolver();
       resolver.addFilter(new InternalNameBlackListFilter());

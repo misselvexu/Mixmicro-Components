@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static xyz.vopen.mixmicro.kits.hessian.HessianConstants.DEFAULT_SERIALIZE_BLACK_LIST;
+import static xyz.vopen.mixmicro.kits.hessian.HessianConstants.SERIALIZE_BLACKLIST_FILE;
+
 /**
  * 内置黑名单列表过滤器
  *
@@ -30,12 +33,9 @@ import java.util.Scanner;
  */
 public class InternalNameBlackListFilter extends NameBlackListFilter {
 
-  private static final String DEFAULT_BLACK_LIST = "security/serialize.blacklist";
+  private static final String BLACKLIST_FILE      = System.getProperty(SERIALIZE_BLACKLIST_FILE, DEFAULT_SERIALIZE_BLACK_LIST);
 
-  private static final String blackListFile =
-      System.getProperty("serialize.blacklist.file", DEFAULT_BLACK_LIST);
-
-  static final List<String> INTERNAL_BLACK_LIST = readBlackList(blackListFile);
+  static final List<String>   INTERNAL_BLACK_LIST = readBlackList(BLACKLIST_FILE);
 
   /** 构造函数 */
   public InternalNameBlackListFilter() {
@@ -57,7 +57,7 @@ public class InternalNameBlackListFilter extends NameBlackListFilter {
     // Get file from resources folder
     ClassLoader classLoader;
 
-    if (blackListFile.equals(DEFAULT_BLACK_LIST)) {
+    if (blackListFile.equals(DEFAULT_SERIALIZE_BLACK_LIST)) {
       classLoader = InternalNameBlackListFilter.class.getClassLoader();
     } else {
       classLoader = Thread.currentThread().getContextClassLoader();
@@ -82,7 +82,7 @@ public class InternalNameBlackListFilter extends NameBlackListFilter {
       }
       // 不存在使用内置的
     } else {
-      result = readBlackList(DEFAULT_BLACK_LIST);
+      result = readBlackList(DEFAULT_SERIALIZE_BLACK_LIST);
     }
 
     return result;
