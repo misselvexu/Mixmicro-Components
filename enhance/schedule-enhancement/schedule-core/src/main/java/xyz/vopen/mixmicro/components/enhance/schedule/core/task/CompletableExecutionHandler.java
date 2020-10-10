@@ -1,12 +1,13 @@
 package xyz.vopen.mixmicro.components.enhance.schedule.core.task;
 
-public interface VoidExecutionHandler<T> {
+public interface CompletableExecutionHandler<T> {
 
   /**
    * Task Executor
    *
    * @param instance instance of {@link TaskInstance} with genic-type
    * @param context instance of {@link ExecutionContext }
+   * @return {@link CompletionHandler}
    */
-  void execute(TaskInstance<T> instance, ExecutionContext context);
+  CompletionHandler<T> execute(TaskInstance<T> instance, ExecutionContext context);
 }

@@ -53,8 +53,8 @@ public abstract class RecurringTask<T> extends Task<T> implements OnStartup {
 
   @Override
   public CompletionHandler<T> execute(
-      TaskInstance<T> taskInstance, ExecutionContext executionContext) {
-    executeRecurringly(taskInstance, executionContext);
+      TaskInstance<T> instance, ExecutionContext context) {
+    executeRecurringly(instance, context);
     return onComplete;
   }
 

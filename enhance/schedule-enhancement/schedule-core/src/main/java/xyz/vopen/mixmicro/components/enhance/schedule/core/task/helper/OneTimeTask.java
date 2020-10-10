@@ -25,8 +25,8 @@ public abstract class OneTimeTask<T> extends Task<T> {
 
   @Override
   public CompletionHandler<T> execute(
-      TaskInstance<T> taskInstance, ExecutionContext executionContext) {
-    executeOnce(taskInstance, executionContext);
+      TaskInstance<T> instance, ExecutionContext context) {
+    executeOnce(instance, context);
     return new OnCompleteRemove<>();
   }
 

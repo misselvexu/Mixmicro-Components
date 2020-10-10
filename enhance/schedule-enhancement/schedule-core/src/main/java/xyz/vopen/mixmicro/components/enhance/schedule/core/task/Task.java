@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.schedule.core.task;
 
-public abstract class Task<T> implements ExecutionHandler<T> {
+public abstract class Task<T> implements CompletableExecutionHandler<T> {
   protected final String name;
   private final FailureHandler<T> failureHandler;
   private final DeadExecutionHandler<T> deadExecutionHandler;
@@ -34,7 +34,7 @@ public abstract class Task<T> implements ExecutionHandler<T> {
   }
 
   public abstract CompletionHandler<T> execute(
-      TaskInstance<T> taskInstance, ExecutionContext executionContext);
+      TaskInstance<T> instance, ExecutionContext context);
 
   public FailureHandler<T> getFailureHandler() {
     return failureHandler;

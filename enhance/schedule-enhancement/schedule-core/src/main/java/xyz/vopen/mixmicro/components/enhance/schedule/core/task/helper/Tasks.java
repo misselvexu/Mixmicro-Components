@@ -78,10 +78,8 @@ public class Tasks {
     public RecurringTask<T> execute(VoidExecutionHandler<T> executionHandler) {
       return new RecurringTask<T>(
           name, schedule, dataClass, scheduleOnStartup, onFailure, onDeadExecution) {
-
         @Override
-        public void executeRecurringly(
-            TaskInstance<T> taskInstance, ExecutionContext executionContext) {
+        public void executeRecurringly(TaskInstance<T> taskInstance, ExecutionContext executionContext) {
           executionHandler.execute(taskInstance, executionContext);
         }
       };
@@ -171,12 +169,12 @@ public class Tasks {
       return this;
     }
 
-    public CustomTask<T> execute(ExecutionHandler<T> executionHandler) {
+    public CustomTask<T> execute(CompletableExecutionHandler<T> handler) {
       return new CustomTask<T>(name, dataClass, onStartup, onFailure, onDeadExecution) {
         @Override
         public CompletionHandler<T> execute(
-            TaskInstance<T> taskInstance, ExecutionContext executionContext) {
-          return executionHandler.execute(taskInstance, executionContext);
+            TaskInstance<T> instance, ExecutionContext context) {
+          return handler.execute(instance, context);
         }
       };
     }

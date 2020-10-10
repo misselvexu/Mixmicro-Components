@@ -4,7 +4,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.autoconfigure.health.ConditionalOnEnabledHealthIndicator;
-import org.springframework.boot.actuate.autoconfigure.health.HealthContributorAutoConfiguration;
+import org.springframework.boot.actuate.autoconfigure.health.HealthIndicatorAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
 import org.springframework.boot.actuate.health.HealthIndicator;
@@ -44,15 +44,16 @@ import java.util.stream.Collectors;
 @AutoConfigurationPackage
 @AutoConfigureAfter({
   DataSourceAutoConfiguration.class,
-  HealthContributorAutoConfiguration.class,
+  HealthIndicatorAutoConfiguration.class,
   MetricsAutoConfiguration.class,
   CompositeMeterRegistryAutoConfiguration.class,
 })
 @ConditionalOnBean(DataSource.class)
-@ConditionalOnProperty(value = "mixmicro.scheduler.enabled", matchIfMissing = true)
+@ConditionalOnProperty(value = "mixmicro.scheduler.enabled", havingValue = "true")
 public class MixmicroSchedulerAutoConfiguration {
 
-  private static final Logger log = LoggerFactory.getLogger(MixmicroSchedulerAutoConfiguration.class);
+  private static final Logger log =
+      LoggerFactory.getLogger(MixmicroSchedulerAutoConfiguration.class);
 
   private static final Predicate<Task<?>> shouldBeStarted = task -> task instanceof OnStartup;
 
@@ -156,14 +157,14 @@ public class MixmicroSchedulerAutoConfiguration {
   @ConditionalOnClass(HealthIndicator.class)
   @ConditionalOnBean(Scheduler.class)
   @Bean
-  public HealthIndicator dbScheduler(Scheduler scheduler) {
+  public HealthIndicator healthIndicator(Scheduler scheduler) {
     return new MixmicroSchedulerHealthIndicator(scheduler);
   }
 
   @ConditionalOnBean(Scheduler.class)
   @ConditionalOnMissingBean
   @Bean
-  public MixmicroSchedulerLifecycle dbSchedulerStarter(Scheduler scheduler) {
+  public MixmicroSchedulerLifecycle schedulerLifecycle(Scheduler scheduler) {
     if (config.isDelayStartupUntilContextReady()) {
       return new ApplicationContextReadyListener(scheduler);
     }

@@ -16,6 +16,7 @@
         <module>email-test</module>
         <module>dbm-master-slave-switch-test</module>
         <module>mongo-client-test</module>
+        <module>scheduler-test</module>
     </modules>
 
     <artifactId>mixmicro-components-test</artifactId>

@@ -87,7 +87,7 @@ public interface SchedulerClient {
 
     private static final Logger log = LoggerFactory.getLogger(StandardSchedulerClient.class);
     protected final TaskRepository taskRepository;
-    private SchedulerClientEventListener schedulerClientEventListener;
+    private final SchedulerClientEventListener schedulerClientEventListener;
 
     StandardSchedulerClient(TaskRepository taskRepository) {
       this(taskRepository, SchedulerClientEventListener.NOOP);
