@@ -52,4 +52,5 @@ public class MixmicroException extends RuntimeException {
   public MixmicroException(Throwable cause) {
     super(cause);
   }
+
 }
