@@ -17,6 +17,7 @@
         <module>dbm-master-slave-switch-test</module>
         <module>mongo-client-test</module>
         <module>scheduler-test</module>
+        <module>quartz-test</module>
     </modules>
 
     <artifactId>mixmicro-components-test</artifactId>
