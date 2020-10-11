@@ -74,7 +74,6 @@ public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCy
     public LoggerContext() {
         super();
         this.loggerCache = new ConcurrentHashMap<String, Logger>();
-
         this.loggerContextRemoteView = new LoggerContextVO(this);
         this.root = new Logger(Logger.ROOT_LOGGER_NAME, null, this);
         this.root.setLevel(Level.DEBUG);

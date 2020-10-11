@@ -13,17 +13,6 @@
  */
 package ch.qos.logback.classic;
 
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
-import org.slf4j.spi.LocationAwareLogger;
-
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.classic.util.LoggerNameUtil;
@@ -32,8 +21,18 @@ import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.spi.AppenderAttachable;
 import ch.qos.logback.core.spi.AppenderAttachableImpl;
 import ch.qos.logback.core.spi.FilterReply;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.spi.LocationAwareLogger;
 import xyz.vopen.framework.logging.client.global.MixmicroLogging;
 import xyz.vopen.framework.logging.client.global.support.MixmicroLoggingMemoryStorage;
+
+import java.io.ObjectStreamException;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class Logger implements org.slf4j.Logger, LocationAwareLogger, AppenderAttachable<ILoggingEvent>, Serializable {
 
@@ -485,22 +484,22 @@ public final class Logger implements org.slf4j.Logger, LocationAwareLogger, Appe
     }
 
     public void debug(String msg) {
-        mixmicroLogging.debug(msg);
+        mixmicroLogging.debug(msg, name);
         filterAndLog_0_Or3Plus(FQCN, null, Level.DEBUG, msg, null, null);
     }
 
     public void debug(String format, Object arg) {
-        mixmicroLogging.debug(format, arg);
+        mixmicroLogging.debug(format, name, arg);
         filterAndLog_1(FQCN, null, Level.DEBUG, format, arg, null);
     }
 
     public void debug(String format, Object arg1, Object arg2) {
-        mixmicroLogging.debug(format, arg1, arg2);
+        mixmicroLogging.debug(format, name, arg1, arg2);
         filterAndLog_2(FQCN, null, Level.DEBUG, format, arg1, arg2, null);
     }
 
     public void debug(String format, Object... argArray) {
-        mixmicroLogging.debug(format, argArray);
+        mixmicroLogging.debug(format, name, argArray);
         filterAndLog_0_Or3Plus(FQCN, null, Level.DEBUG, format, argArray, null);
     }
 
@@ -509,77 +508,77 @@ public final class Logger implements org.slf4j.Logger, LocationAwareLogger, Appe
     }
 
     public void debug(Marker marker, String msg) {
-        mixmicroLogging.debug(msg);
+        mixmicroLogging.debug(msg, name);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.DEBUG, msg, null, null);
     }
 
     public void debug(Marker marker, String format, Object arg) {
-        mixmicroLogging.debug(format, arg);
+        mixmicroLogging.debug(format, name, arg);
         filterAndLog_1(FQCN, marker, Level.DEBUG, format, arg, null);
     }
 
     public void debug(Marker marker, String format, Object arg1, Object arg2) {
-        mixmicroLogging.debug(format, arg1, arg2);
+        mixmicroLogging.debug(format, name, arg1, arg2);
         filterAndLog_2(FQCN, marker, Level.DEBUG, format, arg1, arg2, null);
     }
 
     public void debug(Marker marker, String format, Object... argArray) {
-        mixmicroLogging.debug(format, argArray);
+        mixmicroLogging.debug(format, name, argArray);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.DEBUG, format, argArray, null);
     }
 
     public void debug(Marker marker, String msg, Throwable t) {
-        mixmicroLogging.debug(msg);
+        mixmicroLogging.debug(msg, name);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.DEBUG, msg, null, t);
     }
 
     public void error(String msg) {
-        mixmicroLogging.error(msg);
+        mixmicroLogging.error(msg, name);
         filterAndLog_0_Or3Plus(FQCN, null, Level.ERROR, msg, null, null);
     }
 
     public void error(String format, Object arg) {
-        mixmicroLogging.error(format, arg);
+        mixmicroLogging.error(format, name, arg);
         filterAndLog_1(FQCN, null, Level.ERROR, format, arg, null);
     }
 
     public void error(String format, Object arg1, Object arg2) {
-        mixmicroLogging.error(format, arg1, arg2);
+        mixmicroLogging.error(format, name, arg1, arg2);
         filterAndLog_2(FQCN, null, Level.ERROR, format, arg1, arg2, null);
     }
 
     public void error(String format, Object... argArray) {
-        mixmicroLogging.error(format, argArray);
+        mixmicroLogging.error(format, name, argArray);
         filterAndLog_0_Or3Plus(FQCN, null, Level.ERROR, format, argArray, null);
     }
 
     public void error(String msg, Throwable t) {
-        mixmicroLogging.error(msg, t);
+        mixmicroLogging.error(msg, name, t);
         filterAndLog_0_Or3Plus(FQCN, null, Level.ERROR, msg, null, t);
     }
 
     public void error(Marker marker, String msg) {
-        mixmicroLogging.error(msg);
+        mixmicroLogging.error(msg, name);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.ERROR, msg, null, null);
     }
 
     public void error(Marker marker, String format, Object arg) {
-        mixmicroLogging.error(format, arg);
+        mixmicroLogging.error(format, name, arg);
         filterAndLog_1(FQCN, marker, Level.ERROR, format, arg, null);
     }
 
     public void error(Marker marker, String format, Object arg1, Object arg2) {
-        mixmicroLogging.error(format, arg1, arg2);
+        mixmicroLogging.error(format, name, arg1, arg2);
         filterAndLog_2(FQCN, marker, Level.ERROR, format, arg1, arg2, null);
     }
 
     public void error(Marker marker, String format, Object... argArray) {
-        mixmicroLogging.error(format, argArray);
+        mixmicroLogging.error(format, name, argArray);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.ERROR, format, argArray, null);
     }
 
     public void error(Marker marker, String msg, Throwable t) {
-        mixmicroLogging.error(msg, t);
+        mixmicroLogging.error(msg, name, t);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.ERROR, msg, null, t);
     }
 
@@ -601,52 +600,52 @@ public final class Logger implements org.slf4j.Logger, LocationAwareLogger, Appe
     }
 
     public void info(String msg) {
-        mixmicroLogging.info(msg);
+        mixmicroLogging.info(msg, name);
         filterAndLog_0_Or3Plus(FQCN, null, Level.INFO, msg, null, null);
     }
 
     public void info(String format, Object arg) {
-        mixmicroLogging.info(format, arg);
+        mixmicroLogging.info(format, name, arg);
         filterAndLog_1(FQCN, null, Level.INFO, format, arg, null);
     }
 
     public void info(String format, Object arg1, Object arg2) {
-        mixmicroLogging.info(format, arg1, arg2);
+        mixmicroLogging.info(format, name, arg1, arg2);
         filterAndLog_2(FQCN, null, Level.INFO, format, arg1, arg2, null);
     }
 
     public void info(String format, Object... argArray) {
-        mixmicroLogging.info(format, argArray);
+        mixmicroLogging.info(format, name, argArray);
         filterAndLog_0_Or3Plus(FQCN, null, Level.INFO, format, argArray, null);
     }
 
     public void info(String msg, Throwable t) {
-        mixmicroLogging.info(msg);
+        mixmicroLogging.info(msg, name);
         filterAndLog_0_Or3Plus(FQCN, null, Level.INFO, msg, null, t);
     }
 
     public void info(Marker marker, String msg) {
-        mixmicroLogging.info(msg);
+        mixmicroLogging.info(msg, name);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.INFO, msg, null, null);
     }
 
     public void info(Marker marker, String format, Object arg) {
-        mixmicroLogging.info(format, arg);
+        mixmicroLogging.info(format, name, arg);
         filterAndLog_1(FQCN, marker, Level.INFO, format, arg, null);
     }
 
     public void info(Marker marker, String format, Object arg1, Object arg2) {
-        mixmicroLogging.info(format, arg1, arg2);
+        mixmicroLogging.info(format, name, arg1, arg2);
         filterAndLog_2(FQCN, marker, Level.INFO, format, arg1, arg2, null);
     }
 
     public void info(Marker marker, String format, Object... argArray) {
-        mixmicroLogging.info(format, argArray);
+        mixmicroLogging.info(format, name, argArray);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.INFO, format, argArray, null);
     }
 
     public void info(Marker marker, String msg, Throwable t) {
-        mixmicroLogging.info(msg);
+        mixmicroLogging.info(msg, name);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.INFO, msg, null, t);
     }
 
@@ -720,52 +719,52 @@ public final class Logger implements org.slf4j.Logger, LocationAwareLogger, Appe
     }
 
     public void warn(String msg) {
-        mixmicroLogging.warn(msg);
+        mixmicroLogging.warn(msg, name);
         filterAndLog_0_Or3Plus(FQCN, null, Level.WARN, msg, null, null);
     }
 
     public void warn(String msg, Throwable t) {
-        mixmicroLogging.warn(msg);
+        mixmicroLogging.warn(msg, name);
         filterAndLog_0_Or3Plus(FQCN, null, Level.WARN, msg, null, t);
     }
 
     public void warn(String format, Object arg) {
-        mixmicroLogging.warn(format, arg);
+        mixmicroLogging.warn(format, name, arg);
         filterAndLog_1(FQCN, null, Level.WARN, format, arg, null);
     }
 
     public void warn(String format, Object arg1, Object arg2) {
-        mixmicroLogging.warn(format, arg1, arg2);
+        mixmicroLogging.warn(format, name, arg1, arg2);
         filterAndLog_2(FQCN, null, Level.WARN, format, arg1, arg2, null);
     }
 
     public void warn(String format, Object... argArray) {
-        mixmicroLogging.warn(format, argArray);
+        mixmicroLogging.warn(format, name, argArray);
         filterAndLog_0_Or3Plus(FQCN, null, Level.WARN, format, argArray, null);
     }
 
     public void warn(Marker marker, String msg) {
-        mixmicroLogging.warn(msg);
+        mixmicroLogging.warn(msg, name);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.WARN, msg, null, null);
     }
 
     public void warn(Marker marker, String format, Object arg) {
-        mixmicroLogging.warn(format, arg);
+        mixmicroLogging.warn(format, name, arg);
         filterAndLog_1(FQCN, marker, Level.WARN, format, arg, null);
     }
 
     public void warn(Marker marker, String format, Object... argArray) {
-        mixmicroLogging.warn(format, argArray);
+        mixmicroLogging.warn(format, name, argArray);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.WARN, format, argArray, null);
     }
 
     public void warn(Marker marker, String format, Object arg1, Object arg2) {
-        mixmicroLogging.warn(format, arg1, arg2);
+        mixmicroLogging.warn(format, name, arg1, arg2);
         filterAndLog_2(FQCN, marker, Level.WARN, format, arg1, arg2, null);
     }
 
     public void warn(Marker marker, String msg, Throwable t) {
-        mixmicroLogging.warn(msg);
+        mixmicroLogging.warn(msg, name);
         filterAndLog_0_Or3Plus(FQCN, marker, Level.WARN, msg, null, t);
     }
 

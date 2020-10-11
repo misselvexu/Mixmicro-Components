@@ -16,7 +16,6 @@
     <description>🏗 Enhance Logback Classic</description>
 
     <dependencies>
-
         <!--mixmicro logging client-->
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>

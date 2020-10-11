@@ -1,9 +1,9 @@
 package xyz.vopen.framework.logging.client.global;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import xyz.vopen.framework.logging.client.LoggingFactoryBean;
@@ -19,15 +19,18 @@ import java.util.List;
  */
 public class MixmicroLoggingThreadLocal implements ApplicationContextAware {
 
-    private static ApplicationContext applicationContext;
+    public static final String BEAN_NAME = "loggingThreadLocal";
+
+    private static ApplicationContext context;
 
     public static ApplicationContext getApplicationContext() {
-        return applicationContext;
+        return context;
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        MixmicroLoggingThreadLocal.applicationContext = applicationContext;
+    public void setApplicationContext(ApplicationContext ctx) {
+        Assert.notNull(ctx, "ApplicationContext must not be null");
+        context = ctx;
     }
 
     /**
@@ -51,13 +54,13 @@ public class MixmicroLoggingThreadLocal implements ApplicationContextAware {
      */
     public static void addGlobalLogs(MixmicroGlobalLog mixmicroGlobalLog) {
         ApplicationContext applicationContext = getApplicationContext();
-        if (null == applicationContext) {
+        List<String> globalLogExecutePackages = applicationContext != null ? applicationContext.getBean(LoggingFactoryBean.class).getGlobalLogExecutePackage() : null;
+        String callerClass = mixmicroGlobalLog.getCallerClass();
+        mixmicroGlobalLog.getCallerMethod();
+        if (CollectionUtils.isEmpty(globalLogExecutePackages)) {
             return;
         }
-        List<String> globalLogExecutePackages = applicationContext.getBean(LoggingFactoryBean.class).getGlobalLogExecutePackage();
-        String callerClass = mixmicroGlobalLog.getCallerClass();
-        if (!CollectionUtils.isEmpty(globalLogExecutePackages)
-                && globalLogExecutePackages.stream().noneMatch(callerClass::contains)) {
+        if (globalLogExecutePackages.stream().noneMatch(callerClass::contains)) {
             return;
         }
 
