@@ -9,11 +9,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>mixmicro-components-enhance-schedule-core</artifactId>
+    <artifactId>mixmicro-components-enhance-schedule-default</artifactId>
     <version>1.0.7.BUILD-SNAPSHOT</version>
 
-    <name>Enhance Schedule Core Module :: ${project.version}</name>
-    <description>🏗 Enhance Schedule Core Module</description>
+    <name>Enhance Schedule Default Implements Module :: ${project.version}</name>
+    <description>🏗 Enhance Schedule Default Implements Module</description>
 
     <dependencies>
         <dependency>

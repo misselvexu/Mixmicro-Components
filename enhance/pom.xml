@@ -34,6 +34,7 @@
         <mixmicro-enhance-event-api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-event-api.version>
         <mixmicro-enhance-datasource.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-datasource.version>
         <mixmicro-enhance-schedule.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-schedule.version>
+        <mixmicro-enhance-schedule-quartz.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-schedule-quartz.version>
         <mixmicro-enhance-spi.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-spi.version>
         <mixmicro-enhance-circuitbreaker.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-circuitbreaker.version>
         <mixmicro-enhance-network.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-network.version>
@@ -200,8 +201,14 @@
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-enhance-schedule-core</artifactId>
+                <artifactId>mixmicro-components-enhance-schedule-default</artifactId>
                 <version>${mixmicro-enhance-schedule.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-schedule-quartz</artifactId>
+                <version>${mixmicro-enhance-schedule-quartz.version}</version>
             </dependency>
 
             <dependency>
