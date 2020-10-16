@@ -9,6 +9,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import xyz.vopen.mixmicro.components.boot.openfeign.OpenFeignConfigProperties;
 import xyz.vopen.mixmicro.components.boot.openfeign.core.FeignAttributes;
 import xyz.vopen.mixmicro.components.boot.openfeign.env.ContextEnvironmentFactory;
+import xyz.vopen.mixmicro.kits.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -53,7 +54,10 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
         if (attributes != null) {
           HttpServletRequest request = attributes.getRequest();
           for (String header : properties0.getSensitiveHeaders()) {
-            template.header(header, Optional.ofNullable(request.getHeader(header)).orElse(EMPTY_STRING));
+            String value = Optional.ofNullable(request.getHeader(header)).orElse(EMPTY_STRING);
+            if (!StringUtils.isBlank(value)) {
+              template.header(header, Optional.ofNullable(request.getHeader(header)).orElse(EMPTY_STRING));
+            }
           }
         }
       } catch (Exception ignored) {}
@@ -73,7 +77,10 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
               case MANUAL:
                 Map<String, String> temp = FeignAttributes.getAttributes();
                 if(temp.containsKey(name)) {
-                  template.header(name, Optional.ofNullable(temp.get(name)).orElse(EMPTY_STRING));
+                  String value = Optional.ofNullable(temp.get(name)).orElse(EMPTY_STRING);
+                  if (!StringUtils.isBlank(value)) {
+                    template.header(name, Optional.ofNullable(temp.get(name)).orElse(EMPTY_STRING));
+                  }
                 }
                 break;
               case REQUEST_HEADER:
@@ -81,7 +88,10 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
                   ServletRequestAttributes attributes0 = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
                   if (attributes0 != null) {
                     HttpServletRequest request = attributes0.getRequest();
-                    template.header(name, Optional.ofNullable(request.getHeader(name)).orElse(EMPTY_STRING));
+                    String value = Optional.ofNullable(request.getHeader(name)).orElse(EMPTY_STRING);
+                    if (!StringUtils.isBlank(value)) {
+                      template.header(name, Optional.ofNullable(request.getHeader(name)).orElse(EMPTY_STRING));
+                    }
                   }
                 } catch (Exception ignored) {}
                 break;
