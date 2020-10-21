@@ -11,14 +11,8 @@ import xyz.vopen.framework.logging.client.admin.discovery.lb.support.SmoothWeigh
  */
 @Getter
 public enum LoadBalanceStrategyWay {
-  /**
-   * random weight {@link
-   * RandomWeightedStrategy}
-   */
+  /** random weight {@link RandomWeightedStrategy} */
   RANDOM_WEIGHT,
-  /**
-   * pool weight {@link
-   * SmoothWeightedRoundRobinStrategy}
-   */
+  /** pool weight {@link SmoothWeightedRoundRobinStrategy} */
   POLL_WEIGHT
 }

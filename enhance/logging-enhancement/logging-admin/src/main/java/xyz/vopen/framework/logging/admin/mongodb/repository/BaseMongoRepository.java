@@ -6,31 +6,30 @@ import org.springframework.data.mongodb.core.query.Update;
 import java.util.List;
 
 /**
- * base mongodb mapper repository
+ * {@link BaseMongoRepository} base mongodb mapper repository
  *
- * @author tino
- * @version ${project.version}
- * @date 2020/9/8
+ * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
+ * @version ${project.version} - 2020/9/8
  */
 public interface BaseMongoRepository<T> {
 
-    T findOne(T entity, Query query);
+  T findOne(T entity, Query query);
 
-    List<T> find(T entity, Query query);
+  List<T> find(T entity, Query query);
 
-    long count(T entity, Query query);
+  long count(T entity, Query query);
 
-    void insert(T entity);
+  void insert(T entity);
 
-    void insertMany(List<T> entities);
+  void insertMany(List<T> entities);
 
-    void save(T entity);
+  void save(T entity);
 
-    void updateOne(T entity, Query query, Update update);
+  void updateOne(T entity, Query query, Update update);
 
-    void updateMulti(T entity, Query query, Update update);
+  void updateMulti(T entity, Query query, Update update);
 
-    void remove(T entity);
+  void remove(T entity);
 
-    void removeByQuery(Query query, T entity);
+  void removeByQuery(Query query, T entity);
 }

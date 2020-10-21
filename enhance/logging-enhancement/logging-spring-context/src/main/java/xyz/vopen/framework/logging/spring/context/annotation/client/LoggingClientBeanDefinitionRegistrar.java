@@ -8,8 +8,8 @@ import xyz.vopen.framework.logging.spring.util.LoggingBeanUtils;
 
 /**
  * Register logging client beans {@link
- * LoggingBeanUtils#registerLoggingClientBeans(BeanDefinitionRegistry)}
- * register {@link LoggingWebInterceptor}
+ * LoggingBeanUtils#registerLoggingClientBeans(BeanDefinitionRegistry)} register {@link
+ * LoggingWebInterceptor}
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */

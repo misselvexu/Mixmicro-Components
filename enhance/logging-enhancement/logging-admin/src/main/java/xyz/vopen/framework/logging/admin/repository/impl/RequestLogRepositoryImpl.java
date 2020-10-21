@@ -6,19 +6,19 @@ import xyz.vopen.framework.logging.admin.mongodb.repository.impl.BaseMongoReposi
 import xyz.vopen.framework.logging.admin.repository.RequestLogRepository;
 
 /**
- * Mixmicro Boot Log repository interface implements
+ * {@link RequestLogRepositoryImpl} Mixmicro Boot Log repository interface implements
  *
- * @author tino
- * @version ${project.version}
- * @date 2020/9/8
+ * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
+ * @version ${project.version} - 2020/9/8
  */
-public class RequestLogRepositoryImpl extends BaseMongoRepositoryImpl<RequestLogModel> implements RequestLogRepository {
-    /**
-     * set spring data mongodb template
-     *
-     * @param mongoTemplate
-     */
-    public RequestLogRepositoryImpl(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
+public class RequestLogRepositoryImpl extends BaseMongoRepositoryImpl<RequestLogModel>
+    implements RequestLogRepository {
+  /**
+   * set spring data mongodb template
+   *
+   * @param mongoTemplate spring data MongoTemplate
+   */
+  public RequestLogRepositoryImpl(MongoTemplate mongoTemplate) {
+    this.mongoTemplate = mongoTemplate;
+  }
 }

@@ -6,19 +6,19 @@ import xyz.vopen.framework.logging.admin.mongodb.repository.impl.BaseMongoReposi
 import xyz.vopen.framework.logging.admin.repository.GlobalLogRepository;
 
 /**
- * Global log data repository interface implements
+ * {@link GlobalLogRepositoryImpl} Global log data repository interface implements
  *
- * @author tino
- * @version ${project.version}
- * @date 2020/9/8
+ * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
+ * @version ${project.version} - 2020/9/8
  */
-public class GlobalLogRepositoryImpl extends BaseMongoRepositoryImpl<GlobalLogModel> implements GlobalLogRepository {
-    /**
-     * set spring data mongodb template
-     *
-     * @param mongoTemplate
-     */
-    public GlobalLogRepositoryImpl(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
+public class GlobalLogRepositoryImpl extends BaseMongoRepositoryImpl<GlobalLogModel>
+    implements GlobalLogRepository {
+  /**
+   * set spring data mongodb template
+   *
+   * @param mongoTemplate spring data MongoTemplate
+   */
+  public GlobalLogRepositoryImpl(MongoTemplate mongoTemplate) {
+    this.mongoTemplate = mongoTemplate;
+  }
 }

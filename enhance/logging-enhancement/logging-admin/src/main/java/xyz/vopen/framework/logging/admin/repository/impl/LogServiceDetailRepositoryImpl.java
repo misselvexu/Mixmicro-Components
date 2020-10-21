@@ -6,19 +6,19 @@ import xyz.vopen.framework.logging.admin.mongodb.repository.impl.BaseMongoReposi
 import xyz.vopen.framework.logging.admin.repository.LogServiceDetailRepository;
 
 /**
- * logging service details repository interface im
+ * {@link LogServiceDetailRepositoryImpl} logging service details repository interface im
  *
- * @author tino
- * @version ${project.version}
- * @date 2020/9/8
+ * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
+ * @version ${project.version} - 2020/9/8
  */
-public class LogServiceDetailRepositoryImpl extends BaseMongoRepositoryImpl<LogServiceDetailModel> implements LogServiceDetailRepository {
-    /**
-     * set spring data mongodb template
-     *
-     * @param mongoTemplate
-     */
-    public LogServiceDetailRepositoryImpl(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
+public class LogServiceDetailRepositoryImpl extends BaseMongoRepositoryImpl<LogServiceDetailModel>
+    implements LogServiceDetailRepository {
+  /**
+   * set spring data mongodb template
+   *
+   * @param mongoTemplate spring data MongoTemplate
+   */
+  public LogServiceDetailRepositoryImpl(MongoTemplate mongoTemplate) {
+    this.mongoTemplate = mongoTemplate;
+  }
 }
