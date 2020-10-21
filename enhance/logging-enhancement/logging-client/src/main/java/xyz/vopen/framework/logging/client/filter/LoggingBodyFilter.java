@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Mixmicro Logging Body（Request / Response） Filter Encapsulation principal obtains the corresponding
- * replicated content
+ * Mixmicro Logging Body（Request / Response） Filter Encapsulation principal obtains the
+ * corresponding replicated content
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */

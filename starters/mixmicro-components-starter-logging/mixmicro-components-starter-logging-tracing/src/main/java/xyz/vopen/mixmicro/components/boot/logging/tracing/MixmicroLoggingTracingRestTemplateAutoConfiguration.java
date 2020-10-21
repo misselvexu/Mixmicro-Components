@@ -27,19 +27,19 @@ import java.util.List;
 @ConditionalOnBean(RestTemplate.class)
 public class MixmicroLoggingTracingRestTemplateAutoConfiguration {
 
-    public MixmicroLoggingTracingRestTemplateAutoConfiguration(RestTemplate restTemplate) {
+  public MixmicroLoggingTracingRestTemplateAutoConfiguration(RestTemplate restTemplate) {
 
-        List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
+    List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
 
-        LoggingRestTemplateInterceptor interceptor = new LoggingRestTemplateInterceptor();
+    LoggingRestTemplateInterceptor interceptor = new LoggingRestTemplateInterceptor();
 
-        if (ObjectUtils.isEmpty(interceptors)) {
-            restTemplate.setInterceptors(Arrays.asList(interceptor));
-        } else {
-            LocalDateTime localDateTime = LocalDateTime.now();
-            localDateTime.toEpochSecond(ZoneOffset.UTC);
-            Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-            interceptors.add(interceptor);
-        }
+    if (ObjectUtils.isEmpty(interceptors)) {
+      restTemplate.setInterceptors(Arrays.asList(interceptor));
+    } else {
+      LocalDateTime localDateTime = LocalDateTime.now();
+      localDateTime.toEpochSecond(ZoneOffset.UTC);
+      Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+      interceptors.add(interceptor);
     }
+  }
 }

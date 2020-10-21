@@ -4,11 +4,9 @@ import xyz.vopen.framework.logging.admin.model.GlobalLogModel;
 import xyz.vopen.framework.logging.admin.mongodb.repository.BaseMongoRepository;
 
 /**
- * Global log data repository interface
+ * {@link GlobalLogRepository} Global log data repository interface
  *
- * @author tino
- * @version ${project.version}
- * @date 2020/9/8
+ * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
+ * @version ${project.version} - 2020/9/8
  */
-public interface GlobalLogRepository extends BaseMongoRepository<GlobalLogModel> {
-}
+public interface GlobalLogRepository extends BaseMongoRepository<GlobalLogModel> {}

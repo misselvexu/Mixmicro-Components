@@ -27,7 +27,8 @@ public class MixmicroLoggingTracingWebAutoConfiguration implements WebMvcConfigu
   private MixmicroLoggingTracingProperties loggingProperties;
 
   public MixmicroLoggingTracingWebAutoConfiguration(
-      LoggingWebInterceptor loggingWebInterceptor, MixmicroLoggingTracingProperties loggingProperties) {
+      LoggingWebInterceptor loggingWebInterceptor,
+      MixmicroLoggingTracingProperties loggingProperties) {
     this.loggingWebInterceptor = loggingWebInterceptor;
     this.loggingProperties = loggingProperties;
   }

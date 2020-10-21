@@ -39,79 +39,78 @@ import static org.springframework.core.io.support.ResourcePatternResolver.CLASSP
  * @since 2.1.0
  */
 public class MixmicroLoggingAdminEnvironmentPostProcessor
-        implements EnvironmentPostProcessor, Ordered {
+    implements EnvironmentPostProcessor, Ordered {
 
-    /**
-     * The name of MultiDataSource default {@link PropertySource}
-     */
-    public static final String PROPERTY_SOURCE_NAME = "mixmicro-logging-admin-default";
+  /** The name of MultiDataSource default {@link PropertySource} */
+  public static final String PROPERTY_SOURCE_NAME = "mixmicro-logging-admin-default";
 
-    /**
-     * The resource location pattern of MultiDataSource default {@link PropertySource}
-     *
-     * @see ResourcePatternResolver#CLASSPATH_ALL_URL_PREFIX
-     */
-    public static final String RESOURCE_LOCATION_PATTERN = CLASSPATH_ALL_URL_PREFIX + "META-INF/mixmicro-logging-admin-default.properties";
+  /**
+   * The resource location pattern of MultiDataSource default {@link PropertySource}
+   *
+   * @see ResourcePatternResolver#CLASSPATH_ALL_URL_PREFIX
+   */
+  public static final String RESOURCE_LOCATION_PATTERN =
+      CLASSPATH_ALL_URL_PREFIX + "META-INF/mixmicro-logging-admin-default.properties";
 
-    private static final String FILE_ENCODING = "UTF-8";
+  private static final String FILE_ENCODING = "UTF-8";
 
-    @Override
-    public void postProcessEnvironment(
-            ConfigurableEnvironment environment, SpringApplication application) {
+  @Override
+  public void postProcessEnvironment(
+      ConfigurableEnvironment environment, SpringApplication application) {
 
-        ResourceLoader resourceLoader = getResourceLoader(application);
+    ResourceLoader resourceLoader = getResourceLoader(application);
 
-        processPropertySource(environment, resourceLoader);
+    processPropertySource(environment, resourceLoader);
+  }
+
+  private ResourceLoader getResourceLoader(SpringApplication application) {
+
+    ResourceLoader resourceLoader = application.getResourceLoader();
+
+    if (resourceLoader == null) {
+      resourceLoader = new DefaultResourceLoader(application.getClassLoader());
     }
 
-    private ResourceLoader getResourceLoader(SpringApplication application) {
+    return resourceLoader;
+  }
 
-        ResourceLoader resourceLoader = application.getResourceLoader();
+  private void processPropertySource(
+      ConfigurableEnvironment environment, ResourceLoader resourceLoader) {
 
-        if (resourceLoader == null) {
-            resourceLoader = new DefaultResourceLoader(application.getClassLoader());
-        }
-
-        return resourceLoader;
+    try {
+      PropertySource multiDataSourceDefaultPropertySource = buildPropertySource(resourceLoader);
+      MutablePropertySources propertySources = environment.getPropertySources();
+      // append multiDataSourceDefaultPropertySource as last one in order to be overrided by higher
+      // order
+      propertySources.addLast(multiDataSourceDefaultPropertySource);
+    } catch (IOException e) {
+      throw new IllegalStateException(e.getMessage(), e);
     }
+  }
 
-    private void processPropertySource(
-            ConfigurableEnvironment environment, ResourceLoader resourceLoader) {
+  private PropertySource buildPropertySource(ResourceLoader resourceLoader) throws IOException {
+    CompositePropertySource propertySource = new CompositePropertySource(PROPERTY_SOURCE_NAME);
+    appendPropertySource(propertySource, resourceLoader);
+    return propertySource;
+  }
 
-        try {
-            PropertySource multiDataSourceDefaultPropertySource = buildPropertySource(resourceLoader);
-            MutablePropertySources propertySources = environment.getPropertySources();
-            // append multiDataSourceDefaultPropertySource as last one in order to be overrided by higher
-            // order
-            propertySources.addLast(multiDataSourceDefaultPropertySource);
-        } catch (IOException e) {
-            throw new IllegalStateException(e.getMessage(), e);
-        }
+  private void appendPropertySource(
+      CompositePropertySource propertySource, ResourceLoader resourceLoader) throws IOException {
+    ResourcePatternResolver resourcePatternResolver =
+        new PathMatchingResourcePatternResolver(resourceLoader);
+    Resource[] resources = resourcePatternResolver.getResources(RESOURCE_LOCATION_PATTERN);
+    for (Resource resource : resources) {
+      // Add if exists
+      if (resource.exists()) {
+        String internalName = String.valueOf(resource.getURL());
+        propertySource.addPropertySource(
+            new ResourcePropertySource(internalName, new EncodedResource(resource, FILE_ENCODING)));
+      }
     }
+  }
 
-    private PropertySource buildPropertySource(ResourceLoader resourceLoader) throws IOException {
-        CompositePropertySource propertySource = new CompositePropertySource(PROPERTY_SOURCE_NAME);
-        appendPropertySource(propertySource, resourceLoader);
-        return propertySource;
-    }
-
-    private void appendPropertySource(
-            CompositePropertySource propertySource, ResourceLoader resourceLoader) throws IOException {
-        ResourcePatternResolver resourcePatternResolver =
-                new PathMatchingResourcePatternResolver(resourceLoader);
-        Resource[] resources = resourcePatternResolver.getResources(RESOURCE_LOCATION_PATTERN);
-        for (Resource resource : resources) {
-            // Add if exists
-            if (resource.exists()) {
-                String internalName = String.valueOf(resource.getURL());
-                propertySource.addPropertySource(
-                        new ResourcePropertySource(internalName, new EncodedResource(resource, FILE_ENCODING)));
-            }
-        }
-    }
-
-    @Override
-    public int getOrder() {
-        return LOWEST_PRECEDENCE;
-    }
+  @Override
+  public int getOrder() {
+    return LOWEST_PRECEDENCE;
+  }
 }

@@ -6,57 +6,50 @@ import xyz.vopen.framework.logging.admin.mongodb.response.PageResponse;
 import java.util.List;
 
 /**
- * mongodb base crud service
+ * {@link BaseMongoService} mongodb base crud service
  *
- * @author tino
- * @version ${project.version}
- * @date 2020/9/16
+ * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
+ * @version ${project.version} - 2020/9/8
  */
 public interface BaseMongoService<E> {
 
-    /**
-     * @param entity
-     * @param query
-     * @return
-     */
-    E get(E entity, Query query);
+  /**
+   * @param entity mapping entity
+   * @param query spring data mongo query
+   * @return result
+   */
+  E get(E entity, Query query);
 
-    /**
-     * @param entity
-     * @param query
-     * @return
-     */
-    List<E> find(E entity, Query query);
+  /**
+   * @param entity mapping entity
+   * @param query spring data mongo query
+   * @return result
+   */
+  List<E> find(E entity, Query query);
 
-    /**
-     * @param entity
-     * @param query
-     * @param pageNum
-     * @param pageSize
-     * @param orderBy
-     * @return
-     */
-    PageResponse<E> find(E entity, Query query, int pageNum, int pageSize, String orderBy);
+  /**
+   * @param entity mapping entity
+   * @param query spring data mongo query
+   * @param pageNum page number
+   * @param pageSize one page size
+   * @param orderBy sort by
+   * @return result
+   */
+  PageResponse<E> find(E entity, Query query, int pageNum, int pageSize, String orderBy);
 
-    /**
-     * @param entity
-     * @param query
-     * @return
-     */
-    long count(E entity, Query query);
+  /**
+   * @param entity mapping entity
+   * @param query spring data mongo query
+   * @return result
+   */
+  long count(E entity, Query query);
 
-    /**
-     * @param entity
-     */
-    void add(E entity);
+  /** @param entity mapping entity */
+  void add(E entity);
 
-    /**
-     * @param entity
-     */
-    void update(E entity);
+  /** @param entity mapping entity */
+  void update(E entity);
 
-    /**
-     * @param entity
-     */
-    void remove(E entity);
+  /** @param entity mapping entity */
+  void remove(E entity);
 }

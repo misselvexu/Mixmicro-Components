@@ -15,18 +15,18 @@ import xyz.vopen.framework.logging.client.global.support.MixmicroLoggingMemorySt
 @Configuration
 @ConditionalOnClass(MixmicroLogging.class)
 public class MixmicroLoggingTracingGlobalLogStorageAutoConfiguration {
-    /**
-     * Instance global log memory mode repository
-     *
-     * @return {@link MixmicroLoggingMemoryStorage}
-     */
-    @Bean
-    @ConditionalOnProperty(
-            prefix = MixmicroLoggingTracingProperties.MIXMICRO_BOOT_LOGGING_PREFIX,
-            name = "global-logging-repository-way",
-            havingValue = "memory",
-            matchIfMissing = true)
-    public MixmicroLogging globalLogging() {
-        return new MixmicroLoggingMemoryStorage();
-    }
+  /**
+   * Instance global log memory mode repository
+   *
+   * @return {@link MixmicroLoggingMemoryStorage}
+   */
+  @Bean
+  @ConditionalOnProperty(
+      prefix = MixmicroLoggingTracingProperties.MIXMICRO_BOOT_LOGGING_PREFIX,
+      name = "global-logging-repository-way",
+      havingValue = "memory",
+      matchIfMissing = true)
+  public MixmicroLogging globalLogging() {
+    return new MixmicroLoggingMemoryStorage();
+  }
 }

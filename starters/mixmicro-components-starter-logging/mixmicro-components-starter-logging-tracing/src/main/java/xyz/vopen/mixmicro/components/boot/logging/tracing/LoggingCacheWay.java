@@ -9,12 +9,8 @@ import lombok.Getter;
  */
 @Getter
 public enum LoggingCacheWay {
-  /**
-   * cache request log to memory
-   */
+  /** cache request log to memory */
   MEMORY,
-  /**
-   * append request log to file
-   */
+  /** append request log to file */
   FILE
 }

@@ -15,16 +15,10 @@ import static xyz.vopen.mixmicro.components.boot.logging.admin.MixmicroLoggingTr
 @ConfigurationProperties(prefix = MIXMICRO_BOOT_LOGGING_ADMIN_PREFIX)
 @Data
 public class MixmicroLoggingTracingAdminProperties {
-  /**
-   * Mixmicro Boot logging properties config prefix
-   */
+  /** Mixmicro Boot logging properties config prefix */
   public static final String MIXMICRO_BOOT_LOGGING_ADMIN_PREFIX = "mixmicro.logging.tracing.admin";
-  /**
-   * Whether to print the logs reported on the console
-   */
+  /** Whether to print the logs reported on the console */
   private boolean showConsoleReportLog = false;
-  /**
-   * Format console log JSON
-   */
+  /** Format console log JSON */
   private boolean formatConsoleLogJson = false;
 }

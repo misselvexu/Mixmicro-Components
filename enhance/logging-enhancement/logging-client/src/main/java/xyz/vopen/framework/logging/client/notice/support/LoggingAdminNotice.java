@@ -40,8 +40,7 @@ public class LoggingAdminNotice implements LoggingNotice {
 
   /**
    * if just report away，execute report logs to admin if timing report away，cache logs to {@link
-   * LoggingCache} support， wait for {@link
-   * LoggingReportScheduled} execute report
+   * LoggingCache} support， wait for {@link LoggingReportScheduled} execute report
    *
    * @param mixmicroLog Mixmicro Boot Log
    */

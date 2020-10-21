@@ -35,48 +35,48 @@ import xyz.vopen.framework.logging.spring.context.annotation.admin.EnableLogging
 @ConditionalOnWebApplication
 @EnableAsync
 @Import({
-        MongoAutoConfiguration.class,
-        MongoDataAutoConfiguration.class,
-        MongoRepositoriesAutoConfiguration.class
+  MongoAutoConfiguration.class,
+  MongoDataAutoConfiguration.class,
+  MongoRepositoriesAutoConfiguration.class
 })
 public class MixmicroLoggingTracingAdminAutoConfiguration {
-    /**
-     * logger instance
-     */
-    static Logger logger = LoggerFactory.getLogger(MixmicroLoggingTracingAdminAutoConfiguration.class);
-    /**
-     * {@link MixmicroLoggingTracingAdminProperties}
-     */
-    private MixmicroLoggingTracingAdminProperties mixmicroLoggingTracingAdminProperties;
+  /** logger instance */
+  static Logger logger =
+      LoggerFactory.getLogger(MixmicroLoggingTracingAdminAutoConfiguration.class);
+  /** {@link MixmicroLoggingTracingAdminProperties} */
+  private MixmicroLoggingTracingAdminProperties mixmicroLoggingTracingAdminProperties;
 
-    /**
-     * init instance by MixmicroLoggingTracingAdminProperties{@link MixmicroLoggingTracingAdminProperties}
-     *
-     * @param mixmicroLoggingTracingAdminProperties
-     */
-    public MixmicroLoggingTracingAdminAutoConfiguration(
-            MixmicroLoggingTracingAdminProperties mixmicroLoggingTracingAdminProperties) {
-        this.mixmicroLoggingTracingAdminProperties = mixmicroLoggingTracingAdminProperties;
-    }
+  /**
+   * init instance by MixmicroLoggingTracingAdminProperties{@link
+   * MixmicroLoggingTracingAdminProperties}
+   *
+   * @param mixmicroLoggingTracingAdminProperties
+   */
+  public MixmicroLoggingTracingAdminAutoConfiguration(
+      MixmicroLoggingTracingAdminProperties mixmicroLoggingTracingAdminProperties) {
+    this.mixmicroLoggingTracingAdminProperties = mixmicroLoggingTracingAdminProperties;
+  }
 
-    /**
-     * instantiation {@link LoggingAdminFactoryBean}
-     *
-     * @return LoggingAdminFactoryBean
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public LoggingAdminFactoryBean loggingAdminFactoryBean(MongoTemplate mongoTemplate) {
-        LoggingAdminFactoryBean factoryBean = new LoggingAdminFactoryBean();
-        // mongodb data repository
-        factoryBean.setLoggingDataService(new LoggingDataServiceImpl(mongoTemplate));
-        factoryBean.setGlobalLogRepository(new GlobalLogRepositoryImpl(mongoTemplate));
-        factoryBean.setRequestLogRepository(new RequestLogRepositoryImpl(mongoTemplate));
-        factoryBean.setLogServiceDetailRepository(new LogServiceDetailRepositoryImpl(mongoTemplate));
-        // console log config settings
-        factoryBean.setShowConsoleReportLog(mixmicroLoggingTracingAdminProperties.isShowConsoleReportLog());
-        factoryBean.setFormatConsoleLogJson(mixmicroLoggingTracingAdminProperties.isFormatConsoleLogJson());
-        logger.info("【LoggingAdminFactoryBean】init successfully.");
-        return factoryBean;
-    }
+  /**
+   * instantiation {@link LoggingAdminFactoryBean}
+   *
+   * @return LoggingAdminFactoryBean
+   */
+  @Bean
+  @ConditionalOnMissingBean
+  public LoggingAdminFactoryBean loggingAdminFactoryBean(MongoTemplate mongoTemplate) {
+    LoggingAdminFactoryBean factoryBean = new LoggingAdminFactoryBean();
+    // mongodb data repository
+    factoryBean.setLoggingDataService(new LoggingDataServiceImpl(mongoTemplate));
+    factoryBean.setGlobalLogRepository(new GlobalLogRepositoryImpl(mongoTemplate));
+    factoryBean.setRequestLogRepository(new RequestLogRepositoryImpl(mongoTemplate));
+    factoryBean.setLogServiceDetailRepository(new LogServiceDetailRepositoryImpl(mongoTemplate));
+    // console log config settings
+    factoryBean.setShowConsoleReportLog(
+        mixmicroLoggingTracingAdminProperties.isShowConsoleReportLog());
+    factoryBean.setFormatConsoleLogJson(
+        mixmicroLoggingTracingAdminProperties.isFormatConsoleLogJson());
+    logger.info("【LoggingAdminFactoryBean】init successfully.");
+    return factoryBean;
+  }
 }
