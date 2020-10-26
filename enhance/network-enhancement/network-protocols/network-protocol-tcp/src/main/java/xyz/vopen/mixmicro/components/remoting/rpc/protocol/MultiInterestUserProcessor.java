@@ -22,7 +22,7 @@ import java.util.List;
  * Support multi-interests feature based on UserProcessor
  *
  * <p>The implementations of this interface don't need to implement the {@link
- * UserProcessor#interest() interest()} method;
+ * UserProcessor#requestClassType() interest()} method;
  */
 public interface MultiInterestUserProcessor<T> extends UserProcessor<T> {
 

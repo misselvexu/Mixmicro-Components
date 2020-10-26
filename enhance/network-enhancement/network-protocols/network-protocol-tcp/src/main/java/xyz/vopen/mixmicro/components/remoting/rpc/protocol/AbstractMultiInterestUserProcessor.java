@@ -26,10 +26,10 @@ public abstract class AbstractMultiInterestUserProcessor<T> extends AbstractUser
   /**
    * do not need to implement this method because of the multiple interests
    *
-   * @see UserProcessor#interest()
+   * @see UserProcessor#requestClassType()
    */
   @Override
-  public String interest() {
+  public String requestClassType() {
     return null;
   }
 }

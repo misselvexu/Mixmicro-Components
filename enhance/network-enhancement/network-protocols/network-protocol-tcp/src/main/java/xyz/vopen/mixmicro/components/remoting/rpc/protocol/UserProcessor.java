@@ -62,7 +62,7 @@ public interface UserProcessor<T> extends LifeCycle {
    *
    * @return interested request's class name
    */
-  String interest();
+  String requestClassType();
 
   /**
    * Get user executor.

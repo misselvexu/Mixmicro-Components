@@ -41,7 +41,7 @@ public abstract class SyncUserProcessor<T> extends AbstractUserProcessor<T> {
         "ASYNC handle request is unsupported in SyncUserProcessor!");
   }
 
-  /** @see UserProcessor#interest() */
+  /** @see UserProcessor#requestClassType() */
   @Override
-  public abstract String interest();
+  public abstract String requestClassType();
 }

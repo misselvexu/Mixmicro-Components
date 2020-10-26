@@ -36,14 +36,14 @@ public class UserProcessorRegisterHelper {
     if (processor instanceof MultiInterestUserProcessor) {
       registerUserProcessor((MultiInterestUserProcessor) processor, userProcessors);
     } else {
-      if (StringUtils.isBlank(processor.interest())) {
+      if (StringUtils.isBlank(processor.requestClassType())) {
         throw new RuntimeException("Processor interest should not be blank!");
       }
-      UserProcessor<?> preProcessor = userProcessors.putIfAbsent(processor.interest(), processor);
+      UserProcessor<?> preProcessor = userProcessors.putIfAbsent(processor.requestClassType(), processor);
       if (preProcessor != null) {
         String errMsg =
             "Processor with interest key ["
-                + processor.interest()
+                + processor.requestClassType()
                 + "] has already been registered to rpc server, can not register again!";
         throw new RuntimeException(errMsg);
       }

@@ -41,7 +41,7 @@ public abstract class AsyncUserProcessor<T> extends AbstractUserProcessor<T> {
   @Override
   public abstract void handleRequest(BizContext bizCtx, AsyncContext asyncCtx, T request);
 
-  /** @see UserProcessor#interest() */
+  /** @see UserProcessor#requestClassType() */
   @Override
-  public abstract String interest();
+  public abstract String requestClassType();
 }
