@@ -47,6 +47,7 @@
         <module>mixmicro-components-starter-email</module>
         <module>mixmicro-components-starter-rpc</module>
         <module>mixmicro-components-starter-mongo-client</module>
+        <module>mixmicro-components-starter-httpclient</module>
     </modules>
 
     <properties>
