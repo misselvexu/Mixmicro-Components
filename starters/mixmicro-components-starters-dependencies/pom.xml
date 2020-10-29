@@ -52,6 +52,7 @@
         <micro-starter-email.version>1.0.7.BUILD-SNAPSHOT</micro-starter-email.version>
         <micro-starter-rpc-json.version>1.0.7.BUILD-SNAPSHOT</micro-starter-rpc-json.version>
         <micro-starter-mongo-client.version>1.0.7.BUILD-SNAPSHOT</micro-starter-mongo-client.version>
+        <micro-starter-http-client.version>1.0.7.BUILD-SNAPSHOT</micro-starter-http-client.version>
 
         <micro-starter-cache-redis-default.version>1.0.7.BUILD-SNAPSHOT</micro-starter-cache-redis-default.version>
         <micro-starter-cache-redis-lettuce.version>1.0.7.BUILD-SNAPSHOT</micro-starter-cache-redis-lettuce.version>
@@ -264,6 +265,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-mongo-client</artifactId>
                 <version>${micro-starter-mongo-client.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-httpclient</artifactId>
+                <version>${micro-starter-http-client.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
