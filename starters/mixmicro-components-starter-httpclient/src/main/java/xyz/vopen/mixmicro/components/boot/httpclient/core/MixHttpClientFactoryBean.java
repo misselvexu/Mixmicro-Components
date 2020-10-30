@@ -21,6 +21,7 @@ import retrofit2.Retrofit;
 import xyz.vopen.mixmicro.components.boot.httpclient.ErrorDecoderInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientErrorDecoder;
 import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientLogStrategy;
+import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.annotation.InterceptorComponent;
 import xyz.vopen.mixmicro.components.boot.httpclient.annotation.MixHttpClient;
 import xyz.vopen.mixmicro.components.boot.httpclient.annotation.CustomOkHttpClient;
@@ -217,10 +218,10 @@ public class MixHttpClientFactoryBean<T>
       okHttpClientBuilder.addNetworkInterceptor(loggingInterceptor);
     }
 
-    Collection<NetworkInterceptor> networkInterceptors =
+    Collection<MixHttpClientInterceptor> networkInterceptors =
         httpClientConfigBean.getNetworkInterceptors();
     if (!CollectionUtils.isEmpty(networkInterceptors)) {
-      for (NetworkInterceptor networkInterceptor : networkInterceptors) {
+      for (MixHttpClientInterceptor networkInterceptor : networkInterceptors) {
         okHttpClientBuilder.addNetworkInterceptor(networkInterceptor);
       }
     }
@@ -230,8 +231,7 @@ public class MixHttpClientFactoryBean<T>
 
   private <U> U getBean(Class<U> clz) {
     try {
-      U bean = applicationContext.getBean(clz);
-      return bean;
+      return applicationContext.getBean(clz);
     } catch (BeansException e) {
       return null;
     }
@@ -275,13 +275,13 @@ public class MixHttpClientFactoryBean<T>
       Object handler = annotationAttributes.get("handler");
       Assert.notNull(
           handler,
-          "@InterceptMark annotations must be configured: Class<? extends BasePathMatchInterceptor> handler()");
+          "@InterceptorComponent annotations must be configured: Class<? extends BasePathMatchInterceptor> handler()");
       Assert.notNull(
           annotationAttributes.get("include"),
-          "@InterceptMark annotations must be configured: String[] include()");
+          "@InterceptorComponent annotations must be configured: String[] include()");
       Assert.notNull(
           annotationAttributes.get("exclude"),
-          "@InterceptMark annotations must be configured: String[] exclude()");
+          "@InterceptorComponent annotations must be configured: String[] exclude()");
       Class<? extends AbstractPathMatchInterceptor> interceptorClass =
           (Class<? extends AbstractPathMatchInterceptor>) handler;
       AbstractPathMatchInterceptor interceptor = getInterceptorInstance(interceptorClass);
@@ -458,6 +458,6 @@ public class MixHttpClientFactoryBean<T>
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     this.applicationContext = applicationContext;
     this.httpClientConfigBean = applicationContext.getBean(MixHttpClientConfigBean.class);
-    this.httpClientProperties = httpClientConfigBean.getRetrofitProperties();
+    this.httpClientProperties = httpClientConfigBean.getHttpClientProperties();
   }
 }

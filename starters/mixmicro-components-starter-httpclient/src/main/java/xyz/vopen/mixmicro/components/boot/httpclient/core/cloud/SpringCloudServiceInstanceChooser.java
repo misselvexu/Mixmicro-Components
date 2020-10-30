@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.boot.httpclient.core;
+package xyz.vopen.mixmicro.components.boot.httpclient.core.cloud;
 
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;

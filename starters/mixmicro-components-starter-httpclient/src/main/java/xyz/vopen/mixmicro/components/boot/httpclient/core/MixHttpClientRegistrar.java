@@ -34,7 +34,7 @@ public class MixHttpClientRegistrar
     Assert.notNull(attributes, "Annotation @MixHttpClient 's attributes must not be null and empty .");
 
     // Scan the @MixHttpClient annotated interface under the specified path and register it to the BeanDefinitionRegistry
-    ClassPathMixHttpClientScanner scanner = new ClassPathMixHttpClientScanner(registry, classLoader);
+    MixHttpClientClassPathScanner scanner = new MixHttpClientClassPathScanner(registry, classLoader);
 
     if (resourceLoader != null) {
       scanner.setResourceLoader(resourceLoader);
@@ -46,11 +46,6 @@ public class MixHttpClientRegistrar
     scanner.doScan(basePackages);
   }
 
-  /**
-   * 获取扫描的基础包路径
-   *
-   * @return 基础包路径
-   */
   private String[] getPackagesToScan(@NonNull AnnotationAttributes attributes) {
     String[] value = attributes.getStringArray("value");
     String[] basePackages = attributes.getStringArray("basePackages");

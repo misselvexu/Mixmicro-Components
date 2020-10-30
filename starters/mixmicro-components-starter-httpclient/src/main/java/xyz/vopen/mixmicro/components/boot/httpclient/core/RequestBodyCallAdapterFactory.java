@@ -33,7 +33,7 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
-public final class BodyCallAdapterFactory extends CallAdapter.Factory {
+public final class RequestBodyCallAdapterFactory extends CallAdapter.Factory {
 
   @Override
   public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {

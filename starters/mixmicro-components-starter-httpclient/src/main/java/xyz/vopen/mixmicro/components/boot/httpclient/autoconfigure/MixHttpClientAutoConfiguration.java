@@ -18,11 +18,11 @@ import org.springframework.lang.NonNull;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.InvalidServiceInstanceChooser;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.PrototypeInterceptorBeanDefinitionRegistryPostProcessor;
 import xyz.vopen.mixmicro.components.boot.httpclient.ServiceInstanceChooser;
+import xyz.vopen.mixmicro.components.boot.httpclient.core.cloud.InvalidServiceInstanceChooser;
+import xyz.vopen.mixmicro.components.boot.httpclient.core.PrototypeInterceptorDefinitionPostProcessor;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.AbstractGlobalInterceptor;
-import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.NetworkInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.ServiceInstanceChooserInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.retry.AbstractRetryInterceptor;
 
@@ -48,8 +48,8 @@ public class MixHttpClientAutoConfiguration implements ApplicationContextAware {
   public static class RetrofitProcessorAutoConfiguration {
 
     @Bean
-    public static PrototypeInterceptorBeanDefinitionRegistryPostProcessor prototypeInterceptorBdfProcessor() {
-      return new PrototypeInterceptorBeanDefinitionRegistryPostProcessor();
+    public static PrototypeInterceptorDefinitionPostProcessor prototypeInterceptorBdfProcessor() {
+      return new PrototypeInterceptorDefinitionPostProcessor();
     }
   }
 
@@ -93,7 +93,7 @@ public class MixHttpClientAutoConfiguration implements ApplicationContextAware {
     httpClientConfigBean.setRetryInterceptor(retryInterceptor.newInstance());
 
     // add networkInterceptor
-    Collection<NetworkInterceptor> networkInterceptors = getBeans(NetworkInterceptor.class);
+    Collection<MixHttpClientInterceptor> networkInterceptors = getBeans(MixHttpClientInterceptor.class);
     httpClientConfigBean.setNetworkInterceptors(networkInterceptors);
 
     // add ServiceInstanceChooserInterceptor

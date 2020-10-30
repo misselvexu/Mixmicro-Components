@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.boot.httpclient.core;
+package xyz.vopen.mixmicro.components.boot.httpclient.core.cloud;
 
 import xyz.vopen.mixmicro.components.boot.httpclient.ServiceInstanceChooser;
 import xyz.vopen.mixmicro.components.boot.httpclient.exception.ServiceInstanceChooseException;
@@ -15,7 +15,6 @@ public class InvalidServiceInstanceChooser implements ServiceInstanceChooser {
    */
   @Override
   public URI choose(String serviceId) {
-    throw new ServiceInstanceChooseException(
-        "No valid service instance selector, Please configure it!");
+    throw new ServiceInstanceChooseException("No valid service instance selector .");
   }
 }

@@ -1,11 +1,11 @@
-package xyz.vopen.mixmicro.components.boot.httpclient.interceptor;
+package xyz.vopen.mixmicro.components.boot.httpclient;
 
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
-import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientLogStrategy;
+import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.AbstractLoggingInterceptor;
 
 import java.io.IOException;
 
@@ -30,17 +30,19 @@ public class DefaultLoggingInterceptor extends AbstractLoggingInterceptor {
   }
 
   public HttpLoggingInterceptor.Logger httpLoggingInterceptorLogger(Level level) {
-    if (level == Level.DEBUG) {
-      return logger::debug;
-    } else if (level == Level.ERROR) {
-      return logger::error;
-    } else if (level == Level.INFO) {
-      return logger::info;
-    } else if (level == Level.TRACE) {
-      return logger::trace;
-    } else if (level == Level.WARN) {
-      return logger::warn;
+
+    switch (level) {
+      case WARN:
+        return logger::warn;
+      case DEBUG:
+        return logger::debug;
+      case ERROR:
+        return logger::error;
+      case TRACE:
+        return logger::trace;
+      case INFO:
+      default:
+        return logger::info;
     }
-    throw new UnsupportedOperationException("We don't support this log level currently.");
   }
 }

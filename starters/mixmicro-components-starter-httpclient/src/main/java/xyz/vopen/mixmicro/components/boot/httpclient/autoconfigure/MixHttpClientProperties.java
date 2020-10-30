@@ -4,10 +4,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.BodyCallAdapterFactory;
+import xyz.vopen.mixmicro.components.boot.httpclient.core.RequestBodyCallAdapterFactory;
 import xyz.vopen.mixmicro.components.boot.httpclient.core.ResponseCallAdapterFactory;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.AbstractLoggingInterceptor;
-import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.DefaultLoggingInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.DefaultLoggingInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.retry.AbstractRetryInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.retry.DefaultRetryInterceptor;
 
@@ -51,7 +51,7 @@ public class MixHttpClientProperties {
   @SuppressWarnings("unchecked")
   private Class<? extends CallAdapter.Factory>[] globalCallAdapterFactories =
       (Class<? extends CallAdapter.Factory>[])
-          new Class[] {BodyCallAdapterFactory.class, ResponseCallAdapterFactory.class};
+          new Class[] {RequestBodyCallAdapterFactory.class, ResponseCallAdapterFactory.class};
 
   public Class<? extends AbstractLoggingInterceptor> getLoggingInterceptor() {
     return loggingInterceptor;

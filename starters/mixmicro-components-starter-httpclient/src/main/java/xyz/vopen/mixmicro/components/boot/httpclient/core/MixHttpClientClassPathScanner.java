@@ -16,14 +16,14 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 
-public class ClassPathMixHttpClientScanner extends ClassPathBeanDefinitionScanner {
+public class MixHttpClientClassPathScanner extends ClassPathBeanDefinitionScanner {
 
   private final ClassLoader classLoader;
 
   private static final Logger logger =
-      LoggerFactory.getLogger(ClassPathMixHttpClientScanner.class);
+      LoggerFactory.getLogger(MixHttpClientClassPathScanner.class);
 
-  public ClassPathMixHttpClientScanner(BeanDefinitionRegistry registry, ClassLoader classLoader) {
+  public MixHttpClientClassPathScanner(BeanDefinitionRegistry registry, ClassLoader classLoader) {
     super(registry, false);
     this.classLoader = classLoader;
   }

@@ -4,7 +4,7 @@ import okhttp3.ConnectionPool;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.AbstractGlobalInterceptor;
-import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.NetworkInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.ServiceInstanceChooserInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.retry.AbstractRetryInterceptor;
 
@@ -19,7 +19,7 @@ public class MixHttpClientConfigBean {
 
   private Collection<AbstractGlobalInterceptor> globalInterceptors;
 
-  private Collection<NetworkInterceptor> networkInterceptors;
+  private Collection<MixHttpClientInterceptor> networkInterceptors;
 
   private AbstractRetryInterceptor retryInterceptor;
 
@@ -29,7 +29,7 @@ public class MixHttpClientConfigBean {
 
   private Class<? extends CallAdapter.Factory>[] globalCallAdapterFactoryClasses;
 
-  public MixHttpClientProperties getRetrofitProperties() {
+  public MixHttpClientProperties getHttpClientProperties() {
     return httpClientProperties;
   }
 
@@ -61,11 +61,11 @@ public class MixHttpClientConfigBean {
     this.retryInterceptor = retryInterceptor;
   }
 
-  public Collection<NetworkInterceptor> getNetworkInterceptors() {
+  public Collection<MixHttpClientInterceptor> getNetworkInterceptors() {
     return networkInterceptors;
   }
 
-  public void setNetworkInterceptors(Collection<NetworkInterceptor> networkInterceptors) {
+  public void setNetworkInterceptors(Collection<MixHttpClientInterceptor> networkInterceptors) {
     this.networkInterceptors = networkInterceptors;
   }
 

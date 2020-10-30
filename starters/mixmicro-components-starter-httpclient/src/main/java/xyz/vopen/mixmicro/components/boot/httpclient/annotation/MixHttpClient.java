@@ -4,7 +4,7 @@ import org.slf4j.event.Level;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.DefaultMixHttpClientErrorDecoder;
+import xyz.vopen.mixmicro.components.boot.httpclient.core.DefaultHttpClientErrorDecoder;
 import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientErrorDecoder;
 import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientLogStrategy;
 
@@ -61,7 +61,7 @@ public @interface MixHttpClient {
    *
    * @return ErrorDecoder
    */
-  Class<? extends MixHttpClientErrorDecoder> errorDecoder() default DefaultMixHttpClientErrorDecoder.class;
+  Class<? extends MixHttpClientErrorDecoder> errorDecoder() default DefaultHttpClientErrorDecoder.class;
 
   /**
    * connection pool name
@@ -134,18 +134,18 @@ public @interface MixHttpClient {
    */
   boolean retryOnConnectionFailure() default true;
 
-  /** 针对当前接口是否启用日志打印 Whether to enable log printing for the current interface */
+  /** Whether to enable log printing for the current interface */
   boolean enableLog() default true;
 
   /**
-   * 日志打印级别，支持的日志级别参见{@link Level} Log printing level, see {@link Level} for supported log levels
+   * Log printing level, see {@link Level} for supported log levels
    *
    * @return logLevel
    */
   Level logLevel() default Level.INFO;
 
   /**
-   * 日志打印策略，支持的日志打印策略参见{@link MixHttpClientLogStrategy} Log printing strategy, see {@link MixHttpClientLogStrategy} for
+   * Log printing strategy, see {@link MixHttpClientLogStrategy} for
    * supported log printing strategies
    *
    * @return logStrategy

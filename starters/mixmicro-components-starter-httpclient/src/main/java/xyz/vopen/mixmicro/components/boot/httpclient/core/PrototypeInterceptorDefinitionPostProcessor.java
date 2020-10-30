@@ -9,7 +9,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
 import org.springframework.lang.NonNull;
 import xyz.vopen.mixmicro.components.boot.httpclient.PrototypeInterceptor;
 
-public class PrototypeInterceptorBeanDefinitionRegistryPostProcessor
+public class PrototypeInterceptorDefinitionPostProcessor
     implements BeanDefinitionRegistryPostProcessor {
 
   @Override
@@ -34,5 +34,7 @@ public class PrototypeInterceptorBeanDefinitionRegistryPostProcessor
 
   @Override
   public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory)
-      throws BeansException {}
+      throws BeansException {
+    // EMPTY
+  }
 }
