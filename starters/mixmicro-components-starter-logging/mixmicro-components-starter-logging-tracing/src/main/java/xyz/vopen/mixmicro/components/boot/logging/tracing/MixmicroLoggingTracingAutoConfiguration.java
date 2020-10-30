@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.util.ObjectUtils;
 import xyz.vopen.framework.logging.client.LoggingFactoryBean;
-import xyz.vopen.framework.logging.client.admin.discovery.LoggingAdminDiscovery;
+import xyz.vopen.framework.logging.client.admin.discovery.support.LoggingAppointAdminDiscovery;
 import xyz.vopen.framework.logging.client.admin.report.LoggingReportScheduled;
 import xyz.vopen.framework.logging.spring.context.annotation.client.EnableLoggingClient;
 
@@ -28,60 +28,58 @@ import java.util.List;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 @Configuration
-@ConditionalOnClass({LoggingFactoryBean.class, EnableLoggingClient.class})
+@ConditionalOnClass(EnableLoggingClient.class)
 @EnableConfigurationProperties(MixmicroLoggingTracingProperties.class)
 @AutoConfigureAfter(WebMvcAutoConfiguration.class)
 @ConditionalOnWebApplication
 @EnableAsync
 @Import({
-    MixmicroLoggingTracingAdminDiscoveryAutoConfiguration.class,
-    MixmicroLoggingTracingAdminAppointAutoConfiguration.class,
-    MixmicroLoggingTracingOpenfeignAutoConfiguration.class,
-    MixmicroLoggingTracingRestTemplateAutoConfiguration.class,
-    MixmicroLoggingTracingWebAutoConfiguration.class,
-    MixmicroLoggingTracingGlobalLogStorageAutoConfiguration.class
+  MixmicroLoggingTracingOpenfeignAutoConfiguration.class,
+  MixmicroLoggingTracingRestTemplateAutoConfiguration.class,
+  MixmicroLoggingTracingWebAutoConfiguration.class,
+  MixmicroLoggingTracingGlobalLogStorageAutoConfiguration.class
 })
 public class MixmicroLoggingTracingAutoConfiguration {
-  /**
-   * logger instance
-   */
+  /** logger instance */
   static Logger logger = LoggerFactory.getLogger(MixmicroLoggingTracingAutoConfiguration.class);
-  /**
-   * Mixmicro Boot Logging Properties
-   */
+  /** Mixmicro Boot Logging Properties */
   private final MixmicroLoggingTracingProperties mixmicroLoggingTracingProperties;
 
-  public MixmicroLoggingTracingAutoConfiguration(MixmicroLoggingTracingProperties mixmicroLoggingTracingProperties) {
+  public MixmicroLoggingTracingAutoConfiguration(
+      MixmicroLoggingTracingProperties mixmicroLoggingTracingProperties) {
     this.mixmicroLoggingTracingProperties = mixmicroLoggingTracingProperties;
   }
 
   /**
    * logging factory bean {@link LoggingFactoryBean}
    *
-   * @param loggingAdminDiscoveryObjectProvider Logging Admin Discovery Instance Provider
    * @return LoggingFactoryBean
    */
   @Bean
   @ConditionalOnMissingBean
   public LoggingFactoryBean loggingFactoryBean(
-      ObjectProvider<LoggingAdminDiscovery> loggingAdminDiscoveryObjectProvider,
       ObjectProvider<List<LoggingFactoryBeanCustomizer>> customizerObjectProvider) {
     LoggingFactoryBean factoryBean = new LoggingFactoryBean();
     factoryBean.setIgnorePaths(mixmicroLoggingTracingProperties.getIgnorePaths());
     factoryBean.setIgnoreHttpStatus(mixmicroLoggingTracingProperties.getIgnoreHttpStatus());
-    factoryBean.setReportAway(mixmicroLoggingTracingProperties.getReportAway());
-    factoryBean.setNumberOfRequestLog(mixmicroLoggingTracingProperties.getReportNumberOfRequestLog());
-    factoryBean.setReportInitialDelaySecond(mixmicroLoggingTracingProperties.getReportInitialDelaySecond());
+    factoryBean.setReportAway(mixmicroLoggingTracingProperties.getReportWay());
+    factoryBean.setNumberOfRequestLog(
+        mixmicroLoggingTracingProperties.getReportNumberOfRequestLog());
+    factoryBean.setReportInitialDelaySecond(
+        mixmicroLoggingTracingProperties.getReportInitialDelaySecond());
     factoryBean.setReportIntervalSecond(mixmicroLoggingTracingProperties.getReportIntervalSecond());
-    factoryBean.setLoggingAdminDiscovery(loggingAdminDiscoveryObjectProvider.getIfAvailable());
+    factoryBean.setLoggingAdminDiscovery(
+        new LoggingAppointAdminDiscovery(
+            new String[] {mixmicroLoggingTracingProperties.getReportUrl()}));
     factoryBean.setShowConsoleLog(mixmicroLoggingTracingProperties.isShowConsoleLog());
+    factoryBean.setGlobalLogExecutePackage(
+        mixmicroLoggingTracingProperties.getGlobalLogExecutePackage());
     factoryBean.setFormatConsoleLog(mixmicroLoggingTracingProperties.isFormatConsoleLogJson());
 
     List<LoggingFactoryBeanCustomizer> customizers = customizerObjectProvider.getIfAvailable();
     if (!ObjectUtils.isEmpty(customizers)) {
       customizers.forEach(customizer -> customizer.customize(factoryBean));
     }
-    logger.info("【LoggingFactoryBean】init successfully.");
     return factoryBean;
   }
 

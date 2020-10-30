@@ -65,11 +65,13 @@ public class CommonLoggingApplicationListener
       }
     }
 
-    for (Map.Entry<SpaceId, SpaceInfo> entry : MultiAppLoggerSpaceManager.getSpacesMap().entrySet()) {
+    for (Map.Entry<SpaceId, SpaceInfo> entry :
+        MultiAppLoggerSpaceManager.getSpacesMap().entrySet()) {
       SpaceId spaceId = entry.getKey();
       SpaceInfo spaceInfo = entry.getValue();
       ReportUtil.reportDebug("Re-initialize log of " + spaceId.getSpaceName());
-      AbstractLoggerSpaceFactory abstractLoggerSpaceFactory = spaceInfo.getAbstractLoggerSpaceFactory();
+      AbstractLoggerSpaceFactory abstractLoggerSpaceFactory =
+          spaceInfo.getAbstractLoggerSpaceFactory();
 
       if (abstractLoggerSpaceFactory instanceof LogbackLoggerSpaceFactory) {
         ((LogbackLoggerSpaceFactory) abstractLoggerSpaceFactory).reInitialize(context);
@@ -88,9 +90,20 @@ public class CommonLoggingApplicationListener
    */
   private Map<String, String> loadApplicationEnvironment(ConfigurableEnvironment environment) {
     Map<String, String> context = new HashMap<String, String>();
-    readLogConfiguration(Constants.LOG_PATH, environment.getProperty(Constants.LOG_PATH), context, Constants.LOGGING_PATH_DEFAULT);
-    readLogConfiguration(Constants.OLD_LOG_PATH, environment.getProperty(Constants.OLD_LOG_PATH), context, context.get(Constants.LOG_PATH));
-    readLogConfiguration(Constants.LOG_ENCODING_PROP_KEY, environment.getProperty(Constants.LOG_ENCODING_PROP_KEY), context);
+    readLogConfiguration(
+        Constants.LOG_PATH,
+        environment.getProperty(Constants.LOG_PATH),
+        context,
+        Constants.LOGGING_PATH_DEFAULT);
+    readLogConfiguration(
+        Constants.OLD_LOG_PATH,
+        environment.getProperty(Constants.OLD_LOG_PATH),
+        context,
+        context.get(Constants.LOG_PATH));
+    readLogConfiguration(
+        Constants.LOG_ENCODING_PROP_KEY,
+        environment.getProperty(Constants.LOG_ENCODING_PROP_KEY),
+        context);
     LogEnvUtils.keepCompatible(context, true);
 
     Set<String> configKeys = new HashSet<String>();
@@ -99,7 +112,8 @@ public class CommonLoggingApplicationListener
     while (propertySourceIterator.hasNext()) {
       PropertySource<?> propertySource = propertySourceIterator.next();
       if (propertySource instanceof EnumerablePropertySource) {
-        configKeys.addAll(Arrays.asList(((EnumerablePropertySource<?>) propertySource).getPropertyNames()));
+        configKeys.addAll(
+            Arrays.asList(((EnumerablePropertySource<?>) propertySource).getPropertyNames()));
       }
     }
     for (String key : configKeys) {

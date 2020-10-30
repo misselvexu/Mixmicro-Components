@@ -8,6 +8,11 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import xyz.vopen.framework.logging.client.http.rest.LoggingRestTemplateInterceptor;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,6 +36,9 @@ public class MixmicroLoggingTracingRestTemplateAutoConfiguration {
     if (ObjectUtils.isEmpty(interceptors)) {
       restTemplate.setInterceptors(Arrays.asList(interceptor));
     } else {
+      LocalDateTime localDateTime = LocalDateTime.now();
+      localDateTime.toEpochSecond(ZoneOffset.UTC);
+      Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
       interceptors.add(interceptor);
     }
   }

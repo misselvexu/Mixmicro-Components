@@ -24,7 +24,7 @@ import xyz.vopen.framework.logging.client.span.LoggingSpanGenerator;
 import xyz.vopen.framework.logging.client.span.support.LoggingDefaultSpanGenerator;
 import xyz.vopen.framework.logging.client.tracer.LoggingTraceGenerator;
 import xyz.vopen.framework.logging.client.tracer.support.LoggingDefaultTraceGenerator;
-import xyz.vopen.framework.logging.core.ReportAway;
+import xyz.vopen.framework.logging.core.ReportWay;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -60,20 +60,13 @@ public class LoggingFactoryBean
   private LoggingSpanGenerator spanGenerator;
   /** Logging Cache {@link LoggingMemoryCache} */
   private LoggingCache loggingCache;
-  /** Logging Admin Report Away default just report to admin {@link ReportAway} */
-  private ReportAway reportAway = ReportAway.just;
-  /**
-   * report to logging admin {@link
-   * LoggingAdminReportSupport}
-   */
+  /** Logging Admin Report Away default just report to admin {@link ReportWay} */
+  private ReportWay reportWay = ReportWay.JUST;
+  /** report to logging admin {@link LoggingAdminReportSupport} */
   private LoggingAdminReport loggingAdminReport;
   /**
-   * logging admin discovery instance {@link
-   * LoggingAbstractAdminDiscovery}
-   * {@link
-   * LoggingAppointAdminDiscovery}
-   * {@link
-   * LoggingRegistryCenterAdminDiscovery}
+   * logging admin discovery instance {@link LoggingAbstractAdminDiscovery} {@link
+   * LoggingAppointAdminDiscovery} {@link LoggingRegistryCenterAdminDiscovery}
    */
   private LoggingAdminDiscovery loggingAdminDiscovery;
   /** Rest Template */
@@ -87,7 +80,7 @@ public class LoggingFactoryBean
   private int reportIntervalSecond = 5;
   /** Ignore path array */
   private List<String> ignorePaths =
-      new ArrayList() {
+      new ArrayList<String>() {
         {
           add("/error");
         }
@@ -99,7 +92,7 @@ public class LoggingFactoryBean
    * <p>Ignore 404 by default
    */
   private List<HttpStatus> ignoreHttpStatus =
-      new ArrayList() {
+      new ArrayList<HttpStatus>() {
         {
           add(HttpStatus.NOT_FOUND);
         }
@@ -116,6 +109,8 @@ public class LoggingFactoryBean
   private boolean showConsoleLog;
   /** format log in console */
   private boolean formatConsoleLog;
+  /** global log trace execute domain package name */
+  private List<String> globalLogExecutePackage;
 
   /**
    * Examples of classes required for initialization of constructors {@link
@@ -131,7 +126,7 @@ public class LoggingFactoryBean
    * after properties set handler Initialize service parameter configuration {@link RestTemplate}
    * {@link LoggingAdminReportSupport}
    *
-   * @throws Exception
+   * @throws Exception runtime exception
    */
   @Override
   public void afterPropertiesSet() throws Exception {
@@ -197,8 +192,8 @@ public class LoggingFactoryBean
     return loggingCache;
   }
 
-  public ReportAway getReportAway() {
-    return reportAway;
+  public ReportWay getReportAway() {
+    return reportWay;
   }
 
   public LoggingAdminReport getLoggingAdminReport() {
@@ -242,8 +237,8 @@ public class LoggingFactoryBean
     this.loggingCache = loggingCache;
   }
 
-  public void setReportAway(ReportAway reportAway) {
-    this.reportAway = reportAway;
+  public void setReportAway(ReportWay reportWay) {
+    this.reportWay = reportWay;
   }
 
   public void setNumberOfRequestLog(Integer numberOfRequestLog) {
@@ -288,5 +283,13 @@ public class LoggingFactoryBean
 
   public List<HttpStatus> getIgnoreHttpStatus() {
     return ignoreHttpStatus;
+  }
+
+  public List<String> getGlobalLogExecutePackage() {
+    return globalLogExecutePackage;
+  }
+
+  public void setGlobalLogExecutePackage(List<String> globalLogExecutePackage) {
+    this.globalLogExecutePackage = globalLogExecutePackage;
   }
 }

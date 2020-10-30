@@ -101,7 +101,6 @@ public class LoggingWebInterceptor extends LoggingAbstractInterceptor
       log.setParentSpanId(parentSpanId);
       String spanId = createSpanId();
       log.setSpanId(spanId);
-      logger.debug("Request SpanId：{}", log.getSpanId());
     } catch (Exception e) {
       // set exception stack
       log.setExceptionStack(StackTraceUtil.getStackTrace(e));
@@ -134,7 +133,6 @@ public class LoggingWebInterceptor extends LoggingAbstractInterceptor
       log.setHttpStatus(response.getStatus());
       // set exception stack
       if (!ObjectUtils.isEmpty(ex)) {
-        logger.debug("Request Have Exception，Execute Update HttpStatus.");
         log.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         log.setExceptionStack(StackTraceUtil.getStackTrace(ex));
       }
@@ -171,10 +169,8 @@ public class LoggingWebInterceptor extends LoggingAbstractInterceptor
     // if request header don't have traceId
     // create new traceId
     if (ObjectUtils.isEmpty(traceId)) {
-      logger.debug("Request Header Don't Have TraceId，Create New TraceId Now.");
       traceId = factoryBean.getTraceGenerator().createTraceId();
     }
-    logger.debug("Request TraceId：{}", traceId);
     return traceId;
   }
 
@@ -198,7 +194,6 @@ public class LoggingWebInterceptor extends LoggingAbstractInterceptor
   private String extractParentSpanId(HttpServletRequest request) {
     // get spanId from request header
     String spanId = HttpRequestUtil.getHeader(request, LoggingConstant.HEADER_NAME_PARENT_SPAN_ID);
-    logger.debug("Request Parent SpanId：{}", spanId);
     return spanId;
   }
 

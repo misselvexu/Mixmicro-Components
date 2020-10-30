@@ -25,22 +25,17 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>mixmicro-components-enhance-logging-client</artifactId>
-            <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>mixmicro-components-enhance-logging-admin</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>mixmicro-components-enhance-logging-admin-ui</artifactId>
-            <optional>true</optional>
-        </dependency>
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>mixmicro-components-enhance-logging-spring-context</artifactId>
-            <optional>true</optional>
+        </dependency>
+
+        <!--Mixmicro Logback-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>mixmicro-components-enhance-logback-classic</artifactId>
         </dependency>
 
         <!-- Spring Web -->

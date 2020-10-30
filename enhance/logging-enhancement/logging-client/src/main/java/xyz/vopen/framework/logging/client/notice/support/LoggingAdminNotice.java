@@ -1,15 +1,15 @@
 package xyz.vopen.framework.logging.client.notice.support;
 
-import xyz.vopen.framework.logging.client.LoggingFactoryBean;
-import xyz.vopen.framework.logging.client.admin.report.LoggingAdminReport;
-import xyz.vopen.framework.logging.client.cache.LoggingCache;
-import xyz.vopen.framework.logging.client.notice.LoggingNotice;
-import xyz.vopen.framework.logging.core.MixmicroLog;
-import xyz.vopen.framework.logging.core.ReportAway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
+import xyz.vopen.framework.logging.client.LoggingFactoryBean;
+import xyz.vopen.framework.logging.client.admin.report.LoggingAdminReport;
 import xyz.vopen.framework.logging.client.admin.report.LoggingReportScheduled;
+import xyz.vopen.framework.logging.client.cache.LoggingCache;
+import xyz.vopen.framework.logging.client.notice.LoggingNotice;
+import xyz.vopen.framework.logging.core.MixmicroLog;
+import xyz.vopen.framework.logging.core.ReportWay;
 
 import java.util.Arrays;
 
@@ -40,22 +40,20 @@ public class LoggingAdminNotice implements LoggingNotice {
 
   /**
    * if just report away，execute report logs to admin if timing report away，cache logs to {@link
-   * LoggingCache} support， wait for {@link
-   * LoggingReportScheduled} execute report
+   * LoggingCache} support， wait for {@link LoggingReportScheduled} execute report
    *
    * @param mixmicroLog Mixmicro Boot Log
    */
   @Override
   public void notice(MixmicroLog mixmicroLog) {
-    ReportAway reportAway = factoryBean.getReportAway();
-    switch (reportAway) {
-      case just:
+    ReportWay reportWay = factoryBean.getReportAway();
+    switch (reportWay) {
+      case JUST:
         LoggingAdminReport loggingAdminReport = factoryBean.getLoggingAdminReport();
         loggingAdminReport.report(Arrays.asList(mixmicroLog));
         break;
-      case timing:
+      case TIMING:
         factoryBean.getLoggingCache().cache(mixmicroLog);
-        logger.debug("Cache Request Logging Complete.");
         break;
     }
   }

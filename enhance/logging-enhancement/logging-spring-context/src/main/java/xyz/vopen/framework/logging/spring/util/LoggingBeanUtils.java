@@ -5,8 +5,8 @@ import xyz.vopen.framework.logging.admin.endpoint.LoggingEndpoint;
 import xyz.vopen.framework.logging.admin.event.ReportLogEvent;
 import xyz.vopen.framework.logging.admin.listener.ReportLogJsonFormatListener;
 import xyz.vopen.framework.logging.admin.listener.ReportLogStorageListener;
-import xyz.vopen.framework.logging.admin.ui.LoggingAdminUiEndpoint;
 import xyz.vopen.framework.logging.client.filter.LoggingBodyFilter;
+import xyz.vopen.framework.logging.client.global.MixmicroLoggingThreadLocal;
 import xyz.vopen.framework.logging.client.interceptor.web.LoggingWebInterceptor;
 import xyz.vopen.framework.logging.client.notice.LoggingNoticeListener;
 import xyz.vopen.framework.logging.client.notice.support.LoggingAdminNotice;
@@ -22,6 +22,9 @@ import xyz.vopen.framework.util.BeanUtils;
  * @since 1.0.1
  */
 public class LoggingBeanUtils {
+
+  private LoggingBeanUtils() {}
+
   /**
    * Register LoggingAdmin beans {@link
    * BeanUtils#registerInfrastructureBeanIfAbsent(BeanDefinitionRegistry, String, Class, Object...)}
@@ -47,16 +50,7 @@ public class LoggingBeanUtils {
     registerLoggingNoticeListener(registry);
     registerLoggingLocalNotice(registry);
     registerLoggingAdminNotice(registry);
-  }
-
-  /**
-   * Register LoggingAdminUi beans {@link
-   * BeanUtils#registerInfrastructureBeanIfAbsent(BeanDefinitionRegistry, String, Class, Object...)}
-   *
-   * @param registry {@link BeanDefinitionRegistry}
-   */
-  public static void registerLoggingAdminUiBeans(BeanDefinitionRegistry registry) {
-    registerLoggingAdminUiEndpoint(registry);
+    registerLoggingThreadLocal(registry);
   }
 
   /**
@@ -84,8 +78,8 @@ public class LoggingBeanUtils {
   }
 
   /**
-   * Register logging endpoint {@link LoggingEndpoint} Register spring MVC endpoint{@link ApiEndpoint}
-   * bean name is use {@link LoggingEndpoint#BEAN_NAME}
+   * Register logging endpoint {@link LoggingEndpoint} Register spring MVC endpoint{@link
+   * ApiEndpoint} bean name is use {@link LoggingEndpoint#BEAN_NAME}
    *
    * @param registry {@link BeanDefinitionRegistry}
    * @see LoggingRequestMappingHandlerMapping
@@ -107,18 +101,6 @@ public class LoggingBeanUtils {
         registry,
         LoggingRequestMappingHandlerMapping.BEAN_NAME,
         LoggingRequestMappingHandlerMapping.class);
-  }
-
-  /**
-   * Register logging admin ui endpoint {@link
-   * LoggingAdminUiEndpoint} bean name is use {@link
-   * LoggingAdminUiEndpoint#BEAN_NAME}
-   *
-   * @param registry {@link BeanDefinitionRegistry}
-   */
-  public static void registerLoggingAdminUiEndpoint(BeanDefinitionRegistry registry) {
-    BeanUtils.registerInfrastructureBeanIfAbsent(
-        registry, LoggingAdminUiEndpoint.BEAN_NAME, LoggingAdminUiEndpoint.class);
   }
 
   /**
@@ -174,5 +156,16 @@ public class LoggingBeanUtils {
   public static void registerLoggingAdminNotice(BeanDefinitionRegistry registry) {
     BeanUtils.registerInfrastructureBeanIfAbsent(
         registry, LoggingAdminNotice.BEAN_NAME, LoggingAdminNotice.class);
+  }
+
+  /**
+   * Register logging threadLocal {@link MixmicroLoggingThreadLocal} cache bean name is use {@link
+   * MixmicroLoggingThreadLocal#BEAN_NAME}
+   *
+   * @param registry {@link BeanDefinitionRegistry}
+   */
+  public static void registerLoggingThreadLocal(BeanDefinitionRegistry registry) {
+    BeanUtils.registerInfrastructureBeanIfAbsent(
+        registry, MixmicroLoggingThreadLocal.BEAN_NAME, MixmicroLoggingThreadLocal.class);
   }
 }

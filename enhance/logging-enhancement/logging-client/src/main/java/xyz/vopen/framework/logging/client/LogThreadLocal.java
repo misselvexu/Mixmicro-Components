@@ -26,13 +26,17 @@ import xyz.vopen.framework.logging.core.MixmicroLog;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
 public class LogThreadLocal {
+
+  private LogThreadLocal() {}
+
   /**
    * The Request Logs Solve the problem of the {@link MixmicroLog} object of the child parent thread
    *
    * @see TransmittableThreadLocal
    * @see MixmicroLog
    */
-  private static final TransmittableThreadLocal<MixmicroLog> LOGS = new TransmittableThreadLocal<>();
+  private static final TransmittableThreadLocal<MixmicroLog> LOGS =
+      new TransmittableThreadLocal<>();
 
   /**
    * Get This Thread Mixmicro Boot Log Object Instance

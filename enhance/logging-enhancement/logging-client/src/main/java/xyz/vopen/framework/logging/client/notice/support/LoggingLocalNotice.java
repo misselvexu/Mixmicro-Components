@@ -1,11 +1,11 @@
 package xyz.vopen.framework.logging.client.notice.support;
 
 import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import xyz.vopen.framework.logging.client.LoggingFactoryBean;
 import xyz.vopen.framework.logging.client.notice.LoggingNotice;
 import xyz.vopen.framework.logging.core.MixmicroLog;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import xyz.vopen.framework.util.JsonUtil;
 
 /**
@@ -33,12 +33,15 @@ public class LoggingLocalNotice implements LoggingNotice {
   @Override
   public void notice(MixmicroLog mixmicroLog) {
     if (loggingFactoryBean.isShowConsoleLog()) {
-      logger.info(
-          "Request Uri：{}， Logging：\n{}",
-          mixmicroLog.getRequestUri(),
-          loggingFactoryBean.isFormatConsoleLog()
-              ? JsonUtil.beautifyJson(mixmicroLog)
-              : JSON.toJSONString(mixmicroLog));
+      String format =
+          "Request Uri："
+              + mixmicroLog.getRequestUri()
+              + "， Logging：\n{"
+              + (loggingFactoryBean.isFormatConsoleLog()
+                  ? JsonUtil.beautifyJson(mixmicroLog)
+                  : JSON.toJSONString(mixmicroLog))
+              + "}";
+      System.out.println(format);
     }
   }
 

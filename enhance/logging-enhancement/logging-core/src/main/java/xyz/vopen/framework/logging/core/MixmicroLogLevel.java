@@ -9,7 +9,8 @@ import lombok.Getter;
  */
 @Getter
 public enum MixmicroLogLevel {
-  debug,
-  info,
-  error
+  DEBUG,
+  INFO,
+  ERROR,
+  WARN
 }
