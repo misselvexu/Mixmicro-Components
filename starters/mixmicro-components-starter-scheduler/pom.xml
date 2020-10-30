@@ -20,7 +20,7 @@
         <!-- Core Scheduler Lib -->
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
-            <artifactId>mixmicro-components-enhance-schedule-core</artifactId>
+            <artifactId>mixmicro-components-enhance-schedule-default</artifactId>
         </dependency>
 
         <dependency>

@@ -16,7 +16,7 @@ Task-scheduler for Java that was inspired by the need for a clustered `java.util
 ```xml
 <dependency>
     <groupId>com.yunlsp.framework.components</groupId>
-    <artifactId>mixmicro-components-enhance-schedule-core</artifactId>
+    <artifactId>mixmicro-components-enhance-schedule-default</artifactId>
     <version>$VERSION</version>
 </dependency>
 ```

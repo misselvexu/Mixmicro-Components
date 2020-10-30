@@ -104,6 +104,8 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
             if (getProperties().getException().isPrintMixmicroStackTrace()) { // true
               log.error(e.getMessage(), e);
             }
+          } else {
+            log.error(e.getMessage(), e);
           }
         }
       }

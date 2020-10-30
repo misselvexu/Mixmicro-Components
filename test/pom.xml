@@ -18,6 +18,7 @@
         <module>mongo-client-test</module>
         <module>scheduler-test</module>
         <module>auto-httpclient-test</module>
+        <module>quartz-test</module>
     </modules>
 
     <artifactId>mixmicro-components-test</artifactId>
