@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.boot.httpclient.util;
+package xyz.vopen.mixmicro.components.boot.httpclient.kits;
 
 import okhttp3.Headers;
 import okhttp3.MediaType;
@@ -12,14 +12,14 @@ import xyz.vopen.mixmicro.components.boot.httpclient.exception.ReadResponseBodyE
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-public final class RetrofitUtils {
+public final class MixHttpClientKit {
 
   private static final Charset UTF8 = StandardCharsets.UTF_8;
   public static final String GZIP = "gzip";
   public static final String CONTENT_ENCODING = "Content-Encoding";
   public static final String IDENTITY = "identity";
 
-  private RetrofitUtils() {
+  private MixHttpClientKit() {
     throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
   }
 

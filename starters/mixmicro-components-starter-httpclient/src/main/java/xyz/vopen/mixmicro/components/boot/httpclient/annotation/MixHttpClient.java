@@ -4,16 +4,16 @@ import org.slf4j.event.Level;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.DefaultErrorDecoder;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.ErrorDecoder;
-import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.LogStrategy;
+import xyz.vopen.mixmicro.components.boot.httpclient.core.DefaultMixHttpClientErrorDecoder;
+import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientErrorDecoder;
+import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientLogStrategy;
 
 import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
-public @interface RetrofitClient {
+public @interface MixHttpClient {
 
   /**
    * An absolute URL (the protocol is necessary). Can be specified as property key, eg:
@@ -57,11 +57,11 @@ public @interface RetrofitClient {
    * exception when an exception occurs in the request or an invalid response result is received.
    * The invalid response is determined by the business itself. In general, the invalid response
    * corresponding to each service is different, you can customize the corresponding {@link
-   * ErrorDecoder}, and then configure it here.
+   * MixHttpClientErrorDecoder}, and then configure it here.
    *
    * @return ErrorDecoder
    */
-  Class<? extends ErrorDecoder> errorDecoder() default DefaultErrorDecoder.class;
+  Class<? extends MixHttpClientErrorDecoder> errorDecoder() default DefaultMixHttpClientErrorDecoder.class;
 
   /**
    * connection pool name
@@ -145,10 +145,10 @@ public @interface RetrofitClient {
   Level logLevel() default Level.INFO;
 
   /**
-   * 日志打印策略，支持的日志打印策略参见{@link LogStrategy} Log printing strategy, see {@link LogStrategy} for
+   * 日志打印策略，支持的日志打印策略参见{@link MixHttpClientLogStrategy} Log printing strategy, see {@link MixHttpClientLogStrategy} for
    * supported log printing strategies
    *
    * @return logStrategy
    */
-  LogStrategy logStrategy() default LogStrategy.BASIC;
+  MixHttpClientLogStrategy logStrategy() default MixHttpClientLogStrategy.BASIC;
 }

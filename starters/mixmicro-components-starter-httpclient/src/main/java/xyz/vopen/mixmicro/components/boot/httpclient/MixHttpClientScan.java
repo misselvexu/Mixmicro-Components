@@ -1,15 +1,15 @@
-package xyz.vopen.mixmicro.components.boot.httpclient.annotation;
+package xyz.vopen.mixmicro.components.boot.httpclient;
 
 import org.springframework.context.annotation.Import;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.RetrofitClientRegistrar;
+import xyz.vopen.mixmicro.components.boot.httpclient.core.MixHttpClientRegistrar;
 
 import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
-@Import(RetrofitClientRegistrar.class)
-public @interface RetrofitScan {
+@Import(MixHttpClientRegistrar.class)
+public @interface MixHttpClientScan {
 
   /**
    * Scan package path Same meaning as basePackages

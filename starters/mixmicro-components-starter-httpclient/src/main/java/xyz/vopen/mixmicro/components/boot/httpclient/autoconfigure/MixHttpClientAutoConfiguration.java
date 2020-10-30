@@ -14,16 +14,17 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.NoValidServiceInstanceChooser;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.PrototypeInterceptorBdfProcessor;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.ServiceInstanceChooser;
-import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.BaseGlobalInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.core.InvalidServiceInstanceChooser;
+import xyz.vopen.mixmicro.components.boot.httpclient.core.PrototypeInterceptorBeanDefinitionRegistryPostProcessor;
+import xyz.vopen.mixmicro.components.boot.httpclient.ServiceInstanceChooser;
+import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.AbstractGlobalInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.NetworkInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.ServiceInstanceChooserInterceptor;
-import xyz.vopen.mixmicro.components.boot.httpclient.retry.BaseRetryInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.retry.AbstractRetryInterceptor;
 
 import java.util.Collection;
 import java.util.Map;
@@ -31,31 +32,35 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-@EnableConfigurationProperties(RetrofitProperties.class)
+@EnableConfigurationProperties(MixHttpClientProperties.class)
 @AutoConfigureAfter({JacksonAutoConfiguration.class})
-public class RetrofitAutoConfiguration implements ApplicationContextAware {
+public class MixHttpClientAutoConfiguration implements ApplicationContextAware {
 
-  @Autowired private RetrofitProperties retrofitProperties;
+  private final MixHttpClientProperties httpClientProperties;
 
   private ApplicationContext applicationContext;
+
+  public MixHttpClientAutoConfiguration(MixHttpClientProperties httpClientProperties) {
+    this.httpClientProperties = httpClientProperties;
+  }
 
   @Configuration
   public static class RetrofitProcessorAutoConfiguration {
 
     @Bean
-    public static PrototypeInterceptorBdfProcessor prototypeInterceptorBdfProcessor() {
-      return new PrototypeInterceptorBdfProcessor();
+    public static PrototypeInterceptorBeanDefinitionRegistryPostProcessor prototypeInterceptorBdfProcessor() {
+      return new PrototypeInterceptorBeanDefinitionRegistryPostProcessor();
     }
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public RetrofitConfigBean retrofitConfigBean()
+  public MixHttpClientConfigBean retrofitConfigBean()
       throws IllegalAccessException, InstantiationException {
-    RetrofitConfigBean retrofitConfigBean = new RetrofitConfigBean(retrofitProperties);
+    MixHttpClientConfigBean httpClientConfigBean = new MixHttpClientConfigBean(httpClientProperties);
     // Initialize the connection pool
     Map<String, ConnectionPool> poolRegistry = new ConcurrentHashMap<>(4);
-    Map<String, PoolConfig> pool = retrofitProperties.getPool();
+    Map<String, MixHttpClientProperties.PoolConfig> pool = httpClientProperties.getPool();
     if (pool != null) {
       pool.forEach(
           (poolName, poolConfig) -> {
@@ -66,44 +71,44 @@ public class RetrofitAutoConfiguration implements ApplicationContextAware {
             poolRegistry.put(poolName, connectionPool);
           });
     }
-    retrofitConfigBean.setPoolRegistry(poolRegistry);
+    httpClientConfigBean.setPoolRegistry(poolRegistry);
 
     // callAdapterFactory
     Class<? extends CallAdapter.Factory>[] globalCallAdapterFactories =
-        retrofitProperties.getGlobalCallAdapterFactories();
-    retrofitConfigBean.setGlobalCallAdapterFactoryClasses(globalCallAdapterFactories);
+        httpClientProperties.getGlobalCallAdapterFactories();
+    httpClientConfigBean.setGlobalCallAdapterFactoryClasses(globalCallAdapterFactories);
 
     // converterFactory
     Class<? extends Converter.Factory>[] globalConverterFactories =
-        retrofitProperties.getGlobalConverterFactories();
-    retrofitConfigBean.setGlobalConverterFactoryClasses(globalConverterFactories);
+        httpClientProperties.getGlobalConverterFactories();
+    httpClientConfigBean.setGlobalConverterFactoryClasses(globalConverterFactories);
 
     // globalInterceptors
-    Collection<BaseGlobalInterceptor> globalInterceptors = getBeans(BaseGlobalInterceptor.class);
-    retrofitConfigBean.setGlobalInterceptors(globalInterceptors);
+    Collection<AbstractGlobalInterceptor> globalInterceptors = getBeans(AbstractGlobalInterceptor.class);
+    httpClientConfigBean.setGlobalInterceptors(globalInterceptors);
 
     // retryInterceptor
-    Class<? extends BaseRetryInterceptor> retryInterceptor =
-        retrofitProperties.getRetryInterceptor();
-    retrofitConfigBean.setRetryInterceptor(retryInterceptor.newInstance());
+    Class<? extends AbstractRetryInterceptor> retryInterceptor =
+        httpClientProperties.getRetryInterceptor();
+    httpClientConfigBean.setRetryInterceptor(retryInterceptor.newInstance());
 
     // add networkInterceptor
     Collection<NetworkInterceptor> networkInterceptors = getBeans(NetworkInterceptor.class);
-    retrofitConfigBean.setNetworkInterceptors(networkInterceptors);
+    httpClientConfigBean.setNetworkInterceptors(networkInterceptors);
 
     // add ServiceInstanceChooserInterceptor
     ServiceInstanceChooser serviceInstanceChooser;
     try {
       serviceInstanceChooser = applicationContext.getBean(ServiceInstanceChooser.class);
     } catch (BeansException e) {
-      serviceInstanceChooser = new NoValidServiceInstanceChooser();
+      serviceInstanceChooser = new InvalidServiceInstanceChooser();
     }
 
     ServiceInstanceChooserInterceptor serviceInstanceChooserInterceptor =
         new ServiceInstanceChooserInterceptor(serviceInstanceChooser);
-    retrofitConfigBean.setServiceInstanceChooserInterceptor(serviceInstanceChooserInterceptor);
+    httpClientConfigBean.setServiceInstanceChooserInterceptor(serviceInstanceChooserInterceptor);
 
-    return retrofitConfigBean;
+    return httpClientConfigBean;
   }
 
   @Bean
@@ -132,7 +137,7 @@ public class RetrofitAutoConfiguration implements ApplicationContextAware {
   }
 
   @Override
-  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+  public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
     this.applicationContext = applicationContext;
   }
 }

@@ -2,6 +2,7 @@ package xyz.vopen.mixmicro.components.boot.httpclient.core;
 
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import xyz.vopen.mixmicro.components.boot.httpclient.ServiceInstanceChooser;
 
 import java.net.URI;
 

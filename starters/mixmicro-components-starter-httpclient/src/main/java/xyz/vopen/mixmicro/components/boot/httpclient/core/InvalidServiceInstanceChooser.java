@@ -1,10 +1,11 @@
 package xyz.vopen.mixmicro.components.boot.httpclient.core;
 
+import xyz.vopen.mixmicro.components.boot.httpclient.ServiceInstanceChooser;
 import xyz.vopen.mixmicro.components.boot.httpclient.exception.ServiceInstanceChooseException;
 
 import java.net.URI;
 
-public class NoValidServiceInstanceChooser implements ServiceInstanceChooser {
+public class InvalidServiceInstanceChooser implements ServiceInstanceChooser {
 
   /**
    * Chooses a ServiceInstance URI from the LoadBalancer for the specified service.

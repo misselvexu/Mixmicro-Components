@@ -8,36 +8,37 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.lang.NonNull;
 import org.springframework.util.ClassUtils;
-import xyz.vopen.mixmicro.components.boot.httpclient.annotation.RetrofitClient;
+import xyz.vopen.mixmicro.components.boot.httpclient.annotation.MixHttpClient;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 
-public class ClassPathRetrofitClientScanner extends ClassPathBeanDefinitionScanner {
+public class ClassPathMixHttpClientScanner extends ClassPathBeanDefinitionScanner {
 
   private final ClassLoader classLoader;
 
   private static final Logger logger =
-      LoggerFactory.getLogger(ClassPathRetrofitClientScanner.class);
+      LoggerFactory.getLogger(ClassPathMixHttpClientScanner.class);
 
-  public ClassPathRetrofitClientScanner(BeanDefinitionRegistry registry, ClassLoader classLoader) {
+  public ClassPathMixHttpClientScanner(BeanDefinitionRegistry registry, ClassLoader classLoader) {
     super(registry, false);
     this.classLoader = classLoader;
   }
 
   public void registerFilters() {
-    AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(RetrofitClient.class);
+    AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(MixHttpClient.class);
     this.addIncludeFilter(annotationTypeFilter);
   }
 
   @Override
-  protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
+  protected Set<BeanDefinitionHolder> doScan(@NonNull String... basePackages) {
     Set<BeanDefinitionHolder> beanDefinitions = super.doScan(basePackages);
     if (beanDefinitions.isEmpty()) {
       logger.warn(
-          "No RetrofitClient was found in '"
+          "No MixHttpClient was found in '"
               + Arrays.toString(basePackages)
               + "' package. Please check your configuration.");
     } else {
@@ -66,7 +67,7 @@ public class ClassPathRetrofitClientScanner extends ClassPathBeanDefinitionScann
       definition = (GenericBeanDefinition) holder.getBeanDefinition();
       if (logger.isDebugEnabled()) {
         logger.debug(
-            "Creating RetrofitClientBean with name '"
+            "Creating MixHttpClientBean with name '"
                 + holder.getBeanName()
                 + "' and '"
                 + definition.getBeanClassName()
@@ -76,7 +77,7 @@ public class ClassPathRetrofitClientScanner extends ClassPathBeanDefinitionScann
           .getConstructorArgumentValues()
           .addGenericArgumentValue(Objects.requireNonNull(definition.getBeanClassName()));
       // beanClass全部设置为RetrofitFactoryBean
-      definition.setBeanClass(RetrofitFactoryBean.class);
+      definition.setBeanClass(MixHttpClientFactoryBean.class);
     }
   }
 }

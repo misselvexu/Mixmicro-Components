@@ -6,9 +6,11 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.PrototypeInterceptor;
+import org.springframework.lang.NonNull;
+import xyz.vopen.mixmicro.components.boot.httpclient.PrototypeInterceptor;
 
-public class PrototypeInterceptorBdfProcessor implements BeanDefinitionRegistryPostProcessor {
+public class PrototypeInterceptorBeanDefinitionRegistryPostProcessor
+    implements BeanDefinitionRegistryPostProcessor {
 
   @Override
   public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
@@ -25,13 +27,12 @@ public class PrototypeInterceptorBdfProcessor implements BeanDefinitionRegistryP
         if (PrototypeInterceptor.class.isAssignableFrom(beanClass)) {
           beanDefinition.setScope(ConfigurableBeanFactory.SCOPE_PROTOTYPE);
         }
-      } catch (ClassNotFoundException e) {
-        // do nothing
+      } catch (ClassNotFoundException ignore) {
       }
     }
   }
 
   @Override
-  public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory)
+  public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory)
       throws BeansException {}
 }

@@ -21,7 +21,7 @@ import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import xyz.vopen.mixmicro.components.boot.httpclient.exception.RetrofitException;
+import xyz.vopen.mixmicro.components.boot.httpclient.exception.MixHttpClientException;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -30,8 +30,7 @@ import java.lang.reflect.Type;
 import java.util.Objects;
 
 /**
- * 同步调用执行，直接返回 #{@link Response} 对象 Synchronous call execution, directly return #{@link Response}
- * object
+ * Synchronous call execution, directly return #{@link Response} object
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
@@ -67,7 +66,7 @@ public final class ResponseCallAdapterFactory extends CallAdapter.Factory {
       try {
         return call.execute();
       } catch (IOException e) {
-        throw Objects.requireNonNull(RetrofitException.errorExecuting(request, e));
+        throw Objects.requireNonNull(MixHttpClientException.errorExecuting(request, e));
       }
     }
   }

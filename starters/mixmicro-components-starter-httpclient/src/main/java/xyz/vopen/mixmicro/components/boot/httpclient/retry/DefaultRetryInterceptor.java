@@ -5,7 +5,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
-public class DefaultRetryInterceptor extends BaseRetryInterceptor {
+public class DefaultRetryInterceptor extends AbstractRetryInterceptor {
 
   @Override
   protected Response retryIntercept(
@@ -15,7 +15,7 @@ public class DefaultRetryInterceptor extends BaseRetryInterceptor {
       try {
         Request request = chain.request();
         Response response = chain.proceed(request);
-        if (containRetryRule(retryRules, RetryRule.RESPONSE_STATUS_NOT_2XX)) {
+        if (containRetryRule(retryRules, RetryRule.RETRY_WHEN_NON200CODE)) {
           if (response.isSuccessful()) {
             return response;
           }
@@ -50,10 +50,10 @@ public class DefaultRetryInterceptor extends BaseRetryInterceptor {
   }
 
   private boolean judgeRetry(RetryRule[] retryRules, Exception e) {
-    if (containRetryRule(retryRules, RetryRule.OCCUR_EXCEPTION)) {
+    if (containRetryRule(retryRules, RetryRule.RETRY_WHEN_ANY_EXCEPTION)) {
       return true;
     }
-    if (containRetryRule(retryRules, RetryRule.OCCUR_IO_EXCEPTION)) {
+    if (containRetryRule(retryRules, RetryRule.RETRY_WHEN_IO_EXCEPTION)) {
       return e instanceof IOException;
     }
     return false;

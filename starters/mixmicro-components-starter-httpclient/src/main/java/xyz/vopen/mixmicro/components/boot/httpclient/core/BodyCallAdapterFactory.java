@@ -18,7 +18,7 @@ package xyz.vopen.mixmicro.components.boot.httpclient.core;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
 import retrofit2.*;
-import xyz.vopen.mixmicro.components.boot.httpclient.exception.RetrofitException;
+import xyz.vopen.mixmicro.components.boot.httpclient.exception.MixHttpClientException;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -49,13 +49,13 @@ public final class BodyCallAdapterFactory extends CallAdapter.Factory {
     return new BodyCallAdapter(returnType, annotations, retrofit);
   }
 
-  final class BodyCallAdapter<R> implements CallAdapter<R, R> {
+  static final class BodyCallAdapter<R> implements CallAdapter<R, R> {
 
-    private Type returnType;
+    private final Type returnType;
 
-    private Retrofit retrofit;
+    private final Retrofit retrofit;
 
-    private Annotation[] annotations;
+    private final Annotation[] annotations;
 
     BodyCallAdapter(Type returnType, Annotation[] annotations, Retrofit retrofit) {
       this.returnType = returnType;
@@ -75,7 +75,7 @@ public final class BodyCallAdapterFactory extends CallAdapter.Factory {
       try {
         response = call.execute();
       } catch (IOException e) {
-        throw Objects.requireNonNull(RetrofitException.errorExecuting(request, e));
+        throw Objects.requireNonNull(MixHttpClientException.errorExecuting(request, e));
       }
 
       if (response.isSuccessful()) {
@@ -91,7 +91,7 @@ public final class BodyCallAdapterFactory extends CallAdapter.Factory {
       try {
         return converter.convert(Objects.requireNonNull(errorBody));
       } catch (IOException e) {
-        throw Objects.requireNonNull(RetrofitException.errorExecuting(request, e));
+        throw Objects.requireNonNull(MixHttpClientException.errorExecuting(request, e));
       }
     }
   }

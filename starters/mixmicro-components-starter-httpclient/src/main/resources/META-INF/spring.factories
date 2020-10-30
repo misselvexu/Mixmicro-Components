@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  xyz.vopen.mixmicro.components.boot.httpclient.autoconfigure.RetrofitAutoConfiguration
+  xyz.vopen.mixmicro.components.boot.httpclient.autoconfigure.MixHttpClientAutoConfiguration

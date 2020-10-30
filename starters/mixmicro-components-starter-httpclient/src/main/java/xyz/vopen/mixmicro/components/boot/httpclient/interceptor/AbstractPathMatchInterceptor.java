@@ -4,21 +4,17 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
+import xyz.vopen.mixmicro.components.boot.httpclient.PrototypeInterceptor;
 
 import java.io.IOException;
 
-/**
- * 路径匹配拦截器, 如果使用spring-bean方式，使用原型模式
- *
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- */
-public abstract class BasePathMatchInterceptor implements PrototypeInterceptor {
+public abstract class AbstractPathMatchInterceptor implements PrototypeInterceptor {
 
   private String[] include;
 
   private String[] exclude;
 
-  private PathMatcher pathMatcher = new AntPathMatcher();
+  private final PathMatcher pathMatcher = new AntPathMatcher();
 
   public void setInclude(String[] include) {
     this.include = include;

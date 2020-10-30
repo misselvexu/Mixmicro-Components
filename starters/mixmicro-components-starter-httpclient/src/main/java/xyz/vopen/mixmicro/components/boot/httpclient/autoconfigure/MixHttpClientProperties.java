@@ -6,16 +6,16 @@ import retrofit2.Converter;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import xyz.vopen.mixmicro.components.boot.httpclient.core.BodyCallAdapterFactory;
 import xyz.vopen.mixmicro.components.boot.httpclient.core.ResponseCallAdapterFactory;
-import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.BaseLoggingInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.AbstractLoggingInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.DefaultLoggingInterceptor;
-import xyz.vopen.mixmicro.components.boot.httpclient.retry.BaseRetryInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.retry.AbstractRetryInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.retry.DefaultRetryInterceptor;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @ConfigurationProperties(prefix = "mixmicro.httpclient")
-public class RetrofitProperties {
+public class MixHttpClientProperties {
 
   private static final String DEFAULT_POOL = "default";
 
@@ -26,11 +26,12 @@ public class RetrofitProperties {
   private boolean enableLog = true;
 
   /** Log print Interceptor */
-  private Class<? extends BaseLoggingInterceptor> loggingInterceptor =
+  private Class<? extends AbstractLoggingInterceptor> loggingInterceptor =
       DefaultLoggingInterceptor.class;
 
   /** retry interceptor */
-  private Class<? extends BaseRetryInterceptor> retryInterceptor = DefaultRetryInterceptor.class;
+  private Class<? extends AbstractRetryInterceptor> retryInterceptor =
+      DefaultRetryInterceptor.class;
 
   /** Disable Void return type */
   private boolean disableVoidReturnType = false;
@@ -52,11 +53,12 @@ public class RetrofitProperties {
       (Class<? extends CallAdapter.Factory>[])
           new Class[] {BodyCallAdapterFactory.class, ResponseCallAdapterFactory.class};
 
-  public Class<? extends BaseLoggingInterceptor> getLoggingInterceptor() {
+  public Class<? extends AbstractLoggingInterceptor> getLoggingInterceptor() {
     return loggingInterceptor;
   }
 
-  public void setLoggingInterceptor(Class<? extends BaseLoggingInterceptor> loggingInterceptor) {
+  public void setLoggingInterceptor(
+      Class<? extends AbstractLoggingInterceptor> loggingInterceptor) {
     this.loggingInterceptor = loggingInterceptor;
   }
 
@@ -88,11 +90,11 @@ public class RetrofitProperties {
     this.disableVoidReturnType = disableVoidReturnType;
   }
 
-  public Class<? extends BaseRetryInterceptor> getRetryInterceptor() {
+  public Class<? extends AbstractRetryInterceptor> getRetryInterceptor() {
     return retryInterceptor;
   }
 
-  public void setRetryInterceptor(Class<? extends BaseRetryInterceptor> retryInterceptor) {
+  public void setRetryInterceptor(Class<? extends AbstractRetryInterceptor> retryInterceptor) {
     this.retryInterceptor = retryInterceptor;
   }
 
@@ -112,5 +114,40 @@ public class RetrofitProperties {
   public void setGlobalCallAdapterFactories(
       Class<? extends CallAdapter.Factory>[] globalCallAdapterFactories) {
     this.globalCallAdapterFactories = globalCallAdapterFactories;
+  }
+
+  /**
+   * Connection pool parameter configuration
+   *
+   * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+   */
+  public static class PoolConfig {
+
+    private int maxIdleConnections;
+
+    private long keepAliveSecond;
+
+    public PoolConfig(int maxIdleConnections, long keepAliveSecond) {
+      this.maxIdleConnections = maxIdleConnections;
+      this.keepAliveSecond = keepAliveSecond;
+    }
+
+    public PoolConfig() {}
+
+    public void setMaxIdleConnections(int maxIdleConnections) {
+      this.maxIdleConnections = maxIdleConnections;
+    }
+
+    public void setKeepAliveSecond(long keepAliveSecond) {
+      this.keepAliveSecond = keepAliveSecond;
+    }
+
+    public int getMaxIdleConnections() {
+      return maxIdleConnections;
+    }
+
+    public long getKeepAliveSecond() {
+      return keepAliveSecond;
+    }
   }
 }

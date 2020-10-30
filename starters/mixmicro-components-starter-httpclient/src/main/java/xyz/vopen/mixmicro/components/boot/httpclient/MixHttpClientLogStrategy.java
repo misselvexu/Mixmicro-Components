@@ -1,6 +1,6 @@
-package xyz.vopen.mixmicro.components.boot.httpclient.interceptor;
+package xyz.vopen.mixmicro.components.boot.httpclient;
 
-public enum LogStrategy {
+public enum MixHttpClientLogStrategy {
 
   /** No logs. */
   NONE,

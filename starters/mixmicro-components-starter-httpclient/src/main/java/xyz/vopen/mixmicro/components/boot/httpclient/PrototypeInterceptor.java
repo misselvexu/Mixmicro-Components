@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.boot.httpclient.interceptor;
+package xyz.vopen.mixmicro.components.boot.httpclient;
 
 import okhttp3.Interceptor;
 

@@ -4,16 +4,17 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Invocation;
+import xyz.vopen.mixmicro.components.boot.httpclient.annotation.MixHttpClientRetry;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 
 /**
- * 请求重试拦截器 Request retry interceptor
+ * Request retry interceptor
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
-public abstract class BaseRetryInterceptor implements Interceptor {
+public abstract class AbstractRetryInterceptor implements Interceptor {
 
   private static final int LIMIT_RETRIES = 10;
 
@@ -23,12 +24,12 @@ public abstract class BaseRetryInterceptor implements Interceptor {
     Invocation invocation = request.tag(Invocation.class);
     assert invocation != null;
     Method method = invocation.method();
-    Retry retry;
-    if (method.isAnnotationPresent(Retry.class)) {
-      retry = method.getAnnotation(Retry.class);
+    MixHttpClientRetry retry;
+    if (method.isAnnotationPresent(MixHttpClientRetry.class)) {
+      retry = method.getAnnotation(MixHttpClientRetry.class);
     } else {
       Class<?> declaringClass = method.getDeclaringClass();
-      retry = declaringClass.getAnnotation(Retry.class);
+      retry = declaringClass.getAnnotation(MixHttpClientRetry.class);
     }
     if (retry == null) {
       // 不用重试

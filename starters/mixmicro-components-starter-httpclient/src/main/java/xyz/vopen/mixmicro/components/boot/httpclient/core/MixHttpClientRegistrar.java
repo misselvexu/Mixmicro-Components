@@ -7,16 +7,17 @@ import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ObjectUtils;
-import xyz.vopen.mixmicro.components.boot.httpclient.annotation.RetrofitScan;
+import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientScan;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class RetrofitClientRegistrar
+public class MixHttpClientRegistrar
     implements ImportBeanDefinitionRegistrar, ResourceLoaderAware, BeanClassLoaderAware {
 
   private ResourceLoader resourceLoader;
@@ -25,14 +26,16 @@ public class RetrofitClientRegistrar
 
   @Override
   public void registerBeanDefinitions(
-      AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
+      AnnotationMetadata metadata, @NonNull BeanDefinitionRegistry registry) {
     AnnotationAttributes attributes =
         AnnotationAttributes.fromMap(
-            metadata.getAnnotationAttributes(RetrofitScan.class.getName()));
-    // Scan the @RetrofitClient annotated interface under the specified path and register it to the
-    // BeanDefinitionRegistry
-    ClassPathRetrofitClientScanner scanner =
-        new ClassPathRetrofitClientScanner(registry, classLoader);
+            metadata.getAnnotationAttributes(MixHttpClientScan.class.getName()));
+
+    Assert.notNull(attributes, "Annotation @MixHttpClient 's attributes must not be null and empty .");
+
+    // Scan the @MixHttpClient annotated interface under the specified path and register it to the BeanDefinitionRegistry
+    ClassPathMixHttpClientScanner scanner = new ClassPathMixHttpClientScanner(registry, classLoader);
+
     if (resourceLoader != null) {
       scanner.setResourceLoader(resourceLoader);
     }
@@ -48,14 +51,14 @@ public class RetrofitClientRegistrar
    *
    * @return 基础包路径
    */
-  private String[] getPackagesToScan(AnnotationAttributes attributes) {
+  private String[] getPackagesToScan(@NonNull AnnotationAttributes attributes) {
     String[] value = attributes.getStringArray("value");
     String[] basePackages = attributes.getStringArray("basePackages");
     Class<?>[] basePackageClasses = attributes.getClassArray("basePackageClasses");
     if (!ObjectUtils.isEmpty(value)) {
       Assert.state(
           ObjectUtils.isEmpty(basePackages),
-          "@RetrofitScan basePackages and value attributes are mutually exclusive");
+          "@MixHttpClient basePackages and value attributes are mutually exclusive");
     }
     Set<String> packagesToScan = new LinkedHashSet<>();
     packagesToScan.addAll(Arrays.asList(value));
@@ -63,16 +66,16 @@ public class RetrofitClientRegistrar
     for (Class<?> basePackageClass : basePackageClasses) {
       packagesToScan.add(ClassUtils.getPackageName(basePackageClass));
     }
-    return packagesToScan.toArray(new String[packagesToScan.size()]);
+    return packagesToScan.toArray(new String[0]);
   }
 
   @Override
-  public void setResourceLoader(ResourceLoader resourceLoader) {
+  public void setResourceLoader(@NonNull ResourceLoader resourceLoader) {
     this.resourceLoader = resourceLoader;
   }
 
   @Override
-  public void setBeanClassLoader(ClassLoader classLoader) {
+  public void setBeanClassLoader(@NonNull ClassLoader classLoader) {
     this.classLoader = classLoader;
   }
 }

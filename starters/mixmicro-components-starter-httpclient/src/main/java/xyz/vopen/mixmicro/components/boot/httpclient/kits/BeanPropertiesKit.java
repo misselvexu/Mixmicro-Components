@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.boot.httpclient.util;
+package xyz.vopen.mixmicro.components.boot.httpclient.kits;
 
 import org.springframework.beans.BeanUtils;
 
@@ -6,11 +6,9 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-public final class BeanExtendUtils {
+public final class BeanPropertiesKit {
 
-  private BeanExtendUtils() {
-    throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
-  }
+  private BeanPropertiesKit(){}
 
   public static void populate(final Object bean, final Map<String, ?> properties) {
     // Do nothing unless both arguments have been specified

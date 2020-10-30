@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.boot.httpclient.annotation;
 
-import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.BasePathMatchInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.AbstractPathMatchInterceptor;
 
 import java.lang.annotation.*;
 
@@ -12,12 +12,12 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
-@InterceptMark
-public @interface Intercept {
+@InterceptorComponent
+public @interface MixHttpClientInterceptor {
   /**
    * Interceptor matching path pattern
    *
-   * @return 拦截器匹配路径pattern Interceptor matching path pattern
+   * @return Interceptor matching path pattern
    */
   String[] include() default {"/**"};
 
@@ -34,5 +34,5 @@ public @interface Intercept {
    *
    * @return Interceptor handler
    */
-  Class<? extends BasePathMatchInterceptor> handler();
+  Class<? extends AbstractPathMatchInterceptor> handler();
 }

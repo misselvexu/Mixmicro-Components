@@ -11,19 +11,23 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.env.Environment;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import xyz.vopen.mixmicro.components.boot.httpclient.annotation.InterceptMark;
-import xyz.vopen.mixmicro.components.boot.httpclient.annotation.OkHttpClientBuilder;
-import xyz.vopen.mixmicro.components.boot.httpclient.annotation.RetrofitClient;
-import xyz.vopen.mixmicro.components.boot.httpclient.autoconfigure.RetrofitConfigBean;
-import xyz.vopen.mixmicro.components.boot.httpclient.autoconfigure.RetrofitProperties;
+import xyz.vopen.mixmicro.components.boot.httpclient.ErrorDecoderInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientErrorDecoder;
+import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientLogStrategy;
+import xyz.vopen.mixmicro.components.boot.httpclient.annotation.InterceptorComponent;
+import xyz.vopen.mixmicro.components.boot.httpclient.annotation.MixHttpClient;
+import xyz.vopen.mixmicro.components.boot.httpclient.annotation.CustomOkHttpClient;
+import xyz.vopen.mixmicro.components.boot.httpclient.autoconfigure.MixHttpClientConfigBean;
+import xyz.vopen.mixmicro.components.boot.httpclient.autoconfigure.MixHttpClientProperties;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.*;
-import xyz.vopen.mixmicro.components.boot.httpclient.util.BeanExtendUtils;
+import xyz.vopen.mixmicro.components.boot.httpclient.kits.BeanPropertiesKit;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -33,27 +37,27 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class RetrofitFactoryBean<T>
+public class MixHttpClientFactoryBean<T>
     implements FactoryBean<T>, EnvironmentAware, ApplicationContextAware {
 
   public static final String SUFFIX = "/";
   private static final Map<Class<? extends CallAdapter.Factory>, CallAdapter.Factory>
       CALL_ADAPTER_FACTORIES_CACHE = new HashMap<>(4);
 
-  private Class<T> retrofitInterface;
+  private final Class<T> retrofitInterface;
 
   private Environment environment;
 
-  private RetrofitProperties retrofitProperties;
+  private MixHttpClientProperties httpClientProperties;
 
-  private RetrofitConfigBean retrofitConfigBean;
+  private MixHttpClientConfigBean httpClientConfigBean;
 
   private ApplicationContext applicationContext;
 
   private static final Map<Class<? extends Converter.Factory>, Converter.Factory>
       CONVERTER_FACTORIES_CACHE = new HashMap<>(4);
 
-  public RetrofitFactoryBean(Class<T> retrofitInterface) {
+  public MixHttpClientFactoryBean(Class<T> retrofitInterface) {
     this.retrofitInterface = retrofitInterface;
   }
 
@@ -76,16 +80,16 @@ public class RetrofitFactoryBean<T>
         "@RetrofitClient can only be marked on the interface type!");
     Method[] methods = retrofitInterface.getMethods();
 
-    RetrofitClient retrofitClient = retrofitInterface.getAnnotation(RetrofitClient.class);
+    MixHttpClient mixHttpClient = retrofitInterface.getAnnotation(MixHttpClient.class);
 
     Assert.isTrue(
-        StringUtils.hasText(retrofitClient.baseUrl())
-            || StringUtils.hasText(retrofitClient.serviceId()),
+        StringUtils.hasText(mixHttpClient.baseUrl())
+            || StringUtils.hasText(mixHttpClient.serviceId()),
         "@RetrofitClient's baseUrl and serviceId must be configured with one！");
 
     for (Method method : methods) {
       Class<?> returnType = method.getReturnType();
-      if (method.isAnnotationPresent(OkHttpClientBuilder.class)) {
+      if (method.isAnnotationPresent(CustomOkHttpClient.class)) {
         Assert.isTrue(
             returnType.equals(OkHttpClient.Builder.class),
             "For methods annotated by @OkHttpClientBuilder, the return value must be OkHttpClient.Builder！");
@@ -99,7 +103,7 @@ public class RetrofitFactoryBean<T>
           !void.class.isAssignableFrom(returnType),
           "The void keyword is not supported as the return type, please use java.lang.Void！ method="
               + method);
-      if (retrofitProperties.isDisableVoidReturnType()) {
+      if (httpClientProperties.isDisableVoidReturnType()) {
         Assert.isTrue(
             !Void.class.isAssignableFrom(returnType),
             "Configured to disable Void as the return value, please specify another return type!method="
@@ -126,10 +130,9 @@ public class RetrofitFactoryBean<T>
    */
   private synchronized okhttp3.ConnectionPool getConnectionPool(
       Class<?> retrofitClientInterfaceClass) {
-    RetrofitClient retrofitClient =
-        retrofitClientInterfaceClass.getAnnotation(RetrofitClient.class);
-    String poolName = retrofitClient.poolName();
-    Map<String, ConnectionPool> poolRegistry = retrofitConfigBean.getPoolRegistry();
+    MixHttpClient mixHttpClient = retrofitClientInterfaceClass.getAnnotation(MixHttpClient.class);
+    String poolName = mixHttpClient.poolName();
+    Map<String, ConnectionPool> poolRegistry = httpClientConfigBean.getPoolRegistry();
     Assert.notNull(
         poolRegistry, "poolRegistry does not exist! Please set retrofitConfigBean.poolRegistry!");
     ConnectionPool connectionPool = poolRegistry.get(poolName);
@@ -149,8 +152,7 @@ public class RetrofitFactoryBean<T>
   private synchronized OkHttpClient getOkHttpClient(Class<?> retrofitClientInterfaceClass)
       throws IllegalAccessException, InstantiationException, NoSuchMethodException,
           InvocationTargetException {
-    RetrofitClient retrofitClient =
-        retrofitClientInterfaceClass.getAnnotation(RetrofitClient.class);
+    MixHttpClient mixHttpClient = retrofitClientInterfaceClass.getAnnotation(MixHttpClient.class);
     Method method = findOkHttpClientBuilderMethod(retrofitClientInterfaceClass);
     OkHttpClient.Builder okHttpClientBuilder;
     if (method != null) {
@@ -160,29 +162,29 @@ public class RetrofitFactoryBean<T>
       // Construct an OkHttpClient object
       okHttpClientBuilder =
           new OkHttpClient.Builder()
-              .connectTimeout(retrofitClient.connectTimeoutMs(), TimeUnit.MILLISECONDS)
-              .readTimeout(retrofitClient.readTimeoutMs(), TimeUnit.MILLISECONDS)
-              .writeTimeout(retrofitClient.writeTimeoutMs(), TimeUnit.MILLISECONDS)
-              .callTimeout(retrofitClient.callTimeoutMs(), TimeUnit.MILLISECONDS)
-              .retryOnConnectionFailure(retrofitClient.retryOnConnectionFailure())
-              .followRedirects(retrofitClient.followRedirects())
-              .followSslRedirects(retrofitClient.followSslRedirects())
-              .pingInterval(retrofitClient.pingIntervalMs(), TimeUnit.MILLISECONDS)
+              .connectTimeout(mixHttpClient.connectTimeoutMs(), TimeUnit.MILLISECONDS)
+              .readTimeout(mixHttpClient.readTimeoutMs(), TimeUnit.MILLISECONDS)
+              .writeTimeout(mixHttpClient.writeTimeoutMs(), TimeUnit.MILLISECONDS)
+              .callTimeout(mixHttpClient.callTimeoutMs(), TimeUnit.MILLISECONDS)
+              .retryOnConnectionFailure(mixHttpClient.retryOnConnectionFailure())
+              .followRedirects(mixHttpClient.followRedirects())
+              .followSslRedirects(mixHttpClient.followSslRedirects())
+              .pingInterval(mixHttpClient.pingIntervalMs(), TimeUnit.MILLISECONDS)
               .connectionPool(connectionPool);
     }
 
     // add ServiceInstanceChooserInterceptor
-    if (StringUtils.hasText(retrofitClient.serviceId())) {
+    if (StringUtils.hasText(mixHttpClient.serviceId())) {
       ServiceInstanceChooserInterceptor serviceInstanceChooserInterceptor =
-          retrofitConfigBean.getServiceInstanceChooserInterceptor();
+          httpClientConfigBean.getServiceInstanceChooserInterceptor();
       if (serviceInstanceChooserInterceptor != null) {
         okHttpClientBuilder.addInterceptor(serviceInstanceChooserInterceptor);
       }
     }
 
     // add ErrorDecoderInterceptor
-    Class<? extends ErrorDecoder> errorDecoderClass = retrofitClient.errorDecoder();
-    ErrorDecoder decoder = getBean(errorDecoderClass);
+    Class<? extends MixHttpClientErrorDecoder> errorDecoderClass = mixHttpClient.errorDecoder();
+    MixHttpClientErrorDecoder decoder = getBean(errorDecoderClass);
     if (decoder == null) {
       decoder = errorDecoderClass.newInstance();
     }
@@ -193,30 +195,30 @@ public class RetrofitFactoryBean<T>
     List<Interceptor> interceptors =
         new ArrayList<>(findInterceptorByAnnotation(retrofitClientInterfaceClass));
     // add global interceptor
-    Collection<BaseGlobalInterceptor> globalInterceptors =
-        retrofitConfigBean.getGlobalInterceptors();
+    Collection<AbstractGlobalInterceptor> globalInterceptors =
+        httpClientConfigBean.getGlobalInterceptors();
     if (!CollectionUtils.isEmpty(globalInterceptors)) {
       interceptors.addAll(globalInterceptors);
     }
     interceptors.forEach(okHttpClientBuilder::addInterceptor);
 
     // add retry interceptor
-    Interceptor retryInterceptor = retrofitConfigBean.getRetryInterceptor();
+    Interceptor retryInterceptor = httpClientConfigBean.getRetryInterceptor();
     okHttpClientBuilder.addInterceptor(retryInterceptor);
 
     // add log printing interceptor
-    if (retrofitProperties.isEnableLog() && retrofitClient.enableLog()) {
-      Class<? extends BaseLoggingInterceptor> loggingInterceptorClass =
-          retrofitProperties.getLoggingInterceptor();
-      Constructor<? extends BaseLoggingInterceptor> constructor =
-          loggingInterceptorClass.getConstructor(Level.class, LogStrategy.class);
-      BaseLoggingInterceptor loggingInterceptor =
-          constructor.newInstance(retrofitClient.logLevel(), retrofitClient.logStrategy());
+    if (httpClientProperties.isEnableLog() && mixHttpClient.enableLog()) {
+      Class<? extends AbstractLoggingInterceptor> loggingInterceptorClass =
+          httpClientProperties.getLoggingInterceptor();
+      Constructor<? extends AbstractLoggingInterceptor> constructor =
+          loggingInterceptorClass.getConstructor(Level.class, MixHttpClientLogStrategy.class);
+      AbstractLoggingInterceptor loggingInterceptor =
+          constructor.newInstance(mixHttpClient.logLevel(), mixHttpClient.logStrategy());
       okHttpClientBuilder.addNetworkInterceptor(loggingInterceptor);
     }
 
     Collection<NetworkInterceptor> networkInterceptors =
-        retrofitConfigBean.getNetworkInterceptors();
+        httpClientConfigBean.getNetworkInterceptors();
     if (!CollectionUtils.isEmpty(networkInterceptors)) {
       for (NetworkInterceptor networkInterceptor : networkInterceptors) {
         okHttpClientBuilder.addNetworkInterceptor(networkInterceptor);
@@ -239,7 +241,7 @@ public class RetrofitFactoryBean<T>
     Method[] methods = retrofitClientInterfaceClass.getMethods();
     for (Method method : methods) {
       if (Modifier.isStatic(method.getModifiers())
-          && method.isAnnotationPresent(OkHttpClientBuilder.class)
+          && method.isAnnotationPresent(CustomOkHttpClient.class)
           && method.getReturnType().equals(OkHttpClient.Builder.class)) {
         return method;
       }
@@ -248,8 +250,7 @@ public class RetrofitFactoryBean<T>
   }
 
   /**
-   * 获取retrofitClient接口类上定义的拦截器集合 Get the interceptor set defined on the retrofitClient interface
-   * class
+   * Get the interceptor set defined on the retrofitClient interface class
    *
    * @param retrofitClientInterfaceClass retrofitClientInterfaceClass
    * @return the interceptor list
@@ -263,12 +264,12 @@ public class RetrofitFactoryBean<T>
     List<Annotation> interceptAnnotations = new ArrayList<>();
     for (Annotation classAnnotation : classAnnotations) {
       Class<? extends Annotation> annotationType = classAnnotation.annotationType();
-      if (annotationType.isAnnotationPresent(InterceptMark.class)) {
+      if (annotationType.isAnnotationPresent(InterceptorComponent.class)) {
         interceptAnnotations.add(classAnnotation);
       }
     }
     for (Annotation interceptAnnotation : interceptAnnotations) {
-      // 获取注解属性数据。Get annotation attribute data
+      // Get annotation attribute data
       Map<String, Object> annotationAttributes =
           AnnotationUtils.getAnnotationAttributes(interceptAnnotation);
       Object handler = annotationAttributes.get("handler");
@@ -281,9 +282,9 @@ public class RetrofitFactoryBean<T>
       Assert.notNull(
           annotationAttributes.get("exclude"),
           "@InterceptMark annotations must be configured: String[] exclude()");
-      Class<? extends BasePathMatchInterceptor> interceptorClass =
-          (Class<? extends BasePathMatchInterceptor>) handler;
-      BasePathMatchInterceptor interceptor = getInterceptorInstance(interceptorClass);
+      Class<? extends AbstractPathMatchInterceptor> interceptorClass =
+          (Class<? extends AbstractPathMatchInterceptor>) handler;
+      AbstractPathMatchInterceptor interceptor = getInterceptorInstance(interceptorClass);
       Map<String, Object> annotationResolveAttributes = new HashMap<>(8);
       // 占位符属性替换。Placeholder attribute replacement
       annotationAttributes.forEach(
@@ -295,36 +296,32 @@ public class RetrofitFactoryBean<T>
               annotationResolveAttributes.put(key, value);
             }
           });
-      // 动态设置属性值。Set property value dynamically
-      BeanExtendUtils.populate(interceptor, annotationResolveAttributes);
+      // Set property value dynamically
+      BeanPropertiesKit.populate(interceptor, annotationResolveAttributes);
       interceptors.add(interceptor);
     }
     return interceptors;
   }
 
   /**
-   * 获取路径拦截器实例，优先从spring容器中取。如果spring容器中不存在，则无参构造器实例化一个。 Obtain the path interceptor instance, first
-   * from the spring container. If it does not exist in the spring container, the no-argument
-   * constructor will instantiate one.
+   * Obtain the path interceptor instance, first from the spring container. If it does not exist in
+   * the spring container, the no-argument constructor will instantiate one.
    *
-   * @param interceptorClass A subclass of @{@link BasePathMatchInterceptor}
-   * @return @{@link BasePathMatchInterceptor} instance
+   * @param interceptorClass A subclass of @{@link AbstractPathMatchInterceptor}
+   * @return @{@link AbstractPathMatchInterceptor} instance
    */
-  private BasePathMatchInterceptor getInterceptorInstance(
-      Class<? extends BasePathMatchInterceptor> interceptorClass)
+  private AbstractPathMatchInterceptor getInterceptorInstance(
+      Class<? extends AbstractPathMatchInterceptor> interceptorClass)
       throws IllegalAccessException, InstantiationException {
-    // spring bean
     try {
       return applicationContext.getBean(interceptorClass);
     } catch (BeansException e) {
-      // spring容器获取失败，反射创建
       return interceptorClass.newInstance();
     }
   }
 
   /**
-   * 获取Retrofit实例，一个retrofitClient接口对应一个Retrofit实例 Obtain a Retrofit instance, a retrofitClient
-   * interface corresponds to a Retrofit instance
+   * Obtain a Retrofit instance, a retrofitClient interface corresponds to a Retrofit instance
    *
    * @param retrofitClientInterfaceClass retrofitClientInterfaceClass
    * @return Retrofit instance
@@ -332,19 +329,17 @@ public class RetrofitFactoryBean<T>
   private synchronized Retrofit getRetrofit(Class<?> retrofitClientInterfaceClass)
       throws InstantiationException, IllegalAccessException, NoSuchMethodException,
           InvocationTargetException {
-    RetrofitClient retrofitClient =
-        retrofitClientInterfaceClass.getAnnotation(RetrofitClient.class);
-    String baseUrl = retrofitClient.baseUrl();
+    MixHttpClient mixHttpClient = retrofitClientInterfaceClass.getAnnotation(MixHttpClient.class);
+    String baseUrl = mixHttpClient.baseUrl();
 
     if (StringUtils.hasText(baseUrl)) {
       baseUrl = environment.resolveRequiredPlaceholders(baseUrl);
-      // 解析baseUrl占位符
       if (!baseUrl.endsWith(SUFFIX)) {
         baseUrl += SUFFIX;
       }
     } else {
-      String serviceId = retrofitClient.serviceId();
-      String path = retrofitClient.path();
+      String serviceId = mixHttpClient.serviceId();
+      String path = mixHttpClient.path();
       if (!path.endsWith(SUFFIX)) {
         path += SUFFIX;
       }
@@ -356,14 +351,14 @@ public class RetrofitFactoryBean<T>
     Retrofit.Builder retrofitBuilder =
         new Retrofit.Builder()
             .baseUrl(baseUrl)
-            .validateEagerly(retrofitClient.validateEagerly())
+            .validateEagerly(mixHttpClient.validateEagerly())
             .client(client);
 
     // 添加CallAdapter.Factory
     Class<? extends CallAdapter.Factory>[] callAdapterFactoryClasses =
-        retrofitClient.callAdapterFactories();
+        mixHttpClient.callAdapterFactories();
     Class<? extends CallAdapter.Factory>[] globalCallAdapterFactoryClasses =
-        retrofitConfigBean.getGlobalCallAdapterFactoryClasses();
+        httpClientConfigBean.getGlobalCallAdapterFactoryClasses();
     List<CallAdapter.Factory> callAdapterFactories =
         getCallAdapterFactories(callAdapterFactoryClasses, globalCallAdapterFactoryClasses);
     if (!CollectionUtils.isEmpty(callAdapterFactories)) {
@@ -371,9 +366,9 @@ public class RetrofitFactoryBean<T>
     }
     // 添加Converter.Factory
     Class<? extends Converter.Factory>[] converterFactoryClasses =
-        retrofitClient.converterFactories();
+        mixHttpClient.converterFactories();
     Class<? extends Converter.Factory>[] globalConverterFactoryClasses =
-        retrofitConfigBean.getGlobalConverterFactoryClasses();
+        httpClientConfigBean.getGlobalConverterFactoryClasses();
 
     List<Converter.Factory> converterFactories =
         getConverterFactories(converterFactoryClasses, globalConverterFactoryClasses);
@@ -455,14 +450,14 @@ public class RetrofitFactoryBean<T>
   }
 
   @Override
-  public void setEnvironment(Environment environment) {
+  public void setEnvironment(@NonNull Environment environment) {
     this.environment = environment;
   }
 
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     this.applicationContext = applicationContext;
-    this.retrofitConfigBean = applicationContext.getBean(RetrofitConfigBean.class);
-    this.retrofitProperties = retrofitConfigBean.getRetrofitProperties();
+    this.httpClientConfigBean = applicationContext.getBean(MixHttpClientConfigBean.class);
+    this.httpClientProperties = httpClientConfigBean.getRetrofitProperties();
   }
 }

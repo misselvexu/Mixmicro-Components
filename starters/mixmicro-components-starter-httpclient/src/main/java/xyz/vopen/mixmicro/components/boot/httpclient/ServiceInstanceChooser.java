@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.components.boot.httpclient.core;
+package xyz.vopen.mixmicro.components.boot.httpclient;
 
 import java.net.URI;
 

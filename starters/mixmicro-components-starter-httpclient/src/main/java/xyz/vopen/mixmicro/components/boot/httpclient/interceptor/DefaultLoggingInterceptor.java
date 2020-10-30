@@ -5,16 +5,17 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
+import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientLogStrategy;
 
 import java.io.IOException;
 
-public class DefaultLoggingInterceptor extends BaseLoggingInterceptor {
+public class DefaultLoggingInterceptor extends AbstractLoggingInterceptor {
 
   private static final Logger logger = LoggerFactory.getLogger(DefaultLoggingInterceptor.class);
 
   private final HttpLoggingInterceptor httpLoggingInterceptor;
 
-  public DefaultLoggingInterceptor(Level logLevel, LogStrategy logStrategy) {
+  public DefaultLoggingInterceptor(Level logLevel, MixHttpClientLogStrategy logStrategy) {
     super(logLevel, logStrategy);
     HttpLoggingInterceptor.Logger logger = httpLoggingInterceptorLogger(logLevel);
     httpLoggingInterceptor = new HttpLoggingInterceptor(logger);

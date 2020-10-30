@@ -3,25 +3,25 @@ package xyz.vopen.mixmicro.components.boot.httpclient.autoconfigure;
 import okhttp3.ConnectionPool;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
-import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.BaseGlobalInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.AbstractGlobalInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.NetworkInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.ServiceInstanceChooserInterceptor;
-import xyz.vopen.mixmicro.components.boot.httpclient.retry.BaseRetryInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.retry.AbstractRetryInterceptor;
 
 import java.util.Collection;
 import java.util.Map;
 
-public class RetrofitConfigBean {
+public class MixHttpClientConfigBean {
 
-  private final RetrofitProperties retrofitProperties;
+  private final MixHttpClientProperties httpClientProperties;
 
   private Map<String, ConnectionPool> poolRegistry;
 
-  private Collection<BaseGlobalInterceptor> globalInterceptors;
+  private Collection<AbstractGlobalInterceptor> globalInterceptors;
 
   private Collection<NetworkInterceptor> networkInterceptors;
 
-  private BaseRetryInterceptor retryInterceptor;
+  private AbstractRetryInterceptor retryInterceptor;
 
   private ServiceInstanceChooserInterceptor serviceInstanceChooserInterceptor;
 
@@ -29,12 +29,12 @@ public class RetrofitConfigBean {
 
   private Class<? extends CallAdapter.Factory>[] globalCallAdapterFactoryClasses;
 
-  public RetrofitProperties getRetrofitProperties() {
-    return retrofitProperties;
+  public MixHttpClientProperties getRetrofitProperties() {
+    return httpClientProperties;
   }
 
-  public RetrofitConfigBean(RetrofitProperties retrofitProperties) {
-    this.retrofitProperties = retrofitProperties;
+  public MixHttpClientConfigBean(MixHttpClientProperties httpClientProperties) {
+    this.httpClientProperties = httpClientProperties;
   }
 
   public Map<String, ConnectionPool> getPoolRegistry() {
@@ -45,19 +45,19 @@ public class RetrofitConfigBean {
     this.poolRegistry = poolRegistry;
   }
 
-  public Collection<BaseGlobalInterceptor> getGlobalInterceptors() {
+  public Collection<AbstractGlobalInterceptor> getGlobalInterceptors() {
     return globalInterceptors;
   }
 
-  public void setGlobalInterceptors(Collection<BaseGlobalInterceptor> globalInterceptors) {
+  public void setGlobalInterceptors(Collection<AbstractGlobalInterceptor> globalInterceptors) {
     this.globalInterceptors = globalInterceptors;
   }
 
-  public BaseRetryInterceptor getRetryInterceptor() {
+  public AbstractRetryInterceptor getRetryInterceptor() {
     return retryInterceptor;
   }
 
-  public void setRetryInterceptor(BaseRetryInterceptor retryInterceptor) {
+  public void setRetryInterceptor(AbstractRetryInterceptor retryInterceptor) {
     this.retryInterceptor = retryInterceptor;
   }
 
