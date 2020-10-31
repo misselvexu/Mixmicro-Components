@@ -5,12 +5,11 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-starters</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-authorization</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <name>Authorization Starter Module :: ${project.version}</name>
     <description>🏗 Authorization Starter Module</description>

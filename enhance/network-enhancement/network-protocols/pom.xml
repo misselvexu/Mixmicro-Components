@@ -5,12 +5,11 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-network</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-network-protocols</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Enhance Network Protocols Module :: ${project.version}</name>

@@ -5,12 +5,11 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-all</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starters</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Starters Module :: ${project.version}</name>
@@ -40,7 +39,6 @@
         <module>mixmicro-components-starter-monitor</module>
         <module>mixmicro-components-starter-spi</module>
         <module>mixmicro-components-starter-swagger</module>
-        <module>mixmicro-components-starters-dependencies</module>
         <module>mixmicro-components-starter-circuitbreaker</module>
         <module>mixmicro-components-starter-graceful-shutdown</module>
         <module>mixmicro-components-starter-metrics-3x</module>
@@ -50,258 +48,201 @@
         <module>mixmicro-components-starter-httpclient</module>
     </modules>
 
-    <properties>
-        <micro-starter-annotation-processor.version>1.0.7.BUILD-SNAPSHOT</micro-starter-annotation-processor.version>
-        <micro-starter-authorization.version>1.0.7.BUILD-SNAPSHOT</micro-starter-authorization.version>
-        <micro-starter-banner.version>1.0.7.BUILD-SNAPSHOT</micro-starter-banner.version>
-        <micro-starter-logger.version>1.0.7.BUILD-SNAPSHOT</micro-starter-logger.version>
-        <micro-starter-json.version>1.0.7.BUILD-SNAPSHOT</micro-starter-json.version>
-        <micro-starter-cors.version>1.0.7.BUILD-SNAPSHOT</micro-starter-cors.version>
-        <micro-starter-resteasy.version>1.0.7.BUILD-SNAPSHOT</micro-starter-resteasy.version>
-        <micro-starter-snowflake.version>1.0.7.BUILD-SNAPSHOT</micro-starter-snowflake.version>
-        <micro-starter-openfeign.version>1.0.7.BUILD-SNAPSHOT</micro-starter-openfeign.version>
-        <micro-starter-datasource.version>1.0.7.BUILD-SNAPSHOT</micro-starter-datasource.version>
-        <micro-starter-dbm.version>1.0.7.BUILD-SNAPSHOT</micro-starter-dbm.version>
-        <micro-starter-sidecar.version>1.0.7.BUILD-SNAPSHOT</micro-starter-sidecar.version>
-        <micro-starter-security.version>1.0.7.BUILD-SNAPSHOT</micro-starter-security.version>
-        <micro-starter-cloud-event.version>1.0.7.BUILD-SNAPSHOT</micro-starter-cloud-event.version>
-        <micro-starter-message-queue.version>1.0.7.BUILD-SNAPSHOT</micro-starter-message-queue.version>
-        <micro-starter-healthy.version>1.0.7.BUILD-SNAPSHOT</micro-starter-healthy.version>
-        <micro-starter-errors.version>1.0.7.BUILD-SNAPSHOT</micro-starter-errors.version>
-        <micro-starter-scheduler.version>1.0.7.BUILD-SNAPSHOT</micro-starter-scheduler.version>
-        <micro-starter-monitor.version>1.0.7.BUILD-SNAPSHOT</micro-starter-monitor.version>
-        <micro-starter-spi.version>1.0.7.BUILD-SNAPSHOT</micro-starter-spi.version>
-        <micro-starter-swagger.version>1.0.7.BUILD-SNAPSHOT</micro-starter-swagger.version>
-        <micro-starter-circuitbreaker.version>1.0.7.BUILD-SNAPSHOT</micro-starter-circuitbreaker.version>
-        <micro-starter-metrics-3x.version>1.0.7.BUILD-SNAPSHOT</micro-starter-metrics-3x.version>
-        <micro-starter-graceful-shutdown.version>1.0.7.BUILD-SNAPSHOT</micro-starter-graceful-shutdown.version>
-        <micro-starter-email.version>1.0.7.BUILD-SNAPSHOT</micro-starter-email.version>
-        <micro-starter-rpc-json.version>1.0.7.BUILD-SNAPSHOT</micro-starter-rpc-json.version>
-        <micro-starter-mongo-client.version>1.0.7.BUILD-SNAPSHOT</micro-starter-mongo-client.version>
-        <micro-starter-http-client.version>1.0.7.BUILD-SNAPSHOT</micro-starter-http-client.version>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-apis-dependencies</artifactId>
-                <version>${mixmicro-components-apis.dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-kits-dependencies</artifactId>
-                <version>${mixmicro-components-kits.dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-enhance-parent</artifactId>
-                <version>${mixmicro-components-enhance.dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- Starters Dependencies -->
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-starters-dependencies</artifactId>
-                <version>${mixmicro-components-starters.dependencies.version}</version>
-                <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-annotation-processor</artifactId>
-                <version>${micro-starter-annotation-processor.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-banner</artifactId>
-                <version>${micro-starter-banner.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-authorization</artifactId>
-                <version>${micro-starter-authorization.version}</version>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-logging-admin</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-logging-isolation</artifactId>
-                <version>${micro-starter-logger.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-logging-tracing</artifactId>
-                <version>${micro-starter-logger.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-json</artifactId>
-                <version>${micro-starter-json.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-cors</artifactId>
-                <version>${micro-starter-cors.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-resteasy</artifactId>
-                <version>${micro-starter-resteasy.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-snowflake</artifactId>
-                <version>${micro-starter-snowflake.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-openfeign</artifactId>
-                <version>${micro-starter-openfeign.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-datasource</artifactId>
                 <type>pom</type>
-                <version>${micro-starter-datasource.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-dbm</artifactId>
                 <type>pom</type>
-                <version>${micro-starter-dbm.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-dbm-master-slave</artifactId>
-                <version>${micro-starter-dbm.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-dbm-multi-datasource</artifactId>
-                <version>${micro-starter-dbm.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-sidecar</artifactId>
-                <version>${micro-starter-sidecar.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-security</artifactId>
-                <version>${micro-starter-security.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-cloud-event</artifactId>
-                <version>${micro-starter-cloud-event.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-message-queue</artifactId>
-                <version>${micro-starter-message-queue.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-healthy</artifactId>
-                <version>${micro-starter-healthy.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-errors</artifactId>
-                <version>${micro-starter-errors.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-scheduler</artifactId>
-                <version>${micro-starter-scheduler.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-monitor</artifactId>
-                <version>${micro-starter-monitor.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-spi</artifactId>
-                <version>${micro-starter-spi.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-swagger</artifactId>
-                <version>${micro-starter-swagger.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-circuitbreaker</artifactId>
-                <version>${micro-starter-circuitbreaker.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-graceful-shutdown</artifactId>
-                <version>${micro-starter-graceful-shutdown.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-metrics-3x</artifactId>
-                <version>${micro-starter-metrics-3x.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-email</artifactId>
-                <version>${micro-starter-email.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-rpc-json-default</artifactId>
-                <version>${micro-starter-rpc-json.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-mongo-client</artifactId>
-                <version>${micro-starter-mongo-client.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-httpclient</artifactId>
-                <version>${micro-starter-http-client.version}</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

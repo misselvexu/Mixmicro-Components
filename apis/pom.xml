@@ -5,12 +5,11 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-all</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-apis</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Apis Module :: ${project.version}</name>
@@ -23,72 +22,44 @@
         <module>logger</module>
         <module>circuitbreaker</module>
         <module>healthy</module>
-
-        <!-- dependencies -->
-        <module>dependencies</module>
     </modules>
-
-    <properties>
-        <mixmicro-apis-authorization.version>1.0.7.BUILD-SNAPSHOT</mixmicro-apis-authorization.version>
-        <mixmicro-apis-common.version>1.0.7.BUILD-SNAPSHOT</mixmicro-apis-common.version>
-        <mixmicro-apis-exception.version>1.0.7.BUILD-SNAPSHOT</mixmicro-apis-exception.version>
-        <mixmicro-apis-logger.version>1.0.7.BUILD-SNAPSHOT</mixmicro-apis-logger.version>
-        <mixmicro-apis-circuitbreaker.version>1.0.7.BUILD-SNAPSHOT</mixmicro-apis-circuitbreaker.version>
-        <mixmicro-apis-healthy.version>1.0.7.BUILD-SNAPSHOT</mixmicro-apis-healthy.version>
-    </properties>
-
 
     <dependencyManagement>
         <dependencies>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-kits-dependencies</artifactId>
-                <version>${mixmicro-components-kits.dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>authorization-api</artifactId>
-                <version>${mixmicro-apis-authorization.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>common-api</artifactId>
-                <version>${mixmicro-apis-common.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>exception-api</artifactId>
-                <version>${mixmicro-apis-exception.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>logger-api</artifactId>
-                <version>${mixmicro-apis-logger.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>circuitbreaker-api</artifactId>
-                <version>${mixmicro-apis-circuitbreaker.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>healthy-api</artifactId>
-                <version>${mixmicro-apis-healthy.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.github.resilience4j</groupId>
-                <artifactId>resilience4j-circuitbreaker</artifactId>
-                <version>${circuitbreaker.version}</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
 

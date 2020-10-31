@@ -5,11 +5,16 @@
     <parent>
         <artifactId>mixmicro-components-all</artifactId>
         <groupId>com.yunlsp.framework.components</groupId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <modules>
         <module>circuitbreaker-test</module>
         <module>metrics-test</module>
@@ -38,7 +43,7 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-dependencies</artifactId>
-                <version>1.0.7.BUILD-SNAPSHOT</version>
+                <version>1.0.7.RC1</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>

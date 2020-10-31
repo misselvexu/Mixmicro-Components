@@ -4,8 +4,6 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import org.apache.commons.lang3.StringUtils;
 import xyz.vopen.mixmicro.components.boot.sidecar.SidecarProperties;
 
-import java.net.SocketException;
-
 public class SidecarNacosDiscoveryProperties extends NacosDiscoveryProperties {
 
   private final SidecarProperties sidecarProperties;
@@ -15,7 +13,7 @@ public class SidecarNacosDiscoveryProperties extends NacosDiscoveryProperties {
   }
 
   @Override
-  public void init() throws SocketException {
+  public void init() throws Exception {
     super.init();
 
     String ip = sidecarProperties.getIp();

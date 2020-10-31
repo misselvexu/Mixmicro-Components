@@ -5,12 +5,11 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-metrics</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-metrics-spring</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <name>Enhance Metrics Core Spring Module :: ${project.version}</name>
     <description>🏗 Enhance Metrics Core Spring Module</description>
