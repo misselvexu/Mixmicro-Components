@@ -78,6 +78,7 @@
         <module>kits</module>
         <module>enhance</module>
         <module>starters</module>
+        <module>docs</module>
         <module>test</module>
     </modules>
 

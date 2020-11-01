@@ -1,0 +1,12 @@
+[[mixmicro-components-framework-reference]]
+= Mixmicro Components Framework Reference Documentation
+Elve Xu
+:doctype: book
+:toc:
+:toclevels: 4
+:source-highlighter: prettify
+:numbered:
+
+include::introduction.adoc[]
+
+include::dependency-management.adoc[]
