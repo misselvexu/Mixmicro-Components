@@ -1,7 +1,7 @@
 ## CHANGELOG
 
 --------
-### 1.0.7.RELEASE
+### 1.0.8.BUILD-SNAPSHOT
 
 #### ISSUES
 
