@@ -1,0 +1,138 @@
+== Quick Start
+
+Mixmicro+ Components Framework can be used with “classic” Java development tools or installed as a command line tool. Either way, you need Java SDK v1.8 or higher. Before you begin, you should check your current Java installation by using the following command:
+
+[source,bash]
+----
+$ java -version
+----
+
+If you are new to Java development or if you want to experiment with Mixmicro+ Components Framework, you might want to try the _Mixmicro+ Components Framework CLI_ (Command Line Interface) first. Otherwise, read on for “classic” installation instructions.
+
+=== Maven Installation
+
+Mixmicro+ Components Framework is compatible with Apache Maven 3.3 or above. If you do not already have Maven installed, you can follow the instructions at https://maven.apache.org[maven.apache.org].
+
+> On many operating systems, Maven can be installed with a package manager. If you use OSX Homebrew, try brew install maven. Ubuntu users can run sudo apt-get install maven. Windows users with Chocolatey can run choco install maven from an elevated (administrator) prompt.
+
+The following listing shows a typical _pom.xml_ file:
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>myproject</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>mixmicro-components-starter-spring-web</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!-- Add typical dependencies management for application -->
+    <dependencyManagement>
+       <dependencies>
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-dependencies</artifactId>
+                <version>1.0.7.RELEASE</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Package as an executable jar -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+----
+
+
+=== CLI Installation
+
+_Mixmicro+ Components Framework CLI_ use maven archetype plugin to generate project construct .
+
+[source,bash]
+----
+mvn archetype:generate \
+  -DarchetypeCatalog=internal \
+  -DarchetypeGroupId=com.yunlsp.framework \
+  -DarchetypeArtifactId=Framework-Template \
+  -DarchetypeVersion=1.0.9-RELEASE \
+  -DGROUP_NAME=whale \
+  -DBUSINESS_NAME=user \
+  -DMODULE_NAME=account \
+  -DartifactId=whale-user-account \
+  -Dpackage=com.yunlsp.whale.user.account \
+  -DPARENT_PROJECT_VERSION=1.0.4-RELEASE
+----
+
+> Conceptual Explanation
+
+|===
+|Properties Name | Description | Optional | Default Value
+
+|archetypeGroupId
+|Use the *groupId* of framework-template (don't change it)
+|True
+|com.yunlsp.framework
+
+|archetypeArtifactId
+|Use the *artifactId* of framework-template (don't change it)
+|True
+|Framework-Template
+
+|archetypeVersion
+|Use the *version* number of framework-template (don't change it)
+|True
+|1.0.9-RELEASE
+
+|PARENT_PROJECT_VERSION
+|Generated version number of the parent project (don't change it)
+|True
+|-
+
+|GROUP_NAME
+|Group name of the created project; each group is unique and only one (not to be changed, one group at a time; it is strongly recommended to match the group name in AppName)
+|False
+|-
+
+|BUSINESS_NAME
+|Module name of the project (custom, strongly recommended to match the module in AppName)
+|False
+|-
+
+|MODULE_NAM
+|Module name of the project (custom, strongly recommended to match the module in AppName)
+|False
+|-
+
+|artifactId
+|Created project directory name (directory name, strongly recommended group name - business name - module name)
+|False
+|-
+
+|package
+|Generated unified registration (*strongly recommended*, unified package name prefix com.yunlsp.GROUP_NAME.BUSINESS_NAME.MODULE_NAME)
+|False
+|-
+|===
+
+=== StartIO Web Guide Installation (_Recommended_)
+
+Mixmicro Initializr support a custom UI running at http://start.hgj.net
+
+image::../images/start.hgj.net.png[Start IO Page]
