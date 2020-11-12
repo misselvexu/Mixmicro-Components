@@ -2,6 +2,7 @@ package xyz.vopen.mixmicro.components.boot.httpclient.core.cloud;
 
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.util.Assert;
 import xyz.vopen.mixmicro.components.boot.httpclient.ServiceInstanceChooser;
 
 import java.net.URI;
@@ -23,6 +24,7 @@ public class SpringCloudServiceInstanceChooser implements ServiceInstanceChooser
   @Override
   public URI choose(String serviceId) {
     ServiceInstance serviceInstance = loadBalancerClient.choose(serviceId);
+    Assert.notNull(serviceInstance, "no available service instance found , service-id= " + serviceId);
     return serviceInstance.getUri();
   }
 }

@@ -4,9 +4,9 @@ import org.slf4j.event.Level;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.DefaultHttpClientErrorDecoder;
 import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientErrorDecoder;
 import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientLogStrategy;
+import xyz.vopen.mixmicro.components.boot.httpclient.core.DefaultHttpClientErrorDecoder;
 
 import java.lang.annotation.*;
 
@@ -45,6 +45,19 @@ public @interface MixHttpClient {
   Class<? extends CallAdapter.Factory>[] callAdapterFactories() default {};
 
   /**
+   * Fallback class for the specified retrofit client interface. The fallback class must implement
+   * the interface annotated by this annotation and be a valid spring bean.
+   */
+  Class<?> fallback() default void.class;
+
+  /**
+   * Define a fallback factory for the specified Feign client interface. The fallback factory must
+   * produce instances of fallback classes that implement the interface annotated by {@link
+   * MixHttpClient}.The fallback factory must be a valid spring bean. bean.
+   */
+  Class<?> fallbackFactory() default void.class;
+
+  /**
    * When calling {@link Retrofit#create(Class)} on the resulting {@link Retrofit} instance, eagerly
    * validate the configuration of all methods in the supplied interface.
    *
@@ -61,7 +74,8 @@ public @interface MixHttpClient {
    *
    * @return ErrorDecoder
    */
-  Class<? extends MixHttpClientErrorDecoder> errorDecoder() default DefaultHttpClientErrorDecoder.class;
+  Class<? extends MixHttpClientErrorDecoder> errorDecoder() default
+      DefaultHttpClientErrorDecoder.class;
 
   /**
    * connection pool name
@@ -145,8 +159,8 @@ public @interface MixHttpClient {
   Level logLevel() default Level.INFO;
 
   /**
-   * Log printing strategy, see {@link MixHttpClientLogStrategy} for
-   * supported log printing strategies
+   * Log printing strategy, see {@link MixHttpClientLogStrategy} for supported log printing
+   * strategies
    *
    * @return logStrategy
    */

@@ -18,11 +18,13 @@ import org.springframework.lang.NonNull;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-import xyz.vopen.mixmicro.components.boot.httpclient.ServiceInstanceChooser;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.cloud.InvalidServiceInstanceChooser;
-import xyz.vopen.mixmicro.components.boot.httpclient.core.PrototypeInterceptorDefinitionPostProcessor;
-import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.AbstractGlobalInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.MixHttpClientInterceptor;
+import xyz.vopen.mixmicro.components.boot.httpclient.ServiceInstanceChooser;
+import xyz.vopen.mixmicro.components.boot.httpclient.core.PrototypeInterceptorDefinitionPostProcessor;
+import xyz.vopen.mixmicro.components.boot.httpclient.core.cloud.InvalidServiceInstanceChooser;
+import xyz.vopen.mixmicro.components.boot.httpclient.degrade.AbstractResourceNameParser;
+import xyz.vopen.mixmicro.components.boot.httpclient.degrade.DegradeRuleInitializer;
+import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.AbstractGlobalInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.ServiceInstanceChooserInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.retry.AbstractRetryInterceptor;
 
@@ -108,6 +110,10 @@ public class MixHttpClientAutoConfiguration implements ApplicationContextAware {
         new ServiceInstanceChooserInterceptor(serviceInstanceChooser);
     httpClientConfigBean.setServiceInstanceChooserInterceptor(serviceInstanceChooserInterceptor);
 
+    // resource name parser
+    Class<? extends AbstractResourceNameParser> resourceNameParser = httpClientProperties.getResourceNameParser();
+    httpClientConfigBean.setResourceNameParser(resourceNameParser.newInstance());
+
     return httpClientConfigBean;
   }
 
@@ -139,5 +145,10 @@ public class MixHttpClientAutoConfiguration implements ApplicationContextAware {
   @Override
   public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
     this.applicationContext = applicationContext;
+  }
+
+  @Bean
+  public DegradeRuleInitializer degradeRuleInitializer() {
+    return new DegradeRuleInitializer(httpClientProperties);
   }
 }

@@ -4,18 +4,25 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import xyz.vopen.mixmicro.components.boot.httpclient.DefaultLoggingInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.core.RequestBodyCallAdapterFactory;
 import xyz.vopen.mixmicro.components.boot.httpclient.core.ResponseCallAdapterFactory;
+import xyz.vopen.mixmicro.components.boot.httpclient.degrade.AbstractResourceNameParser;
+import xyz.vopen.mixmicro.components.boot.httpclient.degrade.DefaultResourceNameParser;
+import xyz.vopen.mixmicro.components.boot.httpclient.degrade.DegradeType;
 import xyz.vopen.mixmicro.components.boot.httpclient.interceptor.AbstractLoggingInterceptor;
-import xyz.vopen.mixmicro.components.boot.httpclient.DefaultLoggingInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.retry.AbstractRetryInterceptor;
 import xyz.vopen.mixmicro.components.boot.httpclient.retry.DefaultRetryInterceptor;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@ConfigurationProperties(prefix = "mixmicro.httpclient")
+import static xyz.vopen.mixmicro.components.boot.httpclient.autoconfigure.MixHttpClientProperties.MIX_HTTPCILENT_PROPERTIES_PREFIX;
+
+@ConfigurationProperties(prefix = MIX_HTTPCILENT_PROPERTIES_PREFIX)
 public class MixHttpClientProperties {
+
+  public static final String MIX_HTTPCILENT_PROPERTIES_PREFIX = "mixmicro.httpclient";
 
   private static final String DEFAULT_POOL = "default";
 
@@ -25,13 +32,20 @@ public class MixHttpClientProperties {
   /** Enable log printing */
   private boolean enableLog = true;
 
+  /** enable degrade */
+  private boolean enableDegrade = false;
+
+  /** degrade type, Only SENTINEL is currently supported */
+  private DegradeType degradeType = DegradeType.SENTINEL;
+
+  /** resource name parser */
+  private Class<? extends AbstractResourceNameParser> resourceNameParser = DefaultResourceNameParser.class;
+
   /** Log print Interceptor */
-  private Class<? extends AbstractLoggingInterceptor> loggingInterceptor =
-      DefaultLoggingInterceptor.class;
+  private Class<? extends AbstractLoggingInterceptor> loggingInterceptor = DefaultLoggingInterceptor.class;
 
   /** retry interceptor */
-  private Class<? extends AbstractRetryInterceptor> retryInterceptor =
-      DefaultRetryInterceptor.class;
+  private Class<? extends AbstractRetryInterceptor> retryInterceptor = DefaultRetryInterceptor.class;
 
   /** Disable Void return type */
   private boolean disableVoidReturnType = false;
@@ -41,17 +55,17 @@ public class MixHttpClientProperties {
    * If it is not obtained, it is created by reflection.
    */
   @SuppressWarnings("unchecked")
-  private Class<? extends Converter.Factory>[] globalConverterFactories =
-      (Class<? extends Converter.Factory>[]) new Class[] {JacksonConverterFactory.class};
+  private Class<? extends Converter.Factory>[] globalConverterFactories = (Class<? extends Converter.Factory>[]) new Class[] {JacksonConverterFactory.class};
 
   /**
    * global call adapter factories, The callAdapter instance is first obtained from the Spring
    * container. If it is not obtained, it is created by reflection.
    */
   @SuppressWarnings("unchecked")
-  private Class<? extends CallAdapter.Factory>[] globalCallAdapterFactories =
-      (Class<? extends CallAdapter.Factory>[])
-          new Class[] {RequestBodyCallAdapterFactory.class, ResponseCallAdapterFactory.class};
+  private Class<? extends CallAdapter.Factory>[] globalCallAdapterFactories = (Class<? extends CallAdapter.Factory>[]) new Class[] {RequestBodyCallAdapterFactory.class, ResponseCallAdapterFactory.class};
+
+
+  // ~~ Getter & Setter Method .
 
   public Class<? extends AbstractLoggingInterceptor> getLoggingInterceptor() {
     return loggingInterceptor;
@@ -114,6 +128,31 @@ public class MixHttpClientProperties {
   public void setGlobalCallAdapterFactories(
       Class<? extends CallAdapter.Factory>[] globalCallAdapterFactories) {
     this.globalCallAdapterFactories = globalCallAdapterFactories;
+  }
+
+  public boolean isEnableDegrade() {
+    return enableDegrade;
+  }
+
+  public void setEnableDegrade(boolean enableDegrade) {
+    this.enableDegrade = enableDegrade;
+  }
+
+  public DegradeType getDegradeType() {
+    return degradeType;
+  }
+
+  public void setDegradeType(DegradeType degradeType) {
+    this.degradeType = degradeType;
+  }
+
+  public Class<? extends AbstractResourceNameParser> getResourceNameParser() {
+    return resourceNameParser;
+  }
+
+  public void setResourceNameParser(
+      Class<? extends AbstractResourceNameParser> resourceNameParser) {
+    this.resourceNameParser = resourceNameParser;
   }
 
   /**

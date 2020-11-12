@@ -21,6 +21,7 @@
         <log4j-core.version>2.12.1</log4j-core.version>
         <okhttp3.version>3.14.9</okhttp3.version>
         <okio.version>1.17.5</okio.version>
+        <sentinel.version>1.6.3</sentinel.version>
     </properties>
 
     <dependencies>
@@ -114,6 +115,12 @@
             <version>${okio.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-core</artifactId>
+            <version>${sentinel.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>

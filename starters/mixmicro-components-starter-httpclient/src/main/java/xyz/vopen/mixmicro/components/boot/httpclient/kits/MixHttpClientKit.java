@@ -7,10 +7,19 @@ import okhttp3.ResponseBody;
 import okio.Buffer;
 import okio.BufferedSource;
 import okio.GzipSource;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
+import org.springframework.util.StringUtils;
+import xyz.vopen.mixmicro.components.boot.httpclient.annotation.MixHttpClient;
 import xyz.vopen.mixmicro.components.boot.httpclient.exception.ReadResponseBodyException;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.Map;
+
+import static xyz.vopen.mixmicro.components.boot.httpclient.core.MixHttpClientFactoryBean.SUFFIX;
 
 public final class MixHttpClientKit {
 
@@ -74,5 +83,44 @@ public final class MixHttpClientKit {
     return contentEncoding != null
         && !IDENTITY.equalsIgnoreCase(contentEncoding)
         && !GZIP.equalsIgnoreCase(contentEncoding);
+  }
+
+  public static String convertBaseUrl(
+      MixHttpClient client, String baseUrl, Environment environment) {
+    if (StringUtils.hasText(baseUrl)) {
+      baseUrl = environment.resolveRequiredPlaceholders(baseUrl);
+      // 解析baseUrl占位符
+      if (!baseUrl.endsWith(SUFFIX)) {
+        baseUrl += SUFFIX;
+      }
+    } else {
+      String serviceId = client.serviceId();
+      String path = client.path();
+      if (!path.endsWith(SUFFIX)) {
+        path += SUFFIX;
+      }
+      baseUrl = "http://" + (serviceId + SUFFIX + path).replaceAll("/+", SUFFIX);
+      baseUrl = environment.resolveRequiredPlaceholders(baseUrl);
+    }
+    return baseUrl;
+  }
+
+  public static <U> U getBean(ApplicationContext context, Class<U> clz) {
+    try {
+      U bean = context.getBean(clz);
+      return bean;
+    } catch (BeansException e) {
+      return null;
+    }
+  }
+
+  public static <U> Collection<U> getBeans(ApplicationContext context, Class<U> clz) {
+    try {
+      Map<String, U> beanMap = context.getBeansOfType(clz);
+      return beanMap.values();
+    } catch (BeansException e) {
+      // do nothing
+    }
+    return null;
   }
 }
