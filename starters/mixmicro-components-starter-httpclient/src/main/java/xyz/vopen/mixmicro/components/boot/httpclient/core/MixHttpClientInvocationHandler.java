@@ -21,9 +21,9 @@ public class MixHttpClientInvocationHandler implements InvocationHandler {
 
   private final MixHttpClientProperties properties;
 
-  private Object fallback;
+  private final Object fallback;
 
-  private FallbackFactory<?> fallbackFactory;
+  private final FallbackFactory<?> fallbackFactory;
 
 
   public MixHttpClientInvocationHandler(Object source, Object fallback, FallbackFactory<?> fallbackFactory, MixHttpClientProperties properties) {
@@ -54,7 +54,7 @@ public class MixHttpClientInvocationHandler implements InvocationHandler {
     }
 
     if (fallbackFactory != null) {
-      return fallbackFactory.create(cause);
+      return fallbackFactory.build(cause);
     }
     return null;
   }

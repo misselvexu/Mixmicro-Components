@@ -23,8 +23,14 @@ public class DemoHttpApiTest {
   @Autowired private DemoHttpApi demoHttpApi;
 
   @Test
-  public void index() throws IOException {
+  public void index() throws IOException, InterruptedException {
 
-    System.out.println(demoHttpApi.index().string());
+    for (int i = 0; i < 10; i++) {
+      try{
+        System.out.println(demoHttpApi.index().string());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
   }
 }

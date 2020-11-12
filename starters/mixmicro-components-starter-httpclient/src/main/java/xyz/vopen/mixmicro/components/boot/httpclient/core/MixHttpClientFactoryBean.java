@@ -43,8 +43,8 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class MixHttpClientFactoryBean<T>
-    implements FactoryBean<T>, EnvironmentAware, ApplicationContextAware {
+@SuppressWarnings("DuplicatedCode")
+public class MixHttpClientFactoryBean<T> implements FactoryBean<T>, EnvironmentAware, ApplicationContextAware {
 
   private static final Logger log = LoggerFactory.getLogger(MixHttpClientFactoryBean.class);
 
@@ -61,7 +61,7 @@ public class MixHttpClientFactoryBean<T>
 
   private ApplicationContext applicationContext;
 
-  private MixHttpClient mixHttpClient;
+  private final MixHttpClient mixHttpClient;
 
   private static final Map<Class<? extends Converter.Factory>, Converter.Factory>
       CONVERTER_FACTORIES_CACHE = new HashMap<>(4);
@@ -79,30 +79,36 @@ public class MixHttpClientFactoryBean<T>
     // source
     T source = retrofit.create(httpClientInterface);
 
-    MixHttpClientProperties retrofitProperties = httpClientConfigBean.getHttpClientProperties();
+    MixHttpClientProperties httpClientProperties = httpClientConfigBean.getHttpClientProperties();
+
+    // fallback class
     Class<?> fallbackClass = mixHttpClient.fallback();
     Object fallback = null;
     if (!void.class.isAssignableFrom(fallbackClass)) {
       fallback = MixHttpClientKit.getBean(applicationContext, fallbackClass);
     }
+
+    // fallback factory class
     Class<?> fallbackFactoryClass = mixHttpClient.fallbackFactory();
     FallbackFactory<?> fallbackFactory = null;
     if (!void.class.isAssignableFrom(fallbackFactoryClass)) {
       fallbackFactory =
           (FallbackFactory) MixHttpClientKit.getBean(applicationContext, fallbackFactoryClass);
     }
-    loadDegradeRules();
+
+    this.loadDegradeRules();
+
     // proxy
     return (T)
         Proxy.newProxyInstance(
             httpClientInterface.getClassLoader(),
             new Class<?>[] {httpClientInterface},
             new MixHttpClientInvocationHandler(
-                source, fallback, fallbackFactory, retrofitProperties));
+                source, fallback, fallbackFactory, httpClientProperties));
   }
 
   private void loadDegradeRules() {
-    // 读取熔断配置
+
     Method[] methods = httpClientInterface.getMethods();
     for (Method method : methods) {
       if (method.isDefault()) {
@@ -113,11 +119,11 @@ public class MixHttpClientFactoryBean<T>
         continue;
       }
       // 获取熔断配置
-      Degrade degrade;
-      if (method.isAnnotationPresent(Degrade.class)) {
-        degrade = method.getAnnotation(Degrade.class);
+      MixHttpClientDegrade degrade;
+      if (method.isAnnotationPresent(MixHttpClientDegrade.class)) {
+        degrade = method.getAnnotation(MixHttpClientDegrade.class);
       } else {
-        degrade = httpClientInterface.getAnnotation(Degrade.class);
+        degrade = httpClientInterface.getAnnotation(MixHttpClientDegrade.class);
       }
 
       if (degrade == null) {
@@ -142,11 +148,10 @@ public class MixHttpClientFactoryBean<T>
    *
    * @param httpClientInterface .
    */
+  @SuppressWarnings("ConstantConditions")
   private void checkHttpClientInterface(Class<T> httpClientInterface) {
     // check class type
-    Assert.isTrue(
-        httpClientInterface.isInterface(),
-        "@MixHttpClient can only be marked on the interface type!");
+    Assert.isTrue(httpClientInterface.isInterface(), "@MixHttpClient can only be marked on the interface type!");
     Method[] methods = httpClientInterface.getMethods();
 
     MixHttpClient mixHttpClient = httpClientInterface.getAnnotation(MixHttpClient.class);
@@ -159,14 +164,15 @@ public class MixHttpClientFactoryBean<T>
     for (Method method : methods) {
       Class<?> returnType = method.getReturnType();
       if (method.isAnnotationPresent(CustomOkHttpClient.class)) {
-        Assert.isTrue(returnType.equals(OkHttpClient.Builder.class), "For methods annotated by @OkHttpClientBuilder, the return value must be OkHttpClient.Builder！");
-        Assert.isTrue(Modifier.isStatic(method.getModifiers()), "only static method can annotated by @OkHttpClientBuilder!");
+        Assert.isTrue(returnType.equals(OkHttpClient.Builder.class), "For methods annotated by @OkHttpClientBuilder, the return value must be OkHttpClient.Builder .");
+        Assert.isTrue(Modifier.isStatic(method.getModifiers()), "only static method can annotated by <@CustomOkHttpClient> ");
         continue;
       }
 
-      Assert.isTrue(!void.class.isAssignableFrom(returnType), "The void keyword is not supported as the return type, please use java.lang.Void！ method=" + method);
+      Assert.isTrue(!void.class.isAssignableFrom(returnType), "The void keyword is not supported as the return type, please use <java.lang.Void> , method=" + method);
+
       if (httpClientProperties.isDisableVoidReturnType()) {
-        Assert.isTrue(!Void.class.isAssignableFrom(returnType), "Configured to disable Void as the return value, please specify another return type!method=" + method);
+        Assert.isTrue(!Void.class.isAssignableFrom(returnType), "Configured to disable <java.lang.Void> as the return value, please specify another return type , method=" + method);
       }
     }
 
@@ -179,7 +185,7 @@ public class MixHttpClientFactoryBean<T>
 
     Class<?> fallbackFactoryClass = mixHttpClient.fallbackFactory();
     if (!void.class.isAssignableFrom(fallbackFactoryClass)) {
-      Assert.isTrue(FallbackFactory.class.isAssignableFrom(fallbackFactoryClass), "The fallback factory type must implement FallbackFactory！the fallback factory is " + fallbackFactoryClass);
+      Assert.isTrue(FallbackFactory.class.isAssignableFrom(fallbackFactoryClass), "The fallback factory type must implement <FallbackFactory> , the fallback factory is " + fallbackFactoryClass);
       Object fallbackFactory = MixHttpClientKit.getBean(applicationContext, fallbackFactoryClass);
       Assert.notNull(fallbackFactory, "fallback factory  must be a valid spring bean! the fallback factory class is " + fallbackFactoryClass);
     }
@@ -204,14 +210,13 @@ public class MixHttpClientFactoryBean<T>
   private synchronized okhttp3.ConnectionPool getConnectionPool(Class<?> httpClientInterfaceClass) {
     MixHttpClient mixHttpClient = httpClientInterfaceClass.getAnnotation(MixHttpClient.class);
     String poolName = mixHttpClient.poolName();
-    Map<String, ConnectionPool> poolRegistry = httpClientConfigBean.getPoolRegistry();
-    Assert.notNull(
-        poolRegistry, "poolRegistry does not exist! Please set retrofitConfigBean.poolRegistry!");
+    Map<String, ConnectionPool> poolRegistry = httpClientConfigBean.getPools();
+
+    Assert.notNull(poolRegistry, "pool cache bean is not exist .");
+
     ConnectionPool connectionPool = poolRegistry.get(poolName);
-    Assert.notNull(
-        connectionPool,
-        "The connection pool corresponding to the current poolName does not exist! poolName = "
-            + poolName);
+    Assert.notNull(connectionPool, "The connection pool corresponding to the current pool name does not exist , pool name = " + poolName);
+
     return connectionPool;
   }
 
@@ -221,15 +226,19 @@ public class MixHttpClientFactoryBean<T>
    * @param httpClientInterfaceClass httpClientInterfaceClass
    * @return OkHttpClient instance
    */
-  private synchronized OkHttpClient getOkHttpClient(Class<?> httpClientInterfaceClass)
-      throws IllegalAccessException, InstantiationException, NoSuchMethodException,
-          InvocationTargetException {
+  @SuppressWarnings("SwitchStatementWithTooFewBranches")
+  private synchronized OkHttpClient getOkHttpClient(Class<?> httpClientInterfaceClass) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+
     MixHttpClient mixHttpClient = httpClientInterfaceClass.getAnnotation(MixHttpClient.class);
+
     Method method = findOkHttpClientBuilderMethod(httpClientInterfaceClass);
+
     OkHttpClient.Builder okHttpClientBuilder;
+
     if (method != null) {
       okHttpClientBuilder = (OkHttpClient.Builder) method.invoke(null);
     } else {
+
       okhttp3.ConnectionPool connectionPool = getConnectionPool(httpClientInterfaceClass);
       // Construct an OkHttpClient object
       okHttpClientBuilder =
@@ -257,20 +266,19 @@ public class MixHttpClientFactoryBean<T>
             sentinelDegradeInterceptor.setResourceNameParser(httpClientConfigBean.getResourceNameParser());
             okHttpClientBuilder.addInterceptor(sentinelDegradeInterceptor);
           } catch (ClassNotFoundException e) {
-            log.warn("com.alibaba.csp.sentinel not found! No SentinelDegradeInterceptor is set.");
+            log.warn("Class <com.alibaba.csp.sentinel> is not found .");
           }
           break;
         }
         default: {
-          throw new IllegalArgumentException("Not currently supported! degradeType=" + degradeType);
+          throw new IllegalArgumentException("config-ed degrade type is not supported , type = " + degradeType);
         }
       }
     }
 
     // add ServiceInstanceChooserInterceptor
     if (StringUtils.hasText(mixHttpClient.serviceId())) {
-      ServiceInstanceChooserInterceptor serviceInstanceChooserInterceptor =
-          httpClientConfigBean.getServiceInstanceChooserInterceptor();
+      ServiceInstanceChooserInterceptor serviceInstanceChooserInterceptor = httpClientConfigBean.getServiceInstanceChooserInterceptor();
       if (serviceInstanceChooserInterceptor != null) {
         okHttpClientBuilder.addInterceptor(serviceInstanceChooserInterceptor);
       }
@@ -282,18 +290,20 @@ public class MixHttpClientFactoryBean<T>
     if (decoder == null) {
       decoder = errorDecoderClass.newInstance();
     }
+
     ErrorDecoderInterceptor decoderInterceptor = ErrorDecoderInterceptor.create(decoder);
     okHttpClientBuilder.addInterceptor(decoderInterceptor);
 
     // Add the interceptor defined by the annotation on the interface
-    List<Interceptor> interceptors =
-        new ArrayList<>(findInterceptorByAnnotation(httpClientInterfaceClass));
+    List<Interceptor> interceptors = new ArrayList<>(findInterceptorByAnnotation(httpClientInterfaceClass));
+
     // add global interceptor
-    Collection<AbstractGlobalInterceptor> globalInterceptors =
-        httpClientConfigBean.getGlobalInterceptors();
+    Collection<AbstractGlobalInterceptor> globalInterceptors = httpClientConfigBean.getGlobalInterceptors();
+
     if (!CollectionUtils.isEmpty(globalInterceptors)) {
       interceptors.addAll(globalInterceptors);
     }
+
     interceptors.forEach(okHttpClientBuilder::addInterceptor);
 
     // add retry interceptor
@@ -302,23 +312,23 @@ public class MixHttpClientFactoryBean<T>
 
     // add log printing interceptor
     if (httpClientProperties.isEnableLog() && mixHttpClient.enableLog()) {
-      Class<? extends AbstractLoggingInterceptor> loggingInterceptorClass =
-          httpClientProperties.getLoggingInterceptor();
-      Constructor<? extends AbstractLoggingInterceptor> constructor =
-          loggingInterceptorClass.getConstructor(Level.class, MixHttpClientLogStrategy.class);
-      AbstractLoggingInterceptor loggingInterceptor =
-          constructor.newInstance(mixHttpClient.logLevel(), mixHttpClient.logStrategy());
+
+      Class<? extends AbstractLoggingInterceptor> loggingInterceptorClass = httpClientProperties.getLoggingInterceptor();
+      Constructor<? extends AbstractLoggingInterceptor> constructor = loggingInterceptorClass.getConstructor(Level.class, MixHttpClientLogStrategy.class);
+      AbstractLoggingInterceptor loggingInterceptor = constructor.newInstance(mixHttpClient.logLevel(), mixHttpClient.logStrategy());
+
       okHttpClientBuilder.addNetworkInterceptor(loggingInterceptor);
     }
 
-    Collection<MixHttpClientInterceptor> networkInterceptors =
-        httpClientConfigBean.getNetworkInterceptors();
+    Collection<MixHttpClientInterceptor> networkInterceptors = httpClientConfigBean.getNetworkInterceptors();
+
     if (!CollectionUtils.isEmpty(networkInterceptors)) {
       for (MixHttpClientInterceptor networkInterceptor : networkInterceptors) {
         okHttpClientBuilder.addNetworkInterceptor(networkInterceptor);
       }
     }
 
+    // build client
     return okHttpClientBuilder.build();
   }
 
@@ -349,11 +359,11 @@ public class MixHttpClientFactoryBean<T>
    * @return the interceptor list
    */
   @SuppressWarnings("unchecked")
-  private List<Interceptor> findInterceptorByAnnotation(Class<?> httpClientInterfaceClass)
-      throws InstantiationException, IllegalAccessException {
+  private List<Interceptor> findInterceptorByAnnotation(Class<?> httpClientInterfaceClass) throws InstantiationException, IllegalAccessException {
+
     Annotation[] classAnnotations = httpClientInterfaceClass.getAnnotations();
     List<Interceptor> interceptors = new ArrayList<>();
-    // 找出被@InterceptMark标记的注解。Find the annotation marked by @InterceptMark
+
     List<Annotation> interceptAnnotations = new ArrayList<>();
     for (Annotation classAnnotation : classAnnotations) {
       Class<? extends Annotation> annotationType = classAnnotation.annotationType();
@@ -361,6 +371,7 @@ public class MixHttpClientFactoryBean<T>
         interceptAnnotations.add(classAnnotation);
       }
     }
+
     for (Annotation interceptAnnotation : interceptAnnotations) {
       // Get annotation attribute data
       Map<String, Object> annotationAttributes =
@@ -369,8 +380,8 @@ public class MixHttpClientFactoryBean<T>
       Assert.notNull(handler, "@InterceptorComponent annotations must be configured: Class<? extends BasePathMatchInterceptor> handler()");
       Assert.notNull(annotationAttributes.get("include"), "@InterceptorComponent annotations must be configured: String[] include()");
       Assert.notNull(annotationAttributes.get("exclude"), "@InterceptorComponent annotations must be configured: String[] exclude()");
-      Class<? extends AbstractPathMatchInterceptor> interceptorClass =
-          (Class<? extends AbstractPathMatchInterceptor>) handler;
+      Class<? extends AbstractPathMatchInterceptor> interceptorClass = (Class<? extends AbstractPathMatchInterceptor>) handler;
+
       AbstractPathMatchInterceptor interceptor = getInterceptorInstance(interceptorClass);
       Map<String, Object> annotationResolveAttributes = new HashMap<>(8);
 
@@ -383,10 +394,13 @@ public class MixHttpClientFactoryBean<T>
               annotationResolveAttributes.put(key, value);
             }
           });
+
       // Set property value dynamically
       BeanPropertiesKit.populate(interceptor, annotationResolveAttributes);
       interceptors.add(interceptor);
     }
+
+    // return
     return interceptors;
   }
 
@@ -397,9 +411,7 @@ public class MixHttpClientFactoryBean<T>
    * @param interceptorClass A subclass of @{@link AbstractPathMatchInterceptor}
    * @return @{@link AbstractPathMatchInterceptor} instance
    */
-  private AbstractPathMatchInterceptor getInterceptorInstance(
-      Class<? extends AbstractPathMatchInterceptor> interceptorClass)
-      throws IllegalAccessException, InstantiationException {
+  private AbstractPathMatchInterceptor getInterceptorInstance(Class<? extends AbstractPathMatchInterceptor> interceptorClass) throws IllegalAccessException, InstantiationException {
     try {
       return applicationContext.getBean(interceptorClass);
     } catch (BeansException e) {
@@ -413,10 +425,10 @@ public class MixHttpClientFactoryBean<T>
    * @param httpClientInterfaceClass httpClientInterfaceClass
    * @return Retrofit instance
    */
-  private synchronized Retrofit getRetrofit(Class<?> httpClientInterfaceClass)
-      throws InstantiationException, IllegalAccessException, NoSuchMethodException,
-          InvocationTargetException {
+  private synchronized Retrofit getRetrofit(Class<?> httpClientInterfaceClass) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+
     MixHttpClient mixHttpClient = httpClientInterfaceClass.getAnnotation(MixHttpClient.class);
+
     String baseUrl = mixHttpClient.baseUrl();
 
     if (StringUtils.hasText(baseUrl)) {
@@ -435,6 +447,7 @@ public class MixHttpClientFactoryBean<T>
     }
 
     OkHttpClient client = getOkHttpClient(httpClientInterfaceClass);
+
     Retrofit.Builder retrofitBuilder =
         new Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -442,26 +455,23 @@ public class MixHttpClientFactoryBean<T>
             .client(client);
 
     // 添加CallAdapter.Factory
-    Class<? extends CallAdapter.Factory>[] callAdapterFactoryClasses =
-        mixHttpClient.callAdapterFactories();
-    Class<? extends CallAdapter.Factory>[] globalCallAdapterFactoryClasses =
-        httpClientConfigBean.getGlobalCallAdapterFactoryClasses();
-    List<CallAdapter.Factory> callAdapterFactories =
-        getCallAdapterFactories(callAdapterFactoryClasses, globalCallAdapterFactoryClasses);
+    Class<? extends CallAdapter.Factory>[] callAdapterFactoryClasses = mixHttpClient.callAdapterFactories();
+    Class<? extends CallAdapter.Factory>[] globalCallAdapterFactoryClasses = httpClientConfigBean.getGlobalCallAdapterFactoryClasses();
+    List<CallAdapter.Factory> callAdapterFactories = getCallAdapterFactories(callAdapterFactoryClasses, globalCallAdapterFactoryClasses);
+
     if (!CollectionUtils.isEmpty(callAdapterFactories)) {
       callAdapterFactories.forEach(retrofitBuilder::addCallAdapterFactory);
     }
     // 添加Converter.Factory
-    Class<? extends Converter.Factory>[] converterFactoryClasses =
-        mixHttpClient.converterFactories();
-    Class<? extends Converter.Factory>[] globalConverterFactoryClasses =
-        httpClientConfigBean.getGlobalConverterFactoryClasses();
+    Class<? extends Converter.Factory>[] converterFactoryClasses = mixHttpClient.converterFactories();
+    Class<? extends Converter.Factory>[] globalConverterFactoryClasses = httpClientConfigBean.getGlobalConverterFactoryClasses();
 
-    List<Converter.Factory> converterFactories =
-        getConverterFactories(converterFactoryClasses, globalConverterFactoryClasses);
+    List<Converter.Factory> converterFactories = getConverterFactories(converterFactoryClasses, globalConverterFactoryClasses);
+
     if (!CollectionUtils.isEmpty(converterFactories)) {
       converterFactories.forEach(retrofitBuilder::addConverterFactory);
     }
+
     return retrofitBuilder.build();
   }
 
@@ -521,9 +531,10 @@ public class MixHttpClientFactoryBean<T>
 
     List<Converter.Factory> converterFactories = new ArrayList<>();
 
-    for (Class<? extends Converter.Factory> converterFactoryClass :
-        combineConverterFactoryClasses) {
+    for (Class<? extends Converter.Factory> converterFactoryClass : combineConverterFactoryClasses) {
+
       Converter.Factory converterFactory = CONVERTER_FACTORIES_CACHE.get(converterFactoryClass);
+
       if (converterFactory == null) {
         converterFactory = getBean(converterFactoryClass);
         if (converterFactory == null) {
@@ -533,6 +544,7 @@ public class MixHttpClientFactoryBean<T>
       }
       converterFactories.add(converterFactory);
     }
+
     return converterFactories;
   }
 

@@ -11,10 +11,10 @@ package xyz.vopen.mixmicro.components.boot.httpclient.degrade;
 public interface FallbackFactory<T> {
 
   /**
-   * Returns an instance of the fallback appropriate for the given cause
+   * Build an instance of the fallback appropriate for the given cause
    *
    * @param cause fallback cause
    * @return an instance that implements the client interface.
    */
-  T create(Throwable cause);
+  T build(Throwable cause);
 }

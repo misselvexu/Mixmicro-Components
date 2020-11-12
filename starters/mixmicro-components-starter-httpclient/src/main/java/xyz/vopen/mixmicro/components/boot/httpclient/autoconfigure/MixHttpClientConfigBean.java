@@ -16,7 +16,7 @@ public class MixHttpClientConfigBean {
 
   private final MixHttpClientProperties httpClientProperties;
 
-  private Map<String, ConnectionPool> poolRegistry;
+  private Map<String, ConnectionPool> pools;
 
   private Collection<AbstractGlobalInterceptor> globalInterceptors;
 
@@ -40,12 +40,12 @@ public class MixHttpClientConfigBean {
     this.httpClientProperties = httpClientProperties;
   }
 
-  public Map<String, ConnectionPool> getPoolRegistry() {
-    return poolRegistry;
+  public Map<String, ConnectionPool> getPools() {
+    return pools;
   }
 
-  public void setPoolRegistry(Map<String, ConnectionPool> poolRegistry) {
-    this.poolRegistry = poolRegistry;
+  public void setPools(Map<String, ConnectionPool> pools) {
+    this.pools = pools;
   }
 
   public Collection<AbstractGlobalInterceptor> getGlobalInterceptors() {

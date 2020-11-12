@@ -61,28 +61,27 @@ public class MixHttpClientAutoConfiguration implements ApplicationContextAware {
       throws IllegalAccessException, InstantiationException {
     MixHttpClientConfigBean httpClientConfigBean = new MixHttpClientConfigBean(httpClientProperties);
     // Initialize the connection pool
-    Map<String, ConnectionPool> poolRegistry = new ConcurrentHashMap<>(4);
+    Map<String, ConnectionPool> pools = new ConcurrentHashMap<>(4);
     Map<String, MixHttpClientProperties.PoolConfig> pool = httpClientProperties.getPool();
+    // check pool
     if (pool != null) {
       pool.forEach(
           (poolName, poolConfig) -> {
             long keepAliveSecond = poolConfig.getKeepAliveSecond();
             int maxIdleConnections = poolConfig.getMaxIdleConnections();
-            ConnectionPool connectionPool =
-                new ConnectionPool(maxIdleConnections, keepAliveSecond, TimeUnit.SECONDS);
-            poolRegistry.put(poolName, connectionPool);
+            ConnectionPool connectionPool = new ConnectionPool(maxIdleConnections, keepAliveSecond, TimeUnit.SECONDS);
+            pools.put(poolName, connectionPool);
           });
     }
-    httpClientConfigBean.setPoolRegistry(poolRegistry);
+
+    httpClientConfigBean.setPools(pools);
 
     // callAdapterFactory
-    Class<? extends CallAdapter.Factory>[] globalCallAdapterFactories =
-        httpClientProperties.getGlobalCallAdapterFactories();
+    Class<? extends CallAdapter.Factory>[] globalCallAdapterFactories = httpClientProperties.getGlobalCallAdapterFactories();
     httpClientConfigBean.setGlobalCallAdapterFactoryClasses(globalCallAdapterFactories);
 
     // converterFactory
-    Class<? extends Converter.Factory>[] globalConverterFactories =
-        httpClientProperties.getGlobalConverterFactories();
+    Class<? extends Converter.Factory>[] globalConverterFactories = httpClientProperties.getGlobalConverterFactories();
     httpClientConfigBean.setGlobalConverterFactoryClasses(globalConverterFactories);
 
     // globalInterceptors
@@ -90,8 +89,7 @@ public class MixHttpClientAutoConfiguration implements ApplicationContextAware {
     httpClientConfigBean.setGlobalInterceptors(globalInterceptors);
 
     // retryInterceptor
-    Class<? extends AbstractRetryInterceptor> retryInterceptor =
-        httpClientProperties.getRetryInterceptor();
+    Class<? extends AbstractRetryInterceptor> retryInterceptor = httpClientProperties.getRetryInterceptor();
     httpClientConfigBean.setRetryInterceptor(retryInterceptor.newInstance());
 
     // add networkInterceptor
@@ -106,8 +104,7 @@ public class MixHttpClientAutoConfiguration implements ApplicationContextAware {
       serviceInstanceChooser = new InvalidServiceInstanceChooser();
     }
 
-    ServiceInstanceChooserInterceptor serviceInstanceChooserInterceptor =
-        new ServiceInstanceChooserInterceptor(serviceInstanceChooser);
+    ServiceInstanceChooserInterceptor serviceInstanceChooserInterceptor = new ServiceInstanceChooserInterceptor(serviceInstanceChooser);
     httpClientConfigBean.setServiceInstanceChooserInterceptor(serviceInstanceChooserInterceptor);
 
     // resource name parser

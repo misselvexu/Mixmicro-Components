@@ -3,7 +3,7 @@ package xyz.vopen.mixmicro.components.boot.httpclient.degrade;
 import java.lang.annotation.*;
 
 /**
- * {@link Degrade}
+ * {@link MixHttpClientDegrade}
  *
  * <p>Class Degrade Definition
  *
@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Documented
-public @interface Degrade {
+public @interface MixHttpClientDegrade {
 
   /** RT threshold or exception ratio threshold count. */
   double count();

@@ -22,13 +22,6 @@ import java.io.IOException;
  */
 public class SentinelDegradeInterceptor extends AbstractDegradeInterceptor {
 
-  /**
-   * 熔断拦截处理
-   *
-   * @param chain 请求执行链
-   * @return 请求响应
-   * @throws ClientBlockException 如果触发熔断，抛出ClientBlockException
-   */
   @Override
   protected Response degradeIntercept(String resourceName, Chain chain)
       throws ClientBlockException, IOException {
