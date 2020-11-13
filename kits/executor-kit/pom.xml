@@ -40,8 +40,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.yunlsp.framework.components</groupId>
-            <artifactId>timer-kit</artifactId>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-common</artifactId>
+            <version>4.1.31.Final</version>
         </dependency>
 
     </dependencies>
