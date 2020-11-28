@@ -2,7 +2,6 @@ package xyz.vopen.mixmicro.kits.task;
 
 import xyz.vopen.mixmicro.kits.Assert;
 import xyz.vopen.mixmicro.kits.task.exception.TaskException;
-import xyz.vopen.mixmicro.kits.task.util.Utils;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -32,13 +31,13 @@ abstract class AbstractTask implements Task {
   private long endTime;
 
   protected AbstractTask(String type, String id) {
-    if (Utils.isEmpty(type)) {
+    if (TaskUtils.isEmpty(type)) {
       this.type = DEFAULT_TYPE_NAME;
     } else {
       this.type = type;
     }
-    if (Utils.isEmpty(id)) {
-      this.id = Utils.generateId();
+    if (TaskUtils.isEmpty(id)) {
+      this.id = TaskUtils.generateId();
     } else {
       this.id = id;
     }

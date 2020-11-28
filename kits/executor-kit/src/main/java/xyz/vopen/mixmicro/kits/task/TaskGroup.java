@@ -1,7 +1,6 @@
 package xyz.vopen.mixmicro.kits.task;
 
 import xyz.vopen.mixmicro.kits.Assert;
-import xyz.vopen.mixmicro.kits.task.util.Utils;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -31,7 +30,7 @@ public final class TaskGroup {
 
   protected TaskGroup(String name, DefaultThreadPoolExecutor executor) {
     this.name = name;
-    this.id = Utils.generateId();
+    this.id = TaskUtils.generateId();
     this.executor = executor;
   }
 

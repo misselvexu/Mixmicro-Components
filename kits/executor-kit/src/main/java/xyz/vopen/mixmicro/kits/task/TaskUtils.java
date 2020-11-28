@@ -1,4 +1,4 @@
-package xyz.vopen.mixmicro.kits.task.util;
+package xyz.vopen.mixmicro.kits.task;
 
 import xyz.vopen.mixmicro.kits.task.exception.TaskException;
 
@@ -15,14 +15,14 @@ import java.security.SecureRandom;
 import java.util.UUID;
 
 /**
- * {@link Utils}
+ * {@link TaskUtils}
  *
  * <p>Class Tuple Definition
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020/11/27
  */
-public final class Utils {
+public final class TaskUtils {
 
   private static final String[] CHARS =
       new String[] {
@@ -32,7 +32,7 @@ public final class Utils {
         "S", "T", "U", "V", "W", "X", "Y", "Z"
       };
 
-  private Utils() {}
+  private TaskUtils() {}
 
   public static boolean isEmpty(String src) {
     return src == null || src.isEmpty();
@@ -95,7 +95,7 @@ public final class Utils {
     try {
       in = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
       if (in == null) {
-        in = Utils.class.getResourceAsStream(resource);
+        in = TaskUtils.class.getResourceAsStream(resource);
       }
 
       if (in == null) {
