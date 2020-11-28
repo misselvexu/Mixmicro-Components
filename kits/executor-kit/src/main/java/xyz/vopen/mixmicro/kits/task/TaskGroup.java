@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.kits.task;
 
-import xyz.vopen.mixmicro.kits.task.util.Assert;
+import xyz.vopen.mixmicro.kits.Assert;
 import xyz.vopen.mixmicro.kits.task.util.Utils;
 
 import java.util.Deque;
@@ -9,6 +9,14 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * {@link TaskGroup}
+ *
+ * <p>Class Tuple Definition
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version} - 2020/11/27
+ */
 public final class TaskGroup {
 
   private final DefaultThreadPoolExecutor executor;
@@ -16,7 +24,7 @@ public final class TaskGroup {
   private final String id;
 
   protected final AtomicInteger counter = new AtomicInteger(0);
-  protected final Data data = new Data();
+  protected final DataTuple dataTuple = new DataTuple();
 
   private final AtomicInteger latch = new AtomicInteger(0);
   private final Deque<Task> runningTaskQueue = new ConcurrentLinkedDeque<>();
@@ -49,8 +57,8 @@ public final class TaskGroup {
     return counter.get();
   }
 
-  public Data getData() {
-    return this.data;
+  public DataTuple getData() {
+    return this.dataTuple;
   }
 
   public void go(Item item) {

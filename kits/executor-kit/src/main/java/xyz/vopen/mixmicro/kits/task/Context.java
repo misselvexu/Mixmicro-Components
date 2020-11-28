@@ -3,6 +3,14 @@ package xyz.vopen.mixmicro.kits.task;
 import xyz.vopen.mixmicro.kits.task.exception.ExecutionException;
 import xyz.vopen.mixmicro.kits.task.tuples.Tuple;
 
+/**
+ * {@link Context}
+ *
+ * <p>Class Tuple Definition
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version} - 2020/11/27
+ */
 public final class Context {
 
   private final Task task;
@@ -26,13 +34,13 @@ public final class Context {
 
     public final void addData(String key, Object value) {
       if (group != null) {
-        group.data.add(key, value);
+        group.dataTuple.add(key, value);
       }
     }
 
     public final void addData(Object value) {
       if (group != null) {
-        group.data.add(value);
+        group.dataTuple.add(value);
       }
     }
   }

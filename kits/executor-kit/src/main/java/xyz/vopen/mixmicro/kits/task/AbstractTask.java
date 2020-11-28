@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.kits.task;
 
+import xyz.vopen.mixmicro.kits.Assert;
 import xyz.vopen.mixmicro.kits.task.exception.TaskException;
-import xyz.vopen.mixmicro.kits.task.util.Assert;
 import xyz.vopen.mixmicro.kits.task.util.Utils;
 
 import java.util.concurrent.ExecutionException;
@@ -10,6 +10,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * {@link AbstractTask}
+ *
+ * <p>Class Tuple Definition
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version} - 2020/11/27
+ */
 abstract class AbstractTask implements Task {
 
   private String id; // 任务的 ID

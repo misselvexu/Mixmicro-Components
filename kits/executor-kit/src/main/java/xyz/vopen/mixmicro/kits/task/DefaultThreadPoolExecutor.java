@@ -4,11 +4,17 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * {@link DefaultThreadPoolExecutor}
+ *
+ * <p>Class Tuple Definition
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version} - 2020/11/27
+ */
 final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
 
-  // 统计运行的任务总数量
   private final AtomicLong taskNumber = new AtomicLong(0);
-  // 统计完成的任务总数量
   private final AtomicLong completedTaskNumber = new AtomicLong(0);
   private final Deque<Task> runningQueue = new ConcurrentLinkedDeque<>();
   private final Map<String, TaskGroup> runningTaskGrous = new ConcurrentHashMap<>();
@@ -100,22 +106,18 @@ final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
         .start();
   }
 
-  // 获取正在运行的任务，包含任务组中的任务
   protected final List<Task> getRunningTasks() {
     return new LinkedList<>(runningQueue);
   }
 
-  // 获取正在运行的任务总量，包含任务组中的任务
-  protected int getRunningNumberofTask() {
+  protected int getRunningNumberOfTask() {
     return runningQueue.size();
   }
 
-  // 获取已经完成的任务总量，包含任务组中的任务
   protected long getCompletedNumberOfTask() {
     return completedTaskNumber.get();
   }
 
-  // 获取执行的任务总量
   protected long getTotalNumberOfTask() {
     return taskNumber.get();
   }
@@ -128,7 +130,6 @@ final class DefaultThreadPoolExecutor extends ThreadPoolExecutor {
     this.runningTaskGrous.remove(taskGroup.getId());
   }
 
-  // 获取正在运行的任务组
   protected Collection<TaskGroup> getRunningTaskGroups() {
     return new LinkedList<>(this.runningTaskGrous.values());
   }

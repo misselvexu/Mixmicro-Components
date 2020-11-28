@@ -14,6 +14,14 @@ import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.UUID;
 
+/**
+ * {@link Utils}
+ *
+ * <p>Class Tuple Definition
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version} - 2020/11/27
+ */
 public final class Utils {
 
   private static final String[] CHARS =

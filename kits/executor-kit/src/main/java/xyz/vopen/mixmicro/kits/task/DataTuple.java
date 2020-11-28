@@ -8,7 +8,15 @@ import java.util.List;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class Data extends Tuple {
+/**
+ * {@link DataTuple}
+ *
+ * <p>Class Tuple Definition
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version} - 2020/11/27
+ */
+public class DataTuple extends Tuple {
 
   private final ReadWriteLock lock = new ReentrantReadWriteLock();
 

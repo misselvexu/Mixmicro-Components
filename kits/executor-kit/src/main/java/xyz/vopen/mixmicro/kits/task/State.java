@@ -1,5 +1,13 @@
 package xyz.vopen.mixmicro.kits.task;
 
+/**
+ * {@link State}
+ *
+ * <p>Class Tuple Definition
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version} - 2020/11/27
+ */
 public enum State {
   UNKNOWN("unknown status", -1),
   INIT("task is initialized", 0),

@@ -1,26 +1,37 @@
 package xyz.vopen.mixmicro.kits.task;
 
-import xyz.vopen.mixmicro.kits.task.util.Assert;
+import xyz.vopen.mixmicro.kits.Assert;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * {@link ResultTask}
+ *
+ * <p>Class Tuple Definition
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version} - 2020/11/27
+ */
 public interface ResultTask<T> extends Task {
 
   /**
-   * 获取任务执行的结果，该方法会阻塞当前线程，直到任务执行完成
+   * Gets the result of task execution, which blocks the current thread until the task is completed.
    *
-   * @return 任务执行的结果
+   * @return Result of task execution
    */
   T get();
 
   /**
-   * 在指定的时间内获取任务执行的结果，如果任务在指定的时间内没有完成，则会抛出异常。该方法会阻塞当前线程，直到任务执行完成，或任务超时
+   * Get the result of the task execution within the specified time, and throw an exception if the
+   * task is not completed within the specified time. This method blocks the current thread until
+   * the task execution completes, or until the task times out!
    *
-   * @param timeout 任务执行超时时间
-   * @param unit 时间单位
-   * @return 任务执行的结果
-   * @throws TimeoutException 如果任务在指定的时间内没有完成，则会抛出该异常
+   * @param timeout Task execution timeout
+   * @param unit Time unit
+   * @return Result of task execution
+   * @throws TimeoutException This exception is thrown if the task is not completed within the
+   *     specified time.
    */
   T get(long timeout, TimeUnit unit) throws TimeoutException;
 

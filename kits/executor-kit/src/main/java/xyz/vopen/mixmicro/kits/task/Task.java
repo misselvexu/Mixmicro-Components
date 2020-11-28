@@ -1,59 +1,67 @@
 package xyz.vopen.mixmicro.kits.task;
 
-import xyz.vopen.mixmicro.kits.task.util.Assert;
+import xyz.vopen.mixmicro.kits.Assert;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * {@link Task}
+ *
+ * <p>Class Tuple Definition
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version} - 2020/11/27
+ */
 public interface Task {
 
   String DEFAULT_TYPE_NAME = "DEFAULT";
 
   /**
-   * 获取任务创建时间
+   * Get task creation time
    *
-   * @return 任务创建时间
+   * @return Task creation time
    */
   long createdAt();
 
   /**
-   * 获取任务开始执行时间
+   * Get task start time
    *
-   * @return 任务开始执行的时间
+   * @return The time when the task was started.
    */
   long getStartTime();
 
   /**
-   * 获取任务结束时间
+   * Get end of mission time
    *
-   * @return 任务结束时间
+   * @return Task end time
    */
   long getEndTime();
 
   /**
-   * 获取任务的类型
+   * Get the type of task
    *
-   * @return 任务类型
+   * @return Task type
    */
   String getType();
 
   /**
-   * 获取当前任务的状态
+   * Get the status of the current task
    *
-   * @return 任务状态
+   * @return Task Status
    * @see State
    */
   State getState();
 
   /**
-   * 当前任务的唯一 ID
+   * Unique ID of the current task
    *
-   * @return 任务 ID
+   * @return Task ID
    */
   String getId();
 
   /**
-   * 获取当前任务设置的进度回调，使用 {@code Context.onProgress(int)} 设置进度。可能为 {@code null}。
+   * Gets a callback to the progress of the current task setting, using {@code Context.onProgress(int)} to set the progress. Could be {@code null}.
    *
    * @return {@link Progress}
    * @see Context#onProgress(int)
@@ -62,7 +70,7 @@ public interface Task {
   Progress getProgress();
 
   /**
-   * 获取当前任务设置的完成时的回调，可能为 {@code null}
+   * Get the callback on completion of the current task setup, possibly {@code null}.
    *
    * @return {@link Callback}
    * @see Context#onSuccess(Object...)
@@ -73,22 +81,22 @@ public interface Task {
   Callback getCallback();
 
   /**
-   * 取消当前任务
+   * Cancel current task
    *
-   * @param mayInterruptIfRunning {@code true} 如果执行当前任务的线程需要被中断。否则任务可能会执行完成
-   * @return {@code true} 如果当前任务被取消；否则返回 {@code false}
+   * @param mayInterruptIfRunning {@code true} If the thread executing the current task needs to be interrupted. Otherwise the task may be completed!
+   * @return {@code true} if the current task is cancelled; otherwise return {@code false}
    */
   boolean cancel(boolean mayInterruptIfRunning);
 
-  /** 等待当前任务执行完成，会阻断当前线程继续执行，直到任务完成 */
+  /* Waiting for the current task to complete will block the current thread from continuing until the task is completed */
   void await();
 
   /**
-   * 在指定的时间内等待当前任务执行完成，会阻断当前线程继续执行，直到任务完成或达到了指定的时间。 如果到达指定时间，任务仍未完成，将会抛出异常
+   * Waiting for the completion of the current task execution for the specified time will block the current thread from continuing until the task is completed or the specified time is reached. If the task remains incomplete after the specified time, an exception is thrown.
    *
-   * @param timeout 超时时间
-   * @param unit 时间单位
-   * @throws TimeoutException 如果到达指定时间，任务仍未完成，将会抛出此异常
+   * @param timeout timeout
+   * @param unit Time unit
+   * @throws TimeoutException This exception will be thrown if the task is still incomplete after the specified time.
    */
   void await(long timeout, TimeUnit unit) throws TimeoutException;
 
@@ -107,9 +115,9 @@ public interface Task {
     }
 
     /**
-     * 设置任务的类型，如果不设置，默认为 {@code DEFAULT}
+     * Set the type of task, if not, default is {@code DEFAULT}
      *
-     * @param type 任务类型
+     * @param type Task type
      * @return {@link Builder}
      */
     public Builder type(String type) {
@@ -118,9 +126,9 @@ public interface Task {
     }
 
     /**
-     * 设置任务的进度回调。使用 {@link Context#onProgress(int)} 会触发该回调
+     * Sets a progress callback for the task. Use {@link Context#onProgress(int)} to trigger the callback.
      *
-     * @param progress 进度回调
+     * @param progress progress callback
      * @return {@link Builder}
      */
     public Builder progress(Progress progress) {
@@ -129,16 +137,16 @@ public interface Task {
     }
 
     /**
-     * 设置任务完成时的回调，可以很实用 {@link Context#onSuccess(Object...)}、{@link Context#onError(String, Object)}
-     * 或 {@link Context#onError(Exception)} 触发该回调。
+     * Setting callbacks on task completion can be useful {@link Context#onSuccess(Object...)} {@link Context#onError(String, Object)}
+     * or {@link Context#onError(Exception)} triggers this callback.
      *
-     * <p>如果调用 {@link Context#onSuccess(Object...)} 触发回调，任务状态为成功 {@link State#SUCCESS}，并且回调函数的第二个参数
-     * {@code Exception} 将为 {@code null}
+     * <p>If {@link Context#onSuccess(Object...)} is called, the callback is triggered, the task state is successful {@link State#SUCCESS}, and the second argument of the callback function is successful. triggers the callback, the task state is success {@link State#SUCCESS}, and the second argument of the callback function
+     * {@code Exception} will be {@code null}
      *
-     * <p>如果调用 {@link Context#onError(String, Object)} 或 {@link Context#onError(Exception)}
-     * 触发回调，认为的状态为错误 {@link State#ERROR}， 并且回调函数的第二个参数不为 {@code null}
+     * <p>If you call {@link Context#onError(String, Object)} or {@link Context#onError(Exception)}
+     * The callback is triggered, the considered state is an error {@link State#ERROR}, and the second argument of the callback function is not {@code null}.
      *
-     * @param callback 任务完成时的回调
+     * @param callback A callback on task completion.
      * @return {@link Builder}
      * @see Callback#call(Context, Exception)
      */

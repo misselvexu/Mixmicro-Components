@@ -1,12 +1,20 @@
 package xyz.vopen.mixmicro.kits.task;
 
-import xyz.vopen.mixmicro.kits.task.util.Assert;
+import xyz.vopen.mixmicro.kits.Assert;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * {@link TaskEngine}
+ *
+ * <p>Class Tuple Definition
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version} - 2020/11/27
+ */
 public final class TaskEngine {
 
   /** 默认为 CPU 核数 */
@@ -117,7 +125,7 @@ public final class TaskEngine {
   }
 
   public int getRunningNumberofTask() {
-    return this.executor.getRunningNumberofTask();
+    return this.executor.getRunningNumberOfTask();
   }
 
   // 获取已经完成的任务总量，包含任务组中的任务

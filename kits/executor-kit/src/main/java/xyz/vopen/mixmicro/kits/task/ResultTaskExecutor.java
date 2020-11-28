@@ -2,6 +2,14 @@ package xyz.vopen.mixmicro.kits.task;
 
 import java.util.concurrent.Callable;
 
+/**
+ * {@link ResultTaskExecutor}
+ *
+ * <p>Class Tuple Definition
+ *
+ * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
+ * @version ${project.version} - 2020/11/27
+ */
 class ResultTaskExecutor<T> implements Callable<T> {
 
   private final ResultBaseTask<T> task;
