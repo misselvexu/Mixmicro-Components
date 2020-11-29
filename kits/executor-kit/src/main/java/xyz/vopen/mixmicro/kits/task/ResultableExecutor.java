@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.kits.task;
 
 /**
- * {@link ResultExecutor}
+ * {@link ResultableExecutor}
  *
  * <p>Class Tuple Definition
  *
@@ -9,7 +9,7 @@ package xyz.vopen.mixmicro.kits.task;
  * @version ${project.version} - 2020/11/27
  */
 @FunctionalInterface
-public interface ResultExecutor<T> extends Executor {
+public interface ResultableExecutor<T> extends Executor {
 
   T execute(Context ctx) throws Exception;
 }

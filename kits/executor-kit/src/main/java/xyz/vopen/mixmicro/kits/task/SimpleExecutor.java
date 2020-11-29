@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.kits.task;
 
 /**
- * {@link MixExecutor}
+ * {@link SimpleExecutor}
  *
  * <p>Class Tuple Definition
  *
@@ -9,7 +9,7 @@ package xyz.vopen.mixmicro.kits.task;
  * @version ${project.version} - 2020/11/27
  */
 @FunctionalInterface
-public interface MixExecutor extends Executor {
+public interface SimpleExecutor extends Executor {
 
   void execute(Context ctx);
 }

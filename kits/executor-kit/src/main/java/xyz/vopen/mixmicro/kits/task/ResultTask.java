@@ -40,9 +40,9 @@ public interface ResultTask<T> extends Task {
     private String type;
     private String id;
     private Progress progress;
-    private final ResultExecutor<T> executor;
+    private final ResultableExecutor<T> executor;
 
-    protected Builder(ResultExecutor<T> executor) {
+    protected Builder(ResultableExecutor<T> executor) {
       Assert.notNull(executor);
 
       this.executor = executor;

@@ -69,13 +69,13 @@ public final class TaskGroup {
     executor.submit(item, this);
   }
 
-  public Builder buildItem(MixExecutor executor) {
+  public Builder newItemBuilder(SimpleExecutor executor) {
     Assert.notNull(executor);
 
     return new Builder(executor, this);
   }
 
-  public Item newItem(MixExecutor executor) {
+  public Item newItem(SimpleExecutor executor) {
     Assert.notNull(executor);
 
     return new Builder(executor, this).build();
@@ -97,7 +97,7 @@ public final class TaskGroup {
 
     private TaskGroup taskGroup;
 
-    protected Item(String type, String id, MixExecutor executor, TaskGroup taskGroup) {
+    protected Item(String type, String id, SimpleExecutor executor, TaskGroup taskGroup) {
       super(type, id, executor);
       this.taskGroup = taskGroup;
     }
@@ -115,7 +115,7 @@ public final class TaskGroup {
 
     private final TaskGroup taskGroup;
 
-    protected Builder(MixExecutor executor, TaskGroup taskGroup) {
+    protected Builder(SimpleExecutor executor, TaskGroup taskGroup) {
       super(executor);
       this.taskGroup = taskGroup;
     }

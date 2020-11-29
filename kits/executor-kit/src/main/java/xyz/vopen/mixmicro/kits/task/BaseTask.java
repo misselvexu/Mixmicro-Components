@@ -10,18 +10,18 @@ package xyz.vopen.mixmicro.kits.task;
  */
 class BaseTask extends AbstractTask {
 
-  private final MixExecutor executor;
+  private final SimpleExecutor executor;
 
-  protected BaseTask(MixExecutor executor) {
+  protected BaseTask(SimpleExecutor executor) {
     this(null, null, executor);
   }
 
-  protected BaseTask(String type, String id, MixExecutor executor) {
+  protected BaseTask(String type, String id, SimpleExecutor executor) {
     super(type, id);
     this.executor = executor;
   }
 
-  public MixExecutor getExecutor() {
+  public SimpleExecutor getExecutor() {
     return executor;
   }
 }

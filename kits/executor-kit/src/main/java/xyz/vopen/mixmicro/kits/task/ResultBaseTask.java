@@ -16,18 +16,18 @@ import java.util.concurrent.TimeoutException;
  */
 class ResultBaseTask<T> extends AbstractTask implements ResultTask<T> {
 
-  private final ResultExecutor<T> executor;
+  private final ResultableExecutor<T> executor;
 
-  protected ResultBaseTask(ResultExecutor<T> executor) {
+  protected ResultBaseTask(ResultableExecutor<T> executor) {
     this(null, null, executor);
   }
 
-  protected ResultBaseTask(String type, String id, ResultExecutor<T> executor) {
+  protected ResultBaseTask(String type, String id, ResultableExecutor<T> executor) {
     super(type, id);
     this.executor = executor;
   }
 
-  public ResultExecutor<T> getExecutor() {
+  public ResultableExecutor<T> getExecutor() {
     return executor;
   }
 

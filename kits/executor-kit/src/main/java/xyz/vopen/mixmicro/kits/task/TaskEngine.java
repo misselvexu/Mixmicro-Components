@@ -17,7 +17,6 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public final class TaskEngine {
 
-  /** 默认为 CPU 核数 */
   private static final int DEFAULT_CORE_SIZE = Runtime.getRuntime().availableProcessors();
 
   private static final int DEFAULT_MAX_POOL_SIZE = Integer.MAX_VALUE;
@@ -34,23 +33,25 @@ public final class TaskEngine {
   }
 
   /**
-   * 执行指定的任务
+   * Performs assigned tasks
    *
-   * @param task 要执行的任务，使用 {@link TaskEngine#buildTask(MixExecutor)} 创建
+   * @param task The task to be executed, using {@link TaskEngine#newTaskBuilder(SimpleExecutor)} to
+   *     create the
    */
-  public void go(Task task) {
+  public void execute(Task task) {
     Assert.notNull(task);
 
     executor.submit(task);
   }
 
   /**
-   * 创建无返回结果的任务，任务的执行结果使用回调处理，使用 {@link TaskEngine#go(Task)} 执行创建的任务
+   * Create tasks with no return result, use callbacks for task execution, and execute the created
+   * task using {@link TaskEngine#execute(Task)}.
    *
-   * @param executor 要执行的具体任务
-   * @return 任务
+   * @param executor specific task to be performed
+   * @return Task
    */
-  public Task.Builder buildTask(MixExecutor executor) {
+  public Task.Builder newTaskBuilder(SimpleExecutor executor) {
     return new Task.Builder(executor);
   }
 
@@ -65,35 +66,37 @@ public final class TaskEngine {
   }
 
   /**
-   * 创建有返回结果的任务，使用 {@link ResultTask#get()} 获取任务执行的结果
+   * Create a task with a return result and use {@link ResultTask#get()} to get the result of the
+   * task execution.
    *
-   * @param executor 要执行的具体任务
-   * @param <T> 任务返回结果的具体类型
-   * @return 带有返回结果的任务
+   * @param executor specific task to be performed
+   * @param <T> The specific type of result returned by the task.
+   * @return Tasks with returned results
    */
-  public <T> ResultTask.Builder<T> buildResultTask(ResultExecutor<T> executor) {
+  public <T> ResultTask.Builder<T> newResultTaskBuilder(ResultableExecutor<T> executor) {
     return new ResultTask.Builder<>(executor);
   }
 
   /**
-   * 直接创建并执行一个默认类型和默认 ID 的有返回结果的任务，使用 {@link ResultTask#get()} 获取任务执行的结果
+   * Directly create and execute a task with a default type and a default ID with the result
+   * returned, using {@link ResultTask#get()} to get the result of the task execution.
    *
-   * @param executor 要执行的具体任务
-   * @param <T> 任务返回结果的具体类型
-   * @return 有返回结果的任务
+   * @param executor specific task to be performed
+   * @param <T> The specific type of result returned by the task.
+   * @return Tasks with returned results
    */
-  public <T> ResultTask<T> go(ResultExecutor<T> executor) {
-    return this.go(null, null, executor);
+  public <T> ResultTask<T> execute(ResultableExecutor<T> executor) {
+    return this.execute(null, null, executor);
   }
 
   /**
-   * @param type 任务类型
-   * @param id 任务 ID
-   * @param executor 要执行的具体任务
-   * @param <T> 任务返回结果的具体类型
-   * @return 有返回结果的任务
+   * @param type Task type
+   * @param id Task ID
+   * @param executor specific task to be performed
+   * @param <T> The specific type of result returned by the task.
+   * @return Tasks with returned results
    */
-  public <T> ResultTask<T> go(String type, String id, ResultExecutor<T> executor) {
+  public <T> ResultTask<T> execute(String type, String id, ResultableExecutor<T> executor) {
     Assert.notNull(executor);
 
     ResultTask<T> task = new ResultBaseTask<>(type, id, executor);
@@ -102,9 +105,9 @@ public final class TaskEngine {
   }
 
   /**
-   * 判断线程池是否被关闭
+   * Determines if the thread pool is closed
    *
-   * @return {@code true} 如果线程池已经被关闭
+   * @return {@code true} if the thread pool has been closed
    * @see ThreadPoolExecutor#isShutdown()
    */
   public boolean isShutdown() {
@@ -124,16 +127,14 @@ public final class TaskEngine {
     return executor.getRunningTasks();
   }
 
-  public int getRunningNumberofTask() {
+  public int getRunningNumberOfTask() {
     return this.executor.getRunningNumberOfTask();
   }
 
-  // 获取已经完成的任务总量，包含任务组中的任务
   public long getCompletedNumberOfTask() {
     return this.executor.getCompletedNumberOfTask();
   }
 
-  // 获取执行的任务总量
   public long getTotalNumberOfTask() {
     return this.executor.getTotalNumberOfTask();
   }
@@ -177,14 +178,14 @@ public final class TaskEngine {
       return this;
     }
 
-    public Builder rejectedExecutionHandler(RejectedExecutionHandler handler) {
+    public Builder rejectedPolicy(RejectedExecutionHandler handler) {
       Assert.notNull(handler);
 
       this.rejectedExecutionHandler = handler;
       return this;
     }
 
-    public Builder completedTaskHandler(CompletedTaskHandler handler) {
+    public Builder completedHandler(CompletedTaskHandler handler) {
       this.completedTaskHandler = handler;
       return this;
     }

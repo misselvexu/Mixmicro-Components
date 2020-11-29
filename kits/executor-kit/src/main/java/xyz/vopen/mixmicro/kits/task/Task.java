@@ -102,13 +102,13 @@ public interface Task {
 
   class Builder {
 
-    protected final MixExecutor executor;
+    protected final SimpleExecutor executor;
     protected String type;
     protected String id;
     protected Progress progress;
     protected Callback callback;
 
-    protected Builder(MixExecutor executor) {
+    protected Builder(SimpleExecutor executor) {
       Assert.notNull(executor);
 
       this.executor = executor;
@@ -150,7 +150,7 @@ public interface Task {
      * @return {@link Builder}
      * @see Callback#call(Context, Exception)
      */
-    public Builder end(Callback callback) {
+    public Builder afterExecuted(Callback callback) {
       this.callback = callback;
       return this;
     }
