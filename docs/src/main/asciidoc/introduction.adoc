@@ -1,19 +1,20 @@
 == Introduction
 
-Mixmicro+ Components Framework aims to provide a one-stop solution for microservices development. This prjoect includes the required components for developing distributed applications and services, so that developers can develop distributed applications easily with the Spring Cloud programming models.
+The Mixmicro+ Components Framework is a one-stop solution for microservices development. This project contains the necessary components for developing distributed application services and makes it easy for developers to use these components to develop distributed application services using the Spring Cloud programming model.
 
-With Mixmicro+ Components Framework, you only need to add a few annotations and configurations, and you will be able to use the distributed solutions of Alibaba for your applications, and build a distributed system of your own with Alibaba middleware.
+With the Mixmicro+ Components Framework, you can connect your Spring Cloud applications to Alibaba.com's distributed application solutions with a few annotations and little configuration, and quickly build distributed applications through middleware.
 
-The features of Mixmicro+ Components Framework:
+The Mixmicro+ Components Framework currently provides the following features:
 
-1. **Flow control and service degradation**：support WebServlet, WebFlux, OpenFeign, RestTemplate, Dubbo access to the function of limiting and degrading flow. It can modify the rules of limiting and degrading flow in real time through the console at run time, and it also supports the monitoring of limiting and degrading Metrics.
-2. **Service registration and discovery**：Service can be registered and clients can discover the instances using Spring-managed beans, auto integration Ribbon.
-3. **Distributed configuration**：support for externalized configuration in a distributed system, auto refresh when configuration changes.
-4. **Rpc Service**：extend Spring Cloud client RestTemplate and OpenFeign to support calling Dubbo RPC services.
-5. **Event-driven**：support for building highly scalable event-driven microservices connected with shared messaging systems.
-6. **Distributed Transaction**：support for distributed transaction solution with high performance and ease of use.
-7. **Alibaba Cloud Object Storage**：massive, secure, low-cost, and highly reliable cloud storage services. Support for storing and accessing any type of data in any application, anytime, anywhere.
-8. **Alibaba Cloud SchedulerX**：accurate, highly reliable, and highly available scheduled job scheduling services with response time within seconds.
-9. **Alibaba Cloud SMS**： A messaging service that covers the globe, Alibaba SMS provides convenient, efficient, and intelligent communication capabilities that help businesses quickly contact their customers.
+1. **service stream-limit downgrade**: supports access to WebServlet, WebFlux, OpenFeign, RestTemplate, Dubbo stream-limit downgrade functionality, which allows you to modify stream-limit downgrade rules in real time via the console at runtime, and also supports viewing stream-limit downgrade Metrics monitoring.
+2. **Service Registration and Discovery**: Adapts Spring Cloud service registration and discovery standards and integrates Ribbon support by default.
+3. **Distributed Configuration Management**: Supports externalized configuration in distributed systems, automatically refreshed when configuration changes are made.
+4. **Rpc services**: Extends Spring Cloud client RestTemplate and OpenFeign to support invocation of Dubbo RPC services.
+5. **Message Driven Capabilities**: Builds message driven capabilities for microservice applications based on Mixmicro Stream.
+6. **Distributed transactions**: solve distributed transaction problems efficiently and with zero intrusion into the business using @GlobalTransactional annotations.
+7. **Object storage**: massive, secure, low-cost, highly reliable cloud storage service. Support any application, any time, any place to store and access any type of data.
+8. **Distributed Task Scheduling**: Provides second-by-second, accurate, highly reliable, and highly available scheduled (Cron Expression-based) task scheduling services.
+9. **Messaging Services**: Email, SMS, friendly, efficient and intelligent interconnected communication capabilities to help enterprises quickly build customer reach channels.
+10. **Tools Library**: supports common toolsets, including: queues, reflection, events, network clients, sequence IDs, thread pooling, and more.
 
-Mixmicro+ Components Framework also provide rich https://github.com/misselvexu/Mixmicro-Components/tree/master/examples[examples].
+The Mixmicro+ Components Framework also provides a rich set of https://github.com/misselvexu/Mixmicro-Components/tree/master/examples[examples].
