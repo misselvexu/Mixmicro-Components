@@ -88,8 +88,6 @@ public class TaskTester {
 
     TaskGroup group = engine.prepareGroup("demo-group");
 
-
-
     // ~~
     System.out.println("task engine status ...");
     System.out.println("[Total Task Size] : " + engine.getTotalNumberOfTask());

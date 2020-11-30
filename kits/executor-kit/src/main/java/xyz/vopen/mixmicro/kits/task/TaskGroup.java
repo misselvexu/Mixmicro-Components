@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.kits.task;
 
 import xyz.vopen.mixmicro.kits.Assert;
+import xyz.vopen.mixmicro.kits.annotation.Unstable;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -16,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020/11/27
  */
+@Unstable
 public final class TaskGroup {
 
   private final DefaultThreadPoolExecutor executor;
@@ -60,7 +62,7 @@ public final class TaskGroup {
     return this.dataTuple;
   }
 
-  public void go(Item item) {
+  public void submit(Item item) {
     Assert.notNull(item);
 
     item.setTaskGroup(this);
