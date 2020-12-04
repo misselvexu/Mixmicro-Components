@@ -58,7 +58,6 @@ import java.util.Set;
  * Collections#synchronizedMap} to provide synchronized access to a <Code>ReferenceMap</Code>.
  *
  * @author Paul Jack
- * @version $Id: ReferenceMap.java,v 1.7.2.1 2004/05/22 12:14:01 scolebourne Exp $
  * @see Reference
  * @since 2.1
  */

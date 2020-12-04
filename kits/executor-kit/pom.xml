@@ -5,21 +5,20 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-kits</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>executor-kit</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <name>Executor kit :: ${project.version}</name>
     <description>Mixmicro+ Thread Executor Kit</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -41,8 +40,14 @@
         </dependency>
 
         <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-common</artifactId>
+            <version>4.1.31.Final</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
-            <artifactId>timer-kit</artifactId>
+            <artifactId>common-kits</artifactId>
         </dependency>
 
     </dependencies>
@@ -52,6 +57,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
             </plugin>
             <!-- Make a jar and put the sources in the jar -->
             <plugin>

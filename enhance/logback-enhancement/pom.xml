@@ -5,13 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-parent</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mixmicro-components-enhance-logback</artifactId>
-    <groupId>com.yunlsp.framework.components</groupId>
     <packaging>pom</packaging>
     <name>Enhance Logback Module :: ${project.version}</name>
     <description>🏗 Enhance Log Back Module</description>
@@ -78,17 +77,6 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>${project.version}</version>
-                <type>test-jar</type>
-            </dependency>
             <!-- end of dependencies duplicated from logback-bom/pom.xml -->
 
             <dependency>
@@ -173,26 +161,6 @@
 
     </dependencyManagement>
 
-    <repositories>
-        <repository>
-            <id>maven-snapshots</id>
-            <name>Maven Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>aliyun</id>
-            <name>AliYun Maven</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-
-    </repositories>
-
     <build>
         <plugins>
             <plugin>
@@ -214,17 +182,6 @@
                     <source>2.0</source>
                 </configuration>
             </plugin>
-            <!--jdk version-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
-
 </project>

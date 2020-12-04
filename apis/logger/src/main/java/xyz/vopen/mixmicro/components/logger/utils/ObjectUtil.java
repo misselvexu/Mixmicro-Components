@@ -20,10 +20,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @version $Id: ObjectUtil.java, v 0.1 2017年08月01日 上午11:41 luoguimu123 Exp $
- */
 public class ObjectUtil {
   public static final Object NULL =
       new Serializable() {

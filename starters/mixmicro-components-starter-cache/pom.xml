@@ -5,12 +5,11 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-starters</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-cache</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <name>Cache Starter Module :: ${project.version}</name>
     <description>🏗 Cache Starter Module</description>
@@ -18,9 +17,9 @@
     <packaging>pom</packaging>
 
     <properties>
-        <spring.framework.version>5.2.2.RELEASE</spring.framework.version>
-        <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
-        <lettuce.version>5.2.2.RELEASE</lettuce.version>
+        <spring.framework.version>5.2.9.RELEASE</spring.framework.version>
+        <spring.boot.version>2.2.10.RELEASE</spring.boot.version>
+        <lettuce.version>5.2.9.RELEASE</lettuce.version>
         <jedis.version>3.1.0</jedis.version>
         <kryo.version>4.0.2</kryo.version>
     </properties>

@@ -5,17 +5,25 @@
     <parent>
         <artifactId>mixmicro-components-all</artifactId>
         <groupId>com.yunlsp.framework.components</groupId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <modules>
         <module>circuitbreaker-test</module>
         <module>metrics-test</module>
         <module>email-test</module>
         <module>dbm-master-slave-switch-test</module>
         <module>mongo-client-test</module>
+        <module>scheduler-test</module>
+        <module>auto-httpclient-test</module>
+        <module>quartz-test</module>
     </modules>
 
     <artifactId>mixmicro-components-test</artifactId>
@@ -35,7 +43,7 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-dependencies</artifactId>
-                <version>1.0.7.BUILD-SNAPSHOT</version>
+                <version>${project.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>

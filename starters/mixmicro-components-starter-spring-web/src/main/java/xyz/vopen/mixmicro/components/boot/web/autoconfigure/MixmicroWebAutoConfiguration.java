@@ -56,8 +56,7 @@ public class MixmicroWebAutoConfiguration implements WebMvcConfigurer {
   @ConditionalOnProperty(
       prefix = MIXMICRO_WEB_CONFIG_PROPERTIES_PREFIX + ".log",
       value = "enabled-request-log",
-      havingValue = "true",
-      matchIfMissing = true)
+      havingValue = "true")
   WebApiAspect webApiAspect(MixmicroWebConfigProperties properties) {
     return new WebApiAspect(properties);
   }

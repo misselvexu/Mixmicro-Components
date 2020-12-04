@@ -5,12 +5,11 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-datasource</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-datasource-orm</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <name>Enhance DataSource ORM Module :: ${project.version}</name>
     <description>🏗 Enhance DataSource ORM Module</description>

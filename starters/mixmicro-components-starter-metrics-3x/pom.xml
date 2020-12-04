@@ -5,12 +5,11 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-starters</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starter-metrics-3x</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <name>Metrics Starter Module :: ${project.version}</name>
     <description>🏗 Metrics Starter Module</description>

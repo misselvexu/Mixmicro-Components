@@ -5,47 +5,15 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-all</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-parent</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Enhance Module :: ${project.version}</name>
     <description>🏗 Enhance Module</description>
-
-    <properties>
-
-        <mixmicro-enhance-cache.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache.version>
-
-        <mixmicro-enhance-cache-api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-api.version>
-        <mixmicro-enhance-cache-context.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-context.version>
-        <mixmicro-enhance-cache-core.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-core.version>
-        <mixmicro-enhance-cache-extension.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension.version>
-        <mixmicro-enhance-cache-load.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-load.version>
-        <mixmicro-enhance-cache-extension-redis.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension-redis.version>
-        <mixmicro-enhance-cache-extension-lettuce.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension-lettuce.version>
-        <mixmicro-enhance-cache-extension-springdata.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-cache-extension-springdata.version>
-
-
-        <mixmicro-enhance-security-api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-security-api.version>
-        <mixmicro-enhance-event-api.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-event-api.version>
-        <mixmicro-enhance-datasource.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-datasource.version>
-        <mixmicro-enhance-schedule.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-schedule.version>
-        <mixmicro-enhance-spi.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-spi.version>
-        <mixmicro-enhance-circuitbreaker.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-circuitbreaker.version>
-        <mixmicro-enhance-socket.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-socket.version>
-        <mixmicro-enhance-metrics.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-metrics.version>
-        <mixmicro-enhance-healthy.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-healthy.version>
-        <mixmicro-enhance-email.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-email.version>
-        <mixmicro-enhance-rpc-default.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-rpc-default.version>
-        <mixmicro-enhance-http.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-http.version>
-        <mixmicro-enhance-logging.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-logging.version>
-        <mixmicro-enhance-mongo.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-mongo.version>
-        <mixmicro-enhance-logback.version>1.0.7.BUILD-SNAPSHOT</mixmicro-enhance-logback.version>
-    </properties>
 
     <modules>
         <module>cache-enhancement</module>
@@ -55,7 +23,7 @@
         <module>schedule-enhancement</module>
         <module>spi-enhancement</module>
         <module>circuitbreaker-enhancement</module>
-        <module>socket-enhancement</module>
+        <module>network-enhancement</module>
         <module>metrics-enhancement</module>
         <module>healthy-enhancement</module>
         <module>email-enhancement</module>
@@ -66,26 +34,8 @@
         <module>logback-enhancement</module>
     </modules>
 
-
     <dependencyManagement>
         <dependencies>
-
-            <!-- Common Dependency -->
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-apis-dependencies</artifactId>
-                <version>${mixmicro-components-apis.dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-kits-dependencies</artifactId>
-                <version>${mixmicro-components-kits.dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
 
             <!-- Sub-modules dependencies definition -->
 
@@ -93,123 +43,129 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-cache</artifactId>
-                <version>${mixmicro-enhance-cache.version}</version>
+                <version>${project.version}</version>
                 <type>pom</type>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-cache-api</artifactId>
-                <version>${mixmicro-enhance-cache-api.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-cache-core</artifactId>
-                <version>${mixmicro-enhance-cache-core.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-cache-context</artifactId>
-                <version>${mixmicro-enhance-cache-context.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-cache-extension</artifactId>
-                <version>${mixmicro-enhance-cache-extension.version}</version>
+                <version>${project.version}</version>
                 <type>pom</type>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-cache-extension-redis-default</artifactId>
-                <version>${mixmicro-enhance-cache-extension-redis.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-cache-extension-redis-lettuce</artifactId>
-                <version>${mixmicro-enhance-cache-extension-lettuce.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-cache-extension-redis-springdata</artifactId>
-                <version>${mixmicro-enhance-cache-extension-springdata.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-cache-load</artifactId>
-                <version>${mixmicro-enhance-cache-load.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Security -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-security-core</artifactId>
-                <version>${mixmicro-enhance-security-api.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Event enhance module -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-event</artifactId>
-                <version>${mixmicro-enhance-event-api.version}</version>
+                <version>${project.version}</version>
                 <type>pom</type>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-event-api</artifactId>
-                <version>${mixmicro-enhance-event-api.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-event-core</artifactId>
-                <version>${mixmicro-enhance-event-api.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- DataSource -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-datasource</artifactId>
-                <version>${mixmicro-enhance-datasource.version}</version>
+                <version>${project.version}</version>
                 <type>pom</type>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-datasource-orm</artifactId>
-                <version>${mixmicro-enhance-datasource.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-datasource-jdbc</artifactId>
-                <version>${mixmicro-enhance-datasource.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Schedule -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-schedule</artifactId>
-                <version>${mixmicro-enhance-schedule.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-enhance-schedule-core</artifactId>
-                <version>${mixmicro-enhance-schedule.version}</version>
+                <artifactId>mixmicro-components-enhance-schedule-default</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-schedule-quartz</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-spi-core</artifactId>
-                <version>${mixmicro-enhance-spi.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
 
@@ -217,163 +173,163 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-circuitbreaker</artifactId>
-                <version>${mixmicro-enhance-circuitbreaker.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-circuitbreaker-core</artifactId>
-                <version>${mixmicro-enhance-circuitbreaker.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Socket Enhancement -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-enhance-socket-api</artifactId>
-                <version>${mixmicro-enhance-socket.version}</version>
+                <artifactId>mixmicro-components-enhance-network-api</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Metrics -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-metrics</artifactId>
-                <version>${mixmicro-enhance-metrics.version}</version>
+                <version>${project.version}</version>
                 <type>pom</type>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-enhance-socket-protocol-websocket</artifactId>
-                <version>${mixmicro-enhance-socket.version}</version>
+                <artifactId>mixmicro-components-enhance-network-protocol-tcp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-network-protocol-websocket</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-metrics-spring</artifactId>
-                <version>${mixmicro-enhance-metrics.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Healthy -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-healthy-spring</artifactId>
-                <version>${mixmicro-enhance-healthy.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-healthy-core</artifactId>
-                <version>${mixmicro-enhance-healthy.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Http -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-http</artifactId>
-                <version>${mixmicro-enhance-http.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Email -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-email-core</artifactId>
-                <version>${mixmicro-enhance-email.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-email-template-freemarker</artifactId>
-                <version>${mixmicro-enhance-email.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-email-template-thymeleaf</artifactId>
-                <version>${mixmicro-enhance-email.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- RPC -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-rpc-json-default</artifactId>
-                <version>${mixmicro-enhance-rpc-default.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Logging -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logging</artifactId>
-                <version>${mixmicro-enhance-logging.version}</version>
+                <version>${project.version}</version>
                 <type>pom</type>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logging-core</artifactId>
-                <version>${mixmicro-enhance-logging.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logging-client</artifactId>
-                <version>${mixmicro-enhance-logging.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logging-admin</artifactId>
-                <version>${mixmicro-enhance-logging.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-enhance-logging-admin-ui</artifactId>
-                <version>${mixmicro-enhance-logging.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logging-spring-context</artifactId>
-                <version>${mixmicro-enhance-logging.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Mongo -->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-mongo</artifactId>
-                <version>${mixmicro-enhance-mongo.version}</version>
+                <version>${project.version}</version>
                 <type>pom</type>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-mongo-client</artifactId>
-                <version>${mixmicro-enhance-mongo.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!--Logback-->
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logback</artifactId>
-                <version>${mixmicro-enhance-logback.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logback-core</artifactId>
-                <version>${mixmicro-enhance-logback.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logback-classic</artifactId>
-                <version>${mixmicro-enhance-logback.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-enhance-logback-access</artifactId>
-                <version>${mixmicro-enhance-logback.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
         </dependencies>

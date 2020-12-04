@@ -16,11 +16,6 @@
  */
 package xyz.vopen.mixmicro.components.logger.utils;
 
-/**
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @version $Id: StreamUtil.java, v 0.1 2017年08月01日 下午12:04 luoguimu123 Exp $
- */
-
 import java.io.*;
 
 public class StreamUtil {

@@ -5,13 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-kits</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>servlet-compress-filter</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Servlet Compress Filter :: ${project.version}</name>

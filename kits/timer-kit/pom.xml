@@ -5,13 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-kits</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>timer-kit</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
 
     <name>Timer Kit :: ${project.version}</name>
     <description>Mixmicro+ Thread Timer Kit</description>
@@ -44,12 +43,14 @@
             <groupId>org.jctools</groupId>
             <artifactId>jctools-core</artifactId>
             <version>2.1.2</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-common</artifactId>
             <version>4.1.31.Final</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
@@ -59,6 +60,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
             </plugin>
             <!-- Make a jar and put the sources in the jar -->
             <plugin>

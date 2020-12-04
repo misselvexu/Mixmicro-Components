@@ -19,10 +19,6 @@ package xyz.vopen.mixmicro.components.logger.utils;
 import java.lang.reflect.Array;
 import java.util.*;
 
-/**
- * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @version $Id: ClassUtil.java, v 0.1 2017年08月01日 下午12:01 luoguimu123 Exp $
- */
 public class ClassUtil {
   private static final Map TYPE_MAP = Collections.synchronizedMap(new WeakHashMap());
 

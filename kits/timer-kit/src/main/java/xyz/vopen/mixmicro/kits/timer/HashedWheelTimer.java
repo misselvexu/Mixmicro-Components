@@ -1,473 +1,486 @@
 package xyz.vopen.mixmicro.kits.timer;
 
-import io.netty.util.internal.PlatformDependent;
-import io.netty.util.internal.StringUtil;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Queue;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 /**
- * {@link HashedWheelTimer}
+ * Hash Wheel Timer, as per the paper:
+ *
+ * <p>Hashed and hierarchical timing wheels:
+ * http://www.cs.columbia.edu/~nahum/w6998/papers/ton97-timing-wheels.pdf
+ *
+ * <p>More comprehensive slides, explaining the paper can be found here:
+ * http://www.cse.wustl.edu/~cdgill/courses/cs6874/TimingWheels.ppt
+ *
+ * <p>Hash Wheel timer is an approximated timer that allows performant execution of larger amount of
+ * tasks with better performance compared to traditional scheduling.
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
- * @version ${project.version} - 2019-05-08.
  */
-public class HashedWheelTimer {
+public class HashedWheelTimer implements ScheduledExecutorService {
 
-  private static final AtomicIntegerFieldUpdater<HashedWheelTimer> WORKER_STATE_UPDATER =
-      AtomicIntegerFieldUpdater.newUpdater(HashedWheelTimer.class, "workerState");
+  public static final long DEFAULT_RESOLUTION =
+      TimeUnit.NANOSECONDS.convert(10, TimeUnit.MILLISECONDS);
+  public static final int DEFAULT_WHEEL_SIZE = 512;
+  private static final String DEFAULT_TIMER_NAME = "mixmicro-hashed-wheel-timer";
 
-  private final Worker worker = new Worker();
-  private final Thread workerThread;
+  private final Set<Registration<?>>[] wheel;
+  private final int wheelSize;
+  private final long resolution;
+  private final ExecutorService loop;
+  private final ExecutorService executor;
+  private final WaitStrategy waitStrategy;
 
-  public static final int WORKER_STATE_INIT = 0;
-  public static final int WORKER_STATE_STARTED = 1;
-  public static final int WORKER_STATE_SHUTDOWN = 2;
+  private volatile int cursor = 0;
 
-  @SuppressWarnings({"unused", "FieldMayBeFinal", "RedundantFieldInitialization"})
-  private volatile int workerState = WORKER_STATE_INIT; // 0 - init, 1 - started, 2 - shut down
-
-  private final long tickDuration;
-  private final HashedWheelBucket[] wheel;
-  private final int mask;
-  private final CountDownLatch startTimeInitialized = new CountDownLatch(1);
-  private final Queue<HashedWheelTimeout> timeouts = PlatformDependent.newMpscQueue();
-
-  private volatile long startTime;
-  private final Processor processor;
-
-  public HashedWheelTimer(
-      ThreadFactory threadFactory,
-      long tickDuration,
-      TimeUnit unit,
-      int ticksPerWheel,
-      Processor processor) {
-    this.processor = processor;
-    if (threadFactory == null) {
-      throw new NullPointerException("threadFactory");
-    }
-    if (unit == null) {
-      throw new NullPointerException("unit");
-    }
-    if (tickDuration <= 0) {
-      throw new IllegalArgumentException("tickDuration must be greater than 0: " + tickDuration);
-    }
-    if (ticksPerWheel <= 0) {
-      throw new IllegalArgumentException("ticksPerWheel must be greater than 0: " + ticksPerWheel);
-    }
-
-    // Normalize ticksPerWheel to power of two and initialize the wheel.
-    wheel = createWheel(ticksPerWheel);
-    mask = wheel.length - 1;
-
-    // Convert tickDuration to nanos.
-    this.tickDuration = unit.toNanos(tickDuration);
-
-    // Prevent overflow.
-    if (this.tickDuration >= Long.MAX_VALUE / wheel.length) {
-      throw new IllegalArgumentException(
-          String.format(
-              "tickDuration: %d (expected: 0 < tickDuration in nanos < %d",
-              tickDuration, Long.MAX_VALUE / wheel.length));
-    }
-    workerThread = threadFactory.newThread(worker);
-  }
-
-  private static HashedWheelBucket[] createWheel(int ticksPerWheel) {
-    if (ticksPerWheel <= 0) {
-      throw new IllegalArgumentException("ticksPerWheel must be greater than 0: " + ticksPerWheel);
-    }
-    if (ticksPerWheel > 1073741824) {
-      throw new IllegalArgumentException(
-          "ticksPerWheel may not be greater than 2^30: " + ticksPerWheel);
-    }
-
-    ticksPerWheel = normalizeTicksPerWheel(ticksPerWheel);
-    HashedWheelBucket[] wheel = new HashedWheelBucket[ticksPerWheel];
-    for (int i = 0; i < wheel.length; i++) {
-      wheel[i] = new HashedWheelBucket();
-    }
-    return wheel;
-  }
-
-  private static int normalizeTicksPerWheel(int ticksPerWheel) {
-    int normalizedTicksPerWheel = 1;
-    while (normalizedTicksPerWheel < ticksPerWheel) {
-      normalizedTicksPerWheel <<= 1;
-    }
-    return normalizedTicksPerWheel;
-  }
-
-  public void start() {
-    switch (WORKER_STATE_UPDATER.get(this)) {
-      case WORKER_STATE_INIT:
-        if (WORKER_STATE_UPDATER.compareAndSet(this, WORKER_STATE_INIT, WORKER_STATE_STARTED)) {
-          workerThread.start();
-        }
-        break;
-      case WORKER_STATE_STARTED:
-        break;
-      case WORKER_STATE_SHUTDOWN:
-        throw new IllegalStateException("cannot be started once stopped");
-      default:
-        throw new Error("Invalid WorkerState");
-    }
-
-    // Wait until the startTime is initialized by the worker.
-    while (startTime == 0) {
-      try {
-        startTimeInitialized.await();
-      } catch (InterruptedException ignore) {
-        // Ignore - it will be ready very soon.
-      }
-    }
-  }
-
-  public Set<HashedWheelTimeout> stop() {
-    if (Thread.currentThread() == workerThread) {
-      throw new IllegalStateException(
-          HashedWheelTimer.class.getSimpleName() + ".stop() cannot be called from ");
-    }
-
-    if (!WORKER_STATE_UPDATER.compareAndSet(this, WORKER_STATE_STARTED, WORKER_STATE_SHUTDOWN)) {
-      // workerState can be 0 or 2 at this moment - let it always be 2.
-      WORKER_STATE_UPDATER.set(this, WORKER_STATE_SHUTDOWN);
-
-      return Collections.emptySet();
-    }
-
-    boolean interrupted = false;
-    while (workerThread.isAlive()) {
-      workerThread.interrupt();
-      try {
-        workerThread.join(100);
-      } catch (InterruptedException ignored) {
-        interrupted = true;
-      }
-    }
-
-    if (interrupted) {
-      Thread.currentThread().interrupt();
-    }
-
-    return worker.unprocessedTimeouts();
-  }
-
-  public void newTimeout(ScheduleIndex index, long delay, TimeUnit unit) {
-    long deadline = System.nanoTime() + unit.toNanos(delay) - startTime;
-    HashedWheelTimeout timeout = new HashedWheelTimeout(this, index, deadline);
-    timeouts.add(timeout);
-  }
-
-  private void expire(ScheduleIndex index) {
-    processor.process(index);
-  }
-
-  private final class Worker implements Runnable {
-    private final Set<HashedWheelTimeout> unprocessedTimeouts = new HashSet<>();
-
-    private long tick;
-
-    @Override
-    public void run() {
-      // Initialize the startTime.
-      startTime = System.nanoTime();
-      if (startTime == 0) {
-        // We use 0 as an indicator for the uninitialized value here, so make sure it's not 0 when
-        // initialized.
-        startTime = 1;
-      }
-
-      // Notify the other threads waiting for the initialization at start().
-      startTimeInitialized.countDown();
-
-      do {
-        final long deadline = waitForNextTick();
-        if (deadline > 0) {
-          int idx = (int) (tick & mask);
-          HashedWheelBucket bucket = wheel[idx];
-          transferTimeoutsToBuckets();
-          bucket.expireTimeouts(deadline);
-          tick++;
-        }
-      } while (WORKER_STATE_UPDATER.get(HashedWheelTimer.this) == WORKER_STATE_STARTED);
-
-      // Fill the unprocessedTimeouts so we can return them from stop() method.
-      for (HashedWheelBucket bucket : wheel) {
-        bucket.clearTimeouts(unprocessedTimeouts);
-      }
-      for (; ; ) {
-        HashedWheelTimeout timeout = timeouts.poll();
-        if (timeout == null) {
-          break;
-        }
-
-        unprocessedTimeouts.add(timeout);
-      }
-    }
-
-    private void transferTimeoutsToBuckets() {
-      // transfer only max. 100000 timeouts per tick to prevent a thread to stale the workerThread
-      // when it just
-      // adds new timeouts in a loop.
-      for (int i = 0; i < 100000; i++) {
-        HashedWheelTimeout timeout = timeouts.poll();
-        if (timeout == null) {
-          // all processed
-          break;
-        }
-
-        long calculated = timeout.deadline / tickDuration;
-        timeout.remainingRounds = (calculated - tick) / wheel.length;
-
-        final long ticks = Math.max(calculated, tick); // Ensure we don't schedule for past.
-        int stopIndex = (int) (ticks & mask);
-
-        HashedWheelBucket bucket = wheel[stopIndex];
-        bucket.addTimeout(timeout);
-      }
-    }
-
-    /**
-     * calculate goal nanoTime from startTime and current tick number, then wait until that goal has
-     * been reached.
-     *
-     * @return Long.MIN_VALUE if received a shutdown request, current time otherwise (with
-     *     Long.MIN_VALUE changed by +1)
-     */
-    private long waitForNextTick() {
-      long deadline = tickDuration * (tick + 1);
-
-      for (; ; ) {
-        final long currentTime = System.nanoTime() - startTime;
-        long sleepTimeMs = (deadline - currentTime + 999999) / 1000000;
-
-        if (sleepTimeMs <= 0) {
-          if (currentTime == Long.MIN_VALUE) {
-            return -Long.MAX_VALUE;
-          } else {
-            return currentTime;
-          }
-        }
-
-        // Check if we run on windows, as if thats the case we will need
-        // to round the sleepTime as workaround for a bug that only affect
-        // the JVM if it runs on windows.
-        //
-        // See https://github.com/netty/netty/issues/356
-        if (PlatformDependent.isWindows()) {
-          sleepTimeMs = sleepTimeMs / 10 * 10;
-        }
-
-        try {
-          Thread.sleep(sleepTimeMs);
-        } catch (InterruptedException ignored) {
-          if (WORKER_STATE_UPDATER.get(HashedWheelTimer.this) == WORKER_STATE_SHUTDOWN) {
-            return Long.MIN_VALUE;
-          }
-        }
-      }
-    }
-
-    public Set<HashedWheelTimeout> unprocessedTimeouts() {
-      return Collections.unmodifiableSet(unprocessedTimeouts);
-    }
-  }
-
-  private static final class HashedWheelTimeout {
-
-    private static final int ST_INIT = 0;
-    private static final int ST_EXPIRED = 2;
-    private static final AtomicIntegerFieldUpdater<HashedWheelTimeout> STATE_UPDATER =
-        AtomicIntegerFieldUpdater.newUpdater(HashedWheelTimeout.class, "state");
-
-    private final HashedWheelTimer timer;
-    private final ScheduleIndex entity;
-    private final long deadline;
-
-    @SuppressWarnings({"unused", "FieldMayBeFinal", "RedundantFieldInitialization"})
-    private volatile int state = ST_INIT;
-
-    // remainingRounds will be calculated and set by Worker.transferTimeoutsToBuckets() before the
-    // HashedWheelTimeout will be added to the correct HashedWheelBucket.
-    long remainingRounds;
-
-    // This will be used to chain timeouts in HashedWheelTimerBucket via a double-linked-list.
-    // As only the workerThread will act on it there is no need for synchronization / volatile.
-    HashedWheelTimeout next;
-    HashedWheelTimeout prev;
-
-    // The bucket to which the timeout was added
-    HashedWheelBucket bucket;
-
-    HashedWheelTimeout(HashedWheelTimer timer, ScheduleIndex entity, long deadline) {
-      this.timer = timer;
-      this.entity = entity;
-      this.deadline = deadline;
-    }
-
-    public boolean compareAndSetState(int expected, int state) {
-      return STATE_UPDATER.compareAndSet(this, expected, state);
-    }
-
-    public int state() {
-      return state;
-    }
-
-    public boolean isExpired() {
-      return state() == ST_EXPIRED;
-    }
-
-    public void expire() {
-      if (!compareAndSetState(ST_INIT, ST_EXPIRED)) {
-        return;
-      }
-
-      timer.expire(entity);
-    }
-
-    @Override
-    public String toString() {
-      final long currentTime = System.nanoTime();
-      long remaining = deadline - currentTime + timer.startTime;
-
-      StringBuilder buf =
-          new StringBuilder(192)
-              .append(StringUtil.simpleClassName(this))
-              .append('(')
-              .append("deadline: ");
-      if (remaining > 0) {
-        buf.append(remaining).append(" ns later");
-      } else if (remaining < 0) {
-        buf.append(-remaining).append(" ns ago");
-      } else {
-        buf.append("now");
-      }
-
-      return buf.toString();
-    }
+  /**
+   * Create a new {@code HashedWheelTimer} using the given with default resolution of 10
+   * MILLISECONDS and default wheel size.
+   */
+  public HashedWheelTimer() {
+    this(DEFAULT_RESOLUTION, DEFAULT_WHEEL_SIZE, new WaitStrategy.SleepWait());
   }
 
   /**
-   * Bucket that stores HashedWheelTimeouts. These are stored in a linked-list like datastructure to
-   * allow easy removal of HashedWheelTimeouts in the middle. Also the HashedWheelTimeout act as
-   * nodes themself and so no extra object creation is needed.
+   * Create a new {@code HashedWheelTimer} using the given timer resolution. All times will rounded
+   * up to the closest multiple of this resolution.
+   *
+   * @param resolution the resolution of this timer, in NANOSECONDS
    */
-  private static final class HashedWheelBucket {
-    // Used for the linked-list datastructure
-    private HashedWheelTimeout head;
-    private HashedWheelTimeout tail;
+  public HashedWheelTimer(long resolution) {
+    this(resolution, DEFAULT_WHEEL_SIZE, new WaitStrategy.SleepWait());
+  }
 
-    /** Add {@link HashedWheelTimeout} to this bucket. */
-    public void addTimeout(HashedWheelTimeout timeout) {
-      assert timeout.bucket == null;
-      timeout.bucket = this;
-      if (head == null) {
-        head = tail = timeout;
-      } else {
-        tail.next = timeout;
-        timeout.prev = tail;
-        tail = timeout;
-      }
+  /**
+   * Create a new {@code HashedWheelTimer} using the given timer resolution and wheelSize. All times
+   * will rounded up to the closest multiple of this resolution.
+   *
+   * @param res resolution of this timer in NANOSECONDS
+   * @param wheelSize size of the Ring Buffer supporting the Timer, the larger the wheel, the less
+   *     the lookup time is for sparse timeouts. Sane default is 512.
+   * @param waitStrategy strategy for waiting for the next tick
+   */
+  public HashedWheelTimer(long res, int wheelSize, WaitStrategy waitStrategy) {
+    this(DEFAULT_TIMER_NAME, res, wheelSize, waitStrategy, Executors.newFixedThreadPool(1));
+  }
+
+  /**
+   * Create a new {@code HashedWheelTimer} using the given timer resolution and wheelSize. All times
+   * will rounded up to the closest multiple of this resolution.
+   *
+   * @param name name for daemon thread factory to be displayed
+   * @param res resolution of this timer in NANOSECONDS
+   * @param wheelSize size of the Ring Buffer supporting the Timer, the larger the wheel, the less
+   *     the lookup time is for sparse timeouts. Sane default is 512.
+   * @param strategy strategy for waiting for the next tick
+   * @param exec Executor instance to submit tasks to
+   */
+  public HashedWheelTimer(
+      String name, long res, int wheelSize, WaitStrategy strategy, ExecutorService exec) {
+    this.waitStrategy = strategy;
+
+    this.wheel = new Set[wheelSize];
+    for (int i = 0; i < wheelSize; i++) {
+      wheel[i] = new ConcurrentSkipListSet<>();
     }
 
-    /** Expire all {@link HashedWheelTimeout}s for the given {@code deadline}. */
-    public void expireTimeouts(long deadline) {
-      HashedWheelTimeout timeout = head;
+    this.wheelSize = wheelSize;
 
-      // process all timeouts
-      while (timeout != null) {
-        boolean remove = false;
-        if (timeout.remainingRounds <= 0) {
-          if (timeout.deadline <= deadline) {
-            timeout.expire();
-          } else {
-            // The timeout was placed into a wrong slot. This should never happen.
-            throw new IllegalStateException(
-                String.format("timeout.deadline (%d) > deadline (%d)", timeout.deadline, deadline));
+    this.resolution = res;
+    final Runnable loopRunnable =
+        new Runnable() {
+          @Override
+          public void run() {
+            long deadline = System.nanoTime();
+
+            while (true) {
+              // TODO: consider extracting processing until deadline for test purposes
+              Set<Registration<?>> registrations = wheel[cursor];
+
+              for (Registration r : registrations) {
+                if (r.isCancelled()) {
+                  registrations.remove(r);
+                } else if (r.ready()) {
+                  executor.execute(r);
+                  registrations.remove(r);
+
+                  if (!r.isCancelAfterUse()) {
+                    reschedule(r);
+                  }
+                } else {
+                  r.decrement();
+                }
+              }
+
+              deadline += resolution;
+
+              try {
+                waitStrategy.waitUntil(deadline);
+              } catch (InterruptedException e) {
+                return;
+              }
+
+              cursor = (cursor + 1) % wheelSize;
+            }
           }
-          remove = true;
-        } else {
-          timeout.remainingRounds--;
-        }
-        // store reference to next as we may null out timeout.next in the remove block.
-        HashedWheelTimeout next = timeout.next;
-        if (remove) {
-          remove(timeout);
-        }
-        timeout = next;
-      }
-    }
+        };
 
-    public void remove(HashedWheelTimeout timeout) {
-      HashedWheelTimeout next = timeout.next;
-      // remove timeout that was either processed or cancelled by updating the linked-list
-      if (timeout.prev != null) {
-        timeout.prev.next = next;
-      }
-      if (timeout.next != null) {
-        timeout.next.prev = timeout.prev;
-      }
+    this.loop =
+        Executors.newSingleThreadExecutor(
+            new ThreadFactory() {
+              AtomicInteger i = new AtomicInteger();
 
-      if (timeout == head) {
-        // if timeout is also the tail we need to adjust the entry too
-        if (timeout == tail) {
-          tail = null;
-          head = null;
-        } else {
-          head = next;
+              @Override
+              public Thread newThread(Runnable r) {
+                Thread thread = new Thread(r, name + "-" + i.getAndIncrement());
+                thread.setDaemon(true);
+                return thread;
+              }
+            });
+    this.loop.submit(loopRunnable);
+    this.executor = exec;
+  }
+
+  @Override
+  public ScheduledFuture<?> submit(Runnable runnable) {
+    return scheduleOneShot(resolution, constantlyNull(runnable));
+  }
+
+  @Override
+  public ScheduledFuture<?> schedule(Runnable runnable, long period, TimeUnit timeUnit) {
+    return scheduleOneShot(
+        TimeUnit.NANOSECONDS.convert(period, timeUnit), constantlyNull(runnable));
+  }
+
+  @Override
+  public <V> ScheduledFuture<V> schedule(Callable<V> callable, long period, TimeUnit timeUnit) {
+    return scheduleOneShot(TimeUnit.NANOSECONDS.convert(period, timeUnit), callable);
+  }
+
+  @Override
+  public ScheduledFuture<?> scheduleAtFixedRate(
+      Runnable runnable, long initialDelay, long period, TimeUnit unit) {
+    return scheduleFixedRate(
+        TimeUnit.NANOSECONDS.convert(period, unit),
+        TimeUnit.NANOSECONDS.convert(initialDelay, unit),
+        constantlyNull(runnable));
+  }
+
+  @Override
+  public ScheduledFuture<?> scheduleWithFixedDelay(
+      Runnable runnable, long initialDelay, long delay, TimeUnit unit) {
+    return scheduleFixedDelay(
+        TimeUnit.NANOSECONDS.convert(delay, unit),
+        TimeUnit.NANOSECONDS.convert(initialDelay, unit),
+        constantlyNull(runnable));
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+        "HashedWheelTimer { Buffer Size: %d, Resolution: %d }", wheelSize, resolution);
+  }
+
+  /** Executor Delegates */
+  @Override
+  public void execute(Runnable command) {
+    executor.execute(command);
+  }
+
+  @Override
+  public void shutdown() {
+    this.loop.shutdown();
+    this.executor.shutdown();
+  }
+
+  @Override
+  public List<Runnable> shutdownNow() {
+    this.loop.shutdownNow();
+    return this.executor.shutdownNow();
+  }
+
+  @Override
+  public boolean isShutdown() {
+    return this.loop.isShutdown() && this.executor.isShutdown();
+  }
+
+  @Override
+  public boolean isTerminated() {
+    return this.loop.isTerminated() && this.executor.isTerminated();
+  }
+
+  @Override
+  public boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException {
+    return this.loop.awaitTermination(timeout, unit)
+        && this.executor.awaitTermination(timeout, unit);
+  }
+
+  @Override
+  public <T> Future<T> submit(Callable<T> task) {
+    return this.executor.submit(task);
+  }
+
+  @Override
+  public <T> Future<T> submit(Runnable task, T result) {
+    return this.executor.submit(task, result);
+  }
+
+  @Override
+  public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks)
+      throws InterruptedException {
+    return this.executor.invokeAll(tasks);
+  }
+
+  @Override
+  public <T> List<Future<T>> invokeAll(
+      Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
+      throws InterruptedException {
+    return this.executor.invokeAll(tasks, timeout, unit);
+  }
+
+  @Override
+  public <T> T invokeAny(Collection<? extends Callable<T>> tasks)
+      throws InterruptedException, ExecutionException {
+    return this.executor.invokeAny(tasks);
+  }
+
+  @Override
+  public <T> T invokeAny(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
+      throws InterruptedException, ExecutionException, TimeoutException {
+    return this.executor.invokeAny(tasks, timeout, unit);
+  }
+
+  /**
+   * Create a wrapper Function, which will "debounce" i.e. postpone the function execution until
+   * after <code>period</code> has elapsed since last time it was invoked. <code>delegate</code>
+   * will be called most once <code>period</code>.
+   *
+   * @param delegate delegate runnable to be wrapped
+   * @param period given time period
+   * @param timeUnit unit of the period
+   * @return wrapped runnable
+   */
+  public Runnable debounce(Runnable delegate, long period, TimeUnit timeUnit) {
+    AtomicReference<ScheduledFuture<?>> reg = new AtomicReference<>();
+
+    return new Runnable() {
+      @Override
+      public void run() {
+        ScheduledFuture<?> future =
+            reg.getAndSet(
+                scheduleOneShot(
+                    TimeUnit.NANOSECONDS.convert(period, timeUnit),
+                    new Callable<Object>() {
+                      @Override
+                      public Object call() throws Exception {
+                        delegate.run();
+                        return null;
+                      }
+                    }));
+        if (future != null) {
+          future.cancel(true);
         }
-      } else if (timeout == tail) {
-        // if the timeout is the tail modify the tail to be the prev node.
-        tail = timeout.prev;
       }
-      // null out prev, next and bucket to allow for GC.
-      timeout.prev = null;
-      timeout.next = null;
-      timeout.bucket = null;
-    }
+    };
+  }
 
-    public void clearTimeouts(Set<HashedWheelTimeout> set) {
-      for (; ; ) {
-        HashedWheelTimeout timeout = pollTimeout();
-        if (timeout == null) {
-          return;
+  /**
+   * Create a wrapper Consumer, which will "debounce" i.e. postpone the function execution until
+   * after <code>period</code> has elapsed since last time it was invoked. <code>delegate</code>
+   * will be called most once <code>period</code>.
+   *
+   * @param delegate delegate consumer to be wrapped
+   * @param period given time period
+   * @param timeUnit unit of the period
+   * @return wrapped runnable
+   */
+  public <T> Consumer<T> debounce(Consumer<T> delegate, long period, TimeUnit timeUnit) {
+    AtomicReference<ScheduledFuture<T>> reg = new AtomicReference<>();
+
+    return new Consumer<T>() {
+      @Override
+      public void accept(T t) {
+        ScheduledFuture<T> future =
+            reg.getAndSet(
+                scheduleOneShot(
+                    TimeUnit.NANOSECONDS.convert(period, timeUnit),
+                    new Callable<T>() {
+                      @Override
+                      public T call() throws Exception {
+                        delegate.accept(t);
+                        return t;
+                      }
+                    }));
+        if (future != null) {
+          future.cancel(true);
         }
-        if (timeout.isExpired()) {
-          continue;
+      }
+    };
+  }
+
+  /**
+   * Create a wrapper Runnable, which creates a throttled version, which, when called repeatedly,
+   * will call the original function only once per every <code>period</code> milliseconds. It's
+   * easier to think about throttle in terms of it's "left bound" (first time it's called within the
+   * current period).
+   *
+   * @param delegate delegate runnable to be called
+   * @param period period to be elapsed between the runs
+   * @param timeUnit unit of the period
+   * @return wrapped runnable
+   */
+  public Runnable throttle(Runnable delegate, long period, TimeUnit timeUnit) {
+    AtomicBoolean alreadyWaiting = new AtomicBoolean();
+
+    return new Runnable() {
+      @Override
+      public void run() {
+        if (alreadyWaiting.compareAndSet(false, true)) {
+          scheduleOneShot(
+              TimeUnit.NANOSECONDS.convert(period, timeUnit),
+              new Callable<Object>() {
+                @Override
+                public Object call() throws Exception {
+                  delegate.run();
+                  alreadyWaiting.compareAndSet(true, false);
+                  return null;
+                }
+              });
         }
-        set.add(timeout);
       }
-    }
+    };
+  }
 
-    private HashedWheelTimeout pollTimeout() {
-      HashedWheelTimeout head = this.head;
-      if (head == null) {
-        return null;
-      }
-      HashedWheelTimeout next = head.next;
-      if (next == null) {
-        tail = this.head = null;
-      } else {
-        this.head = next;
-        next.prev = null;
-      }
+  /**
+   * Create a wrapper Consumer, which creates a throttled version, which, when called repeatedly,
+   * will call the original function only once per every <code>period</code> milliseconds. It's
+   * easier to think about throttle in terms of it's "left bound" (first time it's called within the
+   * current period).
+   *
+   * @param delegate delegate consumer to be called
+   * @param period period to be elapsed between the runs
+   * @param timeUnit unit of the period
+   * @return wrapped runnable
+   */
+  public <T> Consumer<T> throttle(Consumer<T> delegate, long period, TimeUnit timeUnit) {
+    AtomicBoolean alreadyWaiting = new AtomicBoolean();
+    AtomicReference<T> lastValue = new AtomicReference<>();
 
-      // null out prev and next to allow for GC.
-      head.next = null;
-      head.prev = null;
-      head.bucket = null;
-      return head;
+    return new Consumer<T>() {
+      @Override
+      public void accept(T val) {
+        lastValue.set(val);
+        if (alreadyWaiting.compareAndSet(false, true)) {
+          scheduleOneShot(
+              TimeUnit.NANOSECONDS.convert(period, timeUnit),
+              new Callable<Object>() {
+                @Override
+                public Object call() throws Exception {
+                  delegate.accept(lastValue.getAndSet(null));
+                  alreadyWaiting.compareAndSet(true, false);
+                  return null;
+                }
+              });
+        }
+      }
+    };
+  }
+
+  // TODO: biConsumer
+
+  /** INTERNALS */
+  private <V> Registration<V> scheduleOneShot(long firstDelay, Callable<V> callable) {
+    assertRunning();
+    isTrue(
+        firstDelay >= resolution,
+        "Cannot schedule tasks for amount of time less than timer precision.");
+    int firstFireOffset = (int) (firstDelay / resolution);
+    int firstFireRounds = firstFireOffset / wheelSize;
+
+    Registration<V> r = new OneShotRegistration<V>(firstFireRounds, callable, firstDelay);
+    // We always add +1 because we'd like to keep to the right boundary of event on execution, not
+    // to the left:
+    //
+    // For example:
+    //    |          now          |
+    // res start               next tick
+    // The earliest time we can tick is aligned to the right. Think of it a bit as a `ceil`
+    // function.
+    wheel[idx(cursor + firstFireOffset + 1)].add(r);
+    return r;
+  }
+
+  private <V> Registration<V> scheduleFixedRate(
+      long recurringTimeout, long firstDelay, Callable<V> callable) {
+    assertRunning();
+    isTrue(
+        recurringTimeout >= resolution,
+        "Cannot schedule tasks for amount of time less than timer precision.");
+
+    int offset = (int) (recurringTimeout / resolution);
+    int rounds = offset / wheelSize;
+
+    int firstFireOffset = (int) (firstDelay / resolution);
+    int firstFireRounds = firstFireOffset / wheelSize;
+
+    Registration<V> r =
+        new FixedRateRegistration<>(firstFireRounds, callable, recurringTimeout, rounds, offset);
+    wheel[idx(cursor + firstFireOffset + 1)].add(r);
+    return r;
+  }
+
+  private <V> Registration<V> scheduleFixedDelay(
+      long recurringTimeout, long firstDelay, Callable<V> callable) {
+    assertRunning();
+    isTrue(
+        recurringTimeout >= resolution,
+        "Cannot schedule tasks for amount of time less than timer precision.");
+
+    int offset = (int) (recurringTimeout / resolution);
+    int rounds = offset / wheelSize;
+
+    int firstFireOffset = (int) (firstDelay / resolution);
+    int firstFireRounds = firstFireOffset / wheelSize;
+
+    Registration<V> r =
+        new FixedDelayRegistration<>(
+            firstFireRounds, callable, recurringTimeout, rounds, offset, this::reschedule);
+    wheel[idx(cursor + firstFireOffset + 1)].add(r);
+    return r;
+  }
+
+  /** Rechedule a {@link Registration} for the next fire */
+  private void reschedule(Registration<?> registration) {
+    registration.reset();
+    wheel[idx(cursor + registration.getOffset() + 1)].add(registration);
+  }
+
+  private int idx(int cursor) {
+    return cursor % wheelSize;
+  }
+
+  private void assertRunning() {
+    if (this.loop.isTerminated()) {
+      throw new IllegalStateException("Timer is not running");
     }
   }
 
-  public interface Processor {
-    void process(ScheduleIndex index);
+  private static void isTrue(boolean expression, String message) {
+    if (!expression) {
+      throw new IllegalArgumentException(message);
+    }
+  }
+
+  private static Callable<?> constantlyNull(Runnable r) {
+    return () -> {
+      r.run();
+      return null;
+    };
   }
 }

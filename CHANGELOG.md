@@ -1,6 +1,37 @@
 ## CHANGELOG
 
 --------
+### 1.0.8.BUILD-SNAPSHOT
+
+#### ISSUES
+
+- Fix Spring Boot low version bugs
+- Fix Spring Cloud low version bugs
+- Fix the problem of calling custom pass values between services.
+- Fix JDK exception stack ignore problem
+- Fix some class naming errors.
+
+#### IMPROVE
+
+- Optimize the project POM structure
+- Optimize the project contracting process
+- Optimization of exception handling mechanisms
+- Upgrading Spring Framework, Spring Boot, Spring Cloud Framework versions
+
+#### FEATURES
+
+- New link log integration support
+- New Logback enhancement log library
+- New TCP network communication component support
+- New Mongo ORM component support
+- Added annotation-driven HttpClient support.
+- New WebSocket networking component support
+- New JSON-based RPC implementation component
+- New Mailing Libraries
+- New scheduling framework components (custom, Quartz support)
+- New Metrics Statistics Component Extension (Metrics-based)
+
+--------
 ### 1.0.6.RC1
 
 #### ISSUES
@@ -114,7 +145,7 @@
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-dependencies</artifactId>
-            <version>1.0.6.RC1</version>
+            <version>1.0.7.RC1</version>
             <scope>import</scope>
             <type>pom</type>
         </dependency>               

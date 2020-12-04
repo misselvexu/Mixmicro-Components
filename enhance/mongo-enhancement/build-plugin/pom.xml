@@ -5,17 +5,19 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-mongo</artifactId>
-        <version>1.0.7.BUILD-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-mongo-build-plugin</artifactId>
-    <version>1.0.7.BUILD-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>Enhance MongoDB Build Maven Plugin Module :: ${project.version}</name>
     <description>🏗 Enhance MongoDB Build Maven Plugin Module</description>
 
+    <properties>
+        <maven.version>3.6.3</maven.version>
+    </properties>
 
     <build>
         <plugins>

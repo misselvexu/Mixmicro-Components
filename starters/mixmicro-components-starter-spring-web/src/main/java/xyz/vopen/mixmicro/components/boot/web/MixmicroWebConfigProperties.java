@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.boot.web;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +9,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import xyz.vopen.mixmicro.components.exception.defined.MixmicroException;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import static xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties.MIXMICRO_WEB_CONFIG_PROPERTIES_PREFIX;
 import static xyz.vopen.mixmicro.components.common.SerializableBean.encode;
@@ -80,9 +83,28 @@ public class MixmicroWebConfigProperties implements Serializable, InitializingBe
 
     private boolean printStackTrace = false;
 
+    /**
+     * Print {@link MixmicroException} Stack Trace
+     *
+     * <p>default: true
+     */
+    private boolean printMixmicroStackTrace = true;
+
     private Class<?> handlerClass;
 
     private int defaultExceptionResponseCode = -1;
+
+    /**
+     * Stack Trace Detail .
+     *
+     * <p>Checkout Order:
+     * <li>1、Check Sensitive stacks map
+     * <li>2、Check is instance of {@link MixmicroException}
+     * <li>3、Check {{@link #printMixmicroStackTrace}} 's value
+     *
+     * @since 1.0.7
+     */
+    private Map<Class<? extends Exception>, Boolean> sensitiveStacks = Maps.newHashMap();
   }
 
   @Data
