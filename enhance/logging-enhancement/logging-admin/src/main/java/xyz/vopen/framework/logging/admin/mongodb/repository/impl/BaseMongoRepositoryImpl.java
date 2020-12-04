@@ -5,14 +5,13 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.util.CollectionUtils;
-import xyz.vopen.framework.logging.admin.model.LogServiceDetailModel;
 import xyz.vopen.framework.logging.admin.mongodb.helper.MongoHelper;
 import xyz.vopen.framework.logging.admin.mongodb.repository.BaseMongoRepository;
 
 import java.util.List;
 
 /**
- * {@link LogServiceDetailModel} spring data mongodb base crud implements
+ * {@link BaseMongoRepositoryImpl} spring data mongodb base crud implements
  *
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2020/9/8

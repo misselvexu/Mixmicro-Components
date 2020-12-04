@@ -8,7 +8,7 @@ import xyz.vopen.framework.logging.core.MixmicroLogLevel;
 import java.io.Serializable;
 
 /**
- * {@link LogServiceDetailModel} global log mongodb mapping model
+ * {@link GlobalLogModel} global log mongodb mapping model
  *
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2020/9/9

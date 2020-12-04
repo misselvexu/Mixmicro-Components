@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * {@link LogServiceDetailModel} mongodb page query helper
+ * {@link MongoPageHelper} mongodb page query helper
  *
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2020/9/8
