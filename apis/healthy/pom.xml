@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-apis</artifactId>
-        <version>1.0.6.RC1</version>
+        <version>1.0.6.RC2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>healthy-api</artifactId>
-    <version>1.0.6.RC1</version>
+    <version>1.0.6.RC2</version>
 
     <name>Healthy Api Module :: ${project.version}</name>
     <description>🏗 Healthy Api Module</description>
@@ -73,6 +73,7 @@
 
     <build>
         <plugins>
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -86,7 +87,7 @@
                 </executions>
             </plugin>
 
-            <!--
+
             <plugin>
                 <groupId>biz.aQute.bnd</groupId>
                 <artifactId>bnd-maven-plugin</artifactId>

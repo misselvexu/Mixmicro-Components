@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yunlsp.framework.components</groupId>
+    <artifactId>mixmicro-components-starters</artifactId>
+    <version>1.0.7.RELEASE</version>
+  </parent>
+  <groupId>com.yunlsp.framework.components</groupId>
+  <artifactId>mixmicro-components-starter-cache</artifactId>
+  <version>1.0.7.RELEASE</version>
+  <packaging>pom</packaging>
+  <name>Cache Starter Module :: ${project.version}</name>
+  <description>🏗 Cache Starter Module</description>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://choosealicense.com/licenses/mit/</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <modules>
+    <module>mixmicro-components-starter-cache-redis-default</module>
+    <module>mixmicro-components-starter-cache-redis-lettuce</module>
+    <module>mixmicro-components-starter-cache-redis-springdata</module>
+  </modules>
+  <properties>
+    <jedis.version>3.1.0</jedis.version>
+    <kryo.version>4.0.2</kryo.version>
+    <spring.framework.version>5.2.9.RELEASE</spring.framework.version>
+    <lettuce.version>5.2.9.RELEASE</lettuce.version>
+    <spring.boot.version>2.2.10.RELEASE</spring.boot.version>
+  </properties>
+</project>

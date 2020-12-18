@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-event</artifactId>
-        <version>1.0.6.RC1</version>
+        <version>1.0.6.RC2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-event-core</artifactId>
-    <version>1.0.6.RC1</version>
+    <version>1.0.6.RC2</version>
 
     <name>Enhance Event Core Module :: ${project.version}</name>
     <description>🏗 Enhance Event Core Module</description>

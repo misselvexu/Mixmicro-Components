@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-dependencies</artifactId>
-            <version>1.0.6.RC1</version>
+            <version>1.0.6.RC2</version>
             <scope>import</scope>
             <type>pom</type>
         </dependency>

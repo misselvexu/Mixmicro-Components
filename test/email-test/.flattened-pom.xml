@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yunlsp.framework.components</groupId>
+    <artifactId>mixmicro-components-test</artifactId>
+    <version>1.0.7.RELEASE</version>
+  </parent>
+  <groupId>com.yunlsp.framework.components</groupId>
+  <artifactId>mixmicro-components-email-test</artifactId>
+  <version>1.0.7.RELEASE</version>
+  <name>Email Test Module :: ${project.version}</name>
+  <description>🏗 Metrics Test Module</description>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://choosealicense.com/licenses/mit/</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>mixmicro-components-starter-email</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>mixmicro-components-enhance-email-template-freemarker</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+  </dependencies>
+  <build>
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>${project.build.directory}/generated-resources</directory>
+      </resource>
+    </resources>
+  </build>
+</project>

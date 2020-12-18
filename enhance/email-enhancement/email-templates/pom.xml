@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-email</artifactId>
-        <version>1.0.6.RC1</version>
+        <version>1.0.6.RC2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-email-templates</artifactId>
-    <version>1.0.6.RC1</version>
+    <version>1.0.6.RC2</version>
     <packaging>pom</packaging>
 
     <name>Enhance Email Templates Module :: ${project.version}</name>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yunlsp.framework.components</groupId>
+    <artifactId>mixmicro-components-kits</artifactId>
+    <version>1.0.7.RELEASE</version>
+  </parent>
+  <groupId>com.yunlsp.framework.components</groupId>
+  <artifactId>event-kit</artifactId>
+  <version>1.0.7.RELEASE</version>
+  <name>Event kit :: ${project.version}</name>
+  <description>Mixmicro+ Event Kit</description>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://choosealicense.com/licenses/mit/</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>executor-kit</artifactId>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.jasig.maven</groupId>
+        <artifactId>maven-notice-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>

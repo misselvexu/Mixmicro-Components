@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yunlsp.framework.components</groupId>
+    <artifactId>mixmicro-components-enhance-parent</artifactId>
+    <version>1.0.7.RELEASE</version>
+  </parent>
+  <groupId>com.yunlsp.framework.components</groupId>
+  <artifactId>mixmicro-components-enhance-datasource</artifactId>
+  <version>1.0.7.RELEASE</version>
+  <packaging>pom</packaging>
+  <name>Enhance DataSource Module :: ${project.version}</name>
+  <description>🏗 Enhance DataSource Module</description>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://choosealicense.com/licenses/mit/</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <modules>
+    <module>datasource-orm</module>
+    <module>datasource-jdbc</module>
+  </modules>
+  <properties>
+    <junit.version>4.8.1</junit.version>
+    <java.version>1.8</java.version>
+    <commons-lang.version>2.1</commons-lang.version>
+    <persistence-api.version>1.0</persistence-api.version>
+    <h2.version>1.2.128</h2.version>
+    <commons-logging.version>1.1.1</commons-logging.version>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <log4j.version>1.2.17</log4j.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <easymock.version>3.4</easymock.version>
+    <log4j2.version>2.0-beta4</log4j2.version>
+    <joda-time.version>1.5</joda-time.version>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-enhance-datasource-orm</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-enhance-datasource-jdbc</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>

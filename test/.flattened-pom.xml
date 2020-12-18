@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yunlsp.framework.components</groupId>
+    <artifactId>mixmicro-components-all</artifactId>
+    <version>1.0.7.RELEASE</version>
+  </parent>
+  <groupId>com.yunlsp.framework.components</groupId>
+  <artifactId>mixmicro-components-test</artifactId>
+  <version>1.0.7.RELEASE</version>
+  <packaging>pom</packaging>
+  <name>Test Module :: ${project.version}</name>
+  <description>🏗 Test Module</description>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://choosealicense.com/licenses/mit/</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <modules>
+    <module>circuitbreaker-test</module>
+    <module>metrics-test</module>
+    <module>email-test</module>
+    <module>dbm-master-slave-switch-test</module>
+    <module>mongo-client-test</module>
+    <module>scheduler-test</module>
+    <module>auto-httpclient-test</module>
+    <module>quartz-test</module>
+  </modules>
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.yunlsp.framework.components</groupId>
+        <artifactId>mixmicro-components-dependencies</artifactId>
+        <version>1.0.7.RC1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
