@@ -98,16 +98,22 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
           Boolean isPrint = exceptions.get(e.getClass());
           if(isPrint) {
             log.error(e.getMessage(), e);
+          } else {
+            log.error(e.getMessage());
           }
         } else {
           if (e instanceof MixmicroException) {
             if (getProperties().getException().isPrintMixmicroStackTrace()) { // true
               log.error(e.getMessage(), e);
+            } else {
+              log.error(e.getMessage());
             }
           } else {
             log.error(e.getMessage(), e);
           }
         }
+      } else {
+        log.error(e.getMessage());
       }
     }
   }
