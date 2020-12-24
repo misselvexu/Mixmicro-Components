@@ -61,7 +61,8 @@ public class MixmicroResponseBodyAdvice extends AbstractAdvice implements Respon
    * @return the body that was passed in or a modified (possibly new) instance
    */
   @Override
-  public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+  public Object beforeBodyWrite(Object body, @NonNull MethodParameter returnType, @NonNull MediaType selectedContentType,
+                                @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, @NonNull ServerHttpResponse response) {
 
     // check ignore urls .
     if(checkIgnoreURL(request.getURI().getPath())) {
