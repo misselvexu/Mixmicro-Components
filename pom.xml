@@ -31,9 +31,9 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <!-- Framework's version -->
-        <spring.cloud.version>Hoxton.SR8</spring.cloud.version>
-        <spring.boot.version>2.2.10.RELEASE</spring.boot.version>
-        <spring.framework.version>5.2.9.RELEASE</spring.framework.version>
+        <spring.cloud.version>Hoxton.SR9</spring.cloud.version>
+        <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
+        <spring.framework.version>5.2.12.RELEASE</spring.framework.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>

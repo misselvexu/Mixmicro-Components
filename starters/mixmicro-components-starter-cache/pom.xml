@@ -17,8 +17,8 @@
     <packaging>pom</packaging>
 
     <properties>
-        <spring.framework.version>5.2.9.RELEASE</spring.framework.version>
-        <spring.boot.version>2.2.10.RELEASE</spring.boot.version>
+        <spring.framework.version>5.2.12.RELEASE</spring.framework.version>
+        <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
         <lettuce.version>5.2.9.RELEASE</lettuce.version>
         <jedis.version>3.1.0</jedis.version>
         <kryo.version>4.0.2</kryo.version>
