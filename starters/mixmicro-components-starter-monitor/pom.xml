@@ -24,6 +24,18 @@
             <groupId>com.yunlsp</groupId>
             <artifactId>monitor</artifactId>
             <version>${mixmicro.monitor.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.micrometer</groupId>
+                    <artifactId>micrometer-registry-prometheus</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>1.6.2</version>
         </dependency>
 
         <dependency>
