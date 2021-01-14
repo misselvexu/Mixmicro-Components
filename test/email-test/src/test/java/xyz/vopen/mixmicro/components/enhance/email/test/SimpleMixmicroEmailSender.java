@@ -17,7 +17,6 @@ import xyz.vopen.mixmicro.components.enhance.mail.service.EmailService;
 import xyz.vopen.mixmicro.components.enhance.mail.service.exception.CannotSendEmailException;
 
 import javax.mail.internet.InternetAddress;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.time.OffsetDateTime;
@@ -66,7 +65,7 @@ public class SimpleMixmicroEmailSender {
         .encoding("UTF-8").build();
 
     final Map<String, Object> modelObject = new HashMap<>();
-    modelObject.put("value", "##value##");
+    modelObject.put("value", "elve.xu");
 
     emailService.send(email, "simple-biz-html.ftl", modelObject);
   }
