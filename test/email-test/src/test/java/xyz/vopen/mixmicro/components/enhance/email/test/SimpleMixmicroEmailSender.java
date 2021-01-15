@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
+import xyz.vopen.mixmicro.components.enhance.mail.model.ContentType;
 import xyz.vopen.mixmicro.components.enhance.mail.model.MixmicroEmail;
 import xyz.vopen.mixmicro.components.enhance.mail.model.impl.DefaultMixmicroEmailAttachment;
 import xyz.vopen.mixmicro.components.enhance.mail.model.impl.DefaultMixmicroMixmicroEmail;
@@ -17,7 +18,6 @@ import xyz.vopen.mixmicro.components.enhance.mail.service.EmailService;
 import xyz.vopen.mixmicro.components.enhance.mail.service.exception.CannotSendEmailException;
 
 import javax.mail.internet.InternetAddress;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.time.OffsetDateTime;
@@ -42,6 +42,19 @@ public class SimpleMixmicroEmailSender {
   @Autowired
   private EmailSchedulerService emailSchedulerService;
 
+
+  @Test
+  public void testHtmlEmail() throws Exception {
+    final MixmicroEmail email = DefaultMixmicroMixmicroEmail.builder()
+        .from(new InternetAddress("mailservice@yunlsp.com", "苏州海管家物流科技有限公司"))
+        .to(Lists.newArrayList(new InternetAddress("x_vivi@yeah.net", "Elve.Xu-Yeah")))
+        .subject("Spring Boot Email Starter Unit Test Subject")
+        .contentType(ContentType.HTML)
+        .body("<html>This a <em>test email</em> , do no reply .</html>")
+        .encoding("UTF-8").build();
+
+    emailService.send(email);
+  }
 
   @Test
   public void testSimpleEmail() throws Exception {
