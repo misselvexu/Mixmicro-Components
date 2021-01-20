@@ -14,6 +14,11 @@
     <name>Uniform Openfeign Starter Module :: ${project.version}</name>
     <description>🏗 Uniform Openfeign Starter Module</description>
 
+    <properties>
+        <okhttp.version>3.14.6</okhttp.version>
+        <feign.core.version>10.10.1</feign.core.version>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -41,7 +46,7 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-httpclient</artifactId>
-            <version>10.4.0</version>
+<!--            <version>${feign.core.version}</version>-->
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -49,7 +54,7 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
-            <version>10.4.0</version>
+<!--            <version>${feign.core.version}</version>-->
             <scope>provided</scope>
             <optional>true</optional>
             <exclusions>
@@ -63,7 +68,7 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>3.6.0</version>
+<!--            <version>${okhttp.version}</version>-->
             <optional>true</optional>
             <scope>provided</scope>
         </dependency>

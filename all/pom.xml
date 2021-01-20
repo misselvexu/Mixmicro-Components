@@ -937,6 +937,12 @@
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-spring-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-scheduler</artifactId>
                 <version>${revision}</version>
             </dependency>
