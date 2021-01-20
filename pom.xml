@@ -20,7 +20,7 @@
     <properties>
 
         <!-- Project Main Reversion -->
-        <revision>1.0.7.RELEASE</revision>
+        <revision>1.0.7.RC2</revision>
 
         <!-- Deploy Properties -->
         <maven.deploy.skip>false</maven.deploy.skip>

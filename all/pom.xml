@@ -20,7 +20,7 @@
 
     <properties>
 
-        <revision>1.0.7.RELEASE</revision>
+        <revision>1.0.7.RC2</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
