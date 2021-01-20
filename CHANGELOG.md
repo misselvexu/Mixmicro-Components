@@ -1,7 +1,7 @@
 ## CHANGELOG
 
 --------
-### 1.0.8.RC1
+### 1.0.8.RELEASE
 
 #### ISSUES
 
