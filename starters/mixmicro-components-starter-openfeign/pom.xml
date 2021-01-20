@@ -41,7 +41,6 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-httpclient</artifactId>
-            <version>10.4.0</version>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -49,7 +48,6 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
-            <version>10.4.0</version>
             <scope>provided</scope>
             <optional>true</optional>
             <exclusions>
@@ -63,7 +61,6 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>3.6.0</version>
             <optional>true</optional>
             <scope>provided</scope>
         </dependency>

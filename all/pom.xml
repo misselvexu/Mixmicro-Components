@@ -817,6 +817,24 @@
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-cache-redis-default</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-cache-redis-lettuce</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-cache-redis-springdata</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-authorization</artifactId>
                 <version>${revision}</version>
             </dependency>
