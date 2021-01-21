@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yunlsp.framework.components</groupId>
+    <artifactId>mixmicro-components-starters</artifactId>
+    <version>1.0.7.RC2</version>
+  </parent>
+  <groupId>com.yunlsp.framework.components</groupId>
+  <artifactId>mixmicro-components-starter-dbm</artifactId>
+  <version>1.0.7.RC2</version>
+  <packaging>pom</packaging>
+  <name>Database Middleware Starter Module :: ${project.version}</name>
+  <description>🏗 Database Middleware Starter Module</description>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://choosealicense.com/licenses/mit/</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <modules>
+    <module>mixmicro-components-starter-dbm-master-slave</module>
+    <module>mixmicro-components-starter-dbm-multi-datasource</module>
+  </modules>
+</project>

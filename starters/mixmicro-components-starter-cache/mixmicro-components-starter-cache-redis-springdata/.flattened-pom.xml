@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yunlsp.framework.components</groupId>
+    <artifactId>mixmicro-components-starter-cache</artifactId>
+    <version>1.0.7.RC2</version>
+  </parent>
+  <groupId>com.yunlsp.framework.components</groupId>
+  <artifactId>mixmicro-components-starter-cache-redis-springdata</artifactId>
+  <version>1.0.7.RC2</version>
+  <name>Cache Starter With Default Redis(springdata) Implements Module :: ${project.version}</name>
+  <description>🏗 Cache Starter With Default Redis(springdata) Implements Module</description>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://choosealicense.com/licenses/mit/</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>mixmicro-components-enhance-cache-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>mixmicro-components-enhance-cache-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>mixmicro-components-enhance-cache-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>mixmicro-components-enhance-cache-load</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>mixmicro-components-enhance-cache-extension-redis-springdata</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+  </dependencies>
+</project>

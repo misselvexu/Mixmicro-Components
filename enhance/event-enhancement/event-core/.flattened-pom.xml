@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yunlsp.framework.components</groupId>
+    <artifactId>mixmicro-components-enhance-event</artifactId>
+    <version>1.0.7.RC2</version>
+  </parent>
+  <groupId>com.yunlsp.framework.components</groupId>
+  <artifactId>mixmicro-components-enhance-event-core</artifactId>
+  <version>1.0.7.RC2</version>
+  <name>Enhance Event Core Module :: ${project.version}</name>
+  <description>🏗 Enhance Event Core Module</description>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://choosealicense.com/licenses/mit/</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>mixmicro-components-enhance-event-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>xyz.vopen.opensource</groupId>
+      <artifactId>spring-cloud-bus</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xyz.vopen.opensource</groupId>
+      <artifactId>spring-cloud-stream</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xyz.vopen.opensource</groupId>
+      <artifactId>spring-cloud-stream-binder-rocketmq</artifactId>
+    </dependency>
+  </dependencies>
+</project>

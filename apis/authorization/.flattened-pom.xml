@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yunlsp.framework.components</groupId>
+    <artifactId>mixmicro-components-apis</artifactId>
+    <version>1.0.7.RC2</version>
+  </parent>
+  <groupId>com.yunlsp.framework.components</groupId>
+  <artifactId>authorization-api</artifactId>
+  <version>1.0.7.RC2</version>
+  <name>Authorization Api Module :: ${project.version}</name>
+  <description>🔐 Authorization Api Module</description>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://choosealicense.com/licenses/mit/</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>exception-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>common-kits</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yunlsp.framework.components</groupId>
+      <artifactId>timed-id-kit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+    </dependency>
+  </dependencies>
+</project>

@@ -6,12 +6,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-apis</artifactId>
-        <version>1.0.6.RC1.fix</version>
+        <version>1.0.6.RC2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-apis-dependencies</artifactId>
-    <version>1.0.6.RC1.fix</version>
+    <version>1.0.6.RC2</version>
 
     <packaging>pom</packaging>
 
@@ -35,12 +35,12 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
 
         <!-- Module Version -->
-        <mixmicro-common.api.version>1.0.6.RC1.fix</mixmicro-common.api.version>
-        <mixmicro-exception.api.version>1.0.6.RC1.fix</mixmicro-exception.api.version>
-        <mixmicro-logger.api.version>1.0.6.RC1.fix</mixmicro-logger.api.version>
-        <mixmicro-authorization.api.version>1.0.6.RC1.fix</mixmicro-authorization.api.version>
-        <mixmicro-circuitbreaker.api.version>1.0.6.RC1.fix</mixmicro-circuitbreaker.api.version>
-        <mixmicro-healthy.api.version>1.0.6.RC1.fix</mixmicro-healthy.api.version>
+        <mixmicro-common.api.version>1.0.6.RC2</mixmicro-common.api.version>
+        <mixmicro-exception.api.version>1.0.6.RC2</mixmicro-exception.api.version>
+        <mixmicro-logger.api.version>1.0.6.RC2</mixmicro-logger.api.version>
+        <mixmicro-authorization.api.version>1.0.6.RC2</mixmicro-authorization.api.version>
+        <mixmicro-circuitbreaker.api.version>1.0.6.RC2</mixmicro-circuitbreaker.api.version>
+        <mixmicro-healthy.api.version>1.0.6.RC2</mixmicro-healthy.api.version>
     </properties>
 
     <dependencyManagement>

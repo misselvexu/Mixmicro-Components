@@ -1,5 +1,6 @@
 package xyz.vopen.mixmicro.components.boot.openfeign.interceptor;
 
+import com.google.common.collect.Lists;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.slf4j.Logger;
@@ -9,11 +10,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import xyz.vopen.mixmicro.components.boot.openfeign.OpenFeignConfigProperties;
 import xyz.vopen.mixmicro.components.boot.openfeign.core.FeignAttributes;
 import xyz.vopen.mixmicro.components.boot.openfeign.env.ContextEnvironmentFactory;
+import xyz.vopen.mixmicro.kits.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SERVICE_INVOKE_HEADER;
 
@@ -31,6 +31,17 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
 
   private static final String EMPTY_STRING = "";
 
+
+  private Map<String, Collection<String>> covertRequestHeaders(RequestTemplate template) {
+
+    Map<String, Collection<String>> copyHeaders = template.headers();
+
+    template.headers().clear();
+
+    return copyHeaders;
+
+  }
+
   /**
    * Called for every request. Add data using methods on the supplied {@link RequestTemplate}.
    *
@@ -47,9 +58,22 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes != null) {
           HttpServletRequest request = attributes.getRequest();
+
+          // convert headers
+          Map<String, Collection<String>> theaders = covertRequestHeaders(template);
+
           for (String header : properties0.getSensitiveHeaders()) {
-            template.header(header, Optional.ofNullable(request.getHeader(header)).orElse(EMPTY_STRING));
+            String value = Optional.ofNullable(request.getHeader(header)).orElse(EMPTY_STRING);
+            if (!StringUtils.isBlank(value)) {
+              if(theaders.containsKey(header)) {
+                theaders.remove(header);
+              }
+
+              theaders.put(header, Lists.newArrayList(Optional.ofNullable(request.getHeader(header)).orElse(EMPTY_STRING)));
+            }
           }
+
+          template.headers(theaders);
         }
       } catch (Exception ignored) {}
     }
@@ -68,7 +92,18 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
               case MANUAL:
                 Map<String, String> temp = FeignAttributes.getAttributes();
                 if(temp.containsKey(name)) {
-                  template.header(name, Optional.ofNullable(temp.get(name)).orElse(EMPTY_STRING));
+
+                  // convert headers
+                  Map<String, Collection<String>> theaders = covertRequestHeaders(template);
+
+                  String value = Optional.ofNullable(temp.get(name)).orElse(EMPTY_STRING);
+                  if (!StringUtils.isBlank(value)) {
+                    if(theaders.containsKey(name)) {
+                      theaders.remove(name);
+                    }
+
+                    theaders.put(name, Lists.newArrayList(Optional.ofNullable(temp.get(name)).orElse(EMPTY_STRING)));
+                  }
                 }
                 break;
               case REQUEST_HEADER:
@@ -76,7 +111,19 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
                   ServletRequestAttributes attributes0 = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
                   if (attributes0 != null) {
                     HttpServletRequest request = attributes0.getRequest();
-                    template.header(name, Optional.ofNullable(request.getHeader(name)).orElse(EMPTY_STRING));
+
+                    // convert headers
+                    Map<String, Collection<String>> theaders = covertRequestHeaders(template);
+
+                    String value = Optional.ofNullable(request.getHeader(name)).orElse(EMPTY_STRING);
+                    if (!StringUtils.isBlank(value)) {
+
+                      if(theaders.containsKey(name)) {
+                        theaders.remove(name);
+                      }
+
+                      theaders.put(name, Lists.newArrayList(Optional.ofNullable(request.getHeader(name)).orElse(EMPTY_STRING)));
+                    }
                   }
                 } catch (Exception ignored) {}
                 break;

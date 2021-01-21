@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-enhance-rpc</artifactId>
-        <version>1.0.6.RC1.fix</version>
+        <version>1.0.6.RC2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-enhance-rpc-json-default</artifactId>
-    <version>1.0.6.RC1.fix</version>
+    <version>1.0.6.RC2</version>
 
     <name>Enhance RPC Default Implement Module :: ${project.version}</name>
     <description>🏗 Enhance RPC Implement Module</description>

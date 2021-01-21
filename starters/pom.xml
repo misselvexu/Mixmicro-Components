@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yunlsp.framework.components</groupId>
         <artifactId>mixmicro-components-all</artifactId>
-        <version>1.0.6.RC1.fix</version>
+        <version>1.0.6.RC2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mixmicro-components-starters</artifactId>
-    <version>1.0.6.RC1.fix</version>
+    <version>1.0.6.RC2</version>
     <packaging>pom</packaging>
 
     <name>Starters Module :: ${project.version}</name>
@@ -49,32 +49,32 @@
     </modules>
 
     <properties>
-        <micro-starter-annotation-processor.version>1.0.6.RC1.fix</micro-starter-annotation-processor.version>
-        <micro-starter-authorization.version>1.0.6.RC1.fix</micro-starter-authorization.version>
-        <micro-starter-banner.version>1.0.6.RC1.fix</micro-starter-banner.version>
-        <micro-starter-logger.version>1.0.6.RC1.fix</micro-starter-logger.version>
-        <micro-starter-json.version>1.0.6.RC1.fix</micro-starter-json.version>
-        <micro-starter-cors.version>1.0.6.RC1.fix</micro-starter-cors.version>
-        <micro-starter-resteasy.version>1.0.6.RC1.fix</micro-starter-resteasy.version>
-        <micro-starter-snowflake.version>1.0.6.RC1.fix</micro-starter-snowflake.version>
-        <micro-starter-openfeign.version>1.0.6.RC1.fix</micro-starter-openfeign.version>
-        <micro-starter-datasource.version>1.0.6.RC1.fix</micro-starter-datasource.version>
-        <micro-starter-dbm.version>1.0.6.RC1.fix</micro-starter-dbm.version>
-        <micro-starter-sidecar.version>1.0.6.RC1.fix</micro-starter-sidecar.version>
-        <micro-starter-security.version>1.0.6.RC1.fix</micro-starter-security.version>
-        <micro-starter-cloud-event.version>1.0.6.RC1.fix</micro-starter-cloud-event.version>
-        <micro-starter-message-queue.version>1.0.6.RC1.fix</micro-starter-message-queue.version>
-        <micro-starter-healthy.version>1.0.6.RC1.fix</micro-starter-healthy.version>
-        <micro-starter-errors.version>1.0.6.RC1.fix</micro-starter-errors.version>
-        <micro-starter-scheduler.version>1.0.6.RC1.fix</micro-starter-scheduler.version>
-        <micro-starter-monitor.version>1.0.6.RC1.fix</micro-starter-monitor.version>
-        <micro-starter-spi.version>1.0.6.RC1.fix</micro-starter-spi.version>
-        <micro-starter-swagger.version>1.0.6.RC1.fix</micro-starter-swagger.version>
-        <micro-starter-circuitbreaker.version>1.0.6.RC1.fix</micro-starter-circuitbreaker.version>
-        <micro-starter-metrics-3x.version>1.0.6.RC1.fix</micro-starter-metrics-3x.version>
-        <micro-starter-graceful-shutdown.version>1.0.6.RC1.fix</micro-starter-graceful-shutdown.version>
-        <micro-starter-email.version>1.0.6.RC1.fix</micro-starter-email.version>
-        <micro-starter-rpc-json.version>1.0.6.RC1.fix</micro-starter-rpc-json.version>
+        <micro-starter-annotation-processor.version>1.0.6.RC2</micro-starter-annotation-processor.version>
+        <micro-starter-authorization.version>1.0.6.RC2</micro-starter-authorization.version>
+        <micro-starter-banner.version>1.0.6.RC2</micro-starter-banner.version>
+        <micro-starter-logger.version>1.0.6.RC2</micro-starter-logger.version>
+        <micro-starter-json.version>1.0.6.RC2</micro-starter-json.version>
+        <micro-starter-cors.version>1.0.6.RC2</micro-starter-cors.version>
+        <micro-starter-resteasy.version>1.0.6.RC2</micro-starter-resteasy.version>
+        <micro-starter-snowflake.version>1.0.6.RC2</micro-starter-snowflake.version>
+        <micro-starter-openfeign.version>1.0.6.RC2</micro-starter-openfeign.version>
+        <micro-starter-datasource.version>1.0.6.RC2</micro-starter-datasource.version>
+        <micro-starter-dbm.version>1.0.6.RC2</micro-starter-dbm.version>
+        <micro-starter-sidecar.version>1.0.6.RC2</micro-starter-sidecar.version>
+        <micro-starter-security.version>1.0.6.RC2</micro-starter-security.version>
+        <micro-starter-cloud-event.version>1.0.6.RC2</micro-starter-cloud-event.version>
+        <micro-starter-message-queue.version>1.0.6.RC2</micro-starter-message-queue.version>
+        <micro-starter-healthy.version>1.0.6.RC2</micro-starter-healthy.version>
+        <micro-starter-errors.version>1.0.6.RC2</micro-starter-errors.version>
+        <micro-starter-scheduler.version>1.0.6.RC2</micro-starter-scheduler.version>
+        <micro-starter-monitor.version>1.0.6.RC2</micro-starter-monitor.version>
+        <micro-starter-spi.version>1.0.6.RC2</micro-starter-spi.version>
+        <micro-starter-swagger.version>1.0.6.RC2</micro-starter-swagger.version>
+        <micro-starter-circuitbreaker.version>1.0.6.RC2</micro-starter-circuitbreaker.version>
+        <micro-starter-metrics-3x.version>1.0.6.RC2</micro-starter-metrics-3x.version>
+        <micro-starter-graceful-shutdown.version>1.0.6.RC2</micro-starter-graceful-shutdown.version>
+        <micro-starter-email.version>1.0.6.RC2</micro-starter-email.version>
+        <micro-starter-rpc-json.version>1.0.6.RC2</micro-starter-rpc-json.version>
     </properties>
 
     <dependencyManagement>
