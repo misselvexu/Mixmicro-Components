@@ -20,7 +20,7 @@
 
     <properties>
 
-        <revision>1.0.8.RELEASE</revision>
+        <revision>1.0.9.BUILD-SNAPSHOT</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -503,6 +503,12 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>embedded-redis-kit</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>llc-kits</artifactId>
                 <version>${revision}</version>
             </dependency>
 
