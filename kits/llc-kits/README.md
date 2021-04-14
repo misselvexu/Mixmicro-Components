@@ -1,5 +1,17 @@
 ## Usage
 
+- Maven
+
+```xml
+
+<dependency>
+    <groupId>com.yunlsp.framework.components</groupId>
+    <artifactId>llc-kits</artifactId>
+    <version>1.0.9.BUILD-SNAPSHOT</version>
+</dependency>
+
+```
+
 - `Zip`解压缩
 
 ```java
