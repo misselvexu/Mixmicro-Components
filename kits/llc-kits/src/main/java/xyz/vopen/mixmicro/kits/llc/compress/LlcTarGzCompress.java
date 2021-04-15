@@ -18,24 +18,17 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package xyz.vopen.mixmicro.kits.llc;
+package xyz.vopen.mixmicro.kits.llc.compress;
+
+
+import xyz.vopen.mixmicro.kits.llc.Injection;
 
 /**
- * {@link GenericSkinnyCompress} Generic Skinny compress.
+ * {@link LlcTarGzCompress}
  *
  * @author <a href="mailto:siran0611@gmail.com">Elias.Yao</a>
- * @version ${project.version} - 2021/4/14
+ * @version ${project.version} - 2021/4/15
  */
-public abstract class GenericSkinnyCompress implements Compress {
-
-  private LlcContext context;
-
-  @Override
-  public void injectContext(LlcContext context) {
-    this.context = context;
-  }
-
-  protected LlcContext getContext() {
-    return this.context;
-  }
+@Injection(name = "TarGz")
+public class LlcTarGzCompress extends LlcGzipCompress {
 }

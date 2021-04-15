@@ -22,7 +22,7 @@ public class LlcTester {
 
       // 压缩包
       Compress compress =
-          Llc.builder().outputSiz(1024 * 4).type(Llc.CompressType.ZIP).build().getCompress();
+          Llc.builder().outputSiz(1024 * 4).compressionTyp(Llc.CompressType.ZIP).build().getCompress();
 
       // 测试压缩
       File[] files = new File[] {new File("/xxx/xxx.json")};
@@ -44,7 +44,7 @@ public class LlcTester {
 
       // 压缩包
       Compress compress =
-          Llc.builder().outputSiz(1024 * 4).type(Llc.CompressType.SEVENZ).build().getCompress();
+          Llc.builder().outputSiz(1024 * 4).compressionTyp(Llc.CompressType.SEVENZ).build().getCompress();
 
       // 测试压缩
       File[] files = new File[] {new File("/xxx/xxx.json")};

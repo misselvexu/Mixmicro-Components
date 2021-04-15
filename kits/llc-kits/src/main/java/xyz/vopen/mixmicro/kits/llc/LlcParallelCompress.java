@@ -1,4 +1,4 @@
-/*
+/**
  * MIT License
  *
  * <p>Copyright (c) 2021 mixmicro
@@ -20,6 +20,8 @@
  */
 package xyz.vopen.mixmicro.kits.llc;
 
+import java.io.File;
+import java.util.List;
 import net.coobird.thumbnailator.geometry.Positions;
 
 /**
@@ -31,8 +33,7 @@ import net.coobird.thumbnailator.geometry.Positions;
 public abstract class LlcParallelCompress extends GenericSkinnyCompress {
 
   @Override
-  public boolean compressImage(
-      String originPath, String outputPath, float scale, float outputQuality) {
+  public boolean compressImage(String originPath, String outputPath, float scale, float outputQuality) {
     return false;
   }
 
@@ -47,8 +48,7 @@ public abstract class LlcParallelCompress extends GenericSkinnyCompress {
   }
 
   @Override
-  public boolean tailorImage(
-      String originPath, String outputPath, Positions positions, int length, int width) {
+  public boolean tailorImage(String originPath, String outputPath, Positions positions, int length, int width) {
     return false;
   }
 
@@ -58,12 +58,13 @@ public abstract class LlcParallelCompress extends GenericSkinnyCompress {
   }
 
   @Override
-  public boolean watermarkImage(
-      String originPath,
-      String outputPath,
-      Positions positions,
-      String watermarkPath,
+  public boolean watermarkImage(String originPath, String outputPath, Positions positions, String watermarkPath,
       float outputQuality) {
     return false;
+  }
+
+  @Override
+  public List<String> listFiles(File file) {
+    return null;
   }
 }

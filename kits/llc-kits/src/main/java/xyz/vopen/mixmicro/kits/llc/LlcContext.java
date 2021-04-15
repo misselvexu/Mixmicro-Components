@@ -1,4 +1,4 @@
-/*
+/**
  * MIT License
  *
  * <p>Copyright (c) 2021 mixmicro
@@ -31,11 +31,13 @@ public class LlcContext {
   private long blockSize;
   private int blocks;
   private int outputSize;
+  private String outputName;
 
-  protected LlcContext(long blockSize, int blocks, int outputSize) {
+  protected LlcContext(long blockSize, int blocks, int outputSize, String outputName) {
     this.blockSize = blockSize;
     this.blocks = blocks;
     this.outputSize = outputSize;
+    this.outputName = outputName;
   }
 
   public long getBlockSize() {
@@ -48,5 +50,9 @@ public class LlcContext {
 
   public int getOutputSize() {
     return outputSize;
+  }
+
+  public String getOutputName() {
+    return outputName;
   }
 }

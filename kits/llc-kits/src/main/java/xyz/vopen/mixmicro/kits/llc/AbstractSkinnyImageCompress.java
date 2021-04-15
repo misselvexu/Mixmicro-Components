@@ -1,4 +1,4 @@
-/*
+/**
  * MIT License
  *
  * <p>Copyright (c) 2021 mixmicro
@@ -21,19 +21,18 @@
 package xyz.vopen.mixmicro.kits.llc;
 
 import java.io.File;
+import java.util.List;
 
 /**
- * {@link AbstractLlcImageCompress}
+ * {@link AbstractSkinnyImageCompress}
  *
  * @author <a href="mailto:siran0611@gmail.com">Elias.Yao</a>
  * @version ${project.version} - 2021/4/14
  */
-public abstract class AbstractLlcImageCompress
-    extends xyz.vopen.mixmicro.kits.llc.GenericSkinnyCompress {
+public abstract class AbstractSkinnyImageCompress extends GenericSkinnyCompress {
 
   @Override
-  public boolean compress(
-      File[] sourceFiles, String filePath, String fileName, boolean isDeleteSourceFile) {
+  public boolean compress(File[] sourceFiles, String filePath, String fileName, boolean isDeleteSourceFile) {
     return false;
   }
 
@@ -50,5 +49,10 @@ public abstract class AbstractLlcImageCompress
   @Override
   public boolean decompress(File file, File targetDir) {
     return false;
+  }
+
+  @Override
+  public List<String> listFiles(File file) {
+    return null;
   }
 }

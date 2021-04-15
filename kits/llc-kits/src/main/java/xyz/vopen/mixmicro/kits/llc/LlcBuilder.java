@@ -1,4 +1,4 @@
-/*
+/**
  * MIT License
  *
  * <p>Copyright (c) 2021 mixmicro
@@ -20,6 +20,7 @@
  */
 package xyz.vopen.mixmicro.kits.llc;
 
+
 import xyz.vopen.mixmicro.kits.llc.Llc.CompressType;
 
 /**
@@ -38,8 +39,11 @@ public class LlcBuilder {
   private int blocks;
   private CompressType typ;
   private int outputSize;
+  private String outputName;
 
-  public LlcBuilder() {}
+  public LlcBuilder() {
+
+  }
 
   public LlcBuilder isParallel(boolean isParallel) {
     this.isParallel = isParallel;
@@ -56,7 +60,7 @@ public class LlcBuilder {
     return this;
   }
 
-  public LlcBuilder type(CompressType typ) {
+  public LlcBuilder compressionTyp(CompressType typ) {
     this.typ = typ;
     return this;
   }
@@ -66,13 +70,15 @@ public class LlcBuilder {
     return this;
   }
 
+  public LlcBuilder outputName(String outputName) {
+    this.outputName = outputName;
+    return this;
+  }
+
   public Llc build() {
     return new Llc(
-        isParallel,
-        blockSize,
-        blocks,
-        typ,
-        outputSize,
-        new LlcContext(blockSize, blocks, outputSize));
+        isParallel, blockSize, blocks, typ, outputSize, outputName,
+        new LlcContext(blockSize, blocks, outputSize, outputName)
+    );
   }
 }

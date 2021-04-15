@@ -1,3 +1,14 @@
 xyz.vopen.mixmicro.kits.llc.LlcSevenZCompress
 xyz.vopen.mixmicro.kits.llc.LlcZipCompress
 xyz.vopen.mixmicro.kits.llc.LlcImageCompress
+xyz.vopen.mixmicro.kits.llc.LlcArCompress
+xyz.vopen.mixmicro.kits.llc.LlcBzip2Compress
+xyz.vopen.mixmicro.kits.llc.LlcCpioCompress
+xyz.vopen.mixmicro.kits.llc.LlcGzipCompress
+xyz.vopen.mixmicro.kits.llc.LlcJarCompress
+xyz.vopen.mixmicro.kits.llc.LlcPdfCompress
+xyz.vopen.mixmicro.kits.llc.LlcRarCompress
+xyz.vopen.mixmicro.kits.llc.LlcTarBz2Compress
+xyz.vopen.mixmicro.kits.llc.LlcTarCompress
+xyz.vopen.mixmicro.kits.llc.LlcTarGzCompress
+xyz.vopen.mixmicro.kits.llc.LlcXzCompress

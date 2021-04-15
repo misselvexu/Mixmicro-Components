@@ -1,4 +1,4 @@
-/*
+/**
  * MIT License
  *
  * <p>Copyright (c) 2021 mixmicro
@@ -41,14 +41,10 @@ public enum LlcFactory {
       if (spi != null) {
         String name = spi.name();
         if (compressMap.containsKey(name)) {
-          throw new RuntimeException(
-              "The @Injection value("
-                  + name
-                  + ") repeat, for class("
-                  + compress.getClass()
-                  + ") and class("
-                  + compressMap.get(name).getClass()
-                  + ").");
+          throw new RuntimeException("The @Injection value(" + name
+              + ") repeat, for class(" + compress.getClass()
+              + ") and class(" + compressMap.get(name).getClass()
+              + ").");
         }
         compressMap.put(name, compress);
       }
