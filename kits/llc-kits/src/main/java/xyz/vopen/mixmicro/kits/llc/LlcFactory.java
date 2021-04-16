@@ -32,7 +32,7 @@ import java.util.ServiceLoader;
  */
 public enum LlcFactory {
   INSTANCE;
-  Map<String, Compress> compressMap = new HashMap<>(4);
+  Map<String, Compress> compressMap = new HashMap<>(14);
 
   LlcFactory() {
     ServiceLoader<Compress> compresses = ServiceLoader.load(Compress.class);
