@@ -18,37 +18,15 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package xyz.vopen.mixmicro.kits.llc;
+package xyz.vopen.mixmicro.kits.llc.impls;
 
-import java.io.File;
+import xyz.vopen.mixmicro.kits.llc.Injection;
 
 /**
- * {@link AbstractLlcImageCompress}
+ * {@link LlcTarBz2Compress}
  *
  * @author <a href="mailto:siran0611@gmail.com">Elias.Yao</a>
- * @version ${project.version} - 2021/4/14
+ * @version ${project.version} - 2021/4/15
  */
-public abstract class AbstractLlcImageCompress
-    extends GenericLlcCompress {
-
-  @Override
-  public boolean compress(
-      File[] sourceFiles, String filePath, String fileName, boolean isDeleteSourceFile) {
-    return false;
-  }
-
-  @Override
-  public boolean compress(File[] sourceFiles, File file, boolean isDeleteSourceFile) {
-    return false;
-  }
-
-  @Override
-  public boolean decompress(File file, String targetDir) {
-    return false;
-  }
-
-  @Override
-  public boolean decompress(File file, File targetDir) {
-    return false;
-  }
-}
+@Injection(name = "TarBz2")
+public class LlcTarBz2Compress extends LlcBzip2Compress {}

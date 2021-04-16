@@ -18,37 +18,74 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package xyz.vopen.mixmicro.kits.llc;
+package xyz.vopen.mixmicro.kits.llc.impls;
+
+import com.github.junrar.ContentDescription;
+import com.github.junrar.Junrar;
+import xyz.vopen.mixmicro.kits.llc.Injection;
+import xyz.vopen.mixmicro.kits.llc.LlcParallelCompress;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * {@link AbstractLlcImageCompress}
+ * {@link LlcRarCompress}
  *
  * @author <a href="mailto:siran0611@gmail.com">Elias.Yao</a>
- * @version ${project.version} - 2021/4/14
+ * @version ${project.version} - 2021/4/15
  */
-public abstract class AbstractLlcImageCompress
-    extends GenericLlcCompress {
+@Injection(name = "Rar")
+public class LlcRarCompress extends LlcParallelCompress {
+
+  private static final String RAR_SUFFIX = ".rar";
 
   @Override
   public boolean compress(
       File[] sourceFiles, String filePath, String fileName, boolean isDeleteSourceFile) {
-    return false;
+    throw new UnsupportedOperationException(
+        "RAR Compress haven't been support,but you can decompress");
   }
 
   @Override
   public boolean compress(File[] sourceFiles, File file, boolean isDeleteSourceFile) {
-    return false;
+    throw new UnsupportedOperationException(
+        "RAR Compress haven't been support,but you can decompress");
   }
 
   @Override
   public boolean decompress(File file, String targetDir) {
-    return false;
+    return decompress(file, new File(targetDir));
   }
 
   @Override
   public boolean decompress(File file, File targetDir) {
-    return false;
+    if (!file.getName().endsWith(RAR_SUFFIX)) {
+      throw new IllegalArgumentException(
+          "Suffix name error, your input filename is: " + file.getName());
+    }
+
+    try {
+      if (!targetDir.isDirectory() && !targetDir.mkdirs()) {
+        throw new IOException("failed to create directory " + targetDir);
+      }
+      Junrar.extract(file, targetDir);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+    return true;
+  }
+
+  @Override
+  public List<String> listFiles(File file) {
+    List<ContentDescription> contentDescriptions = null;
+    try {
+      contentDescriptions = Junrar.getContentsDescription(file);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return contentDescriptions.stream().map((desc) -> desc.path).collect(Collectors.toList());
   }
 }

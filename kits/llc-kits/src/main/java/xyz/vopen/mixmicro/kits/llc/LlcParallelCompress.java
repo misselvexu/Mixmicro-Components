@@ -28,7 +28,7 @@ import net.coobird.thumbnailator.geometry.Positions;
  * @author <a href="mailto:siran0611@gmail.com">Elias.Yao</a>
  * @version ${project.version} - 2021/4/14
  */
-public abstract class LlcParallelCompress extends GenericSkinnyCompress {
+public abstract class LlcParallelCompress extends GenericLlcCompress {
 
   @Override
   public boolean compressImage(

@@ -38,6 +38,7 @@ public class LlcBuilder {
   private int blocks;
   private CompressType typ;
   private int outputSize;
+  private String outputName;
 
   public LlcBuilder() {}
 
@@ -66,6 +67,11 @@ public class LlcBuilder {
     return this;
   }
 
+  public LlcBuilder outputName(String outputName) {
+    this.outputName = outputName;
+    return this;
+  }
+
   public Llc build() {
     return new Llc(
         isParallel,
@@ -73,6 +79,7 @@ public class LlcBuilder {
         blocks,
         typ,
         outputSize,
-        new LlcContext(blockSize, blocks, outputSize));
+        outputName,
+        new LlcContext(blockSize, blocks, outputSize, outputName));
   }
 }

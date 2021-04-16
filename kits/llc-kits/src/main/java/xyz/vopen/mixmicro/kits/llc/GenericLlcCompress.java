@@ -21,12 +21,12 @@
 package xyz.vopen.mixmicro.kits.llc;
 
 /**
- * {@link GenericSkinnyCompress} Generic Skinny compress.
+ * {@link GenericLlcCompress} Generic Skinny compress.
  *
  * @author <a href="mailto:siran0611@gmail.com">Elias.Yao</a>
  * @version ${project.version} - 2021/4/14
  */
-public abstract class GenericSkinnyCompress implements Compress {
+public abstract class GenericLlcCompress implements Compress {
 
   private LlcContext context;
 

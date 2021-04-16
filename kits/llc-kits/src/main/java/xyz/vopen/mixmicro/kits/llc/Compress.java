@@ -23,6 +23,8 @@ package xyz.vopen.mixmicro.kits.llc;
 import net.coobird.thumbnailator.geometry.Positions;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * {@link Compress}
@@ -146,6 +148,16 @@ public interface Compress {
    * @return
    */
   boolean decompress(File file, File targetDir);
+
+  /**
+   * Returns list of filename in compressed package.
+   *
+   * @param file The compressed file to be extracted.
+   * @return list of filename in compressed package.
+   */
+  default List<String> listFiles(File file) {
+    return new ArrayList<>();
+  }
 
   void injectContext(final LlcContext context);
 }

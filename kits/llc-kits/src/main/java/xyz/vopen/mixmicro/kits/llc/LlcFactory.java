@@ -42,13 +42,7 @@ public enum LlcFactory {
         String name = spi.name();
         if (compressMap.containsKey(name)) {
           throw new RuntimeException(
-              "The @Injection value("
-                  + name
-                  + ") repeat, for class("
-                  + compress.getClass()
-                  + ") and class("
-                  + compressMap.get(name).getClass()
-                  + ").");
+              "The @Injection value(" + name + ") repeat, for class(" + compress.getClass() + ") and class(" + compressMap.get(name).getClass() + ").");
         }
         compressMap.put(name, compress);
       }

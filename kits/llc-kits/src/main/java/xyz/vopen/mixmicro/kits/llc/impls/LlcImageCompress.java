@@ -18,10 +18,12 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package xyz.vopen.mixmicro.kits.llc;
+package xyz.vopen.mixmicro.kits.llc.impls;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
+import xyz.vopen.mixmicro.kits.llc.AbstractLlcImageCompress;
+import xyz.vopen.mixmicro.kits.llc.Injection;
 
 import javax.imageio.ImageIO;
 import java.io.File;

@@ -24,6 +24,9 @@ Compress compress =
 File[] files = new File[] {new File("/xxx/xxx.json")};
 compress.compress(files, new File("/xxx/xxx/xxx.zip"), false);
 
+// 显示文件列表
+compress.listFiles(new File("/xxx/xxx/xxx.zip"));
+
 // 测试解压
 compress.decompress(new File("/xxx/xxx/xxx.zip"), "/xxx/xxx/xxx.json");
 
@@ -39,6 +42,9 @@ Compress compress =
 // 测试压缩
 File[] files = new File[] {new File("/xxx/xxx.json")};
 compress.compress(files, new File("/xxx/xxx/xxx.7z"), false);
+
+// 显示文件列表
+compress.listFiles(new File("/xxx/xxx/xxx.7z"));
 
 // 测试解压
 compress.decompress(new File("/xxx/xxx/xxx.7z"), "/xxx/xxx/xxx.json");
@@ -77,3 +83,18 @@ boolean compressImage(String originPath, String outputPath, int length, int widt
 
 ```
 
+- `pdf`压缩
+
+```java
+
+
+
+// 压缩器
+Compress compress =
+  Llc.builder().outputSiz(1024 * 4).type(Llc.CompressType.PDF).build().getCompress();
+
+// 测试压缩pdf
+File[] files = new File[] {new File("/xxx/xxx.pdf")};
+compress.compress(files, new File("/xxx/xxx/xxx.pdf"), false);
+
+```
