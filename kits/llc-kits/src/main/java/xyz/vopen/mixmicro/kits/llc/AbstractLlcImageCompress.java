@@ -28,12 +28,10 @@ import java.io.File;
  * @author <a href="mailto:siran0611@gmail.com">Elias.Yao</a>
  * @version ${project.version} - 2021/4/14
  */
-public abstract class AbstractLlcImageCompress
-    extends GenericLlcCompress {
+public abstract class AbstractLlcImageCompress extends GenericLlcCompress {
 
   @Override
-  public boolean compress(
-      File[] sourceFiles, String filePath, String fileName, boolean isDeleteSourceFile) {
+  public boolean compress(File[] sourceFiles, String filePath, String fileName, boolean isDeleteSourceFile) {
     return false;
   }
 

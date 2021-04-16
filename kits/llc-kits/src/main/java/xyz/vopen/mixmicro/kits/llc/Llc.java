@@ -21,12 +21,12 @@
 package xyz.vopen.mixmicro.kits.llc;
 
 /**
- * {@link Llc}As everyone knows that pure java have a standard gzip library, * you can use if you
- * want easy to use and fewer errors,but if you want (de)compress * faster or big data, the standard
- * library can't satisfied you but skinny can do it. *
- *
- * <p>* The Skinny will split compression into blocks that are compressed in parallel. * This can be
- * used for compressing big amounts data. The output is standard gzip file.
+ * {@link Llc}As everyone knows that pure java have a standard gzip library,
+ * * you can use if you want easy to use and fewer errors,but if you want (de)compress
+ * * faster or big data, the standard library can't satisfied you but skinny can do it.
+ * * <p>
+ * * The Skinny will split compression into blocks that are compressed in parallel.
+ * * This can be used for compressing big amounts data. The output is standard gzip file.
  *
  * @author <a href="mailto:siran0611@gmail.com">Elias.Yao</a>
  * @version ${project.version} - 2021/4/13
@@ -35,22 +35,25 @@ public class Llc {
 
   public static final int DEFAULT_OUTPUT_SIZ = 1024 * 4; // 4kb.
 
-  /** true if need to parallel. */
+  /**
+   * true if need to parallel.
+   */
   private boolean isParallel;
-  /** size of single block. */
+  /**
+   * size of single block.
+   */
   private long blockSize;
-  /** the block number. */
+  /**
+   * the block number.
+   */
   private int blocks;
-
   private CompressType typ;
   private String outputName;
 
   /**
-   * output siz. Default is 4kb, if you want bigger siz that you can set it through {@link
-   * LlcBuilder#outputSiz(int)}
+   * output siz. Default is 4kb, if you want bigger siz that you can set it through {@link LlcBuilder#outputSiz(int)}
    */
   private int outputSize;
-
   private LlcContext context;
 
   private Llc() {
@@ -113,8 +116,7 @@ public class Llc {
           return value.desc;
         }
       }
-      throw new IllegalArgumentException(
-          "[Illegal Argument] The maximum code currently supported for compression type is 2.");
+      throw new IllegalArgumentException("[Illegal Argument] The maximum code currently supported for compression type is 2.");
     }
   }
 }

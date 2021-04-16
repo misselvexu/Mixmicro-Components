@@ -20,6 +20,7 @@
  */
 package xyz.vopen.mixmicro.kits.llc;
 
+
 import xyz.vopen.mixmicro.kits.llc.Llc.CompressType;
 
 /**
@@ -40,7 +41,9 @@ public class LlcBuilder {
   private int outputSize;
   private String outputName;
 
-  public LlcBuilder() {}
+  public LlcBuilder() {
+
+  }
 
   public LlcBuilder isParallel(boolean isParallel) {
     this.isParallel = isParallel;

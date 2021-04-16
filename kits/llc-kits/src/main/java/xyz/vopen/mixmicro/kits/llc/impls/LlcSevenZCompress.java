@@ -20,18 +20,22 @@
  */
 package xyz.vopen.mixmicro.kits.llc.impls;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZFile;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
 import xyz.vopen.mixmicro.kits.llc.Injection;
 import xyz.vopen.mixmicro.kits.llc.LlcParallelCompress;
-
-import java.io.*;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * {@link LlcSevenZCompress}
@@ -44,11 +48,12 @@ public class LlcSevenZCompress extends LlcParallelCompress {
 
   private static final String SEVENZ_SUFFIX = ".7z";
 
-  public LlcSevenZCompress() {}
+  public LlcSevenZCompress() {
+
+  }
 
   @Override
-  public boolean compress(
-      File[] sourceFiles, String file, String fileName, boolean isDeleteSourceFile) {
+  public boolean compress(File[] sourceFiles, String file, String fileName, boolean isDeleteSourceFile) {
     return compress(sourceFiles, new File(file, fileName), isDeleteSourceFile);
   }
 
@@ -58,8 +63,7 @@ public class LlcSevenZCompress extends LlcParallelCompress {
     SevenZOutputFile sevenZOutputFile = null;
 
     if (!file.getName().endsWith(SEVENZ_SUFFIX)) {
-      throw new IllegalArgumentException(
-          "Suffix name error, your input filename is: " + file.getName());
+      throw new IllegalArgumentException("Suffix name error, your input filename is: " + file.getName());
     }
 
     if (sourceFiles == null || sourceFiles.length <= 0) {
@@ -96,6 +100,7 @@ public class LlcSevenZCompress extends LlcParallelCompress {
           sourceFile.deleteOnExit();
         }
       }
+
 
     } catch (IOException e) {
       e.printStackTrace();

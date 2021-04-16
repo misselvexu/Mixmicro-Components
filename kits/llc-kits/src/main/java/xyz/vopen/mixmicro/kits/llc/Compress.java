@@ -1,4 +1,4 @@
-/*
+/**
  * MIT License
  *
  * <p>Copyright (c) 2021 mixmicro
@@ -20,6 +20,7 @@
  */
 package xyz.vopen.mixmicro.kits.llc;
 
+
 import net.coobird.thumbnailator.geometry.Positions;
 
 import java.io.File;
@@ -37,12 +38,13 @@ public interface Compress {
   /**
    * Special for picture compression.
    *
-   * @param originPath the original path
-   * @param outputPath the output path
-   * @param scale specifies the image size. The value is between 0 and 1, 1f is the original image
-   *     size and 0.5 is half the original image size.
-   * @param outputQuality the quality of the picture is also between 0 and 1. The closer it is to 1,
-   *     the better the quality is. The closer it is to 0,the worse the quality is.
+   * @param originPath    the original path
+   * @param outputPath    the output path
+   * @param scale         specifies the image size. The value is between 0 and 1, 1f is the original image size and 0.5 is half
+   *                      the
+   *                      original image size.
+   * @param outputQuality the quality of the picture is also between 0 and 1. The closer it is to 1, the better the quality is.
+   *                      The closer it is to 0,the worse the quality is.
    * @return
    */
   boolean compressImage(String originPath, String outputPath, float scale, float outputQuality);
@@ -59,7 +61,7 @@ public interface Compress {
   /**
    * Rotate picture,
    *
-   * @param rotate angle positive: clockwise, negative: counterclockwise.
+   * @param rotate     angle positive: clockwise, negative: counterclockwise.
    * @param originPath the original path
    * @param outputPath the output path
    * @return
@@ -71,19 +73,18 @@ public interface Compress {
    *
    * @param originPath the original path
    * @param outputPath the output path
-   * @param positions the position to be clipped. i.e. {@see Positions.CENTER}
-   * @param length The cut length
-   * @param width the cut width
+   * @param positions  the position to be clipped. i.e. {@see Positions.CENTER}
+   * @param length     The cut length
+   * @param width      the cut width
    * @return
    */
-  boolean tailorImage(
-      String originPath, String outputPath, Positions positions, int length, int width);
+  boolean tailorImage(String originPath, String outputPath, Positions positions, int length, int width);
 
   /**
    * Convert image format.
    *
-   * @param originPath the original path
-   * @param outputPath the output path
+   * @param originPath   the original path
+   * @param outputPath   the output path
    * @param outputFormat i.e. png, jpg etc.
    * @return
    */
@@ -92,28 +93,24 @@ public interface Compress {
   /**
    * Watermark
    *
-   * @param originPath the original path
-   * @param outputPath the output path
-   * @param positions the position to be clipped. i.e. {@see Positions.CENTER}
+   * @param originPath    the original path
+   * @param outputPath    the output path
+   * @param positions     the position to be clipped. i.e. {@see Positions.CENTER}
    * @param watermarkPath the watermark path
    * @param outputQuality image transparency
    * @return
    */
-  boolean watermarkImage(
-      String originPath,
-      String outputPath,
-      Positions positions,
-      String watermarkPath,
-      float outputQuality);
+  boolean watermarkImage(String originPath, String outputPath, Positions positions, String watermarkPath, float outputQuality);
 
   /**
    * Pack the file into a zip archive file
    *
-   * @param sourceFiles A list of multiple files to compress. Only support files, can not have a
-   *     directory, otherwise throw exception.
-   * @param filePath Compress file path. The file may not exist,but the directory must exist i.e.
-   *     xxx/xxx/, otherwise throw exception.
-   * @param fileName Compress file name, i.e. output.zip or output.7z
+   * @param sourceFiles        A list of multiple files to compress. Only support files, can not have a directory, otherwise throw
+   *                           exception.
+   * @param filePath           Compress file path. The file may not exist,but the directory must exist i.e. xxx/xxx/,
+   *                           otherwise throw
+   *                           exception.
+   * @param fileName           Compress file name, i.e. output.zip or output.7z
    * @param isDeleteSourceFile whether to delete the source file after compress completed.
    * @return
    */
@@ -122,10 +119,11 @@ public interface Compress {
   /**
    * Pack the file into a zip archive file
    *
-   * @param sourceFiles A list of multiple files to compress. Only support files, can not have a
-   *     directory, otherwise throw exception.
-   * @param file Compress file path. The file may not exist,but the directory must exist i.e.
-   *     xxx/xxx/output.zip, otherwise throw exception.
+   * @param sourceFiles        A list of multiple files to compress. Only support files, can not have a directory, otherwise throw
+   *                           exception.
+   * @param file               Compress file path. The file may not exist,but the directory must exist i.e. xxx/xxx/output.zip,
+   *                           otherwise throw
+   *                           exception.
    * @param isDeleteSourceFile whether to delete the source file after compress completed.
    * @return
    */
@@ -134,7 +132,7 @@ public interface Compress {
   /**
    * Unpack the zip package into a file and place it in the specified folder.
    *
-   * @param file The compressed file to be extracted.
+   * @param file      The compressed file to be extracted.
    * @param targetDir Destination where files are stored after unzipping.
    * @return
    */
@@ -143,7 +141,7 @@ public interface Compress {
   /**
    * Unpack the zip package into a file and place it in the specified folder.
    *
-   * @param file The compressed file to be extracted.
+   * @param file      The compressed file to be extracted.
    * @param targetDir Destination where files are stored after unzipping.
    * @return
    */

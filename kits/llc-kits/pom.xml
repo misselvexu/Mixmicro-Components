@@ -55,7 +55,6 @@
             <artifactId>itextpdf</artifactId>
             <version>5.5.13.2</version>
         </dependency>
-
     </dependencies>
 
     <build>

@@ -38,13 +38,16 @@ import java.io.IOException;
 @Injection(name = "Image")
 public class LlcImageCompress extends AbstractLlcImageCompress {
 
-  public LlcImageCompress() {}
+  public LlcImageCompress(){
+  }
 
   @Override
-  public boolean compressImage(
-      String originPath, String outputPath, float scale, float outputQuality) {
+  public boolean compressImage(String originPath, String outputPath, float scale, float outputQuality) {
     try {
-      Thumbnails.of(originPath).scale(scale).outputQuality(outputQuality).toFile(outputPath);
+      Thumbnails.of(originPath)
+          .scale(scale)
+          .outputQuality(outputQuality)
+          .toFile(outputPath);
     } catch (IOException e) {
       e.printStackTrace();
       return false;
@@ -55,7 +58,9 @@ public class LlcImageCompress extends AbstractLlcImageCompress {
   @Override
   public boolean compressImage(String originPath, String outputPath, int length, int width) {
     try {
-      Thumbnails.of(originPath).size(length, width).toFile(outputPath);
+      Thumbnails.of(originPath)
+          .size(length, width)
+          .toFile(outputPath);
     } catch (IOException e) {
       e.printStackTrace();
       return false;
@@ -66,7 +71,9 @@ public class LlcImageCompress extends AbstractLlcImageCompress {
   @Override
   public boolean rotateImage(String originPath, String outputPath, int rotate) {
     try {
-      Thumbnails.of(originPath).rotate(rotate).toFile(outputPath);
+      Thumbnails.of(originPath)
+          .rotate(rotate)
+          .toFile(outputPath);
     } catch (IOException e) {
       e.printStackTrace();
       return false;
@@ -75,10 +82,11 @@ public class LlcImageCompress extends AbstractLlcImageCompress {
   }
 
   @Override
-  public boolean tailorImage(
-      String originPath, String outputPath, Positions positions, int length, int width) {
+  public boolean tailorImage(String originPath, String outputPath, Positions positions, int length, int width) {
     try {
-      Thumbnails.of(originPath).sourceRegion(positions, length, width).toFile(outputPath);
+      Thumbnails.of(originPath)
+          .sourceRegion(positions, length, width)
+          .toFile(outputPath);
     } catch (IOException e) {
       e.printStackTrace();
       return false;
@@ -89,7 +97,9 @@ public class LlcImageCompress extends AbstractLlcImageCompress {
   @Override
   public boolean convertImageFormat(String originPath, String outputPath, String outputFormat) {
     try {
-      Thumbnails.of(originPath).outputFormat(outputFormat).toFile(outputPath);
+      Thumbnails.of(originPath)
+          .outputFormat(outputFormat)
+          .toFile(outputPath);
     } catch (IOException e) {
       e.printStackTrace();
       return false;
@@ -98,11 +108,7 @@ public class LlcImageCompress extends AbstractLlcImageCompress {
   }
 
   @Override
-  public boolean watermarkImage(
-      String originPath,
-      String outputPath,
-      Positions positions,
-      String watermarkPath,
+  public boolean watermarkImage(String originPath, String outputPath, Positions positions, String watermarkPath,
       float outputQuality) {
     try {
       Thumbnails.of(originPath)

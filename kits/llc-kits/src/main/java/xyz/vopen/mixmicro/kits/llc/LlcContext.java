@@ -28,10 +28,10 @@ package xyz.vopen.mixmicro.kits.llc;
  */
 public class LlcContext {
 
-  private long blockSize;
-  private int blocks;
-  private int outputSize;
-  private String outputName;
+  private final long blockSize;
+  private final int blocks;
+  private final int outputSize;
+  private final String outputName;
 
   protected LlcContext(long blockSize, int blocks, int outputSize, String outputName) {
     this.blockSize = blockSize;
