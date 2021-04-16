@@ -51,6 +51,11 @@ public class Llc {
   private String outputName;
 
   /**
+   * Only used for rar5.
+   */
+  private boolean ignoreFolder;
+
+  /**
    * output siz. Default is 4kb, if you want bigger siz that you can set it through {@link LlcBuilder#outputSiz(int)}
    */
   private int outputSize;
@@ -68,6 +73,7 @@ public class Llc {
       CompressType typ,
       int outputSize,
       String outputName,
+      boolean ignoreFolder,
       LlcContext context) {
     this.isParallel = isParallel;
     this.blockSize = blockSize;
@@ -75,6 +81,7 @@ public class Llc {
     this.typ = typ;
     this.outputSize = outputSize;
     this.outputName = outputName;
+    this.ignoreFolder = ignoreFolder;
     this.context = context;
   }
 
@@ -100,7 +107,8 @@ public class Llc {
     TARBZ2(10, "TarBz2"),
     TAR(11, "Tar"),
     TARGZ(12, "TarGz"),
-    XZ(13, "Xz");
+    XZ(13, "Xz"),
+    RAR5(14, "Rar5");
 
     private int code;
     private String desc;

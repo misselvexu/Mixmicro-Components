@@ -8,6 +8,7 @@ xyz.vopen.mixmicro.kits.llc.impls.LlcGzipCompress
 xyz.vopen.mixmicro.kits.llc.impls.LlcJarCompress
 xyz.vopen.mixmicro.kits.llc.impls.LlcPdfCompress
 xyz.vopen.mixmicro.kits.llc.impls.LlcRarCompress
+xyz.vopen.mixmicro.kits.llc.impls.LlcRar5Compress
 xyz.vopen.mixmicro.kits.llc.impls.LlcTarBz2Compress
 xyz.vopen.mixmicro.kits.llc.impls.LlcTarCompress
 xyz.vopen.mixmicro.kits.llc.impls.LlcTarGzCompress

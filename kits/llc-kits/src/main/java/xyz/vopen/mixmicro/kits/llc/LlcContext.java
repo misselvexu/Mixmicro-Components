@@ -20,6 +20,7 @@
  */
 package xyz.vopen.mixmicro.kits.llc;
 
+
 /**
  * {@link LlcContext}
  *
@@ -32,12 +33,14 @@ public class LlcContext {
   private final int blocks;
   private final int outputSize;
   private final String outputName;
+  private final boolean ignoreFolder;
 
-  protected LlcContext(long blockSize, int blocks, int outputSize, String outputName) {
+  protected LlcContext(long blockSize, int blocks, int outputSize, String outputName, boolean ignoreFolder) {
     this.blockSize = blockSize;
     this.blocks = blocks;
     this.outputSize = outputSize;
     this.outputName = outputName;
+    this.ignoreFolder = ignoreFolder;
   }
 
   public long getBlockSize() {
@@ -54,5 +57,9 @@ public class LlcContext {
 
   public String getOutputName() {
     return outputName;
+  }
+
+  public boolean getIgnoreFolder() {
+    return ignoreFolder;
   }
 }

@@ -40,6 +40,7 @@ public class LlcBuilder {
   private CompressType typ;
   private int outputSize;
   private String outputName;
+  private boolean ignoreFolder;
 
   public LlcBuilder() {
 
@@ -75,6 +76,11 @@ public class LlcBuilder {
     return this;
   }
 
+  public LlcBuilder ignoreFolder(boolean ignoreFolder) {
+    this.ignoreFolder = ignoreFolder;
+    return this;
+  }
+
   public Llc build() {
     return new Llc(
         isParallel,
@@ -83,6 +89,7 @@ public class LlcBuilder {
         typ,
         outputSize,
         outputName,
-        new LlcContext(blockSize, blocks, outputSize, outputName));
+        ignoreFolder,
+        new LlcContext(blockSize, blocks, outputSize, outputName,ignoreFolder));
   }
 }
