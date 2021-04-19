@@ -21,10 +21,10 @@
 package xyz.vopen.mixmicro.kits.llc;
 
 
-import static xyz.vopen.mixmicro.kits.llc.Llc.DEFAULT_ENCODING;
-import static xyz.vopen.mixmicro.kits.llc.Llc.DEFAULT_OUTPUT_SIZ;
-
 import xyz.vopen.mixmicro.kits.llc.Llc.CompressType;
+
+import static xyz.vopen.mixmicro.kits.llc.Llc.DEFAULT_ENCODING_CHARSET;
+import static xyz.vopen.mixmicro.kits.llc.Llc.DEFAULT_OUTPUT_SIZ;
 
 /**
  * {@link LlcBuilder}
@@ -56,8 +56,8 @@ public class LlcBuilder {
    * output siz. Default is 4kb, if you want bigger siz that you can set it through {@link LlcBuilder#outputSiz(int)}
    */
   private int outputSize = DEFAULT_OUTPUT_SIZ;
-  private String compressEncode = DEFAULT_ENCODING;
-  private String decompressEncode = DEFAULT_ENCODING;
+  private String compressEncodeCharset = DEFAULT_ENCODING_CHARSET;
+  private String decompressEncodeCharset = DEFAULT_ENCODING_CHARSET;
 
   public LlcBuilder() {
 
@@ -98,13 +98,13 @@ public class LlcBuilder {
     return this;
   }
 
-  public LlcBuilder compressEncode(String compressEncode) {
-    this.compressEncode = compressEncode;
+  public LlcBuilder compressEncodeCharset(String compressEncode) {
+    this.compressEncodeCharset = compressEncode;
     return this;
   }
 
-  public LlcBuilder decompressEncode(String decompressEncode) {
-    this.decompressEncode = decompressEncode;
+  public LlcBuilder decompressEncodeCharset(String decompressEncode) {
+    this.decompressEncodeCharset = decompressEncode;
     return this;
   }
 
@@ -117,7 +117,7 @@ public class LlcBuilder {
             outputSize,
             outputName,
             ignoreFolder,
-            compressEncode,
-            decompressEncode));
+            compressEncodeCharset,
+            decompressEncodeCharset));
   }
 }

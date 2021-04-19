@@ -34,7 +34,7 @@ package xyz.vopen.mixmicro.kits.llc;
 public class Llc {
 
   public static final int DEFAULT_OUTPUT_SIZ = 1024 * 4; // 4kb.
-  protected static final String DEFAULT_ENCODING = "UTF-8";
+  protected static final String DEFAULT_ENCODING_CHARSET = "UTF-8";
 
   private CompressType typ;
   private LlcContext context;
