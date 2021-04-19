@@ -38,4 +38,15 @@ public abstract class GenericLlcCompress implements Compress {
   protected LlcContext getContext() {
     return this.context;
   }
+
+  /**
+   * Extract prefix folder name from archive entity name.
+   *
+   * @param archiveName the archive entity name
+   * @return
+   */
+  protected String extractFolder(String archiveName) {
+    String fullPathNoEndSeparator = FilenameUtils.getFullPathNoEndSeparator(archiveName);
+    return fullPathNoEndSeparator;
+  }
 }
