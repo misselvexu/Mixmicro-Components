@@ -21,6 +21,9 @@
 package xyz.vopen.mixmicro.kits.llc;
 
 
+import static xyz.vopen.mixmicro.kits.llc.Llc.DEFAULT_ENCODING;
+import static xyz.vopen.mixmicro.kits.llc.Llc.DEFAULT_OUTPUT_SIZ;
+
 import xyz.vopen.mixmicro.kits.llc.Llc.CompressType;
 
 /**
@@ -31,16 +34,30 @@ import xyz.vopen.mixmicro.kits.llc.Llc.CompressType;
  */
 public class LlcBuilder {
 
-  // true if need to parallel.
-  private boolean isParallel;
-  // size of single block.
+  /**
+   * true if need to parallel.
+   */
+  private boolean isParallel = false;
+  /**
+   * size of single block.
+   */
   private long blockSize;
-  // the block number.
+  /**
+   * the block number.
+   */
   private int blocks;
   private CompressType typ;
-  private int outputSize;
   private String outputName;
-  private boolean ignoreFolder;
+  /**
+   * Only used for rar5.
+   */
+  private boolean ignoreFolder = true;
+  /**
+   * output siz. Default is 4kb, if you want bigger siz that you can set it through {@link LlcBuilder#outputSiz(int)}
+   */
+  private int outputSize = DEFAULT_OUTPUT_SIZ;
+  private String compressEncode = DEFAULT_ENCODING;
+  private String decompressEncode = DEFAULT_ENCODING;
 
   public LlcBuilder() {
 
@@ -81,15 +98,26 @@ public class LlcBuilder {
     return this;
   }
 
+  public LlcBuilder compressEncode(String compressEncode) {
+    this.compressEncode = compressEncode;
+    return this;
+  }
+
+  public LlcBuilder decompressEncode(String decompressEncode) {
+    this.decompressEncode = decompressEncode;
+    return this;
+  }
+
   public Llc build() {
     return new Llc(
-        isParallel,
-        blockSize,
-        blocks,
         typ,
-        outputSize,
-        outputName,
-        ignoreFolder,
-        new LlcContext(blockSize, blocks, outputSize, outputName,ignoreFolder));
+        new LlcContext(
+            blockSize,
+            blocks,
+            outputSize,
+            outputName,
+            ignoreFolder,
+            compressEncode,
+            decompressEncode));
   }
 }

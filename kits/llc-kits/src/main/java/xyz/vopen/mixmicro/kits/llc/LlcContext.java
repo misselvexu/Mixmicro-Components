@@ -34,13 +34,24 @@ public class LlcContext {
   private final int outputSize;
   private final String outputName;
   private final boolean ignoreFolder;
+  private String compressEncode;
+  private String decompressEncode;
 
-  protected LlcContext(long blockSize, int blocks, int outputSize, String outputName, boolean ignoreFolder) {
+  protected LlcContext(
+      long blockSize,
+      int blocks,
+      int outputSize,
+      String outputName,
+      boolean ignoreFolder,
+      String compressEncode,
+      String decompressEncode) {
     this.blockSize = blockSize;
     this.blocks = blocks;
     this.outputSize = outputSize;
     this.outputName = outputName;
     this.ignoreFolder = ignoreFolder;
+    this.compressEncode = compressEncode;
+    this.decompressEncode = decompressEncode;
   }
 
   public long getBlockSize() {
@@ -61,5 +72,13 @@ public class LlcContext {
 
   public boolean getIgnoreFolder() {
     return ignoreFolder;
+  }
+
+  public String getCompressEncode() {
+    return compressEncode;
+  }
+
+  public String getDecompressEncode() {
+    return decompressEncode;
   }
 }

@@ -69,6 +69,7 @@ public class LlcZipCompress extends LlcParallelCompress {
     try {
       zipArchiveOutputStream = new ZipArchiveOutputStream(file);
       zipArchiveOutputStream.setUseZip64(Zip64Mode.AsNeeded);
+      zipArchiveOutputStream.setEncoding(super.getContext().getCompressEncode());
       for (File sourceFile : sourceFiles) {
         ZipArchiveEntry zipArchiveEntry = new ZipArchiveEntry(sourceFile.getName());
         zipArchiveOutputStream.putArchiveEntry(zipArchiveEntry);
@@ -119,7 +120,7 @@ public class LlcZipCompress extends LlcParallelCompress {
     ArchiveEntry archiveEntry;
     try {
       inputStream = new FileInputStream(file);
-      zipArchiveInputStream = new ZipArchiveInputStream(inputStream, encoding);
+      zipArchiveInputStream = new ZipArchiveInputStream(inputStream, super.getContext().getDecompressEncode());
       while (null != (archiveEntry = zipArchiveInputStream.getNextEntry())) {
         String archiveEntryFileName = archiveEntry.getName();
 
@@ -165,7 +166,7 @@ public class LlcZipCompress extends LlcParallelCompress {
     ArchiveEntry archiveEntry;
     try {
       input = new FileInputStream(file);
-      zipArchiveInputStream = new ZipArchiveInputStream(input, encoding);
+      zipArchiveInputStream = new ZipArchiveInputStream(input, super.getContext().getDecompressEncode());
 
       while (null != (archiveEntry = zipArchiveInputStream.getNextEntry())) {
         String archiveEntryFileName = archiveEntry.getName();

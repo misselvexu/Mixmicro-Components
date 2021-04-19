@@ -34,31 +34,9 @@ package xyz.vopen.mixmicro.kits.llc;
 public class Llc {
 
   public static final int DEFAULT_OUTPUT_SIZ = 1024 * 4; // 4kb.
+  protected static final String DEFAULT_ENCODING = "UTF-8";
 
-  /**
-   * true if need to parallel.
-   */
-  private boolean isParallel;
-  /**
-   * size of single block.
-   */
-  private long blockSize;
-  /**
-   * the block number.
-   */
-  private int blocks;
   private CompressType typ;
-  private String outputName;
-
-  /**
-   * Only used for rar5.
-   */
-  private boolean ignoreFolder;
-
-  /**
-   * output siz. Default is 4kb, if you want bigger siz that you can set it through {@link LlcBuilder#outputSiz(int)}
-   */
-  private int outputSize;
   private LlcContext context;
 
   private Llc() {
@@ -67,21 +45,9 @@ public class Llc {
   }
 
   protected Llc(
-      boolean isParallel,
-      long blockSize,
-      int blocks,
       CompressType typ,
-      int outputSize,
-      String outputName,
-      boolean ignoreFolder,
       LlcContext context) {
-    this.isParallel = isParallel;
-    this.blockSize = blockSize;
-    this.blocks = blocks;
     this.typ = typ;
-    this.outputSize = outputSize;
-    this.outputName = outputName;
-    this.ignoreFolder = ignoreFolder;
     this.context = context;
   }
 
