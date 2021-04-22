@@ -143,6 +143,8 @@ public class LlcZipCompress extends LlcParallelCompress {
         }
         outputStream.flush();
       }
+
+      return true;
     } catch (IOException e) {
       e.printStackTrace();
       return false;
@@ -161,7 +163,6 @@ public class LlcZipCompress extends LlcParallelCompress {
         e.printStackTrace();
       }
     }
-    return false;
   }
 
   @Override
