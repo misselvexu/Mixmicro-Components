@@ -44,10 +44,12 @@ import xyz.vopen.mixmicro.kits.llc.LlcParallelCompress;
 public class LlcRar5Compress extends LlcParallelCompress {
 
   private static final String RAR_SUFFIX = ".rar";
+  private ExtractItemsStandardCallback call;
 
   public LlcRar5Compress() {
     try {
       SevenZip.initSevenZipFromPlatformJAR();
+      call = new ExtractItemsStandardCallback();
     } catch (SevenZipNativeInitializationException e) {
       e.printStackTrace();
     }
@@ -76,19 +78,7 @@ public class LlcRar5Compress extends LlcParallelCompress {
       throw new IllegalArgumentException("Suffix name error, your input filename is: " + file.getName());
     }
     try {
-      if (!targetDir.isDirectory() && !targetDir.mkdirs()) {
-        throw new IOException("failed to create directory " + targetDir);
-      }
-
-      final Map<String, byte[]> extract = ExtractItemsStandardCallback.extract(file, super.getContext().getIgnoreFolder());
-
-      extract.forEach((fileName, bytes) -> {
-        final Path path = Paths.get(targetDir.getPath(), fileName);
-        try {
-          Files.write(path, bytes);
-        } catch (IOException e) {
-        }
-      });
+      call.extract(file, targetDir, super.getContext().getIgnoreFolder());
     } catch (Exception e) {
       e.printStackTrace();
       return false;
@@ -98,13 +88,6 @@ public class LlcRar5Compress extends LlcParallelCompress {
 
   @Override
   public List<String> listFiles(File file) {
-    List<String> ret = new LinkedList<>();
-    try {
-      final Map<String, byte[]> extract = ExtractItemsStandardCallback.extract(file, super.getContext().getIgnoreFolder());
-      extract.forEach((fileName, bytes) -> ret.add(fileName));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return ret;
+    return call.list(file);
   }
 }
