@@ -18,7 +18,7 @@
 
 // 压缩器
 Compress compress =
-  Llc.builder().outputSiz(1024 * 4).type(Llc.CompressType.ZIP).build().getCompress();
+  Llc.builder().decompressEncodeCharset("GBK").outputSiz(1024 * 4).type(Llc.CompressType.ZIP).build().getCompress();
 
 // 测试压缩
 File[] files = new File[] {new File("/xxx/xxx.json")};

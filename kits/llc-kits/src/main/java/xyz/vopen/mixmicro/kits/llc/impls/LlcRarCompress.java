@@ -27,6 +27,7 @@ import xyz.vopen.mixmicro.kits.llc.LlcParallelCompress;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -80,7 +81,7 @@ public class LlcRarCompress extends LlcParallelCompress {
 
   @Override
   public List<String> listFiles(File file) {
-    List<ContentDescription> contentDescriptions = null;
+    List<ContentDescription> contentDescriptions = new ArrayList<>();
     try {
       contentDescriptions = Junrar.getContentsDescription(file);
     } catch (Exception e) {
