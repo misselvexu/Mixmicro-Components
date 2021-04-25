@@ -1,15 +1,15 @@
 package xyz.vopen.mixmicro.kits.llc;
 
+import net.sf.sevenzipjbinding.*;
+import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
+
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.Collections;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.IntStream;
-import net.sf.sevenzipjbinding.IInArchive;
-import net.sf.sevenzipjbinding.SevenZip;
-import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
 
 public final class ExtractItemsStandardCallback {
 
@@ -19,7 +19,7 @@ public final class ExtractItemsStandardCallback {
     private ISequentialOutStream out;
     private IArchiveExtractCallback callback;
 
-    private ExtractItemsStandardCallback() {
+    public ExtractItemsStandardCallback() {
         out = data -> {
             try {
                 if (output != null) {
