@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties;
-import xyz.vopen.mixmicro.components.exception.EntityBody;
 import xyz.vopen.mixmicro.components.exception.defined.BizException;
 import xyz.vopen.mixmicro.components.exception.defined.CompatibleMixmicroException;
 import xyz.vopen.mixmicro.components.exception.defined.MixmicroException;
@@ -98,16 +97,22 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
           Boolean isPrint = exceptions.get(e.getClass());
           if(isPrint) {
             log.error(e.getMessage(), e);
+          } else {
+            log.error(e.getMessage());
           }
         } else {
           if (e instanceof MixmicroException) {
             if (getProperties().getException().isPrintMixmicroStackTrace()) { // true
               log.error(e.getMessage(), e);
+            } else {
+              log.error(e.getMessage());
             }
           } else {
             log.error(e.getMessage(), e);
           }
         }
+      } else {
+        log.error(e.getMessage());
       }
     }
   }
@@ -124,9 +129,9 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
     printStackTrace(e);
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
         .body(
-            EntityBody.<Void, String>builder()
-                .message("missing request parameter(s) [" + e.getParameterName() + "]")
-                .build());
+            xyz.vopen.mixmicro.components.common.ResponseEntity.fail(
+                xyz.vopen.mixmicro.components.exception.HttpStatus.BAD_REQUEST.code(),
+                "missing request parameter(s) [" + e.getParameterName() + "]"));
   }
 
   // === 定义自定义异常全局拦截机制
@@ -143,8 +148,10 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
 
     handlerException(e);
 
-    return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-        .body(EntityBody.<Void, String>builder().message(e.getMessage()).build());
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(
+            xyz.vopen.mixmicro.components.common.ResponseEntity.fail(
+                getProperties().getException().getDefaultExceptionResponseCode(), e));
   }
 
   /**
@@ -217,7 +224,10 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
                               .build());
     }
 
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(EntityBody.exception(e));
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(
+            xyz.vopen.mixmicro.components.common.ResponseEntity.fail(
+                getProperties().getException().getDefaultExceptionResponseCode(), e));
   }
 
   // === end
@@ -237,6 +247,9 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
       return o.get();
     }
 
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(EntityBody.exception(e));
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(
+            xyz.vopen.mixmicro.components.common.ResponseEntity.fail(
+                getProperties().getException().getDefaultExceptionResponseCode(), e));
   }
 }

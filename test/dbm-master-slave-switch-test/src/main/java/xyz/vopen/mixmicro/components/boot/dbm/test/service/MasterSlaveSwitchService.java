@@ -29,16 +29,21 @@ public class MasterSlaveSwitchService {
   }
 
 
+
+  // 原生事务注解
   @Transactional(rollbackFor = Exception.class)
-  @MixmicroDBMRouter(isMasterRouteOnly = false)
+  // 主库路由标记注解
+  @MixmicroDBMRouter(isMasterRouteOnly = true)
   public void testWriteAndReadContext(String appname) {
 
+    // 新增用户操作
     String sql = "INSERT INTO `log_login`(`user_id`, `app_name`) VALUES (1, ?)";
 
     int row = template.update(sql, appname);
 
     System.out.println("insert rows: " + row);
 
+    // 针对用户的第一次查询操作
     String ssql = "SELECT * FROM `log_login` WHERE `app_name` = ? ";
 
     LoginLog log = template.queryForObject(ssql, new Object[]{appname}, new RowMapper<LoginLog>() {
@@ -54,12 +59,12 @@ public class MasterSlaveSwitchService {
 
     System.out.println("query result: " + log);
 
+    // 针对用户的删除操作
     String dsql = "DELETE FROM `log_login` WHERE `app_name` = ? ";
 
     row = template.update(dsql, appname);
 
     System.out.println("clear & delete rows : " + row);
-
   }
 
 

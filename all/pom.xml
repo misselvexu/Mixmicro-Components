@@ -20,7 +20,7 @@
 
     <properties>
 
-        <revision>1.0.8.BUILD-SNAPSHOT</revision>
+        <revision>1.0.9.BUILD-SNAPSHOT</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -31,6 +31,7 @@
         <spring.cloud.alibaba.version>2.2.3.RELEASE</spring.cloud.alibaba.version>
         <spring.boot.version>2.2.10.RELEASE</spring.boot.version>
         <spring.framework.version>5.2.9.RELEASE</spring.framework.version>
+        <nacos.client.version>1.4.0</nacos.client.version>
 
         <jaeger.opentracing.version>2.0.3</jaeger.opentracing.version>
         <swagger.version>1.5.14</swagger.version>
@@ -152,6 +153,13 @@
                 <version>${testcontainers.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- Nacos Client -->
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos.client.version}</version>
             </dependency>
 
             <!-- Database Libs -->
@@ -498,6 +506,12 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>llc-kits</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
 
             <!-- Owner Dependencies Enhance -->
 
@@ -804,6 +818,24 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-banner</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-cache-redis-default</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-cache-redis-lettuce</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-cache-redis-springdata</artifactId>
                 <version>${revision}</version>
             </dependency>
 

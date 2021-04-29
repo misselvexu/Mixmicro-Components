@@ -16,7 +16,7 @@ import java.util.Date;
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 22/10/2018.
- * @deprecated use <code>ResponseEntity<T></code> instead of, will removed next release version.
+ * @deprecated use <code>ResponseEntity<T></code> instead of, will removed <code>1.0.9</code> version.
  */
 @Getter
 @Setter
