@@ -56,6 +56,9 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
           for (String header : properties0.getSensitiveHeaders()) {
             String value = Optional.ofNullable(request.getHeader(header)).orElse(EMPTY_STRING);
             if (!StringUtils.isBlank(value)) {
+              if(template.headers().containsKey(header)) {
+                template.removeHeader(header);
+              }
               template.header(header, Optional.ofNullable(request.getHeader(header)).orElse(EMPTY_STRING));
             }
           }
@@ -79,6 +82,9 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
                 if(temp.containsKey(name)) {
                   String value = Optional.ofNullable(temp.get(name)).orElse(EMPTY_STRING);
                   if (!StringUtils.isBlank(value)) {
+                    if(template.headers().containsKey(name)) {
+                      template.removeHeader(name);
+                    }
                     template.header(name, Optional.ofNullable(temp.get(name)).orElse(EMPTY_STRING));
                   }
                 }
@@ -90,6 +96,9 @@ public class OpenFeignPreInvokeInterceptor implements RequestInterceptor {
                     HttpServletRequest request = attributes0.getRequest();
                     String value = Optional.ofNullable(request.getHeader(name)).orElse(EMPTY_STRING);
                     if (!StringUtils.isBlank(value)) {
+                      if(template.headers().containsKey(name)) {
+                        template.removeHeader(name);
+                      }
                       template.header(name, Optional.ofNullable(request.getHeader(name)).orElse(EMPTY_STRING));
                     }
                   }

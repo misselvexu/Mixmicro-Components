@@ -20,7 +20,7 @@
 
     <properties>
 
-        <revision>1.0.8.RELEASE</revision>
+        <revision>1.0.9.RC1</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -506,6 +506,12 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>llc-kits</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
 
             <!-- Owner Dependencies Enhance -->
 
@@ -823,13 +829,13 @@
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-starter-cache-redis-springdata</artifactId>
+                <artifactId>mixmicro-components-starter-cache-redis-lettuce</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
-                <artifactId>mixmicro-components-starter-cache-redis-lettuce</artifactId>
+                <artifactId>mixmicro-components-starter-cache-redis-springdata</artifactId>
                 <version>${revision}</version>
             </dependency>
 

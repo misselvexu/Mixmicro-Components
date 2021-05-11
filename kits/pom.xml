@@ -50,6 +50,7 @@
         <module>qrcode-kit</module>
         <module>reflect-kit</module>
         <module>embedded-redis-kit</module>
+        <module>llc-kits</module>
     </modules>
 
 
@@ -148,6 +149,12 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>embedded-redis-kit</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>llc-kits</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
