@@ -20,7 +20,7 @@
 
     <properties>
 
-        <revision>1.0.9.RC1</revision>
+        <revision>1.0.9.BUILD-SNAPSHOT</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -509,6 +509,13 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>llc-kits</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-kits</artifactId>
+                <type>pom</type>
                 <version>${revision}</version>
             </dependency>
 
@@ -1024,6 +1031,12 @@
             <dependency>
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-spring-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-optimization</artifactId>
                 <version>${revision}</version>
             </dependency>
 
