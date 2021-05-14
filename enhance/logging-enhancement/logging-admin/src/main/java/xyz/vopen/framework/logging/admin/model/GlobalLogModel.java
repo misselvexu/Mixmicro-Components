@@ -1,6 +1,5 @@
 package xyz.vopen.framework.logging.admin.model;
 
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import xyz.vopen.framework.logging.core.MixmicroLogLevel;
@@ -13,7 +12,6 @@ import java.io.Serializable;
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2020/9/9
  */
-@Data
 @Document(collection = "logging_global_logs")
 public class GlobalLogModel implements Serializable {
   /** Global log primary key */
@@ -34,4 +32,76 @@ public class GlobalLogModel implements Serializable {
   private String exceptionStack;
   /** the global log create time default is current time millis */
   private Long createTime;
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public String getRequestLogId() {
+    return requestLogId;
+  }
+
+  public void setRequestLogId(String requestLogId) {
+    this.requestLogId = requestLogId;
+  }
+
+  public MixmicroLogLevel getLevel() {
+    return level;
+  }
+
+  public void setLevel(MixmicroLogLevel level) {
+    this.level = level;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public String getCallerClass() {
+    return callerClass;
+  }
+
+  public void setCallerClass(String callerClass) {
+    this.callerClass = callerClass;
+  }
+
+  public String getCallerMethod() {
+    return callerMethod;
+  }
+
+  public void setCallerMethod(String callerMethod) {
+    this.callerMethod = callerMethod;
+  }
+
+  public Integer getCallerCodeLineNumber() {
+    return callerCodeLineNumber;
+  }
+
+  public void setCallerCodeLineNumber(Integer callerCodeLineNumber) {
+    this.callerCodeLineNumber = callerCodeLineNumber;
+  }
+
+  public String getExceptionStack() {
+    return exceptionStack;
+  }
+
+  public void setExceptionStack(String exceptionStack) {
+    this.exceptionStack = exceptionStack;
+  }
+
+  public Long getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(Long createTime) {
+    this.createTime = createTime;
+  }
 }

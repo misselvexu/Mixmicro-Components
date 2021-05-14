@@ -5,9 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import xyz.vopen.framework.logging.admin.endpoint.LoggingEndpoint;
-import xyz.vopen.framework.logging.admin.listener.ReportLogJsonFormatListener;
-import xyz.vopen.framework.logging.admin.listener.ReportLogStorageListener;
 import xyz.vopen.framework.logging.admin.repository.GlobalLogRepository;
 import xyz.vopen.framework.logging.admin.repository.LogServiceDetailRepository;
 import xyz.vopen.framework.logging.admin.repository.RequestLogRepository;
@@ -19,8 +16,6 @@ import xyz.vopen.framework.logging.admin.service.LoggingDataService;
  *
  * <p>Register the following beans to BeanFactory{@link
  * org.springframework.beans.factory.BeanFactory}： Register {@link LoggingDataService} bean Register
- * {@link ReportLogStorageListener} bean Register {@link ReportLogJsonFormatListener} bean Register
- * {@link LoggingEndpoint} bean
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @since 1.0.1

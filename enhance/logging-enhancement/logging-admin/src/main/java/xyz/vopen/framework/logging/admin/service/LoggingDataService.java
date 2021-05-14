@@ -38,17 +38,7 @@ public interface LoggingDataService {
    * @param servicePort ServicePort
    * @return ServiceDetail Pk Value
    */
-  String insertLogServiceDetail(String serviceId, String serviceIp, int servicePort);
-
-  /**
-   * Select ServiceDetails Id
-   *
-   * @param serviceId Service Id
-   * @param serviceIp Service Ip Address
-   * @param servicePort Service Port
-   * @return ServiceDetail Id
-   */
-  String selectLogServiceDetailId(String serviceId, String serviceIp, int servicePort);
+  String insertServiceDetailIfAbsent(String serviceId, String serviceIp, int servicePort);
 
   /**
    * Update ServiceDetail Last Report Time

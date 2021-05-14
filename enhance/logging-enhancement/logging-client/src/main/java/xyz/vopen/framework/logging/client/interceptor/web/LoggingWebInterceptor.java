@@ -193,8 +193,7 @@ public class LoggingWebInterceptor extends LoggingAbstractInterceptor
    */
   private String extractParentSpanId(HttpServletRequest request) {
     // get spanId from request header
-    String spanId = HttpRequestUtil.getHeader(request, LoggingConstant.HEADER_NAME_PARENT_SPAN_ID);
-    return spanId;
+    return HttpRequestUtil.getHeader(request, LoggingConstant.HEADER_NAME_PARENT_SPAN_ID);
   }
 
   /**

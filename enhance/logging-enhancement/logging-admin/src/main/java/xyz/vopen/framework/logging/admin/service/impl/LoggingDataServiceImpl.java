@@ -3,6 +3,7 @@ package xyz.vopen.framework.logging.admin.service.impl;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.util.Assert;
 import xyz.vopen.framework.logging.admin.model.GlobalLogModel;
 import xyz.vopen.framework.logging.admin.model.LogServiceDetailModel;
 import xyz.vopen.framework.logging.admin.model.RequestLogModel;
@@ -110,42 +111,23 @@ public class LoggingDataServiceImpl implements LoggingDataService {
    * @return log service id
    */
   @Override
-  public String insertLogServiceDetail(String serviceId, String serviceIp, int servicePort) {
+  public String insertServiceDetailIfAbsent(String serviceId, String serviceIp, int servicePort) {
     LogServiceDetailModel logServiceDetailModel = new LogServiceDetailModel();
-    String id = UUID.randomUUID().toString();
-    logServiceDetailModel.setId(id);
-    logServiceDetailModel.setServiceId(serviceId);
-    logServiceDetailModel.setServiceIp(serviceIp);
-    logServiceDetailModel.setServicePort(servicePort);
-    logServiceDetailModel.setCreateTime(System.currentTimeMillis());
-    logServiceDetailModel.setLastReportTime(System.currentTimeMillis());
-    logServiceDetailRepository.insert(logServiceDetailModel);
-    return id;
-  }
-
-  /**
-   * get service id by service detail
-   *
-   * @param serviceId Service Id
-   * @param serviceIp Service Ip Address
-   * @param servicePort Service Port
-   * @return log service detail id
-   */
-  @Override
-  public String selectLogServiceDetailId(String serviceId, String serviceIp, int servicePort) {
-    Criteria criteria =
-        Criteria.where("serviceId")
-            .is(serviceId)
-            .and("serviceIp")
-            .is(serviceIp)
-            .and("servicePort")
-            .is(servicePort);
-    LogServiceDetailModel logServiceDetailModel =
-        logServiceDetailRepository.findOne(new LogServiceDetailModel(), Query.query(criteria));
-    if (null != logServiceDetailModel) {
-      return logServiceDetailModel.getId();
+    String id = formatServiceDetailID(serviceId, serviceIp, servicePort);
+    logServiceDetailModel =
+        logServiceDetailRepository.findOne(
+            logServiceDetailModel, Query.query(Criteria.where("_id").is(id)));
+    if (null == logServiceDetailModel) {
+      logServiceDetailModel = new LogServiceDetailModel();
+      logServiceDetailModel.setId(id);
+      logServiceDetailModel.setServiceId(serviceId);
+      logServiceDetailModel.setServiceIp(serviceIp);
+      logServiceDetailModel.setServicePort(servicePort);
+      logServiceDetailModel.setCreateTime(System.currentTimeMillis());
+      logServiceDetailModel.setLastReportTime(System.currentTimeMillis());
+      logServiceDetailRepository.insert(logServiceDetailModel);
     }
-    return null;
+    return id;
   }
 
   @Override
@@ -157,5 +139,20 @@ public class LoggingDataServiceImpl implements LoggingDataService {
       logServiceDetailModel.setLastReportTime(System.currentTimeMillis());
       logServiceDetailRepository.save(logServiceDetailModel);
     }
+  }
+
+  /**
+   * format serviceDetail ID
+   *
+   * @param serviceId service id
+   * @param serviceIp service ip address
+   * @param servicePort service port
+   * @return service detail id
+   */
+  private String formatServiceDetailID(String serviceId, String serviceIp, Integer servicePort) {
+    Assert.notNull(serviceId, "Service Id Is Required.");
+    Assert.notNull(serviceIp, "Service Ip Is Required.");
+    Assert.notNull(servicePort, "Service Port Is Required.");
+    return String.format("%s-%s:%d", serviceId, serviceIp, servicePort);
   }
 }

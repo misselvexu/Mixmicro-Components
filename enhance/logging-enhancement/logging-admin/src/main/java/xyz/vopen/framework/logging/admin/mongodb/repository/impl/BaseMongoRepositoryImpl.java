@@ -1,6 +1,5 @@
 package xyz.vopen.framework.logging.admin.mongodb.repository.impl;
 
-import org.springframework.data.mongodb.SessionSynchronization;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -18,9 +17,6 @@ import java.util.List;
  */
 public abstract class BaseMongoRepositoryImpl<E> implements BaseMongoRepository<E> {
 
-  /** mongodb transaction switch:true-on,false-off */
-  protected static Boolean transactionEnabled = false;
-
   protected MongoTemplate mongoTemplate;
 
   /**
@@ -31,10 +27,6 @@ public abstract class BaseMongoRepositoryImpl<E> implements BaseMongoRepository<
   @SuppressWarnings("unused")
   public BaseMongoRepositoryImpl<E> setMongoTemplate(MongoTemplate template) {
     mongoTemplate = template;
-    if (transactionEnabled && null != mongoTemplate) {
-      // turn on the mongondb transaction switch
-      mongoTemplate.setSessionSynchronization(SessionSynchronization.ALWAYS);
-    }
     return this;
   }
 
@@ -60,11 +52,6 @@ public abstract class BaseMongoRepositoryImpl<E> implements BaseMongoRepository<
 
   @Override
   public long count(E entity, Query query) {
-    //  when the mongodb transaction is on, this will not supported on count sql
-    if (transactionEnabled) {
-      // the replace way is getting the result data size to count,bus this is unstable
-      return this.find(entity, query).size();
-    }
     String collectionName = MongoHelper.getCollectionName(entity);
     if (query == null) {
       query = new Query();
