@@ -4,6 +4,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.transaction.annotation.Transactional;
+import xyz.vopen.framework.logging.admin.mongodb.exception.RepositoryException;
 import xyz.vopen.framework.logging.admin.mongodb.helper.MongoPageHelper;
 import xyz.vopen.framework.logging.admin.mongodb.repository.BaseMongoRepository;
 import xyz.vopen.framework.logging.admin.mongodb.response.PageResponse;
@@ -12,7 +13,7 @@ import xyz.vopen.framework.logging.admin.mongodb.service.BaseMongoService;
 import java.util.List;
 
 /**
- * {@link BaseMongoServiceImpl}mongodb base crud service impl
+ * mongodb base crud service impl
  *
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2020/9/8
@@ -46,8 +47,8 @@ public abstract class BaseMongoServiceImpl<R extends BaseMongoRepository<E>, E>
   }
 
   @Override
-  public PageResponse<E> find(E entity, Query query, int pageNum, int pageSize, String orderBy) {
-    PageRequest pageRequest = MongoPageHelper.startPage(pageNum, pageSize, orderBy);
+  public PageResponse<E> find(E entity, Query query, int pageNum, int pageSize) {
+    PageRequest pageRequest = MongoPageHelper.startPage(pageNum, pageSize);
     if (query == null) {
       query = new Query();
     }
@@ -75,7 +76,7 @@ public abstract class BaseMongoServiceImpl<R extends BaseMongoRepository<E>, E>
     try {
       repository.save(entity);
     } catch (OptimisticLockingFailureException e) {
-      throw new RuntimeException("mongodb update error", e);
+      throw new RepositoryException("mongodb update error", e);
     }
   }
 

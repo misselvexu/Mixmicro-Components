@@ -32,10 +32,9 @@ public interface BaseMongoService<E> {
    * @param query spring data mongo query
    * @param pageNum page number
    * @param pageSize one page size
-   * @param orderBy sort by
    * @return result
    */
-  PageResponse<E> find(E entity, Query query, int pageNum, int pageSize, String orderBy);
+  PageResponse<E> find(E entity, Query query, int pageNum, int pageSize);
 
   /**
    * @param entity mapping entity

@@ -1,17 +1,12 @@
 package xyz.vopen.framework.logging.spring.util;
 
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import xyz.vopen.framework.logging.admin.endpoint.LoggingEndpoint;
-import xyz.vopen.framework.logging.admin.event.ReportLogEvent;
-import xyz.vopen.framework.logging.admin.listener.ReportLogJsonFormatListener;
-import xyz.vopen.framework.logging.admin.listener.ReportLogStorageListener;
 import xyz.vopen.framework.logging.client.filter.LoggingBodyFilter;
 import xyz.vopen.framework.logging.client.global.MixmicroLoggingThreadLocal;
 import xyz.vopen.framework.logging.client.interceptor.web.LoggingWebInterceptor;
 import xyz.vopen.framework.logging.client.notice.LoggingNoticeListener;
 import xyz.vopen.framework.logging.client.notice.support.LoggingAdminNotice;
 import xyz.vopen.framework.logging.client.notice.support.LoggingLocalNotice;
-import xyz.vopen.framework.logging.core.annotation.ApiEndpoint;
 import xyz.vopen.framework.logging.core.mapping.LoggingRequestMappingHandlerMapping;
 import xyz.vopen.framework.util.BeanUtils;
 
@@ -32,9 +27,6 @@ public class LoggingBeanUtils {
    * @param registry {@link BeanDefinitionRegistry}
    */
   public static void registerLoggingAdminBeans(BeanDefinitionRegistry registry) {
-    registerReportLogJsonFormatListener(registry);
-    registerReportLogStorageListener(registry);
-    registerLoggingEndpoint(registry);
     registerLoggingRequestMappingHandler(registry);
   }
 
@@ -51,42 +43,6 @@ public class LoggingBeanUtils {
     registerLoggingLocalNotice(registry);
     registerLoggingAdminNotice(registry);
     registerLoggingThreadLocal(registry);
-  }
-
-  /**
-   * Register Format Report Logging in console listener {@link ReportLogJsonFormatListener} bean
-   * name is use {@link ReportLogJsonFormatListener#BEAN_NAME}
-   *
-   * @param registry {@link BeanDefinitionRegistry}
-   * @see ReportLogEvent
-   */
-  public static void registerReportLogJsonFormatListener(BeanDefinitionRegistry registry) {
-    BeanUtils.registerInfrastructureBeanIfAbsent(
-        registry, ReportLogJsonFormatListener.BEAN_NAME, ReportLogJsonFormatListener.class);
-  }
-
-  /**
-   * Register repository logging{@link ReportLogStorageListener} listener bean name is use {@link
-   * ReportLogStorageListener#BEAN_NAME}
-   *
-   * @param registry {@link BeanDefinitionRegistry}
-   * @see ReportLogEvent
-   */
-  public static void registerReportLogStorageListener(BeanDefinitionRegistry registry) {
-    BeanUtils.registerInfrastructureBeanIfAbsent(
-        registry, ReportLogStorageListener.BEAN_NAME, ReportLogStorageListener.class);
-  }
-
-  /**
-   * Register logging endpoint {@link LoggingEndpoint} Register spring MVC endpoint{@link
-   * ApiEndpoint} bean name is use {@link LoggingEndpoint#BEAN_NAME}
-   *
-   * @param registry {@link BeanDefinitionRegistry}
-   * @see LoggingRequestMappingHandlerMapping
-   */
-  public static void registerLoggingEndpoint(BeanDefinitionRegistry registry) {
-    BeanUtils.registerInfrastructureBeanIfAbsent(
-        registry, LoggingEndpoint.BEAN_NAME, LoggingEndpoint.class);
   }
 
   /**
