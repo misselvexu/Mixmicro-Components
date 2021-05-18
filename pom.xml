@@ -13,7 +13,7 @@
     <url>http://git.hgj.net/elve.xu/Mixmicro-Components</url>
 
     <organization>
-        <name>The YunLSP+ Organization</name>
+        <name>The HGJ.NET Organization</name>
         <url>https://www.yunlsp.com</url>
     </organization>
 
@@ -61,7 +61,7 @@
 
     <developers>
         <developer>
-            <id>YunLSP+</id>
+            <id>HGJ.NET</id>
             <name>Developer</name>
             <email>developer@yunlsp.com</email>
             <roles>

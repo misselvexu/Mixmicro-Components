@@ -89,15 +89,41 @@
 
     <developers>
         <developer>
-            <id>YunLSP+</id>
-            <name>Developer</name>
-            <email>developer@yunlsp.com</email>
+            <name>Elve.Xu</name>
+            <email>elve.xu@yunlsp.com</email>
             <roles>
-                <role>Architect</role>
+                <role>Owner</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+
+        <developer>
+            <name>Tino.Tang</name>
+            <email>tino.tang@yunlsp.com</email>
+            <roles>
                 <role>Developer</role>
             </roles>
             <timezone>+8</timezone>
         </developer>
+
+        <developer>
+            <name>Acker.Wang</name>
+            <email>acker.wang@yunlsp.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+
+        <developer>
+            <name>Siran.Yao</name>
+            <email>siran.yao@yunlsp.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+
     </developers>
 
     <dependencyManagement>
