@@ -124,6 +124,15 @@
             <timezone>+8</timezone>
         </developer>
 
+        <developer>
+            <name>Jake.Gao</name>
+            <email>jake.gao@yunlsp.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+
     </developers>
 
     <dependencyManagement>

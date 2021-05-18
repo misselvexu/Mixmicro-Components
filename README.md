@@ -1,10 +1,10 @@
-## Mix Micro-service Components
+## Mixmicro Components
 
-> A micro-services sample project.
+> MicroService-based Development Framework
 
 ### Overview
 
->
+### [Version Change Logs](CHANGELOG.md)
 
 ### Requirements
 
@@ -14,7 +14,7 @@ YunLSP+ Maven Repository Configuration
 
 ### Quick Start
 
-You can download binaries from [Release Repo](http://git.hgj.net/elve.xu/Mixmicro-Components) or [repo.hgj.net](http://nexus.hgj.net/).
+You can download binaries from [Release Repo](https://github.com/misselvexu/Mixmicro-Components) or [repo.hgj.net](http://nexus.hgj.net/).
 
 *First* : unzip release package
 
@@ -46,7 +46,7 @@ but if you want to try out the latest and greatest,
 *First* : git clone source from gitlab
  
 ```bash
-$ git clone http://git.hgj.net/elve.xu/Mixmicro-Components.git
+$ git clone https://github.com/misselvexu/Mixmicro-Components.git
 ```
 
 *Second* : build
@@ -68,7 +68,7 @@ If you want to build with the regular `mvn` command, you will need [Maven v3.5.0
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-dependencies</artifactId>
-            <version>1.0.7.RC1</version>
+            <version>1.0.8.RELEASE</version>
             <scope>import</scope>
             <type>pom</type>
         </dependency>               
