@@ -49,24 +49,26 @@ public class LoggingDataServiceImpl implements LoggingDataService {
    * Insert Global Log
    *
    * @param requestLogId request log id
-   * @param log {@link MixmicroGlobalLog}
+   * @param globalLog {@link MixmicroGlobalLog}
    */
   @Override
-  public void insertGlobalLog(String requestLogId, MixmicroGlobalLog log) {
+  public void insertGlobalLog(String requestLogId, MixmicroGlobalLog globalLog) {
     GlobalLogModel globalLogModel = new GlobalLogModel();
     String id = UUID.randomUUID().toString();
     globalLogModel.setId(id);
     globalLogModel.setRequestLogId(requestLogId);
-    globalLogModel.setLevel(log.getLevel());
-    globalLogModel.setContent(log.getContent());
-    globalLogModel.setCallerClass(log.getCallerClass());
-    globalLogModel.setCallerMethod(log.getCallerMethod());
-    globalLogModel.setCallerCodeLineNumber(log.getCallerCodeLineNumber());
-    globalLogModel.setExceptionStack(log.getExceptionStack());
-    if (null == log.getCreateTime()) {
+    globalLogModel.setLevel(globalLog.getLevel());
+    globalLogModel.setContent(globalLog.getContent());
+    globalLogModel.setCallerClass(globalLog.getCallerClass());
+    globalLogModel.setCallerMethod(globalLog.getCallerMethod());
+    globalLogModel.setCallerCodeLineNumber(globalLog.getCallerCodeLineNumber());
+    globalLogModel.setExceptionStack(globalLog.getExceptionStack());
+    globalLogModel.setServiceId(globalLog.getServiceId());
+    globalLogModel.setServiceDetailId(globalLog.getServiceDetailId());
+    if (null == globalLog.getCreateTime()) {
       globalLogModel.setCreateTime(System.currentTimeMillis());
     } else {
-      globalLogModel.setCreateTime(log.getCreateTime());
+      globalLogModel.setCreateTime(globalLog.getCreateTime());
     }
     globalLogRepository.insert(globalLogModel);
   }
@@ -75,31 +77,33 @@ public class LoggingDataServiceImpl implements LoggingDataService {
    * Insert request log
    *
    * @param serviceDetailId ServiceDetail ID
-   * @param log MinBoxLog
+   * @param requestLog MinBoxLog
    * @return request log id
    */
   @Override
-  public String insertRequestLog(String serviceDetailId, MixmicroLog log) {
+  public String insertRequestLog(String serviceDetailId, MixmicroLog requestLog) {
     RequestLogModel requestLogModel = new RequestLogModel();
     String id = UUID.randomUUID().toString();
     requestLogModel.setId(id);
     requestLogModel.setServiceDetailId(serviceDetailId);
-    requestLogModel.setTraceId(log.getTraceId());
-    requestLogModel.setParentSpanId(log.getParentSpanId());
-    requestLogModel.setSpanId(log.getSpanId());
-    requestLogModel.setStartTime(log.getStartTime());
-    requestLogModel.setEndTime(log.getEndTime());
-    requestLogModel.setHttpStatus(log.getHttpStatus());
-    requestLogModel.setRequestBody(log.getRequestBody());
-    requestLogModel.setRequestHeaders(log.getRequestHeaders());
-    requestLogModel.setRequestIp(log.getRequestIp());
-    requestLogModel.setRequestMethod(log.getRequestMethod());
-    requestLogModel.setRequestUri(log.getRequestUri());
-    requestLogModel.setResponseBody(log.getResponseBody());
-    requestLogModel.setResponseHeaders(log.getResponseHeaders());
-    requestLogModel.setTimeConsuming(log.getTimeConsuming());
-    requestLogModel.setRequestParams(log.getRequestParam());
-    requestLogModel.setExceptionStack(log.getExceptionStack());
+    requestLogModel.setTraceId(requestLog.getTraceId());
+    requestLogModel.setParentSpanId(requestLog.getParentSpanId());
+    requestLogModel.setSpanId(requestLog.getSpanId());
+    requestLogModel.setStartTime(requestLog.getStartTime());
+    requestLogModel.setEndTime(requestLog.getEndTime());
+    requestLogModel.setHttpStatus(requestLog.getHttpStatus());
+    requestLogModel.setRequestBody(requestLog.getRequestBody());
+    requestLogModel.setRequestHeaders(requestLog.getRequestHeaders());
+    requestLogModel.setRequestIp(requestLog.getRequestIp());
+    requestLogModel.setRequestMethod(requestLog.getRequestMethod());
+    requestLogModel.setRequestUri(requestLog.getRequestUri());
+    requestLogModel.setResponseBody(requestLog.getResponseBody());
+    requestLogModel.setResponseHeaders(requestLog.getResponseHeaders());
+    requestLogModel.setTimeConsuming(requestLog.getTimeConsuming());
+    requestLogModel.setRequestParams(requestLog.getRequestParam());
+    requestLogModel.setExceptionStack(requestLog.getExceptionStack());
+    requestLogModel.setServiceId(requestLog.getServiceId());
+    requestLogModel.setServiceDetailId(requestLog.getServiceDetailId());
     requestLogRepository.insert(requestLogModel);
     return id;
   }

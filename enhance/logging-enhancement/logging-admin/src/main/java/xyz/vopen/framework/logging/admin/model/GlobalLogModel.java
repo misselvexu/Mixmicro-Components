@@ -18,6 +18,10 @@ public class GlobalLogModel implements Serializable {
   @Id private String id;
   /** request log primary key */
   private String requestLogId;
+  /** request log service detail id */
+  private String serviceDetailId;
+  /** service id */
+  private String serviceId;
   /** Global log level {@link MixmicroLogLevel} */
   private MixmicroLogLevel level;
   /** all level's log content */
@@ -39,6 +43,22 @@ public class GlobalLogModel implements Serializable {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getServiceDetailId() {
+    return serviceDetailId;
+  }
+
+  public void setServiceDetailId(String serviceDetailId) {
+    this.serviceDetailId = serviceDetailId;
+  }
+
+  public String getServiceId() {
+    return serviceId;
+  }
+
+  public void setServiceId(String serviceId) {
+    this.serviceId = serviceId;
   }
 
   public String getRequestLogId() {

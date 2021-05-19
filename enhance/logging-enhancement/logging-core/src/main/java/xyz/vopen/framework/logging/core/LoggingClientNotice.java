@@ -17,8 +17,6 @@
 
 package xyz.vopen.framework.logging.core;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,6 @@ import java.util.List;
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  */
-@Data
 public class LoggingClientNotice implements Serializable {
   /** Client Service Id */
   private String clientServiceId;
@@ -61,5 +58,45 @@ public class LoggingClientNotice implements Serializable {
     notice.setClientServicePort(clientServicePort);
     notice.setLoggers(loggers);
     return notice;
+  }
+
+  public String getClientServiceId() {
+    return clientServiceId;
+  }
+
+  public void setClientServiceId(String clientServiceId) {
+    this.clientServiceId = clientServiceId;
+  }
+
+  public String getClientServiceIp() {
+    return clientServiceIp;
+  }
+
+  public void setClientServiceIp(String clientServiceIp) {
+    this.clientServiceIp = clientServiceIp;
+  }
+
+  public Integer getClientServicePort() {
+    return clientServicePort;
+  }
+
+  public void setClientServicePort(Integer clientServicePort) {
+    this.clientServicePort = clientServicePort;
+  }
+
+  public Long getReportTimeMillis() {
+    return reportTimeMillis;
+  }
+
+  public void setReportTimeMillis(Long reportTimeMillis) {
+    this.reportTimeMillis = reportTimeMillis;
+  }
+
+  public List<MixmicroLog> getLoggers() {
+    return loggers;
+  }
+
+  public void setLoggers(List<MixmicroLog> loggers) {
+    this.loggers = loggers;
   }
 }

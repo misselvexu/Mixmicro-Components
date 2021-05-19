@@ -17,18 +17,18 @@ public interface LoggingDataService {
    * Insert Global Log
    *
    * @param requestLogId request log id
-   * @param log {@link MixmicroGlobalLog}
+   * @param globalLog {@link MixmicroGlobalLog}
    */
-  void insertGlobalLog(String requestLogId, MixmicroGlobalLog log);
+  void insertGlobalLog(String requestLogId, MixmicroGlobalLog globalLog);
 
   /**
    * Insert ApiBootLogs To DataBase
    *
    * @param serviceDetailId ServiceDetail ID
-   * @param log MinBoxLog
+   * @param requestLog MinBoxLog
    * @return request log id
    */
-  String insertRequestLog(String serviceDetailId, MixmicroLog log) throws SQLException;
+  String insertRequestLog(String serviceDetailId, MixmicroLog requestLog) throws SQLException;
 
   /**
    * Insert ServiceDetail To DataBase
