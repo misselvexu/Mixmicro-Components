@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import xyz.vopen.mixmicro.components.boot.web.MixmicroWebConfigProperties;
-import xyz.vopen.mixmicro.components.exception.defined.BizException;
-import xyz.vopen.mixmicro.components.exception.defined.CompatibleMixmicroException;
-import xyz.vopen.mixmicro.components.exception.defined.MixmicroException;
-import xyz.vopen.mixmicro.components.exception.defined.MixmicroInvokeServerException;
+import xyz.vopen.mixmicro.components.exception.defined.*;
 import xyz.vopen.mixmicro.kits.StringUtils;
+import xyz.vopen.mixmicro.kits.reflect.ReflectionKit;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Constructor;
@@ -35,6 +33,9 @@ import static xyz.vopen.mixmicro.components.common.MixmicroConstants.MIXMICRO_SE
 public class MixmicroExceptionAdvice extends AbstractAdvice {
 
   private static final Logger log = LoggerFactory.getLogger(MixmicroExceptionAdvice.class);
+
+  private static final String HYSTRIX_EXCEPTION_CLASS_NAME = "com.netflix.hystrix.exception.HystrixBadRequestException";
+  private static final String CAUSE_METHOD = "getCause";
 
   private xyz.vopen.mixmicro.components.boot.web.ExceptionHandler handler;
 
@@ -245,6 +246,20 @@ public class MixmicroExceptionAdvice extends AbstractAdvice {
     Optional<ResponseEntity<?>> o = handlerException(e);
     if (o.isPresent()) {
       return o.get();
+    }
+
+    try{
+      // process hystrix exception for web front
+      if(org.apache.commons.lang3.StringUtils.equals(e.getClass().getName(), HYSTRIX_EXCEPTION_CLASS_NAME)) {
+        Object cause = ReflectionKit.invokeMethodByName(e, CAUSE_METHOD, new Object[]{});
+        if(cause instanceof MixmicroInvokeException) {
+          MixmicroInvokeException ie = (MixmicroInvokeException) cause;
+          Object response = ie.getResponse();
+          return ResponseEntity.status(ie.getHttpCode()).body(response);
+        }
+      }
+    } catch (Exception exception) {
+      log.warn("@ExceptionHandler process hystrix exception failed, {}", exception.getMessage());
     }
 
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

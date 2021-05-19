@@ -1,13 +1,17 @@
 package xyz.vopen.mixmicro.components.boot.openfeign.decoder;
 
+import com.netflix.hystrix.exception.HystrixBadRequestException;
 import feign.Feign;
 import feign.Request;
 import feign.Response;
 import feign.RetryableException;
 import feign.codec.ErrorDecoder;
 import org.apache.commons.io.IOUtils;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.Environment;
 import xyz.vopen.mixmicro.components.common.ResponseEntity;
 import xyz.vopen.mixmicro.components.exception.defined.MixmicroInvokeException;
+import xyz.vopen.mixmicro.kits.lang.NonNull;
 
 import java.lang.reflect.Constructor;
 
@@ -20,7 +24,11 @@ import static xyz.vopen.mixmicro.components.exception.defined.MixmicroInvokeExce
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 2020/3/5
  */
-public class OpenFeignInvokeErrorDecoder implements ErrorDecoder {
+public class OpenFeignInvokeErrorDecoder implements ErrorDecoder, EnvironmentAware {
+
+  private Environment environment;
+
+  private static final String FEIGN_HYSTRIX_CONFIG = "feign.hystrix.enabled";
 
   /**
    * Implement this method in order to decode an HTTP {@link Response} when {@link
@@ -38,12 +46,16 @@ public class OpenFeignInvokeErrorDecoder implements ErrorDecoder {
   @Override
   public Exception decode(String methodKey, Response response) {
 
+    boolean enabled = Boolean.parseBoolean(environment.getProperty(FEIGN_HYSTRIX_CONFIG, "false"));
+
     if (response.status() >= 400 && response.status() <= 499) {
-      return buildException(response, true);
+      MixmicroInvokeException exception = buildException(response, true);
+      return enabled ? new HystrixBadRequestException("E4: Client Service Exception", exception) : exception;
     }
 
     if (response.status() >= 500 && response.status() <= 599) {
-      return buildException(response, false);
+      MixmicroInvokeException exception = buildException(response, false);
+      return enabled ? new HystrixBadRequestException("E5: Remote Service Exception", exception) : exception;
     }
 
     // DEFAULT ERROR
@@ -90,5 +102,10 @@ public class OpenFeignInvokeErrorDecoder implements ErrorDecoder {
     } catch (Exception e) {
       return new MixmicroInvokeException(response.status(), response.reason());
     }
+  }
+
+  @Override
+  public void setEnvironment(@NonNull Environment environment) {
+    this.environment = environment;
   }
 }

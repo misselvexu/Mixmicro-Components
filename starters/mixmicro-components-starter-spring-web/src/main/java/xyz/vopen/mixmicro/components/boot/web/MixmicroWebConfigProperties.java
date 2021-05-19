@@ -92,6 +92,10 @@ public class MixmicroWebConfigProperties implements Serializable, InitializingBe
 
     private Class<?> handlerClass;
 
+    /**
+     * Default Biz Exception Code
+     * <p><b>warning:: not http status code</b>
+     */
     private int defaultExceptionResponseCode = -1;
 
     /**

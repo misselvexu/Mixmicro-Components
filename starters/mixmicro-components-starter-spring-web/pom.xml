@@ -44,6 +44,11 @@
 
         <dependency>
             <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>common-kits</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>executor-kit</artifactId>
         </dependency>
 
