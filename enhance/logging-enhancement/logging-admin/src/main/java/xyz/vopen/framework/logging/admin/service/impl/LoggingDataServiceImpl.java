@@ -76,16 +76,14 @@ public class LoggingDataServiceImpl implements LoggingDataService {
   /**
    * Insert request log
    *
-   * @param serviceDetailId ServiceDetail ID
    * @param requestLog MinBoxLog
    * @return request log id
    */
   @Override
-  public String insertRequestLog(String serviceDetailId, MixmicroLog requestLog) {
+  public String insertRequestLog(MixmicroLog requestLog) {
     RequestLogModel requestLogModel = new RequestLogModel();
     String id = UUID.randomUUID().toString();
     requestLogModel.setId(id);
-    requestLogModel.setServiceDetailId(serviceDetailId);
     requestLogModel.setTraceId(requestLog.getTraceId());
     requestLogModel.setParentSpanId(requestLog.getParentSpanId());
     requestLogModel.setSpanId(requestLog.getSpanId());

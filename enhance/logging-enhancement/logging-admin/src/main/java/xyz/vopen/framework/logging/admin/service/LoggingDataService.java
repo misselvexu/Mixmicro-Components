@@ -24,11 +24,10 @@ public interface LoggingDataService {
   /**
    * Insert ApiBootLogs To DataBase
    *
-   * @param serviceDetailId ServiceDetail ID
    * @param requestLog MinBoxLog
    * @return request log id
    */
-  String insertRequestLog(String serviceDetailId, MixmicroLog requestLog) throws SQLException;
+  String insertRequestLog(MixmicroLog requestLog) throws SQLException;
 
   /**
    * Insert ServiceDetail To DataBase
