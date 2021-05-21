@@ -47,6 +47,7 @@
         <module>mixmicro-components-starter-mongo-client</module>
         <module>mixmicro-components-starter-httpclient</module>
         <module>mixmicro-components-starter-optimization</module>
+        <module>mixmicro-components-starter-redlimiter</module>
     </modules>
 
     <dependencyManagement>
@@ -250,6 +251,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-optimization</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-redlimiter</artifactId>
+                <version>${revision}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
