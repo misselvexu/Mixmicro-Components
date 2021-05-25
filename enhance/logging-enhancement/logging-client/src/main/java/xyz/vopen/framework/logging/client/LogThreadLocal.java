@@ -18,6 +18,7 @@
 package xyz.vopen.framework.logging.client;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
+import org.springframework.util.Assert;
 import xyz.vopen.framework.logging.core.MixmicroLog;
 
 /**
@@ -59,5 +60,21 @@ public class LogThreadLocal {
   /** Remove This Thread Mixmicro Boot Log Object Instance */
   public static void remove() {
     LOGS.remove();
+  }
+
+  /**
+   * set custom traceId
+   *
+   * @param traceId custom traceId
+   * @return true:success,false: failed
+   */
+  public static boolean setTraceId(String traceId) {
+    Assert.notNull(traceId, "traceId cannot be null");
+    MixmicroLog mixmicroLog = get();
+    if (null != mixmicroLog) {
+      mixmicroLog.setTraceId(traceId);
+      return true;
+    }
+    return false;
   }
 }
