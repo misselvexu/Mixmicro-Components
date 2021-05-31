@@ -22,7 +22,7 @@ public interface IResponseWrapper {
   /**
    * to wrap response , don't forget to put responseNode into map.
    *
-   * @param responseNode
+   * @param responseNode response node
    */
   Map<String, Object> wrapResponse(ResponseNode responseNode);
 }

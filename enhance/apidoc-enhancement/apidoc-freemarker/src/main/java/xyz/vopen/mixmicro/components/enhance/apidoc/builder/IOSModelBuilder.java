@@ -9,8 +9,8 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.ICodeBuilder;
 public class IOSModelBuilder implements ICodeBuilder {
 
   private String modelTemplate;
-  private String objectName;
-  private String properties;
+  private final String objectName;
+  private final String properties;
 
   public IOSModelBuilder(String modelTemplate, String objectName, String properties) {
     super();

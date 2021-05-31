@@ -10,7 +10,7 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
 public class JavaGetterBuilder implements ICodeBuilder {
 
   private String getterTemplate;
-  private FieldModel entryFieldModel;
+  private final FieldModel entryFieldModel;
 
   public JavaGetterBuilder(String getterTemplate, FieldModel entryFieldModel) {
     this.getterTemplate = getterTemplate;

@@ -4,9 +4,9 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 import xyz.vopen.mixmicro.components.enhance.apidoc.IPluginSupport;
-import xyz.vopen.mixmicro.components.enhance.apidoc.Resources;
+import xyz.vopen.mixmicro.components.enhance.apidoc.ResourcesUtils;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.ControllerNode;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -22,8 +22,8 @@ import java.util.Map;
  */
 public class MarkdownDocPlugin implements IPluginSupport {
 
-    @Override
-    public void execute(List<ControllerNode> controllerNodeList) {
+  @Override
+  public void execute(List<ControllerNode> controllerNodeList) {
         FileWriter docFileWriter = null;
         try {
             final Template ctrlTemplate = getDocTpl();
@@ -44,6 +44,6 @@ public class MarkdownDocPlugin implements IPluginSupport {
     }
 
     private Template getDocTpl() throws IOException {
-        return Resources.getFreemarkerTemplate("api-doc.md.ftl");
+        return ResourcesUtils.getFreemarkerTemplate("api-doc.md.ftl");
     }
 }

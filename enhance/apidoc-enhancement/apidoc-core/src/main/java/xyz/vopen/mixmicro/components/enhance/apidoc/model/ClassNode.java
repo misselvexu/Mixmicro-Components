@@ -144,7 +144,7 @@ public class ClassNode {
 
   private void toJsonApiMap(FieldNode fieldNode, Map<String, Object> map) {
 
-    if (fieldNode.getLoopNode()) {
+    if (Boolean.TRUE.equals(fieldNode.getLoopNode())) {
       map.put(fieldNode.getName(), getFieldDesc(fieldNode));
       return;
     }
@@ -174,7 +174,7 @@ public class ClassNode {
     if (Boolean.TRUE.equals(fieldNode.getLoopNode())) {
       fieldType =
           fieldNode.getChildNode().getClassName()
-              + (fieldNode.getChildNode().isList() ? "[]" : "{}");
+              + (Boolean.TRUE.equals(fieldNode.getChildNode().isList()) ? "[]" : "{}");
     } else {
       fieldType = fieldNode.getType();
     }

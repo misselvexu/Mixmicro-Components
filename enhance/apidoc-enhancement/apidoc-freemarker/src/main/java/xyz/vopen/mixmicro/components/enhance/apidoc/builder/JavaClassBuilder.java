@@ -8,9 +8,9 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.ICodeBuilder;
  */
 public class JavaClassBuilder implements ICodeBuilder {
 
-  private String className;
-  private String mFieldCode;
-  private String mMethodCode;
+  private final String className;
+  private final String mFieldCode;
+  private final String mMethodCode;
   private String entryClassTemplate;
 
   public JavaClassBuilder(

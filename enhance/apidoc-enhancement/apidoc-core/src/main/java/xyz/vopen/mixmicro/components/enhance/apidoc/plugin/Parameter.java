@@ -21,7 +21,7 @@ class Parameter {
   private Set<Action> actionResponseList = new HashSet<>();
   private String validator = "";
   private Set<Parameter> parameterList = new HashSet<>();
-  private Set<Parameter> complexParamerterList = new HashSet<>();
+  private Set<Parameter> complexParameterList = new HashSet<>();
 
   public static Parameter newParameter() {
     Parameter p = new Parameter();
@@ -125,11 +125,11 @@ class Parameter {
     this.parameterList = parameterList;
   }
 
-  public Set<Parameter> getComplexParamerterList() {
-    return complexParamerterList;
+  public Set<Parameter> getComplexParameterList() {
+    return complexParameterList;
   }
 
-  public void setComplexParamerterList(Set<Parameter> complexParamerterList) {
-    this.complexParamerterList = complexParamerterList;
+  public void setComplexParameterList(Set<Parameter> complexParameterList) {
+    this.complexParameterList = complexParameterList;
   }
 }

@@ -3,9 +3,10 @@ package xyz.vopen.mixmicro.components.enhance.apidoc.plugin;
 import org.apache.commons.lang3.StringUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 import xyz.vopen.mixmicro.components.enhance.apidoc.IResponseWrapper;
+import xyz.vopen.mixmicro.components.enhance.apidoc.consts.ActionType;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.*;
-import xyz.vopen.mixmicro.components.enhance.apidoc.utils.ParseUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
+import xyz.vopen.mixmicro.components.enhance.apidoc.utils.ParseUtils;
 
 import java.util.*;
 
@@ -27,7 +28,7 @@ class Project {
   private int mockNum;
   private int teamId;
   private short accessType;
-  private Set<Module> moduleList = new HashSet<Module>();
+  private Set<Module> moduleList = new HashSet<>();
   private String projectData;
   private List<String> memberAccountList;
   private String version;
@@ -219,7 +220,7 @@ class Project {
         setResultMapToAction((Map) entry.getValue(), parameter.getParameterList());
       } else if (entry.getValue() instanceof ResponseNode) {
         ResponseNode responseNode = (ResponseNode) entry.getValue();
-        if (responseNode.isList()) {
+        if (Boolean.TRUE.equals(responseNode.isList())) {
           parameter.setIdentifier(getArrayIdentifier(entry.getKey()));
           parameter.setDataType(DataType.ARRAY_OBJECT);
         } else {

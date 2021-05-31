@@ -40,12 +40,8 @@ public class JFinalRoutesParser {
     for (String javaSrcPath : DocContext.getJavaSrcPaths()) {
       CommonUtils.wideSearchFile(
           new File(javaSrcPath),
-          new FilenameFilter() {
-            @Override
-            public boolean accept(File f, String name) {
-              return ParseUtils.compilationUnit(f)
-                  .getChildNodesByType(ClassOrInterfaceDeclaration.class)
-                  .stream()
+          (f, name) ->
+              ParseUtils.compilationUnit(f).findAll(ClassOrInterfaceDeclaration.class).stream()
                   .anyMatch(
                       cl ->
                           cl.getMethodsByName("configRoute").stream()
@@ -54,9 +50,7 @@ public class JFinalRoutesParser {
                                     mdConfigRoute = m;
                                     return m.getParameters().stream()
                                         .anyMatch(p -> p.getType().asString().endsWith("Routes"));
-                                  }));
-            }
-          },
+                                  })),
           result,
           true);
 
@@ -119,7 +113,8 @@ public class JFinalRoutesParser {
                                                 });
                                       });
                             } else {
-                              String basicUrl = CommonUtils.removeQuotations(arguments.get(0).toString());
+                              String basicUrl =
+                                  CommonUtils.removeQuotations(arguments.get(0).toString());
                               String controllerClass = arguments.get(1).toString();
                               String controllerFilePath =
                                   getControllerFilePath(inJavaFile, controllerClass);

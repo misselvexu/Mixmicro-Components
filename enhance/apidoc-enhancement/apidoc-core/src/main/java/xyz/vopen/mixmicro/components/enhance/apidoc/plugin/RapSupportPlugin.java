@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocsConfig;
 import xyz.vopen.mixmicro.components.enhance.apidoc.IPluginSupport;
+import xyz.vopen.mixmicro.components.enhance.apidoc.exception.PluginException;
 import xyz.vopen.mixmicro.components.enhance.apidoc.http.DHttpRequest;
 import xyz.vopen.mixmicro.components.enhance.apidoc.http.DHttpResponse;
 import xyz.vopen.mixmicro.components.enhance.apidoc.http.DHttpUtils;
@@ -66,7 +67,7 @@ public class RapSupportPlugin implements IPluginSupport {
     Set<DeleteActionFrom> deleteModuleForms = new HashSet<>(moduleSet.size());
     if (!moduleSet.isEmpty()) {
       for (Module module : moduleSet) {
-        if (Module.NAME.equalsIgnoreCase(module.getName())) {
+        if (Module.MODULE_NAME.equalsIgnoreCase(module.getName())) {
           DeleteActionFrom delForm = new DeleteActionFrom();
           delForm.setClassName("Module");
           delForm.setId(module.getId());
@@ -92,7 +93,7 @@ public class RapSupportPlugin implements IPluginSupport {
       return DHttpUtils.httpPost(request);
     } catch (IOException ex) {
       LOGGER.error("login rap fail , userName : {}, pass : {}", userName, password);
-      throw new RuntimeException(ex);
+      throw new PluginException(ex);
     }
   }
 
@@ -104,12 +105,12 @@ public class RapSupportPlugin implements IPluginSupport {
         return model.getModel().getModuleList();
       } else {
         LOGGER.error("request module data fail, rapHost : {}, projectId : {}", rapHost, projectId);
-        throw new RuntimeException("request module data fail , code : " + modelResp.getCode());
+        throw new PluginException("request module data fail , code : " + modelResp.getCode());
       }
     } catch (IOException e) {
       LOGGER.error("get rap models fail", e);
-      throw new RuntimeException(e);
     }
+    return new HashSet<>();
   }
 
   private void postProject(ProjectForm projectForm) {
@@ -136,14 +137,14 @@ public class RapSupportPlugin implements IPluginSupport {
 
     try {
       DHttpResponse response = DHttpUtils.httpPost(request);
+      String responseString = response.streamAsString();
       if (response.getCode() == 200) {
-        LOGGER.info("post project to rap success, response : {}", response.streamAsString());
+        LOGGER.info("post project to rap success, response : {}", responseString);
       } else {
-        LOGGER.error("post project to rap fail !!! code : {}", response.streamAsString());
+        LOGGER.error("post project to rap fail !!! code : {}", responseString);
       }
     } catch (IOException e) {
       LOGGER.error("post project to rap fail", e);
-      throw new RuntimeException(e);
     }
   }
 

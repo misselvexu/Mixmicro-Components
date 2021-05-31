@@ -47,6 +47,10 @@
             <groupId>com.yunlsp.framework.components</groupId>
             <artifactId>mixmicro-components-enhance-apidocds-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

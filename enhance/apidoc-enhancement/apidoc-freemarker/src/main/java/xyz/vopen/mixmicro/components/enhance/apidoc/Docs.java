@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc;
 
 import xyz.vopen.mixmicro.components.enhance.apidoc.genetator.HtmlDocGenerator;
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.ControllerNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.plugin.RapSupportPlugin;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CacheUtils;
 
@@ -67,7 +67,7 @@ public class Docs {
    *
    * <p>{ code : 0, data: ${response} msg: 'success' }
    *
-   * @param responseWrapper
+   * @param responseWrapper response wrapper
    */
   public static void setResponseWrapper(IResponseWrapper responseWrapper) {
     DocContext.setResponseWrapper(responseWrapper);

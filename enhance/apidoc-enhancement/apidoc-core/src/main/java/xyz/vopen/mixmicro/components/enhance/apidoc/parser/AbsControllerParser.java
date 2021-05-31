@@ -33,14 +33,13 @@ import java.util.Optional;
  */
 public abstract class AbsControllerParser {
 
-  private CompilationUnit compilationUnit;
   private ControllerNode controllerNode;
   private File javaFile;
 
   public ControllerNode parse(File javaFile) {
 
     this.javaFile = javaFile;
-    this.compilationUnit = ParseUtils.compilationUnit(javaFile);
+    CompilationUnit compilationUnit = ParseUtils.compilationUnit(javaFile);
     this.controllerNode = new ControllerNode();
 
     String controllerName = CommonUtils.getJavaFileName(javaFile);
@@ -106,8 +105,8 @@ public abstract class AbsControllerParser {
               boolean existsApiDoc =
                   m.getAnnotationByName(ApiDoc.class.getSimpleName()).isPresent();
               if (!existsApiDoc
-                  && !controllerNode.getGenerateDocs()
-                  && !DocContext.getDocsConfig().getAutoGenerate()) {
+                  && Boolean.FALSE.equals(controllerNode.getGenerateDocs())
+                  && Boolean.FALSE.equals(DocContext.getDocsConfig().getAutoGenerate())) {
                 return;
               }
 

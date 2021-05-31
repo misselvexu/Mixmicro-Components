@@ -40,9 +40,7 @@ public class PlayControllerParser extends AbsControllerParser {
               if (paramNode != null) {
                 p.getAnnotationByName("Required")
                     .ifPresent(
-                        r -> {
-                          paramNode.setRequired(true);
-                        });
+                        r -> paramNode.setRequired(true));
               }
             });
   }

@@ -3,12 +3,12 @@ package xyz.vopen.mixmicro.components.enhance.apidoc.genetator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
-import xyz.vopen.mixmicro.components.enhance.apidoc.Link;
-import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.IControllerDocBuilder;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.LinkModel;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.RequestNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.parser.AbsControllerParser;
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.ControllerNode;
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.RequestNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public abstract class AbsDocGenerator {
 
   private AbsControllerParser controllerParser;
   private IControllerDocBuilder controllerDocBuilder;
-  private List<Link> docFileLinkList = new ArrayList<>();
+  private List<LinkModel> docFileLinkList = new ArrayList<>();
   private List<ControllerNode> controllerNodeList = new ArrayList<>();
 
   AbsDocGenerator(
@@ -76,7 +76,7 @@ public abstract class AbsDocGenerator {
             "start to generate docs for controller file : {}", controllerNode.getSrcFileName());
         final String controllerDocs = controllerDocBuilder.buildDoc(controllerNode);
         docFileLinkList.add(
-            new Link(
+            new LinkModel(
                 controllerNode.getDescription(),
                 String.format("%s", controllerNode.getDocFileName())));
         CommonUtils.writeToDisk(new File(docPath, controllerNode.getDocFileName()), controllerDocs);

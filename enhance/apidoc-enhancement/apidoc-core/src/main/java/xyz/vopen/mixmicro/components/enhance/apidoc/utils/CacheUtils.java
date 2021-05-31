@@ -23,8 +23,10 @@ import java.util.List;
  */
 public class CacheUtils {
 
+  private CacheUtils() {}
+
   private static final String CACHE_FILE = ".cache.json";
-  private static final Logger LOGGER = LoggerFactory.getLogger(DocContext.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(CacheUtils.class);
 
   /**
    * save controller nodes of this version
@@ -70,7 +72,7 @@ public class CacheUtils {
   /**
    * get controller nodes of api version
    *
-   * @param apiVersion
+   * @param apiVersion api version
    * @return return null if cache not exists
    */
   public static List<ControllerNode> getControllerNodes(String apiVersion) {

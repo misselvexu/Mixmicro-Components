@@ -9,19 +9,19 @@ import java.util.Set;
  */
 class Module {
 
-  public static final String NAME = "API List";
+  public static final String MODULE_NAME = "API List";
 
   private int id;
   private int projectId;
   private String name;
   private String introduction;
   private Project project;
-  private Set<Page> pageList = new HashSet<Page>();
+  private Set<Page> pageList = new HashSet<>();
 
   public static Module newModule() {
     Module module = new Module();
     module.setId(-1);
-    module.setName(NAME);
+    module.setName(MODULE_NAME);
     return module;
   }
 

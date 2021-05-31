@@ -3,10 +3,10 @@ package xyz.vopen.mixmicro.components.enhance.apidoc.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.BuildToolType;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
@@ -79,8 +79,8 @@ public class CommonUtils {
   /**
    * some parse url may has double quotation, remove them
    *
-   * @param rawUrl
-   * @return
+   * @param rawUrl raw url
+   * @return url
    */
   public static String removeQuotations(String rawUrl) {
     return rawUrl.replace("\"", "").trim();
@@ -89,8 +89,8 @@ public class CommonUtils {
   /**
    * remove some characters like [* \n]
    *
-   * @param content
-   * @return
+   * @param content content
+   * @return cleaned content
    */
   public static String cleanCommentContent(String content) {
     return content.replace("*", "").replace("\n", "").trim();
@@ -99,9 +99,9 @@ public class CommonUtils {
   /**
    * get url with base url
    *
-   * @param baseUrl
-   * @param relativeUrl
-   * @return
+   * @param baseUrl base url
+   * @param relativeUrl sub url
+   * @return action url
    */
   public static String getActionUrl(String baseUrl, String relativeUrl) {
 
@@ -149,8 +149,8 @@ public class CommonUtils {
   /**
    * make first word capitalize
    *
-   * @param name
-   * @return
+   * @param name english word
+   * @return capitalize name
    */
   public static String capitalize(String name) {
     if (name != null && name.length() != 0) {
@@ -165,9 +165,9 @@ public class CommonUtils {
   /**
    * join string array , （ e.g. ([a,a,a] , .) = a.a.a )
    *
-   * @param array
-   * @param separator
-   * @return
+   * @param array origin array
+   * @param separator separator
+   * @return join string
    */
   public static String joinArrayString(String[] array, String separator) {
     if (array == null || array.length == 0) {
@@ -186,8 +186,8 @@ public class CommonUtils {
   /**
    * get file name without extension
    *
-   * @param javaFile
-   * @return
+   * @param javaFile java file
+   * @return file name
    */
   public static String getJavaFileName(File javaFile) {
     String fileName = javaFile.getName();
@@ -197,15 +197,20 @@ public class CommonUtils {
   /**
    * search files match filter, store in result
    *
-   * @param rootPath
-   * @param filter
-   * @param result
+   * @param rootPath project root path
+   * @param filter file name filter
+   * @param result file filter result
    * @param stopAtFirstResult stop when first file matches
    */
   public static void wideSearchFile(
       File rootPath, FilenameFilter filter, List<File> result, boolean stopAtFirstResult) {
     File[] fileList = rootPath.listFiles();
     List<File> dirPaths = new ArrayList<>();
+    if (null == fileList || fileList.length == 0) {
+      LOGGER.error("There is not any file in root path");
+      return;
+    }
+
     for (File f : fileList) {
       if (f.isFile() && filter.accept(f, f.getName())) {
         result.add(f);
@@ -228,10 +233,10 @@ public class CommonUtils {
   /**
    * judge dir is in file's path or not
    *
-   * @param f
+   * @param f source file
    * @param stopPath stopPath
-   * @param dirName
-   * @return
+   * @param dirName folder name
+   * @return file has folder or not
    */
   public static boolean hasDirInFile(File f, File stopPath, String dirName) {
     File p = f.getParentFile();
@@ -249,7 +254,7 @@ public class CommonUtils {
    * the project is a play framework or not
    *
    * @param projectDir 工程目录
-   * @return
+   * @return is play framework
    */
   public static boolean isPlayFramework(File projectDir) {
     File ymlFile = new File(projectDir, "conf/dependencies.yml");
@@ -257,63 +262,52 @@ public class CommonUtils {
       return false;
     }
     File routesFile = new File(projectDir, "conf/routes");
-    if (!routesFile.exists()) {
-      return false;
-    }
-    return true;
+    return !routesFile.exists();
   }
 
   /**
    * the project is a spring mvc framework or not
    *
-   * @param javaSrcDir
-   * @return
+   * @param javaSrcDir java file folder
+   * @return is spring framework
    */
   public static boolean isSpringFramework(File javaSrcDir) {
     List<File> result = new ArrayList<>();
     CommonUtils.wideSearchFile(
         javaSrcDir,
-        new FilenameFilter() {
-          @Override
-          public boolean accept(File f, String name) {
-            return name.endsWith(".java")
+        (f, name) ->
+            name.endsWith(".java")
                 && ParseUtils.compilationUnit(f).getImports().stream()
-                    .anyMatch(im -> im.getNameAsString().contains("org.springframework.web"));
-          }
-        },
+                    .anyMatch(im -> im.getNameAsString().contains("org.springframework.web")),
         result,
         true);
-    return result.size() > 0;
+    return !result.isEmpty();
   }
 
   /**
-   * the project is a jfinal framework or not
+   * the project is a JFinal framework or not
    *
-   * @param javaSrcDir
-   * @return
+   * @param javaSrcDir java file folder
+   * @return js JFinal framework
    */
   public static boolean isJFinalFramework(File javaSrcDir) {
     List<File> result = new ArrayList<>();
     CommonUtils.wideSearchFile(
         javaSrcDir,
-        new FilenameFilter() {
-          @Override
-          public boolean accept(File f, String name) {
-            return name.endsWith(".java")
+        (f, name) ->
+            name.endsWith(".java")
                 && ParseUtils.compilationUnit(f).getImports().stream()
-                    .anyMatch(im -> im.getNameAsString().contains("com.jfinal.core"));
-          }
-        },
+                    .anyMatch(im -> im.getNameAsString().contains("com.jfinal.core")),
         result,
         true);
-    return result.size() > 0;
+    return !result.isEmpty();
   }
 
   /**
    * is value type or not
    *
-   * @param value
-   * @return
+   * @param value value
+   * @return value type
    */
   public static boolean isValueType(Object value) {
     return value instanceof Number || value instanceof String || value instanceof java.util.Date;
@@ -322,8 +316,8 @@ public class CommonUtils {
   /**
    * get simple class name
    *
-   * @param packageClass
-   * @return
+   * @param packageClass package reference
+   * @return class name
    */
   public static String getClassName(String packageClass) {
     String[] parts = packageClass.split("\\.");
@@ -351,8 +345,8 @@ public class CommonUtils {
   /**
    * get project modules name
    *
-   * @param projectDir
-   * @return
+   * @param projectDir project folder path
+   * @return module names
    */
   public static List<String> getModuleNames(File projectDir) {
     BuildToolType buildToolType = getProjectBuildTool(projectDir);
@@ -361,11 +355,10 @@ public class CommonUtils {
 
     // gradle
     if (buildToolType == BuildToolType.GRADLE) {
-      try {
-        BufferedReader settingReader =
-            new BufferedReader(
-                new InputStreamReader(
-                    new FileInputStream(new File(projectDir, "settings.gradle"))));
+      try (BufferedReader settingReader =
+          new BufferedReader(
+              new InputStreamReader(
+                  new FileInputStream(new File(projectDir, "settings.gradle"))))) {
         String lineText;
         String keyword = "include ";
         while ((lineText = settingReader.readLine()) != null) {
@@ -384,7 +377,11 @@ public class CommonUtils {
     // maven
     if (buildToolType == BuildToolType.MAVEN) {
       try {
-        SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        SAXParser saxParser = factory.newSAXParser();
+        saxParser.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+        saxParser.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, ""); // Compliant
+
         saxParser.parse(
             new File(projectDir, "pom.xml"),
             new DefaultHandler() {
@@ -394,16 +391,14 @@ public class CommonUtils {
 
               @Override
               public void startElement(
-                  String uri, String localName, String qName, Attributes attributes)
-                  throws SAXException {
+                  String uri, String localName, String qName, Attributes attributes) {
                 if ("module".equalsIgnoreCase(qName)) {
                   isModuleTag = true;
                 }
               }
 
               @Override
-              public void endElement(String uri, String localName, String qName)
-                  throws SAXException {
+              public void endElement(String uri, String localName, String qName) {
                 if ("module".equalsIgnoreCase(qName)) {
                   moduleNames.add(moduleName);
                   isModuleTag = false;
@@ -411,7 +406,7 @@ public class CommonUtils {
               }
 
               @Override
-              public void characters(char[] ch, int start, int length) throws SAXException {
+              public void characters(char[] ch, int start, int length) {
                 if (isModuleTag) {
                   moduleName = new String(ch, start, length);
                 }

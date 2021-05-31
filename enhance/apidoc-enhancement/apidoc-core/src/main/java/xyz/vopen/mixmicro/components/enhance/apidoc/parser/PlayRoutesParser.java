@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
-import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,10 +23,10 @@ public class PlayRoutesParser {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(PlayRoutesParser.class);
 
-  private String routeFile;
-  private String javaSrcPath;
+  private final String routeFile;
+  private final String javaSrcPath;
 
-  private List<RouteNode> routeNodeList = new ArrayList<>();
+  private final List<RouteNode> routeNodeList = new ArrayList<>();
 
   private PlayRoutesParser() {
     this.routeFile = DocContext.getProjectPath().concat("conf/routes");
@@ -35,51 +34,43 @@ public class PlayRoutesParser {
     parse();
   }
 
-  public static PlayRoutesParser INSTANCE = new PlayRoutesParser();
+  public static final PlayRoutesParser INSTANCE = new PlayRoutesParser();
 
   private void parse() {
-    BufferedReader reader = null;
-    try {
-      reader = new BufferedReader(new FileReader(new File(routeFile)));
+    try (BufferedReader reader = new BufferedReader(new FileReader(routeFile))) {
+
       String lineText;
       String[] nodes;
       while ((lineText = reader.readLine()) != null) {
         lineText = lineText.trim();
-        if (StringUtils.isEmpty(lineText) || lineText.startsWith("#")) {
-          continue;
-        }
-        nodes = lineText.split("\\s+");
-        if (nodes.length < 3 || nodes[2].matches("\\d+")) {
-          continue;
-        }
+        if (StringUtils.isNotEmpty(lineText) && lineText.startsWith("#")) {
+          nodes = lineText.split("\\s+");
+          if (nodes.length >= 3 && !nodes[2].matches("\\d+")) {
+            String[] actions = nodes[2].split("\\.");
+            if (actions.length != 1) {
+              StringBuilder ctrlPathBuilder = new StringBuilder();
+              ctrlPathBuilder.append("controllers");
+              for (int i = 0; i != actions.length - 1; i++) {
+                ctrlPathBuilder.append('/');
+                ctrlPathBuilder.append(actions[i]);
+              }
+              String controllerFileName = getControllerFile(ctrlPathBuilder.toString());
+              if (new File(controllerFileName).exists()) {
+                RouteNode routeNode =
+                    new RouteNode(
+                        nodes[0].trim(),
+                        nodes[1].trim(),
+                        controllerFileName,
+                        actions[actions.length - 1]);
 
-        String[] actions = nodes[2].split("\\.");
-        if (actions.length == 1) {
-          continue;
+                routeNodeList.add(routeNode);
+              }
+            }
+          }
         }
-
-        StringBuilder ctrlPathBuilder = new StringBuilder();
-        ctrlPathBuilder.append("controllers");
-        for (int i = 0; i != actions.length - 1; i++) {
-          ctrlPathBuilder.append('/');
-          ctrlPathBuilder.append(actions[i]);
-        }
-
-        String controllerFileName = getControllerFile(ctrlPathBuilder.toString());
-        if (!new File(controllerFileName).exists()) {
-          continue;
-        }
-
-        RouteNode routeNode =
-            new RouteNode(
-                nodes[0].trim(), nodes[1].trim(), controllerFileName, actions[actions.length - 1]);
-
-        routeNodeList.add(routeNode);
       }
     } catch (IOException e) {
       LOGGER.error("parse Play Routes Error", e);
-    } finally {
-      CommonUtils.closeSilently(reader);
     }
   }
 
@@ -91,7 +82,7 @@ public class PlayRoutesParser {
                     controllerFile.getAbsolutePath().equals(node.controllerFile)
                         && node.actionMethod.equals(methodName))
             .findFirst();
-    return routeNode.isPresent() ? routeNode.get() : null;
+    return routeNode.orElse(null);
   }
 
   public List<RouteNode> getRouteNodeList() {

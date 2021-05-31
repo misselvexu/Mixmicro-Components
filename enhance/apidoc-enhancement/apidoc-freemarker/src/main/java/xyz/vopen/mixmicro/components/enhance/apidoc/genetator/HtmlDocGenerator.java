@@ -5,10 +5,10 @@ import freemarker.template.TemplateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
-import xyz.vopen.mixmicro.components.enhance.apidoc.Resources;
-import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
+import xyz.vopen.mixmicro.components.enhance.apidoc.ResourcesUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.HtmlControllerDocBuilder;
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.ControllerNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -59,13 +59,14 @@ public class HtmlDocGenerator extends AbsDocGenerator {
     try {
       String cssFileName = "style.css";
       File cssFile = new File(DocContext.getDocPath(), cssFileName);
-      CommonUtils.writeToDisk(cssFile, CommonUtils.streamToString(Resources.getTemplateFile(cssFileName)));
+      CommonUtils.writeToDisk(
+          cssFile, CommonUtils.streamToString(ResourcesUtils.getTemplateFile(cssFileName)));
     } catch (IOException e) {
       LOGGER.error("copyCssStyle fail", e);
     }
   }
 
   private Template getIndexTpl() throws IOException {
-    return Resources.getFreemarkerTemplate("api-index.html.ftl");
+    return ResourcesUtils.getFreemarkerTemplate("api-index.html.ftl");
   }
 }

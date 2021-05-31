@@ -120,7 +120,7 @@ public class DocsConfig {
    * if cannot find the java file from other module, you can try to config the java src path
    * yourself.
    *
-   * @param javaSrcPath
+   * @param javaSrcPath java src path
    */
   public void addJavaSrcPath(String javaSrcPath) {
     javaSrcPaths.add(javaSrcPath);

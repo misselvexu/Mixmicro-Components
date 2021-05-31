@@ -10,7 +10,7 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
 public class JavaSetterBuilder implements ICodeBuilder {
 
   private String setterTemplate;
-  private FieldModel entryFieldModel;
+  private final FieldModel entryFieldModel;
 
   public JavaSetterBuilder(String setterTemplate, FieldModel entryFieldModel) {
     this.setterTemplate = setterTemplate;

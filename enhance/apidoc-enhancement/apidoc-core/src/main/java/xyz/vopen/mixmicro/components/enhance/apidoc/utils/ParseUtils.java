@@ -1,10 +1,7 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.utils;
 
 import com.github.javaparser.JavaParser;
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.ImportDeclaration;
-import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.expr.AnnotationExpr;
@@ -19,13 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 import xyz.vopen.mixmicro.components.enhance.apidoc.anonations.Ignore;
+import xyz.vopen.mixmicro.components.enhance.apidoc.exception.FileParseException;
 import xyz.vopen.mixmicro.components.enhance.apidoc.exception.JavaFileNotFoundException;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -41,6 +39,10 @@ public class ParseUtils {
 
   /** means a model class type */
   private static final String TYPE_MODEL = "_object";
+
+  private static final String OBJECT_CLASS_NAME = "Object";
+
+  private static final String JAVA_FILE_SUFFIX = ".java";
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ParseUtils.class);
 
@@ -101,13 +103,7 @@ public class ParseUtils {
       File[] javaFiles =
           inJavaFile
               .getParentFile()
-              .listFiles(
-                  new FilenameFilter() {
-                    @Override
-                    public boolean accept(File dir, String name) {
-                      return name.equals(className + ".java");
-                    }
-                  });
+              .listFiles((dir, name) -> name.equals(className + JAVA_FILE_SUFFIX));
 
       if (javaFiles != null && javaFiles.length == 1) {
         return javaFiles[0];
@@ -121,15 +117,12 @@ public class ParseUtils {
           inJavaFile
               .getParentFile()
               .listFiles(
-                  new FilenameFilter() {
-                    @Override
-                    public boolean accept(File dir, String name) {
-                      int i = name.lastIndexOf(".java");
-                      if (i == -1) {
-                        return false;
-                      }
-                      return name.substring(0, i).equals(firstPath);
+                  (dir, name) -> {
+                    int i = name.lastIndexOf(JAVA_FILE_SUFFIX);
+                    if (i == -1) {
+                      return false;
                     }
+                    return name.substring(0, i).equals(firstPath);
                   });
 
       if (javaFiles != null && javaFiles.length > 0) {
@@ -180,10 +173,11 @@ public class ParseUtils {
   /**
    * get inner class node
    *
-   * @param compilationUnit
-   * @param className
-   * @return
+   * @param compilationUnit compilation unit
+   * @param className class name
+   * @return TypeDeclaration Optional
    */
+  @SuppressWarnings("rawtypes")
   private static Optional<TypeDeclaration> getInnerClassNode(
       CompilationUnit compilationUnit, String className) {
     return compilationUnit.findAll(TypeDeclaration.class).stream()
@@ -196,7 +190,7 @@ public class ParseUtils {
     if (cPaths.length == 0) {
       return null;
     }
-    String javaFilePath = javaSrcPath + CommonUtils.joinArrayString(cPaths, "/") + ".java";
+    String javaFilePath = javaSrcPath + CommonUtils.joinArrayString(cPaths, "/") + JAVA_FILE_SUFFIX;
     File javaFile = new File(javaFilePath);
     if (javaFile.exists() && javaFile.isFile()) {
       return javaFile;
@@ -208,30 +202,30 @@ public class ParseUtils {
   /**
    * get java file parser object
    *
-   * @param javaFile
-   * @return
+   * @param javaFile java file
+   * @return compilation unit
    */
   public static CompilationUnit compilationUnit(File javaFile) {
     try {
       return JavaParser.parse(javaFile);
     } catch (FileNotFoundException e) {
-      throw new RuntimeException("java file not exits , file path : " + javaFile.getAbsolutePath());
+      throw new FileParseException(
+          "java file not exits , file path : " + javaFile.getAbsolutePath());
     } catch (Exception e) {
-      throw new RuntimeException("parser error , file path : " + javaFile.getAbsolutePath());
+      throw new FileParseException("parser error , file path : " + javaFile.getAbsolutePath());
     }
   }
 
   /**
    * parse class model java file
    *
-   * @param inJavaFile
+   * @param inJavaFile java file
    * @param classType 携带了类的泛型信息
    */
   public static void parseClassNodeByType(
       File inJavaFile, ClassNode rootClassNode, com.github.javaparser.ast.type.Type classType) {
-
-    if (classType.getParentNode().isPresent()
-        && classType.getParentNode().get() instanceof ArrayType) {
+    Optional<Node> nodeOptional = classType.getParentNode();
+    if (nodeOptional.isPresent() && nodeOptional.get() instanceof ArrayType) {
       rootClassNode.setList(true);
     } else if (classType instanceof ArrayType) {
       rootClassNode.setList(true);
@@ -239,13 +233,12 @@ public class ParseUtils {
     } else if (isCollectionType(classType.asString())) {
       rootClassNode.setList(true);
       rootClassNode.setGenericNodes(null);
-      List<ClassOrInterfaceType> collectionType =
-          classType.getChildNodesByType(ClassOrInterfaceType.class);
+      List<ClassOrInterfaceType> collectionType = classType.findAll(ClassOrInterfaceType.class);
       if (collectionType.isEmpty()) {
         LOGGER.warn(
             "We found Collection without specified Class Type, Please check ! java file : {}",
             inJavaFile.getName());
-        rootClassNode.setClassName("Object");
+        rootClassNode.setClassName(OBJECT_CLASS_NAME);
         return;
       } else {
         classType = collectionType.get(0);
@@ -275,8 +268,8 @@ public class ParseUtils {
   /**
    * parse class model java file
    *
-   * @param modelJavaFile
-   * @param classNode
+   * @param modelJavaFile java model file
+   * @param classNode class node
    */
   public static void parseClassNode(File modelJavaFile, ClassNode classNode) {
     innerParseClassNode(modelJavaFile, classNode);
@@ -336,19 +329,22 @@ public class ParseUtils {
               }
 
               cl.findAll(FieldDeclaration.class).stream()
-                  .filter(fd -> !fd.getModifiers().contains(Modifier.STATIC))
+                  .filter(
+                      fd -> !fd.getModifiers().contains(com.github.javaparser.ast.Modifier.STATIC))
                   .forEach(
                       fd -> {
 
                         // 内部类字段也会读取到，这里特殊处理
-                        Node cClNode = fd.getParentNode().get();
-
-                        if (cClNode instanceof TypeDeclaration) {
-                          TypeDeclaration cClDeclaration = (TypeDeclaration) cClNode;
-                          if (!(resultClassName.equals(cClDeclaration.getNameAsString())
-                              || resultClassName.endsWith(
-                                  "." + cClDeclaration.getNameAsString()))) {
-                            return;
+                        Optional<Node> parentNode = fd.getParentNode();
+                        if (parentNode.isPresent()) {
+                          Node cClNode = parentNode.get();
+                          if (cClNode instanceof TypeDeclaration) {
+                            TypeDeclaration<?> cClDeclaration = (TypeDeclaration<?>) cClNode;
+                            if (!(resultClassName.equals(cClDeclaration.getNameAsString())
+                                || resultClassName.endsWith(
+                                    "." + cClDeclaration.getNameAsString()))) {
+                              return;
+                            }
                           }
                         }
 
@@ -451,7 +447,7 @@ public class ParseUtils {
         try {
           File childJavaFile = searchJavaFile(inJavaFile, fieldClassType);
           ed =
-              compilationUnit(childJavaFile).getChildNodesByType(EnumDeclaration.class).stream()
+              compilationUnit(childJavaFile).findAll(EnumDeclaration.class).stream()
                   .filter(em -> fieldClassType.endsWith(em.getNameAsString()))
                   .findFirst();
         } catch (JavaFileNotFoundException ex) {
@@ -459,8 +455,7 @@ public class ParseUtils {
         }
         if (ed.isPresent()) {
           fieldNode.setType("enum");
-          List<EnumConstantDeclaration> constants =
-              ed.get().getChildNodesByType(EnumConstantDeclaration.class);
+          List<EnumConstantDeclaration> constants = ed.get().findAll(EnumConstantDeclaration.class);
           StringBuilder sb =
               new StringBuilder(
                   fieldNode.getDescription() == null ? "" : fieldNode.getDescription());
@@ -484,9 +479,9 @@ public class ParseUtils {
       inJavaFile = genericNode.getFromJavaFile();
     }
 
-    Boolean isList;
-
-    if (fieldType.getParentNode().get() instanceof ArrayType) {
+    boolean isList;
+    Optional<Node> parentNode = fieldType.getParentNode();
+    if (parentNode.isPresent() && parentNode.get() instanceof ArrayType) {
       isList = true;
     } else if (fieldType instanceof ArrayType) {
       isList = true;
@@ -499,8 +494,7 @@ public class ParseUtils {
     } else {
       if (isCollectionType(fieldType.asString())) {
         isList = true;
-        List<ClassOrInterfaceType> collectionType =
-            fieldType.getChildNodesByType(ClassOrInterfaceType.class);
+        List<ClassOrInterfaceType> collectionType = fieldType.findAll(ClassOrInterfaceType.class);
         if (collectionType.isEmpty()) {
           LOGGER.warn(
               "We found Collection without specified Class Type, Please check ! java file : {}",
@@ -541,10 +535,12 @@ public class ParseUtils {
       childNode.setClassName(fieldClassType);
 
       fieldNode.setChildNode(childNode);
-      fieldNode.setType(isList ? fieldClassType + "[]" : fieldClassType);
+      fieldNode.setType(Boolean.TRUE.equals(isList) ? fieldClassType + "[]" : fieldClassType);
 
       final File childJavaFile = inJavaFile;
-      ((ClassOrInterfaceType) fieldType)
+      assert fieldType instanceof ClassOrInterfaceType;
+      ClassOrInterfaceType classOrInterfaceType = (ClassOrInterfaceType) fieldType;
+      classOrInterfaceType
           .getTypeArguments()
           .ifPresent(
               typeList ->
@@ -585,7 +581,7 @@ public class ParseUtils {
       } catch (JavaFileNotFoundException ex) {
         LOGGER.warn(
             "we cannot found more information of it, you've better to make it a JavaBean", ex);
-        fieldNode.setType(isList ? "Object[]" : "Object");
+        fieldNode.setType(isList ? "Object[]" : OBJECT_CLASS_NAME);
       }
     } else {
       fieldNode.setType(isList ? unifyType + "[]" : unifyType);
@@ -595,8 +591,8 @@ public class ParseUtils {
   /**
    * 判断本节点是否处在依赖树中，防止出现循环引用
    *
-   * @param fieldNode
-   * @return
+   * @param fieldNode file node
+   * @return is dependency tree
    */
   private static boolean inClassDependencyTree(FieldNode fieldNode, ClassNode parentClassNode) {
 
@@ -605,11 +601,10 @@ public class ParseUtils {
       if (fieldNode.getChildNode().getModelClass().equals(parentClassNode.getModelClass())) {
         return true;
       }
-    } else if (fieldNode.getChildNode().getClassFileName() != null) {
-      if (fieldNode.getChildNode().getClassFileName().equals(parentClassNode.getClassFileName())
-          && fieldNode.getChildNode().getClassName().equals(parentClassNode.getClassName())) {
-        return true;
-      }
+    } else if (fieldNode.getChildNode().getClassFileName() != null
+        && fieldNode.getChildNode().getClassFileName().equals(parentClassNode.getClassFileName())
+        && fieldNode.getChildNode().getClassName().equals(parentClassNode.getClassName())) {
+      return true;
     }
 
     if (parentClassNode.getParentNode() == null) {
@@ -622,8 +617,8 @@ public class ParseUtils {
   /**
    * is model type or not
    *
-   * @param className
-   * @return
+   * @param className class name
+   * @return model type
    */
   public static boolean isModelType(String className) {
     if (className == null) {
@@ -635,7 +630,7 @@ public class ParseUtils {
   /**
    * 判断是否是枚举类型
    *
-   * @return
+   * @return is enum type
    */
   public static boolean isEnum(File inJavaFile, String className) {
     try {
@@ -649,8 +644,8 @@ public class ParseUtils {
   /**
    * unify the type show in docs
    *
-   * @param className
-   * @return
+   * @param className class name
+   * @return type
    */
   public static String unifyType(String className) {
     String[] cPaths = className.replace("[]", "").split("\\.");
@@ -682,7 +677,7 @@ public class ParseUtils {
       return "date";
     } else if ("file".equalsIgnoreCase(rawType) || "MultipartFile".equalsIgnoreCase(rawType)) {
       return "file";
-    } else if ("Object".equalsIgnoreCase(rawType)) {
+    } else if (OBJECT_CLASS_NAME.equalsIgnoreCase(rawType)) {
       return "object";
     } else if ("enum".equalsIgnoreCase(rawType)) {
       return "enum";
@@ -694,8 +689,8 @@ public class ParseUtils {
   /**
    * is implements from Collection or not
    *
-   * @param className
-   * @return
+   * @param className class name
+   * @return is collection
    */
   public static boolean isCollectionType(String className) {
     String[] cPaths = className.split("\\.");
@@ -714,7 +709,7 @@ public class ParseUtils {
         genericLeftIndex != -1 ? genericType.substring(0, genericLeftIndex) : genericType;
     String collectionClassName = "java.util." + rawType;
     try {
-      Class collectionClass = Class.forName(collectionClassName);
+      Class<?> collectionClass = Class.forName(collectionClassName);
       return Collection.class.isAssignableFrom(collectionClass);
     } catch (ClassNotFoundException e) {
       return false;
@@ -724,8 +719,8 @@ public class ParseUtils {
   /**
    * like HttpServletRequest, HttpServletSession should be auto ignore
    *
-   * @param param
-   * @return
+   * @param param Parameter
+   * @return is exclude param
    */
   public static boolean isExcludeParam(Parameter param) {
     final String type = param.getTypeAsString();
@@ -739,10 +734,10 @@ public class ParseUtils {
    *
    * @param inJavaFile 所在java文件
    * @param className 类名
-   * @return
+   * @return class
    */
-  public static Class getClassInJavaFile(File inJavaFile, String className) {
-    Class modelClass = null;
+  public static Class<?> getClassInJavaFile(File inJavaFile, String className) {
+    Class<?> modelClass = null;
     CompilationUnit compilationUnit = compilationUnit(inJavaFile);
     for (ImportDeclaration importDeclaration : compilationUnit.getImports()) {
       String importName = importDeclaration.getNameAsString();
@@ -762,52 +757,44 @@ public class ParseUtils {
       }
     }
     try {
-      modelClass =
-          Class.forName(
-              compilationUnit
-                  .getPackageDeclaration()
-                  .get()
-                  .getNameAsString()
-                  .concat(".")
-                  .concat(className));
+      Optional<PackageDeclaration> packageDeclaration = compilationUnit.getPackageDeclaration();
+      if (packageDeclaration.isPresent()) {
+        modelClass =
+            Class.forName(packageDeclaration.get().getNameAsString().concat(".").concat(className));
+      }
+
     } catch (Exception e) {
-      // just ignore
+      LOGGER.error("get model class error", e);
     }
     return modelClass;
   }
 
   private static void parseResponseNodeByReflection(
       File inJavaFile, String className, ClassNode classNode) {
-
-    Class modelClass = getClassInJavaFile(inJavaFile, className);
-
+    Class<?> modelClass = getClassInJavaFile(inJavaFile, className);
     if (modelClass != null) {
-
       if (classNode instanceof ResponseNode) {
-
         ResponseNode responseNode = (ResponseNode) classNode;
         responseNode.reset();
-
         // 解析方法返回值泛型信息
-        Class controllerClass =
-            ParseUtils.getClassInJavaFile(inJavaFile, inJavaFile.getName().replace(".java", ""));
+        Class<?> controllerClass =
+            ParseUtils.getClassInJavaFile(
+                inJavaFile, inJavaFile.getName().replace(JAVA_FILE_SUFFIX, ""));
         if (controllerClass != null) {
           RequestNode requestNode = responseNode.getRequestNode();
           try {
             // 获取该api对应的请求方法
             Method apiMethod = null;
-
             for (Method method : controllerClass.getDeclaredMethods()) {
-              if (method.getName().equals(requestNode.getMethodName())) {
-                if (method.getAnnotations() != null) {
-                  for (Annotation annotation : method.getAnnotations()) {
-                    String reqUrl = requestNode.getUrl();
-                    if (reqUrl.contains("/")) {
-                      reqUrl = reqUrl.substring(reqUrl.lastIndexOf("/") + 1);
-                    }
-                    if (annotation.toString().contains(reqUrl)) {
-                      apiMethod = method;
-                    }
+              if (method.getName().equals(requestNode.getMethodName())
+                  && method.getAnnotations() != null) {
+                for (Annotation annotation : method.getAnnotations()) {
+                  String reqUrl = requestNode.getUrl();
+                  if (reqUrl.contains("/")) {
+                    reqUrl = reqUrl.substring(reqUrl.lastIndexOf("/") + 1);
+                  }
+                  if (annotation.toString().contains(reqUrl)) {
+                    apiMethod = method;
                   }
                 }
               }
@@ -822,16 +809,15 @@ public class ParseUtils {
                   .equals("org.springframework.http.ResponseEntity")) {
                 Type[] responseEntityTypeArguments =
                     ((ParameterizedType) apiMethod.getGenericReturnType()).getActualTypeArguments();
-                if (responseEntityTypeArguments.length == 1) {
-                  if (responseEntityTypeArguments[0] instanceof ParameterizedType) {
-                    ParameterizedType parameterizedType =
-                        (ParameterizedType) responseEntityTypeArguments[0];
-                    if (parameterizedType.getRawType() instanceof Class) {
-                      ParseUtils.parseGenericNodesInType(
-                          (Class) parameterizedType.getRawType(),
-                          parameterizedType,
-                          responseNode.getGenericNodes());
-                    }
+                if (responseEntityTypeArguments.length == 1
+                    && responseEntityTypeArguments[0] instanceof ParameterizedType) {
+                  ParameterizedType parameterizedType =
+                      (ParameterizedType) responseEntityTypeArguments[0];
+                  if (parameterizedType.getRawType() instanceof Class) {
+                    ParseUtils.parseGenericNodesInType(
+                        (Class<?>) parameterizedType.getRawType(),
+                        parameterizedType,
+                        responseNode.getGenericNodes());
                   }
                 }
               } else {
@@ -847,7 +833,7 @@ public class ParseUtils {
       }
 
       // 使用反射解析字段
-      if (DocContext.getDocsConfig().getOpenReflection()) {
+      if (Boolean.TRUE.equals(DocContext.getDocsConfig().getOpenReflection())) {
         classNode.setModelClass(modelClass);
         parseClassNodeByReflection(classNode);
       }
@@ -857,171 +843,29 @@ public class ParseUtils {
   /**
    * 通过反射解析对象字段
    *
-   * @param classNode
+   * @param classNode class node
    */
   public static void parseClassNodeByReflection(ClassNode classNode) {
 
-    Class modelClass = classNode.getModelClass();
-
+    Class<?> modelClass = classNode.getModelClass();
     // java 内部对象或者接口，直接忽略
     if (modelClass.getPackage().getName().startsWith("java.") || modelClass.isInterface()) {
       return;
     }
-
     List<FieldNode> childNodes = classNode.getChildNodes();
     classNode.setClassName(modelClass.getName());
-
-    for (Field field : modelClass.getDeclaredFields()) {
-
-      // 过滤 static
-      if (Modifier.isStatic(field.getModifiers())) {
-        continue;
-      }
-
-      FieldNode fieldNode = new FieldNode();
-      childNodes.add(fieldNode);
-
-      Annotation[] annotations = field.getAnnotations();
-      if (annotations != null) {
-        for (Annotation annotation : annotations) {
-          if (isNotNullAnnotation(annotation.getClass().getSimpleName())) {
-            fieldNode.setNotNull(true);
-            break;
-          }
-        }
-      }
-
-      fieldNode.setName(field.getName());
-
-      // 枚举,当做字符串类型
-      if (field.getType().isEnum()) {
-        fieldNode.setType("enum");
-        continue;
-      }
-
-      ClassNode childClassNode = new ClassNode();
-      childClassNode.setParentNode(classNode);
-      Class childNodeClass = null;
-      Type childGenericType = null;
-
-      Class fieldClass = field.getType();
-
-      // 数组
-      if (fieldClass.isArray()) {
-        Class componentType = fieldClass.getComponentType();
-        final String unifyFieldType = unifyType(componentType.getSimpleName());
-        fieldNode.setType(unifyFieldType + "[]");
-        if (unifyFieldType.equals(TYPE_MODEL)) {
-          childClassNode.setList(true);
-          childNodeClass = componentType;
-          childGenericType = field.getGenericType();
-        } else {
-          continue;
-        }
-      }
-
-      // 列表
-      if (Collection.class.isAssignableFrom(fieldClass)) {
-        fieldNode.setType("[]");
-
-        Type genericType = field.getGenericType();
-        if (!(genericType instanceof ParameterizedType)) {
-          continue;
-        }
-
-        Type boxType = ((ParameterizedType) genericType).getActualTypeArguments()[0];
-        childGenericType = boxType;
-
-        Class boxClass = null;
-        if (boxType
-            instanceof ParameterizedType) { // List<GenericResult<Student[], Integer>> picList
-          boxClass = (Class) ((ParameterizedType) boxType).getRawType();
-        } else if (boxType instanceof TypeVariable) { // List<T>
-          GenericNode genericNode = classNode.getGenericNode(((TypeVariable) boxType).getName());
-          if (genericNode == null) {
-            continue;
-          } else {
-            boxClass = genericNode.getModelClass();
-            childClassNode.setGenericNodes(genericNode.getChildGenericNode());
-          }
-        } else if (boxType instanceof Class) { // List<String>
-          boxClass = (Class) boxType;
-        }
-
-        if (boxClass == null) {
-          continue;
-        }
-
-        final String unifyFieldType = unifyType(boxClass.getSimpleName());
-        if (unifyFieldType.equals(TYPE_MODEL)) {
-          childClassNode.setList(true);
-          childNodeClass = boxClass;
-        } else {
-          fieldNode.setType(unifyFieldType + "[]");
-          continue;
-        }
-      }
-
-      if (childNodeClass == null) {
-        childNodeClass = fieldClass;
-        childGenericType = field.getGenericType();
-
-        // V object
-        if (childGenericType instanceof TypeVariable) {
-          GenericNode genericNode =
-              classNode.getGenericNode(((TypeVariable) childGenericType).getName());
-          if (genericNode == null) {
-            continue;
-          } else {
-            childNodeClass = genericNode.getModelClass();
-            childClassNode.setGenericNodes(genericNode.getChildGenericNode());
-          }
-        } else if (childGenericType instanceof ParameterizedType) {
-          Type[] paramTypes = ((ParameterizedType) childGenericType).getActualTypeArguments();
-          for (Type paramType : paramTypes) {
-            if (paramType instanceof TypeVariable) {
-              GenericNode genericNode =
-                  classNode.getGenericNode(((TypeVariable) paramType).getName());
-              if (genericNode != null) {
-                childClassNode.addGenericNode(genericNode);
-              }
-            }
-          }
-        }
-
-        final String unifyFieldType = unifyType(childNodeClass.getSimpleName());
-        if (!unifyFieldType.equals(TYPE_MODEL)) {
-          fieldNode.setType(unifyFieldType);
-          continue;
-        }
-      }
-
-      // 解析泛型
-      parseGenericNodesInType(childNodeClass, childGenericType, childClassNode.getGenericNodes());
-      childClassNode.setClassName(childNodeClass.getName());
-      childClassNode.setModelClass(childNodeClass);
-      fieldNode.setChildNode(childClassNode);
-
-      if (!inClassDependencyTree(fieldNode, classNode)) {
-        parseClassNodeByReflection(childClassNode);
-      }
-    }
-
+    for (Field field : modelClass.getDeclaredFields()) fieldHandler(classNode, childNodes, field);
     // 解析父类
-    Class superClass = modelClass.getSuperclass();
-
+    Class<?> superClass = modelClass.getSuperclass();
     if (superClass != null) {
       Type superType = modelClass.getGenericSuperclass();
-
       // 父类泛型信息
       if (superType instanceof ParameterizedType) {
         classNode.getGenericNodes().clear();
         parseGenericNodesInType(superClass, superType, classNode.getGenericNodes());
       }
-
       classNode.setModelClass(modelClass.getSuperclass());
       parseClassNodeByReflection(classNode);
-
       // 恢复
       classNode.setClassName(modelClass.getName());
       classNode.setModelClass(modelClass);
@@ -1031,55 +875,45 @@ public class ParseUtils {
   /**
    * 解析泛型
    *
-   * @param fieldClass
-   * @param fieldGenericType
-   * @param genericNodeList
+   * @param fieldClass file class
+   * @param fieldGenericType filed generic type
+   * @param genericNodeList generic node list
    */
   public static void parseGenericNodesInType(
-      Class fieldClass, Type fieldGenericType, List<GenericNode> genericNodeList) {
-
+      Class<?> fieldClass, Type fieldGenericType, List<GenericNode> genericNodeList) {
     if (fieldGenericType instanceof GenericArrayType) {
       fieldGenericType = ((GenericArrayType) fieldGenericType).getGenericComponentType();
     }
-
     if (fieldGenericType instanceof ParameterizedType) {
-
-      TypeVariable[] typeVariables = fieldClass.getTypeParameters();
+      TypeVariable<?>[] typeVariables = fieldClass.getTypeParameters();
       Type[] paramTypes = ((ParameterizedType) fieldGenericType).getActualTypeArguments();
-
       if (typeVariables.length == 0 || typeVariables.length != paramTypes.length) {
         return;
       }
-
       int paramIndex = 0;
-
       for (Type paramType : paramTypes) {
         GenericNode paramGenericNode = new GenericNode();
         final String placeholder = typeVariables[paramIndex++].getName();
         paramGenericNode.setPlaceholder(placeholder);
 
         if (paramType instanceof ParameterizedType) { // GenericResult<Student, Integer> picList
-          Class boxClass = (Class) ((ParameterizedType) paramType).getRawType();
+          Class<?> boxClass = (Class<?>) ((ParameterizedType) paramType).getRawType();
           paramGenericNode.setModelClass(boxClass);
           genericNodeList.add(paramGenericNode);
-
           Type[] childTypeArguments = ((ParameterizedType) paramType).getActualTypeArguments();
-          TypeVariable[] boxClassTypeVariables = boxClass.getTypeParameters();
-
+          TypeVariable<?>[] boxClassTypeVariables = boxClass.getTypeParameters();
           if (childTypeArguments != null) {
-
             if (childTypeArguments.length == 0
                 || childTypeArguments.length != boxClassTypeVariables.length) {
               continue;
             }
-
             List<GenericNode> childGenericNodeList = new ArrayList<>();
             paramGenericNode.setChildGenericNode(childGenericNodeList);
             int childParamIndex = 0;
             for (Type childGenericType : childTypeArguments) {
               if (childGenericType instanceof Class) {
                 GenericNode childGenericNode = new GenericNode();
-                childGenericNode.setModelClass((Class) childGenericType);
+                childGenericNode.setModelClass((Class<?>) childGenericType);
                 childGenericNode.setPlaceholder(boxClassTypeVariables[childParamIndex++].getName());
                 childGenericNodeList.add(childGenericNode);
               } else {
@@ -1088,7 +922,7 @@ public class ParseUtils {
             }
           }
         } else if (paramType instanceof Class) { // List<String>
-          Class boxClass = (Class) paramType;
+          Class<?> boxClass = (Class<?>) paramType;
           paramGenericNode.setModelClass(boxClass);
           genericNodeList.add(paramGenericNode);
         }
@@ -1100,5 +934,129 @@ public class ParseUtils {
     return annotationName.endsWith("NotEmpty")
         || annotationName.endsWith("NotNull")
         || annotationName.endsWith("NotBlank");
+  }
+
+  /**
+   * field type handler
+   *
+   * @param classNode class node
+   * @param childNodes result class nodes
+   * @param field filed
+   */
+  private static void fieldHandler(ClassNode classNode, List<FieldNode> childNodes, Field field) {
+    // 过滤 static
+    if (Modifier.isStatic(field.getModifiers())) {
+      return;
+    }
+    FieldNode fieldNode = new FieldNode();
+    childNodes.add(fieldNode);
+    Annotation[] annotations = field.getAnnotations();
+    if (annotations != null) {
+      for (Annotation annotation : annotations) {
+        if (isNotNullAnnotation(annotation.getClass().getSimpleName())) {
+          fieldNode.setNotNull(true);
+          break;
+        }
+      }
+    }
+    fieldNode.setName(field.getName());
+    // 枚举,当做字符串类型
+    if (field.getType().isEnum()) {
+      fieldNode.setType("enum");
+      return;
+    }
+    ClassNode childClassNode = new ClassNode();
+    childClassNode.setParentNode(classNode);
+    Class<?> childNodeClass = null;
+    Type childGenericType = null;
+    Class<?> fieldClass = field.getType();
+    // 数组
+    if (fieldClass.isArray()) {
+      Class<?> componentType = fieldClass.getComponentType();
+      final String unifyFieldType = unifyType(componentType.getSimpleName());
+      fieldNode.setType(unifyFieldType + "[]");
+      if (unifyFieldType.equals(TYPE_MODEL)) {
+        childClassNode.setList(true);
+        childNodeClass = componentType;
+        childGenericType = field.getGenericType();
+      } else {
+        return;
+      }
+    }
+    // 列表
+    if (Collection.class.isAssignableFrom(fieldClass)) {
+      fieldNode.setType("[]");
+      Type genericType = field.getGenericType();
+      if (!(genericType instanceof ParameterizedType)) {
+        return;
+      }
+      Type boxType = ((ParameterizedType) genericType).getActualTypeArguments()[0];
+      childGenericType = boxType;
+      Class<?> boxClass = null;
+      if (boxType instanceof ParameterizedType) { // List<GenericResult<Student[], Integer>> picList
+        boxClass = (Class<?>) ((ParameterizedType) boxType).getRawType();
+      } else if (boxType instanceof TypeVariable) { // List<T>
+        GenericNode genericNode = classNode.getGenericNode(((TypeVariable<?>) boxType).getName());
+        if (genericNode == null) {
+          return;
+        } else {
+          boxClass = genericNode.getModelClass();
+          childClassNode.setGenericNodes(genericNode.getChildGenericNode());
+        }
+      } else if (boxType instanceof Class) { // List<String>
+        boxClass = (Class<?>) boxType;
+      }
+      if (boxClass == null) {
+        return;
+      }
+      final String unifyFieldType = unifyType(boxClass.getSimpleName());
+      if (unifyFieldType.equals(TYPE_MODEL)) {
+        childClassNode.setList(true);
+        childNodeClass = boxClass;
+      } else {
+        fieldNode.setType(unifyFieldType + "[]");
+        return;
+      }
+    }
+    if (childNodeClass == null) {
+      childNodeClass = fieldClass;
+      childGenericType = field.getGenericType();
+      // V object
+      if (childGenericType instanceof TypeVariable) {
+        GenericNode genericNode =
+            classNode.getGenericNode(((TypeVariable<?>) childGenericType).getName());
+        if (genericNode == null) {
+          return;
+        } else {
+          childNodeClass = genericNode.getModelClass();
+          childClassNode.setGenericNodes(genericNode.getChildGenericNode());
+        }
+      } else if (childGenericType instanceof ParameterizedType) {
+        Type[] paramTypes = ((ParameterizedType) childGenericType).getActualTypeArguments();
+        for (Type paramType : paramTypes) {
+          if (paramType instanceof TypeVariable) {
+            GenericNode genericNode =
+                classNode.getGenericNode(((TypeVariable<?>) paramType).getName());
+            if (genericNode != null) {
+              childClassNode.addGenericNode(genericNode);
+            }
+          }
+        }
+      }
+      final String unifyFieldType = unifyType(childNodeClass.getSimpleName());
+      if (!unifyFieldType.equals(TYPE_MODEL)) {
+        fieldNode.setType(unifyFieldType);
+        return;
+      }
+    }
+    // 解析泛型
+    parseGenericNodesInType(childNodeClass, childGenericType, childClassNode.getGenericNodes());
+    childClassNode.setClassName(childNodeClass.getName());
+    childClassNode.setModelClass(childNodeClass);
+    fieldNode.setChildNode(childClassNode);
+
+    if (!inClassDependencyTree(fieldNode, classNode)) {
+      parseClassNodeByReflection(childClassNode);
+    }
   }
 }

@@ -15,10 +15,10 @@ class Action {
   private String description;
   private String requestType = "1";
   private String requestUrl;
-  private Set<Parameter> requestParameterList = new HashSet<Parameter>();
-  private Set<Parameter> responseParameterList = new HashSet<Parameter>();
+  private Set<Parameter> requestParameterList = new HashSet<>();
+  private Set<Parameter> responseParameterList = new HashSet<>();
   private String responseTemplate;
-  private Set<Page> pageList = new HashSet<Page>();
+  private Set<Page> pageList = new HashSet<>();
   private String remarks;
 
   public static Action newAction() {

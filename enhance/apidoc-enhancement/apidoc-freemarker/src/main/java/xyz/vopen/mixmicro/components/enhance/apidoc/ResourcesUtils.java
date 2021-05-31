@@ -4,33 +4,24 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2021/05/27
  */
-public class Resources {
+public class ResourcesUtils {
 
-  private Resources() {}
+  private ResourcesUtils() {}
 
   private static boolean isDebug = false;
   private static String debugResourcePath;
 
-  static {
-    try {
-      if (!isDebug) {
-        freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_NONE);
-      }
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    }
-  }
-
   /**
    * get template file
    *
-   * @param fileName
-   * @return
+   * @param fileName template file name
+   * @return input stream
    */
   public static InputStream getTemplateFile(String fileName) throws FileNotFoundException {
 
@@ -47,14 +38,14 @@ public class Resources {
       }
     }
 
-    return Resources.class.getResourceAsStream("/" + fileName);
+    return ResourcesUtils.class.getResourceAsStream("/" + fileName);
   }
 
   /**
    * get code template file
    *
-   * @param fileName
-   * @return
+   * @param fileName file name
+   * @return input stream
    */
   public static InputStream getCodeTemplateFile(String fileName) throws FileNotFoundException {
     return getTemplateFile(fileName);
@@ -63,13 +54,13 @@ public class Resources {
   /**
    * get freemarker template
    *
-   * @param fileName
-   * @return
-   * @throws IOException
+   * @param fileName file name
+   * @return Template
+   * @throws IOException exception
    */
   public static Template getFreemarkerTemplate(String fileName) throws IOException {
     Configuration conf = new Configuration(Configuration.VERSION_2_3_0);
-    conf.setDefaultEncoding("utf-8");
+    conf.setDefaultEncoding(StandardCharsets.UTF_8.name());
     if (isDebug) {
       conf.setDirectoryForTemplateLoading(new File(debugResourcePath));
     } else {
@@ -78,7 +69,7 @@ public class Resources {
       if (tplFile.isFile() && tplFile.exists()) {
         conf.setDirectoryForTemplateLoading(new File(userResPath));
       } else {
-        conf.setClassForTemplateLoading(Resources.class, "/");
+        conf.setClassForTemplateLoading(ResourcesUtils.class, "/");
       }
     }
     return conf.getTemplate(fileName);

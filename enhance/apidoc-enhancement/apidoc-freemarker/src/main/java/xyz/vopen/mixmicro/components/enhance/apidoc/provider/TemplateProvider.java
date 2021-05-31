@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.provider;
 
-import xyz.vopen.mixmicro.components.enhance.apidoc.Resources;
+import xyz.vopen.mixmicro.components.enhance.apidoc.ResourcesUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
 
 import java.io.IOException;
@@ -14,6 +14,6 @@ public class TemplateProvider {
   private TemplateProvider() {}
 
   public static String provideTemplateForName(String templateName) throws IOException {
-    return CommonUtils.streamToString(Resources.getCodeTemplateFile(templateName));
+    return CommonUtils.streamToString(ResourcesUtils.getCodeTemplateFile(templateName));
   }
 }

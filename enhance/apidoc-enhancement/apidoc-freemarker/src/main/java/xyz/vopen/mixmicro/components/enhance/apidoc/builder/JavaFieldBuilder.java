@@ -10,7 +10,7 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
 public class JavaFieldBuilder implements ICodeBuilder {
 
   private String fieldTemplate;
-  private FieldModel entryFieldModel;
+  private final FieldModel entryFieldModel;
 
   public JavaFieldBuilder(String fieldTemplate, FieldModel entryFieldModel) {
     this.fieldTemplate = fieldTemplate;

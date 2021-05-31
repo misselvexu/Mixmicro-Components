@@ -1,15 +1,15 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.genetator;
 
+import xyz.vopen.mixmicro.components.enhance.apidoc.builder.IOSModelBuilder;
+import xyz.vopen.mixmicro.components.enhance.apidoc.builder.IOSModelFieldBuilder;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ResponseNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.provider.IOSModelTemplateProvider;
 import xyz.vopen.mixmicro.components.enhance.apidoc.provider.TemplateProvider;
 import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.CodeGenerator;
 import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.IFieldProvider;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
 import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.provider.ProviderFactory;
-import xyz.vopen.mixmicro.components.enhance.apidoc.builder.IOSModelBuilder;
-import xyz.vopen.mixmicro.components.enhance.apidoc.builder.IOSModelFieldBuilder;
-import xyz.vopen.mixmicro.components.enhance.apidoc.provider.IOSModelTemplateProvider;
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.ClassNode;
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.ResponseNode;
 
 import java.io.IOException;
 import java.util.List;
@@ -57,9 +57,9 @@ public class IOSModelCodeGenerator extends CodeGenerator {
       IOSModelFieldBuilder fieldBuilder = new IOSModelFieldBuilder(sFieldTemplate, entryFieldModel);
       fieldStrings.append(fieldBuilder.build());
     }
-    IOSModelBuilder IOSModelBuilder =
+    IOSModelBuilder iosModelBuilder =
         new IOSModelBuilder(sModelTemplate, className, fieldStrings.toString());
-    return IOSModelBuilder.build();
+    return iosModelBuilder.build();
   }
 
   @Override

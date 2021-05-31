@@ -9,8 +9,8 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.RequestMethod;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.*;
-import xyz.vopen.mixmicro.components.enhance.apidoc.utils.ParseUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
+import xyz.vopen.mixmicro.components.enhance.apidoc.utils.ParseUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,7 +92,8 @@ public class SpringControllerParser extends AbsControllerParser {
                           p -> {
                             String key = p.getNameAsString();
                             if (isUrlPathKey(key)) {
-                              requestNode.setUrl(CommonUtils.removeQuotations(p.getValue().toString()));
+                              requestNode.setUrl(
+                                  CommonUtils.removeQuotations(p.getValue().toString()));
                             }
 
                             if ("headers".equals(key)) {
@@ -136,7 +137,8 @@ public class SpringControllerParser extends AbsControllerParser {
                 }
 
                 requestNode.setUrl(
-                    CommonUtils.getActionUrl(getControllerNode().getBaseUrl(), requestNode.getUrl()));
+                    CommonUtils.getActionUrl(
+                        getControllerNode().getBaseUrl(), requestNode.getUrl()));
               }
             });
 
@@ -193,7 +195,7 @@ public class SpringControllerParser extends AbsControllerParser {
                                       if ("required".equals(exprName)) {
                                         Boolean exprValue =
                                             ((BooleanLiteralExpr) pair.getValue()).getValue();
-                                        paramNode.setRequired(Boolean.valueOf(exprValue));
+                                        paramNode.setRequired(exprValue);
                                       } else if ("value".equals(exprName)) {
                                         String exprValue =
                                             ((StringLiteralExpr) pair.getValue()).getValue();
@@ -204,7 +206,8 @@ public class SpringControllerParser extends AbsControllerParser {
                         });
 
                 // 如果参数是个对象
-                if (!paramNode.getJsonBody() && ParseUtils.isModelType(paramNode.getType())) {
+                if (Boolean.FALSE.equals(paramNode.getJsonBody())
+                    && ParseUtils.isModelType(paramNode.getType())) {
                   ClassNode classNode = new ClassNode();
                   parseClassNodeByType(classNode, p.getType());
                   List<ParamNode> paramNodeList = new ArrayList<>();

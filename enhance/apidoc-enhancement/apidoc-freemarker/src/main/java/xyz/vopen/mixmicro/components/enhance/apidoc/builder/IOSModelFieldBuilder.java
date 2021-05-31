@@ -10,7 +10,7 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
 public class IOSModelFieldBuilder implements ICodeBuilder {
 
   private String modelFieldTemplate;
-  private FieldModel entryFieldModel;
+  private final FieldModel entryFieldModel;
 
   public IOSModelFieldBuilder(String modelFieldTemplate, FieldModel entryFieldModel) {
     super();

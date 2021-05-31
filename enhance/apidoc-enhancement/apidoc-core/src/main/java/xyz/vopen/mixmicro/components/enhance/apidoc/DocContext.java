@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.anonations.Ignore;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.ProjectType;
 import xyz.vopen.mixmicro.components.enhance.apidoc.exception.ConfigException;
+import xyz.vopen.mixmicro.components.enhance.apidoc.exception.FileParseException;
 import xyz.vopen.mixmicro.components.enhance.apidoc.i18n.I18n;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
-import xyz.vopen.mixmicro.components.enhance.apidoc.model.ResponseNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.parser.*;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CacheUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
@@ -31,12 +31,15 @@ public class DocContext {
 
   private DocContext() {}
 
+  private static final String JAVA_FILE_SUFFIX = ".java";
+  private static final String DIR_END = "/";
+
   private static final Logger LOGGER = LoggerFactory.getLogger(DocContext.class);
 
   private static String projectPath;
   private static String docPath;
   // multi modules
-  private static List<String> javaSrcPaths = new ArrayList<>();
+  private static final List<String> javaSrcPaths = new ArrayList<>();
   private static AbsControllerParser controllerParser;
   private static List<File> controllerFiles;
   private static IResponseWrapper responseWrapper;
@@ -44,7 +47,7 @@ public class DocContext {
   private static I18n i18n;
 
   private static String currentApiVersion;
-  private static List<String> apiVersionList = new ArrayList<>();
+  private static final List<String> apiVersionList = new ArrayList<>();
   private static List<ControllerNode> lastVersionControllerNodes;
   private static List<ControllerNode> controllerNodeList;
 
@@ -222,9 +225,9 @@ public class DocContext {
           CommonUtils.wideSearchFile(
               javaSrcDir,
               (f, name) ->
-                  f.getName().endsWith(".java")
+                  f.getName().endsWith(JAVA_FILE_SUFFIX)
                       && ParseUtils.compilationUnit(f)
-                          .getChildNodesByType(ClassOrInterfaceDeclaration.class)
+                          .findAll(ClassOrInterfaceDeclaration.class)
                           .stream()
                           .anyMatch(
                               cd ->
@@ -241,13 +244,13 @@ public class DocContext {
           CommonUtils.wideSearchFile(
               javaSrcDir,
               (f, name) ->
-                  f.getName().endsWith(".java")
+                  f.getName().endsWith(JAVA_FILE_SUFFIX)
                       && ParseUtils.compilationUnit(f)
-                          .getChildNodesByType(ClassOrInterfaceDeclaration.class)
+                          .findAll(ClassOrInterfaceDeclaration.class)
                           .stream()
                           .anyMatch(
                               cd ->
-                                  cd.getChildNodesByType(MethodDeclaration.class).stream()
+                                  cd.findAll(MethodDeclaration.class).stream()
                                       .anyMatch(
                                           md -> md.getAnnotationByName("ApiDoc").isPresent())),
               result,
@@ -267,17 +270,13 @@ public class DocContext {
     CommonUtils.wideSearchFile(
         moduleDir,
         (file, name) -> {
-          if (name.endsWith(".java") && file.getAbsolutePath().contains("src")) {
+          if (name.endsWith(JAVA_FILE_SUFFIX) && file.getAbsolutePath().contains("src")) {
             Optional<PackageDeclaration> opPackageDeclaration =
                 ParseUtils.compilationUnit(file).getPackageDeclaration();
             if (opPackageDeclaration.isPresent()) {
               String packageName = opPackageDeclaration.get().getNameAsString();
-              if (CommonUtils.hasDirInFile(file, moduleDir, "test")
-                  && !packageName.contains("test")) {
-                return false;
-              } else {
-                return true;
-              }
+              return !CommonUtils.hasDirInFile(file, moduleDir, "test")
+                  || packageName.contains("test");
             }
             return !CommonUtils.hasDirInFile(file, moduleDir, "test");
           }
@@ -287,7 +286,7 @@ public class DocContext {
         true);
 
     if (result.isEmpty()) {
-      throw new RuntimeException(
+      throw new FileParseException(
           "cannot find any java file in this module : " + moduleDir.getName());
     }
 
@@ -295,18 +294,18 @@ public class DocContext {
     Optional<PackageDeclaration> opPackageDeclaration =
         ParseUtils.compilationUnit(oneJavaFile).getPackageDeclaration();
     String parentPath = oneJavaFile.getParentFile().getAbsolutePath();
-    if (opPackageDeclaration.isPresent()) {
-      return parentPath.substring(
-          0, parentPath.length() - opPackageDeclaration.get().getNameAsString().length());
-    } else {
-      return parentPath + "/";
-    }
+    return opPackageDeclaration
+        .map(
+            packageDeclaration ->
+                parentPath.substring(
+                    0, parentPath.length() - packageDeclaration.getNameAsString().length()))
+        .orElseGet(() -> parentPath + "/");
   }
 
   /**
    * get log file path
    *
-   * @return
+   * @return log file
    */
   public static File getLogFile() {
     return new File(DocContext.getDocPath(), "apidoc.log");
@@ -319,14 +318,14 @@ public class DocContext {
 
   private static void setProjectPath(String projectPath) {
     if (projectPath != null) {
-      DocContext.projectPath = new File(projectPath).getAbsolutePath() + "/";
+      DocContext.projectPath = new File(projectPath).getAbsolutePath() + DIR_END;
     }
   }
 
   /**
    * api docs output path
    *
-   * @return
+   * @return doc path
    */
   public static String getDocPath() {
     return docPath;
@@ -339,7 +338,10 @@ public class DocContext {
 
     File docDir = new File(config.docsPath, config.apiVersion);
     if (!docDir.exists()) {
-      docDir.mkdirs();
+      boolean mkdirs = docDir.mkdirs();
+      if (!mkdirs) {
+        LOGGER.error("create folder:{} failed", config.docsPath);
+      }
     }
     DocContext.docPath = docDir.getAbsolutePath();
   }
@@ -347,7 +349,7 @@ public class DocContext {
   /**
    * get java src paths
    *
-   * @return
+   * @return path list
    */
   public static List<String> getJavaSrcPaths() {
     return javaSrcPaths;
@@ -356,16 +358,16 @@ public class DocContext {
   /**
    * get all controllers in this project
    *
-   * @return
+   * @return controller file list
    */
   public static File[] getControllerFiles() {
-    return controllerFiles.toArray(new File[controllerFiles.size()]);
+    return controllerFiles.toArray(new File[0]);
   }
 
   /**
    * get controller parser, it will return different parser by different framework you are using.
    *
-   * @return
+   * @return abstract controller parser
    */
   public static AbsControllerParser controllerParser() {
     return controllerParser;
@@ -374,15 +376,12 @@ public class DocContext {
   public static IResponseWrapper getResponseWrapper() {
     if (responseWrapper == null) {
       responseWrapper =
-          new IResponseWrapper() {
-            @Override
-            public Map<String, Object> wrapResponse(ResponseNode responseNode) {
-              Map<String, Object> resultMap = new HashMap<>();
-              resultMap.put("code", 0);
-              resultMap.put("data", responseNode);
-              resultMap.put("msg", "success");
-              return resultMap;
-            }
+          responseNode -> {
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("code", 0);
+            resultMap.put("data", responseNode);
+            resultMap.put("msg", "success");
+            return resultMap;
           };
     }
     return responseWrapper;

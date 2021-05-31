@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.builder;
 
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.ControllerNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
 
 import java.io.IOException;
 

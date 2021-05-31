@@ -2,11 +2,12 @@ package xyz.vopen.mixmicro.components.enhance.apidoc.builder;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import xyz.vopen.mixmicro.components.enhance.apidoc.*;
+import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
+import xyz.vopen.mixmicro.components.enhance.apidoc.ResourcesUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.genetator.IOSModelCodeGenerator;
 import xyz.vopen.mixmicro.components.enhance.apidoc.genetator.JavaCodeGenerator;
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.ControllerNode;
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.RequestNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.RequestNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
 
 import java.io.File;
@@ -61,6 +62,6 @@ public class HtmlControllerDocBuilder implements IControllerDocBuilder {
   }
 
   private Template getControllerTpl() throws IOException {
-    return Resources.getFreemarkerTemplate("api-controller.html.ftl");
+    return ResourcesUtils.getFreemarkerTemplate("api-controller.html.ftl");
   }
 }

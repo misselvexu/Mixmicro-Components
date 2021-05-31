@@ -13,7 +13,7 @@ class Page {
   private String name;
   private String introduction;
   private Module module;
-  private Set<Action> actionList = new HashSet<Action>();
+  private Set<Action> actionList = new HashSet<>();
   private String template;
 
   public static Page newPage() {

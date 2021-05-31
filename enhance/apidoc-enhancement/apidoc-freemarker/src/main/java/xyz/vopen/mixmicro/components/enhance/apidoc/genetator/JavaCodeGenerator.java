@@ -1,17 +1,17 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.genetator;
 
-import xyz.vopen.mixmicro.components.enhance.apidoc.provider.JavaTemplateProvider;
-import xyz.vopen.mixmicro.components.enhance.apidoc.provider.TemplateProvider;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.JavaClassBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.JavaFieldBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.JavaGetterBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.JavaSetterBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.CodeGenerator;
 import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.IFieldProvider;
-import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
 import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.provider.ProviderFactory;
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.ClassNode;
-import xyz.vopen.mixmicro.components.enhance.apidoc.parser.ResponseNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ResponseNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.provider.JavaTemplateProvider;
+import xyz.vopen.mixmicro.components.enhance.apidoc.provider.TemplateProvider;
 
 import java.io.IOException;
 import java.util.List;
@@ -53,7 +53,7 @@ public class JavaCodeGenerator extends CodeGenerator {
   }
 
   @Override
-  public String generateNodeCode(ClassNode respNode) throws IOException {
+  public String generateNodeCode(ClassNode respNode) {
     String className = respNode.getClassName();
 
     IFieldProvider entryProvider = ProviderFactory.createProvider();
