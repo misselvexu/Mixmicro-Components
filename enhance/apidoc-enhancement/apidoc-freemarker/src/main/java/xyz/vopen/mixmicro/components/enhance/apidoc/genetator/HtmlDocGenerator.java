@@ -5,8 +5,9 @@ import freemarker.template.TemplateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
-import xyz.vopen.mixmicro.components.enhance.apidoc.ResourcesUtils;
+import xyz.vopen.mixmicro.components.enhance.apidoc.utils.ResourcesUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.HtmlControllerDocBuilder;
+import xyz.vopen.mixmicro.components.enhance.apidoc.generator.AbsDocGenerator;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
 
@@ -32,7 +33,7 @@ public class HtmlDocGenerator extends AbsDocGenerator {
   }
 
   @Override
-  void generateIndex(List<ControllerNode> controllerNodeList) {
+  public void generateIndex(List<ControllerNode> controllerNodeList) {
     FileWriter docFileWriter = null;
     try {
       LOGGER.info("generate index start !!!");

@@ -1,5 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.model;
 
+import org.springframework.data.annotation.Transient;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.ChangeFlag;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.RequestMethod;
 
@@ -14,23 +15,38 @@ import java.util.List;
  * @version ${project.version} - 2021/05/27
  */
 public class RequestNode {
-
+  /** method */
   private List<String> method = new ArrayList<>();
+  /** url */
   private String url;
-  private String methodName; // 方法名
-  private String description; // 接口名
-  private String supplement; // 补充说明，对应方法 @description
+  /** method name */
+  private String methodName;
+  /** description */
+  private String description;
+  /** supplement description refers to @description */
+  private String supplement;
+  /** param node data */
   private List<ParamNode> paramNodes = new ArrayList<>();
+  /** header node data */
   private List<HeaderNode> header = new ArrayList<>();
+  /** is deprecated, default false */
   private Boolean deprecated = Boolean.FALSE;
+  /** response node data */
   private ResponseNode responseNode;
-  private ControllerNode controllerNode;
+  /** androidCodePath */
   private String androidCodePath;
+  /** ios code path */
   private String iosCodePath;
+  /** code file url */
   private String codeFileUrl;
+  /** request node author */
   private String author;
-  private Byte changeFlag = ChangeFlag.SAME; // 0: same, 1: new, 2: modify
-  private RequestNode lastRequestNode;
+  /** is changed 0: same, 1: new, 2: modify, default same */
+  private Byte changeFlag = ChangeFlag.SAME;
+  /** controller node data */
+  @Transient private ControllerNode controllerNode;
+  /** last request node */
+  @Transient private RequestNode lastRequestNode;
 
   public String getSupplement() {
     return supplement;
@@ -57,7 +73,7 @@ public class RequestNode {
   }
 
   public List<String> getMethod() {
-    if (method == null || (method != null && method.size() == 0)) {
+    if (method == null || method.isEmpty()) {
       return Arrays.asList(RequestMethod.GET.name(), RequestMethod.POST.name());
     }
     return method;

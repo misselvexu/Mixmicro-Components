@@ -6,10 +6,10 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ResponseNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.provider.IOSModelTemplateProvider;
 import xyz.vopen.mixmicro.components.enhance.apidoc.provider.TemplateProvider;
-import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.CodeGenerator;
-import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.IFieldProvider;
+import xyz.vopen.mixmicro.components.enhance.apidoc.generator.CodeGenerator;
+import xyz.vopen.mixmicro.components.enhance.apidoc.provider.IFieldProvider;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
-import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.provider.ProviderFactory;
+import xyz.vopen.mixmicro.components.enhance.apidoc.provider.ProviderFactory;
 
 import java.io.IOException;
 import java.util.List;

@@ -5,7 +5,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xyz.vopen.mixmicro.components.enhance.apidoc.anonations.Ignore;
+import xyz.vopen.mixmicro.components.enhance.apidoc.annotations.Ignore;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.ProjectType;
 import xyz.vopen.mixmicro.components.enhance.apidoc.exception.ConfigException;
 import xyz.vopen.mixmicro.components.enhance.apidoc.exception.FileParseException;
@@ -61,11 +61,13 @@ public class DocContext {
     }
 
     if (config.getProjectName() == null) {
-      config.setProjectName("JApiDocs");
+      config.setProjectName("Mixmicro API Docs");
     }
 
     DocContext.config = config;
-    i18n = new I18n(config.getLocale());
+    if (null != config.getLocale()) {
+      i18n = new I18n(config.getLocale());
+    }
     DocContext.currentApiVersion = config.getApiVersion();
     setProjectPath(config.projectPath);
     setDocPath(config);
@@ -149,7 +151,7 @@ public class DocContext {
 
     if (config.isSpringMvcProject()) {
       projectType = ProjectType.SPRING;
-    } else if (config.isJfinalProject()) {
+    } else if (config.isJFinalProject()) {
       projectType = ProjectType.JFINAL;
     } else if (config.isPlayProject()) {
       projectType = ProjectType.PLAY;
@@ -391,7 +393,7 @@ public class DocContext {
     return controllerNodeList;
   }
 
-  static void setControllerNodeList(List<ControllerNode> controllerNodeList) {
+  public static void setControllerNodeList(List<ControllerNode> controllerNodeList) {
     DocContext.controllerNodeList = controllerNodeList;
   }
 

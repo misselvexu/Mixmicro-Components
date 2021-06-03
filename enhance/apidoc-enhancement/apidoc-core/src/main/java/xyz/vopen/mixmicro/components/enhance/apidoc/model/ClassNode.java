@@ -2,12 +2,15 @@ package xyz.vopen.mixmicro.components.enhance.apidoc.model;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.annotation.Transient;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * class node
@@ -15,17 +18,21 @@ import java.util.Map;
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2021/05/27
  */
-public class ClassNode {
-
+public class ClassNode implements Serializable {
+  /** class name */
   private String className = "";
-  private Class<?> modelClass; // for reflection
+  /** class for reflection */
+  private Class<?> modelClass;
+  /** class description */
   private String description;
+  /** class it list,default false */
   private Boolean isList = Boolean.FALSE;
-  private List<FieldNode> childNodes = new ArrayList<>();
-  private List<GenericNode> genericNodes = new ArrayList<>();
-
+  /** class child nodes */
+  @Transient private List<? super Object> childNodes = new ArrayList<>();
+  /** class generic nodes */
+  @Transient private List<GenericNode> genericNodes = new ArrayList<>();
   /** class ParentNode{ //parentNode; ClassNode node; } */
-  private ClassNode parentNode; // 包含了该类节点的节点
+  @Transient private ClassNode parentNode;
 
   private String classFileName;
 
@@ -48,10 +55,10 @@ public class ClassNode {
   }
 
   public List<FieldNode> getChildNodes() {
-    return childNodes;
+    return childNodes.stream().map(FieldNode.class::cast).collect(Collectors.toList());
   }
 
-  public void setChildNodes(List<FieldNode> childNodes) {
+  public void setChildNodes(List<? super Object> childNodes) {
     this.childNodes = childNodes;
   }
 
@@ -132,8 +139,8 @@ public class ClassNode {
       return Boolean.TRUE.equals(isList) ? className + "[]" : className + "{}";
     }
     Map<String, Object> jsonRootMap = new LinkedHashMap<>();
-    for (FieldNode fieldNode : childNodes) {
-      toJsonApiMap(fieldNode, jsonRootMap);
+    for (Object fieldNode : childNodes) {
+      toJsonApiMap((FieldNode) fieldNode, jsonRootMap);
     }
     if (Boolean.TRUE.equals(isList)) {
       return JSON.toJSONString(new Map[] {jsonRootMap}, true);
@@ -185,7 +192,7 @@ public class ClassNode {
     } else {
       fieldDesc = fieldType;
     }
-    if (showFieldNotNull && fieldNode.getNotNull()) {
+    if (showFieldNotNull && fieldNode.getNotNull() && null != DocContext.getI18n()) {
       fieldDesc =
           String.format("%s【%s】", fieldDesc, DocContext.getI18n().getMessage("parameterNeed"));
     }

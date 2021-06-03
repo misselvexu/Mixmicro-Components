@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
  */
 public class I18n {
 
-  private ResourceBundle resourceBundle;
+  private final ResourceBundle resourceBundle;
 
   public I18n() {
     this.resourceBundle = ResourceBundle.getBundle("message", Locale.getDefault());

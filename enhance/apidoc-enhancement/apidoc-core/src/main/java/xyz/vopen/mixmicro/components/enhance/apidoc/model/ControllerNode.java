@@ -1,5 +1,8 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.model;
 
+import org.springframework.data.annotation.Transient;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,16 +12,24 @@ import java.util.List;
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2021/05/27
  */
-public class ControllerNode {
-
+public class ControllerNode implements Serializable {
+  /** controller author */
   private String author;
+  /** controller description */
   private String description;
+  /** controller base url */
   private String baseUrl;
+  /** controller class name */
   private String className;
+  /** controller package name */
   private String packageName;
+  /** generate docs,default false */
   private Boolean generateDocs = Boolean.FALSE;
-  private List<RequestNode> requestNodes = new ArrayList<>();
+  /** request nodes */
+  @Transient private List<RequestNode> requestNodes = new ArrayList<>();
+  /** source file name */
   private String srcFileName;
+  /** api doc file name */
   private String docFileName;
 
   public String getPackageName() {

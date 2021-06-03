@@ -15,6 +15,10 @@
     <description>🏗 Enhance APIDoc Freemarker Module</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.yunlsp.framework.components</groupId>
+            <artifactId>mixmicro-components-enhance-apidocds-core</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -43,10 +47,6 @@
             <artifactId>fastjson</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.yunlsp.framework.components</groupId>
-            <artifactId>mixmicro-components-enhance-apidocds-core</artifactId>
-        </dependency>
         <dependency>
             <groupId>antlr</groupId>
             <artifactId>antlr</artifactId>

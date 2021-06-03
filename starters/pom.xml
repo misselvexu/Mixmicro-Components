@@ -47,6 +47,7 @@
         <module>mixmicro-components-starter-mongo-client</module>
         <module>mixmicro-components-starter-httpclient</module>
         <module>mixmicro-components-starter-optimization</module>
+        <module>mixmicro-components-starter-apidoc</module>
     </modules>
 
     <dependencyManagement>
@@ -251,6 +252,13 @@
                 <artifactId>mixmicro-components-starter-optimization</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-apidoc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

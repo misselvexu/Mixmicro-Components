@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.provider;
 
-import xyz.vopen.mixmicro.components.enhance.apidoc.ResourcesUtils;
+import xyz.vopen.mixmicro.components.enhance.apidoc.utils.ResourcesUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
 
 import java.io.IOException;

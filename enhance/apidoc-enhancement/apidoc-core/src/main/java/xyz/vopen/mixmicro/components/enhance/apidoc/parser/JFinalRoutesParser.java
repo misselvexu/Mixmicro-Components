@@ -10,11 +10,10 @@ import com.github.javaparser.ast.stmt.ExpressionStmt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
-import xyz.vopen.mixmicro.components.enhance.apidoc.utils.ParseUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
+import xyz.vopen.mixmicro.components.enhance.apidoc.utils.ParseUtils;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +95,7 @@ public class JFinalRoutesParser {
                               LOGGER.info(
                                   "found child routes in file :{}", childRouteFile.getName());
                               ParseUtils.compilationUnit(childRouteFile)
-                                  .getChildNodesByType(ClassOrInterfaceDeclaration.class)
+                                  .findAll(ClassOrInterfaceDeclaration.class)
                                   .stream()
                                   .filter(cd -> routeClassName.endsWith(cd.getNameAsString()))
                                   .findFirst()

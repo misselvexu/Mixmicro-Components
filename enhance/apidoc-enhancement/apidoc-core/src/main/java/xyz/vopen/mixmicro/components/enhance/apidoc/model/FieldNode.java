@@ -1,20 +1,29 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.model;
 
+import java.io.Serializable;
+
 /**
  * a field node corresponds to a response field
  *
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2021/05/27
  */
-public class FieldNode {
-
+public class FieldNode implements Serializable {
+  /** field name */
   private String name;
+  /** field type */
   private String type;
+  /** field description */
   private String description;
+  /** field mock node */
   private MockNode mockNode;
-  private ClassNode childNode; // 表示该field持有的对象类
-  private ClassNode classNode; // 该field所在的类
-  private Boolean loopNode = Boolean.FALSE; // 有循环引用的类
+  /** field child node */
+  private ClassNode childNode;
+  /** field position class */
+  private ClassNode classNode;
+  /** has loop class reference,default false */
+  private Boolean loopNode = Boolean.FALSE;
+  /** not null,default false */
   private Boolean notNull = Boolean.FALSE;
 
   public Boolean getLoopNode() {

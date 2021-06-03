@@ -1,6 +1,5 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.builder;
 
-import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.ICodeBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
 
 /**

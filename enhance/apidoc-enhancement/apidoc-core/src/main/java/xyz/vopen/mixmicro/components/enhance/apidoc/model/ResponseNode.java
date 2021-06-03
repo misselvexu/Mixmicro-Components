@@ -8,17 +8,39 @@ import com.alibaba.fastjson.JSON;
  * @author tino.tang
  */
 public class ResponseNode extends ClassNode {
-
-  private RequestNode requestNode;
-
+  /** method name */
+  private String methodName;
+  /** controller class name */
+  private String controllerClassName;
+  /** controller class name */
+  private String controllerPackageName;
+  /** string result */
   private String stringResult;
+  /** request url */
+  private String requestUrl;
 
-  public RequestNode getRequestNode() {
-    return requestNode;
+  public String getMethodName() {
+    return methodName;
   }
 
-  public void setRequestNode(RequestNode requestNode) {
-    this.requestNode = requestNode;
+  public void setMethodName(String methodName) {
+    this.methodName = methodName;
+  }
+
+  public String getControllerClassName() {
+    return controllerClassName;
+  }
+
+  public void setControllerClassName(String controllerClassName) {
+    this.controllerClassName = controllerClassName;
+  }
+
+  public String getControllerPackageName() {
+    return controllerPackageName;
+  }
+
+  public void setControllerPackageName(String controllerPackageName) {
+    this.controllerPackageName = controllerPackageName;
   }
 
   public String getStringResult() {
@@ -27,6 +49,14 @@ public class ResponseNode extends ClassNode {
 
   public void setStringResult(String stringResult) {
     this.stringResult = stringResult;
+  }
+
+  public String getRequestUrl() {
+    return requestUrl;
+  }
+
+  public void setRequestUrl(String requestUrl) {
+    this.requestUrl = requestUrl;
   }
 
   @Override

@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
-import xyz.vopen.mixmicro.components.enhance.apidoc.anonations.Ignore;
+import xyz.vopen.mixmicro.components.enhance.apidoc.annotations.Ignore;
 import xyz.vopen.mixmicro.components.enhance.apidoc.exception.FileParseException;
 import xyz.vopen.mixmicro.components.enhance.apidoc.exception.JavaFileNotFoundException;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.*;
@@ -746,25 +746,24 @@ public class ParseUtils {
           modelClass = Class.forName(importName);
           break;
         } catch (Exception e) {
-          LOGGER.error("ClassNotFoundException: {}", className, e);
+          LOGGER.error("ClassNotFoundException: {}", className);
         }
       } else if (importName.endsWith(".*")) {
         try {
           modelClass = Class.forName(importName.replace("*", className));
         } catch (Exception e) {
-          // just ignore
+          LOGGER.error("reflect model class error modelClass:{}", modelClass);
         }
       }
     }
-    try {
-      Optional<PackageDeclaration> packageDeclaration = compilationUnit.getPackageDeclaration();
-      if (packageDeclaration.isPresent()) {
+    Optional<PackageDeclaration> packageDeclaration = compilationUnit.getPackageDeclaration();
+    if (packageDeclaration.isPresent()) {
+      try {
         modelClass =
             Class.forName(packageDeclaration.get().getNameAsString().concat(".").concat(className));
+      } catch (Exception e) {
+        LOGGER.error("get model class error,class:{}", className);
       }
-
-    } catch (Exception e) {
-      LOGGER.error("get model class error", e);
     }
     return modelClass;
   }
@@ -781,15 +780,14 @@ public class ParseUtils {
             ParseUtils.getClassInJavaFile(
                 inJavaFile, inJavaFile.getName().replace(JAVA_FILE_SUFFIX, ""));
         if (controllerClass != null) {
-          RequestNode requestNode = responseNode.getRequestNode();
           try {
             // 获取该api对应的请求方法
             Method apiMethod = null;
             for (Method method : controllerClass.getDeclaredMethods()) {
-              if (method.getName().equals(requestNode.getMethodName())
+              if (method.getName().equals(responseNode.getMethodName())
                   && method.getAnnotations() != null) {
                 for (Annotation annotation : method.getAnnotations()) {
-                  String reqUrl = requestNode.getUrl();
+                  String reqUrl = responseNode.getRequestUrl();
                   if (reqUrl.contains("/")) {
                     reqUrl = reqUrl.substring(reqUrl.lastIndexOf("/") + 1);
                   }

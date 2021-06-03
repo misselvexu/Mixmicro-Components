@@ -207,7 +207,7 @@ public class CommonUtils {
     File[] fileList = rootPath.listFiles();
     List<File> dirPaths = new ArrayList<>();
     if (null == fileList || fileList.length == 0) {
-      LOGGER.error("There is not any file in root path");
+      LOGGER.error("There is not any file in root path: {}", rootPath.getName());
       return;
     }
 

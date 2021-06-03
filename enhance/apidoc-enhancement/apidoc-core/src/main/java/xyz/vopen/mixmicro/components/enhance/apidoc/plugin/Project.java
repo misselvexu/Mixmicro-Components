@@ -234,6 +234,7 @@ class Project {
 
   private static void setResponseToAction(ClassNode responseNode, Set<Parameter> parameterSet) {
     for (FieldNode fieldNode : responseNode.getChildNodes()) {
+
       Parameter parameter = Parameter.newParameter();
       parameter.setName(fieldNode.getDescription());
       MockNode mockNode = fieldNode.getMockNode();

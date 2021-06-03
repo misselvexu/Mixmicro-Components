@@ -14,8 +14,8 @@ import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.javadoc.JavadocBlockTag;
 import org.apache.commons.lang3.StringUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
-import xyz.vopen.mixmicro.components.enhance.apidoc.anonations.ApiDoc;
-import xyz.vopen.mixmicro.components.enhance.apidoc.anonations.Ignore;
+import xyz.vopen.mixmicro.components.enhance.apidoc.annotations.ApiDoc;
+import xyz.vopen.mixmicro.components.enhance.apidoc.annotations.Ignore;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.ChangeFlag;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.*;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
@@ -99,7 +99,7 @@ public abstract class AbsControllerParser {
 
   private void parseMethodDocs(ClassOrInterfaceDeclaration c) {
     c.findAll(MethodDeclaration.class).stream()
-        .filter(m -> m.getModifiers().contains(Modifier.PUBLIC))
+        .filter(methodDeclaration -> methodDeclaration.getModifiers().contains(Modifier.PUBLIC))
         .forEach(
             m -> {
               boolean existsApiDoc =
@@ -223,7 +223,11 @@ public abstract class AbsControllerParser {
               }
 
               ResponseNode responseNode = new ResponseNode();
-              responseNode.setRequestNode(requestNode);
+              responseNode.setControllerClassName(requestNode.getControllerNode().getClassName());
+              responseNode.setMethodName(requestNode.getMethodName());
+              responseNode.setRequestUrl(requestNode.getUrl());
+              responseNode.setControllerPackageName(
+                  requestNode.getControllerNode().getPackageName());
               if (stringResult != null) {
                 responseNode.setStringResult(stringResult);
               } else {

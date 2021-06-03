@@ -2,7 +2,7 @@ package xyz.vopen.mixmicro.components.enhance.apidoc.parser;
 
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.NormalAnnotationExpr;
-import xyz.vopen.mixmicro.components.enhance.apidoc.anonations.ApiDoc;
+import xyz.vopen.mixmicro.components.enhance.apidoc.annotations.ApiDoc;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.RequestNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
 

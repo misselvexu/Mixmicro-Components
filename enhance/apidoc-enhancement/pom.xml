@@ -29,6 +29,7 @@
     <modules>
         <module>apidoc-core</module>
         <module>apidoc-freemarker</module>
+        <module>apidoc-client</module>
     </modules>
 
 

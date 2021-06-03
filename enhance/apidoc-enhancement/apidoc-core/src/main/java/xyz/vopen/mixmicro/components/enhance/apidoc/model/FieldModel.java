@@ -1,17 +1,23 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.model;
 
-import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.provider.DocFieldHelper;
+import xyz.vopen.mixmicro.components.enhance.apidoc.provider.DocFieldHelper;
+
+import java.io.Serializable;
 
 /**
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2021/05/27
  */
-public class FieldModel {
-
+public class FieldModel implements Serializable {
+  /** file name */
   private String remoteFieldName;
+  /** case field name */
   private String caseFieldName;
+  /** field name */
   private String fieldName;
+  /** field type */
   private String fieldType;
+  /** field comment */
   private String comment;
 
   public String getFieldName() {

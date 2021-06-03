@@ -31,23 +31,21 @@ public class CacheUtils {
   /**
    * save controller nodes of this version
    *
-   * @param controllerNodes
+   * @param controllerNodes controller nodes
    */
   public static void saveControllerNodes(List<ControllerNode> controllerNodes) {
     try {
       controllerNodes.forEach(
-          controllerNode -> {
-            controllerNode
-                .getRequestNodes()
-                .forEach(
-                    requestNode -> {
-                      requestNode.setControllerNode(null);
-                      requestNode.setLastRequestNode(null);
-                      ResponseNode responseNode = requestNode.getResponseNode();
-                      responseNode.setRequestNode(null);
-                      removeLoopNode(responseNode);
-                    });
-          });
+          controllerNode ->
+              controllerNode
+                  .getRequestNodes()
+                  .forEach(
+                      requestNode -> {
+                        requestNode.setControllerNode(null);
+                        requestNode.setLastRequestNode(null);
+                        ResponseNode responseNode = requestNode.getResponseNode();
+                        removeLoopNode(responseNode);
+                      }));
       CommonUtils.writeToDisk(
           new File(DocContext.getDocPath(), CACHE_FILE), JSON.toJSONString(controllerNodes));
     } catch (Exception ex) {

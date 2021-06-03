@@ -4,13 +4,13 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.builder.JavaClassBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.JavaFieldBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.JavaGetterBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.JavaSetterBuilder;
-import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.CodeGenerator;
-import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.IFieldProvider;
-import xyz.vopen.mixmicro.components.enhance.apidoc.codegenerator.provider.ProviderFactory;
+import xyz.vopen.mixmicro.components.enhance.apidoc.generator.CodeGenerator;
+import xyz.vopen.mixmicro.components.enhance.apidoc.provider.IFieldProvider;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ResponseNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.provider.JavaTemplateProvider;
+import xyz.vopen.mixmicro.components.enhance.apidoc.provider.ProviderFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.provider.TemplateProvider;
 
 import java.io.IOException;

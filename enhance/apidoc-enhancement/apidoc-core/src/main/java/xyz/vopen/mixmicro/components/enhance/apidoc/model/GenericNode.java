@@ -3,6 +3,7 @@ package xyz.vopen.mixmicro.components.enhance.apidoc.model;
 import com.github.javaparser.ast.type.Type;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +13,16 @@ import java.util.List;
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2021/05/27
  */
-public class GenericNode {
-
-  private Type classType; // for source
-  private Class<?> modelClass; // for reflection
+public class GenericNode implements Serializable {
+  /** for source */
+  private Type classType;
+  /** for reflection */
+  private Class<?> modelClass;
+  /** placeholder */
   private String placeholder;
+  /** form java file */
   private File fromJavaFile;
+  /** child generic node list */
   private List<GenericNode> childGenericNode = new ArrayList<>();
 
   public GenericNode() {}

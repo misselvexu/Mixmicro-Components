@@ -3,7 +3,7 @@ package xyz.vopen.mixmicro.components.enhance.apidoc.builder;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
-import xyz.vopen.mixmicro.components.enhance.apidoc.ResourcesUtils;
+import xyz.vopen.mixmicro.components.enhance.apidoc.utils.ResourcesUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.genetator.IOSModelCodeGenerator;
 import xyz.vopen.mixmicro.components.enhance.apidoc.genetator.JavaCodeGenerator;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
