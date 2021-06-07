@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2021/05/27
  */
-public class ClassNode implements Serializable {
+public class ClassNode implements Serializable, ClassNodeProxy {
   /** class name */
   private String className = "";
   /** class for reflection */
@@ -28,100 +28,122 @@ public class ClassNode implements Serializable {
   /** class it list,default false */
   private Boolean isList = Boolean.FALSE;
   /** class child nodes */
-  @Transient private List<? super Object> childNodes = new ArrayList<>();
+  private List<FieldNode> childNodes = new ArrayList<>();
   /** class generic nodes */
   @Transient private List<GenericNode> genericNodes = new ArrayList<>();
   /** class ParentNode{ //parentNode; ClassNode node; } */
-  @Transient private ClassNode parentNode;
-
+  private ClassNodeProxy parentNode;
+  /** class file name */
   private String classFileName;
-
+  /** show field not null */
   private Boolean showFieldNotNull = Boolean.FALSE;
 
+  @Override
   public String getDescription() {
     return description;
   }
 
+  @Override
   public void setDescription(String description) {
     this.description = description;
   }
 
+  @Override
   public Boolean isList() {
     return isList;
   }
 
+  @Override
   public void setList(Boolean list) {
     isList = list;
   }
 
+  @Override
   public List<FieldNode> getChildNodes() {
     return childNodes.stream().map(FieldNode.class::cast).collect(Collectors.toList());
   }
 
-  public void setChildNodes(List<? super Object> childNodes) {
+  @Override
+  public void setChildNodes(List<FieldNode> childNodes) {
     this.childNodes = childNodes;
   }
 
+  @Override
   public void addChildNode(FieldNode fieldNode) {
     childNodes.add(fieldNode);
   }
 
+  @Override
   public String getClassName() {
     return className;
   }
 
+  @Override
   public void setClassName(String className) {
     this.className = className;
   }
 
+  @Override
   public List<GenericNode> getGenericNodes() {
     return genericNodes;
   }
 
+  @Override
   public void setGenericNodes(List<GenericNode> genericNodes) {
     this.genericNodes = genericNodes;
   }
 
+  @Override
   public void addGenericNode(GenericNode genericNode) {
     this.genericNodes.add(genericNode);
   }
 
+  @Override
   public GenericNode getGenericNode(int index) {
     return genericNodes.get(index);
   }
 
+  @Override
   public String getClassFileName() {
     return classFileName;
   }
 
+  @Override
   public void setClassFileName(String classFileName) {
     this.classFileName = classFileName;
   }
 
-  public ClassNode getParentNode() {
+  @Override
+  public ClassNodeProxy getParentNode() {
     return parentNode;
   }
 
-  public void setParentNode(ClassNode parentNode) {
+  @Override
+  public void setParentNode(ClassNodeProxy parentNode) {
     this.parentNode = parentNode;
   }
 
+  @Override
   public Boolean getShowFieldNotNull() {
     return showFieldNotNull;
   }
 
+  @Override
   public void setShowFieldNotNull(Boolean showFieldNotNull) {
     this.showFieldNotNull = showFieldNotNull;
   }
 
+  @Override
   public Class<?> getModelClass() {
     return modelClass;
   }
 
+  @Override
   public void setModelClass(Class<?> modelClass) {
     this.modelClass = modelClass;
   }
 
+  @Override
   public GenericNode getGenericNode(String type) {
     if (genericNodes == null) {
       return null;
@@ -134,13 +156,14 @@ public class ClassNode implements Serializable {
     return null;
   }
 
+  @Override
   public String toJsonApi() {
     if (childNodes == null || childNodes.isEmpty()) {
       return Boolean.TRUE.equals(isList) ? className + "[]" : className + "{}";
     }
     Map<String, Object> jsonRootMap = new LinkedHashMap<>();
-    for (Object fieldNode : childNodes) {
-      toJsonApiMap((FieldNode) fieldNode, jsonRootMap);
+    for (FieldNode fieldNode : childNodes) {
+      toJsonApiMap(fieldNode, jsonRootMap);
     }
     if (Boolean.TRUE.equals(isList)) {
       return JSON.toJSONString(new Map[] {jsonRootMap}, true);
@@ -156,7 +179,7 @@ public class ClassNode implements Serializable {
       return;
     }
 
-    ClassNode thisFieldNode = fieldNode.getChildNode();
+    ClassNodeProxy thisFieldNode = fieldNode.getChildNode();
     if (thisFieldNode != null) {
       Map<String, Object> childMap = new LinkedHashMap<>();
       for (FieldNode childFieldNode : thisFieldNode.getChildNodes()) {

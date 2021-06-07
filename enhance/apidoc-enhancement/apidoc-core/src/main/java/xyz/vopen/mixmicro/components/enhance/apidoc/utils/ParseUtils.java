@@ -14,6 +14,7 @@ import com.github.javaparser.ast.type.TypeParameter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 import xyz.vopen.mixmicro.components.enhance.apidoc.annotations.Ignore;
 import xyz.vopen.mixmicro.components.enhance.apidoc.exception.FileParseException;
@@ -594,7 +595,7 @@ public class ParseUtils {
    * @param fieldNode file node
    * @return is dependency tree
    */
-  private static boolean inClassDependencyTree(FieldNode fieldNode, ClassNode parentClassNode) {
+  private static boolean inClassDependencyTree(FieldNode fieldNode, ClassNodeProxy parentClassNode) {
 
     if (fieldNode.getChildNode().getModelClass() != null
         && parentClassNode.getModelClass() != null) {

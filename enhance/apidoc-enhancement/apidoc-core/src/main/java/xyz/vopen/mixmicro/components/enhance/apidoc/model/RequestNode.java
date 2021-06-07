@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Transient;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.ChangeFlag;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.RequestMethod;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2021/05/27
  */
-public class RequestNode {
+public class RequestNode implements Serializable {
   /** method */
   private List<String> method = new ArrayList<>();
   /** url */

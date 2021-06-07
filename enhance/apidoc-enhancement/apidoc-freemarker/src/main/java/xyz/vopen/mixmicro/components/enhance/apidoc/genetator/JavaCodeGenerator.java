@@ -5,10 +5,10 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.builder.JavaFieldBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.JavaGetterBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.JavaSetterBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.generator.CodeGenerator;
-import xyz.vopen.mixmicro.components.enhance.apidoc.provider.IFieldProvider;
-import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNodeProxy;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ResponseNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.provider.IFieldProvider;
 import xyz.vopen.mixmicro.components.enhance.apidoc.provider.JavaTemplateProvider;
 import xyz.vopen.mixmicro.components.enhance.apidoc.provider.ProviderFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.provider.TemplateProvider;
@@ -53,7 +53,7 @@ public class JavaCodeGenerator extends CodeGenerator {
   }
 
   @Override
-  public String generateNodeCode(ClassNode respNode) {
+  public String generateNodeCode(ClassNodeProxy respNode) {
     String className = respNode.getClassName();
 
     IFieldProvider entryProvider = ProviderFactory.createProvider();

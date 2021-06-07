@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.provider;
 
-import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNodeProxy;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
@@ -15,7 +15,7 @@ import java.util.List;
 public class DocFieldProvider implements IFieldProvider {
 
   @Override
-  public List<FieldModel> provideFields(ClassNode respNode) {
+  public List<FieldModel> provideFields(ClassNodeProxy respNode) {
     List<FieldNode> recordNodes = respNode.getChildNodes();
     if (recordNodes == null || recordNodes.isEmpty()) {
       return new ArrayList<>();

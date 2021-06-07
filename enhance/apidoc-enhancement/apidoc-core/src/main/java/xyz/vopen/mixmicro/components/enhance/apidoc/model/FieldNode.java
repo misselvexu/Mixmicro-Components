@@ -18,9 +18,9 @@ public class FieldNode implements Serializable {
   /** field mock node */
   private MockNode mockNode;
   /** field child node */
-  private ClassNode childNode;
+  private ClassNodeProxy childNode;
   /** field position class */
-  private ClassNode classNode;
+  private ClassNodeProxy classNode;
   /** has loop class reference,default false */
   private Boolean loopNode = Boolean.FALSE;
   /** not null,default false */
@@ -74,19 +74,19 @@ public class FieldNode implements Serializable {
     this.mockNode = mockNode;
   }
 
-  public ClassNode getChildNode() {
+  public ClassNodeProxy getChildNode() {
     return childNode;
   }
 
-  public void setChildNode(ClassNode childNode) {
+  public void setChildNode(ClassNodeProxy childNode) {
     this.childNode = childNode;
   }
 
-  public ClassNode getClassNode() {
+  public ClassNodeProxy getClassNode() {
     return classNode;
   }
 
-  public void setClassNode(ClassNode classNode) {
+  public void setClassNode(ClassNodeProxy classNode) {
     this.classNode = classNode;
   }
 }

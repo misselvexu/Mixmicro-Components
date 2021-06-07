@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.plugin;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 import xyz.vopen.mixmicro.components.enhance.apidoc.IResponseWrapper;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.ActionType;
@@ -8,13 +9,14 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.model.*;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.ParseUtils;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2021/05/27
  */
-class Project {
+class Project implements Serializable {
 
   private int id;
   private int userId;
@@ -232,7 +234,8 @@ class Project {
     }
   }
 
-  private static void setResponseToAction(ClassNode responseNode, Set<Parameter> parameterSet) {
+  private static void setResponseToAction(
+      ClassNodeProxy responseNode, Set<Parameter> parameterSet) {
     for (FieldNode fieldNode : responseNode.getChildNodes()) {
 
       Parameter parameter = Parameter.newParameter();

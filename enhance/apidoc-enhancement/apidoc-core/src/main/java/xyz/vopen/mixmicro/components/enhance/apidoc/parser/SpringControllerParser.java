@@ -251,7 +251,7 @@ public class SpringControllerParser extends AbsControllerParser {
   }
 
   private void toParamNodeList(
-      List<ParamNode> paramNodeList, ClassNode formNode, String parentName) {
+      List<ParamNode> paramNodeList, ClassNodeProxy formNode, String parentName) {
     formNode
         .getChildNodes()
         .forEach(

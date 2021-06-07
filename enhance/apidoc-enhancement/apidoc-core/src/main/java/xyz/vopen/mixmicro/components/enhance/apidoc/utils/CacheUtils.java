@@ -3,8 +3,10 @@ package xyz.vopen.mixmicro.components.enhance.apidoc.utils;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNode;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNodeProxy;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ResponseNode;
 
@@ -53,7 +55,7 @@ public class CacheUtils {
     }
   }
 
-  private static void removeLoopNode(ClassNode classNode) {
+  private static void removeLoopNode(ClassNodeProxy classNode) {
     classNode.setParentNode(null);
     classNode.setGenericNodes(null);
     classNode
