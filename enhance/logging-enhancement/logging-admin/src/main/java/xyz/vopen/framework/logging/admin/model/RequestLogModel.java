@@ -16,6 +16,8 @@ import java.util.Map;
 public class RequestLogModel implements Serializable {
   /** primary key */
   @Id private String id;
+  /** service id */
+  private String serviceId;
   /** service detail id, relation to LogServiceDetail's primary key */
   private String serviceDetailId;
   /** all log trace id */
@@ -57,6 +59,14 @@ public class RequestLogModel implements Serializable {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getServiceId() {
+    return serviceId;
+  }
+
+  public void setServiceId(String serviceId) {
+    this.serviceId = serviceId;
   }
 
   public String getServiceDetailId() {
