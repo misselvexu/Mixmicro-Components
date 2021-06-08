@@ -3,7 +3,6 @@ package xyz.vopen.mixmicro.components.enhance.apidoc.genetator;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.IOSModelBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.IOSModelFieldBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNode;
-import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNodeProxy;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ResponseNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.provider.IOSModelTemplateProvider;
 import xyz.vopen.mixmicro.components.enhance.apidoc.provider.TemplateProvider;
@@ -46,7 +45,7 @@ public class IOSModelCodeGenerator extends CodeGenerator {
   }
 
   @Override
-  public String generateNodeCode(ClassNodeProxy respNode) throws IOException {
+  public String generateNodeCode(ClassNode respNode) throws IOException {
     String className = respNode.getClassName();
     IFieldProvider entryProvider = ProviderFactory.createProvider();
     List<FieldModel> entryFields = entryProvider.provideFields(respNode);

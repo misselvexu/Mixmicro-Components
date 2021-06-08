@@ -7,6 +7,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
+import org.springframework.beans.BeanUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.RequestMethod;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.*;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
@@ -251,13 +252,15 @@ public class SpringControllerParser extends AbsControllerParser {
   }
 
   private void toParamNodeList(
-      List<ParamNode> paramNodeList, ClassNodeProxy formNode, String parentName) {
+      List<ParamNode> paramNodeList, ClassNode formNode, String parentName) {
     formNode
         .getChildNodes()
         .forEach(
             filedNode -> {
               if (filedNode.getChildNode() != null) {
-                toParamNodeList(paramNodeList, filedNode.getChildNode(), filedNode.getName() + ".");
+                ClassNode fieldClassNode = new ClassNode();
+                BeanUtils.copyProperties(filedNode.getChildNode(), fieldClassNode);
+                toParamNodeList(paramNodeList, fieldClassNode, filedNode.getName() + ".");
               } else {
                 ParamNode paramNode = new ParamNode();
                 paramNode.setName(parentName + filedNode.getName());

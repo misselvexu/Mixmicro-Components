@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2021/05/27
  */
-public class ClassNode implements Serializable, ClassNodeProxy {
+public class ClassNode implements Serializable {
   /** class name */
   private String className = "";
   /** class for reflection */
@@ -32,118 +32,92 @@ public class ClassNode implements Serializable, ClassNodeProxy {
   /** class generic nodes */
   @Transient private List<GenericNode> genericNodes = new ArrayList<>();
   /** class ParentNode{ //parentNode; ClassNode node; } */
-  private ClassNodeProxy parentNode;
+  @Transient private ClassNode parentNode;
   /** class file name */
   private String classFileName;
   /** show field not null */
   private Boolean showFieldNotNull = Boolean.FALSE;
 
-  @Override
   public String getDescription() {
     return description;
   }
 
-  @Override
   public void setDescription(String description) {
     this.description = description;
   }
 
-  @Override
   public Boolean isList() {
     return isList;
   }
 
-  @Override
   public void setList(Boolean list) {
     isList = list;
   }
 
-  @Override
   public List<FieldNode> getChildNodes() {
     return childNodes.stream().map(FieldNode.class::cast).collect(Collectors.toList());
   }
 
-  @Override
   public void setChildNodes(List<FieldNode> childNodes) {
     this.childNodes = childNodes;
   }
 
-  @Override
-  public void addChildNode(FieldNode fieldNode) {
-    childNodes.add(fieldNode);
-  }
-
-  @Override
   public String getClassName() {
     return className;
   }
 
-  @Override
   public void setClassName(String className) {
     this.className = className;
   }
 
-  @Override
   public List<GenericNode> getGenericNodes() {
     return genericNodes;
   }
 
-  @Override
   public void setGenericNodes(List<GenericNode> genericNodes) {
     this.genericNodes = genericNodes;
   }
 
-  @Override
   public void addGenericNode(GenericNode genericNode) {
     this.genericNodes.add(genericNode);
   }
 
-  @Override
   public GenericNode getGenericNode(int index) {
     return genericNodes.get(index);
   }
 
-  @Override
   public String getClassFileName() {
     return classFileName;
   }
 
-  @Override
   public void setClassFileName(String classFileName) {
     this.classFileName = classFileName;
   }
 
-  @Override
-  public ClassNodeProxy getParentNode() {
+  public ClassNode getParentNode() {
     return parentNode;
   }
 
-  @Override
-  public void setParentNode(ClassNodeProxy parentNode) {
+  public void setParentNode(ClassNode parentNode) {
     this.parentNode = parentNode;
   }
 
-  @Override
   public Boolean getShowFieldNotNull() {
     return showFieldNotNull;
   }
 
-  @Override
   public void setShowFieldNotNull(Boolean showFieldNotNull) {
     this.showFieldNotNull = showFieldNotNull;
   }
 
-  @Override
   public Class<?> getModelClass() {
     return modelClass;
   }
 
-  @Override
   public void setModelClass(Class<?> modelClass) {
     this.modelClass = modelClass;
   }
 
-  @Override
   public GenericNode getGenericNode(String type) {
     if (genericNodes == null) {
       return null;
@@ -156,7 +130,6 @@ public class ClassNode implements Serializable, ClassNodeProxy {
     return null;
   }
 
-  @Override
   public String toJsonApi() {
     if (childNodes == null || childNodes.isEmpty()) {
       return Boolean.TRUE.equals(isList) ? className + "[]" : className + "{}";
@@ -179,7 +152,7 @@ public class ClassNode implements Serializable, ClassNodeProxy {
       return;
     }
 
-    ClassNodeProxy thisFieldNode = fieldNode.getChildNode();
+    FieldClassNode thisFieldNode = fieldNode.getChildNode();
     if (thisFieldNode != null) {
       Map<String, Object> childMap = new LinkedHashMap<>();
       for (FieldNode childFieldNode : thisFieldNode.getChildNodes()) {
@@ -203,7 +176,7 @@ public class ClassNode implements Serializable, ClassNodeProxy {
     String fieldType;
     if (Boolean.TRUE.equals(fieldNode.getLoopNode())) {
       fieldType =
-          fieldNode.getChildNode().getClassName()
+          fieldNode.getChildNode().getFieldClassName()
               + (Boolean.TRUE.equals(fieldNode.getChildNode().isList()) ? "[]" : "{}");
     } else {
       fieldType = fieldNode.getType();
@@ -220,6 +193,14 @@ public class ClassNode implements Serializable, ClassNodeProxy {
           String.format("%s【%s】", fieldDesc, DocContext.getI18n().getMessage("parameterNeed"));
     }
     return fieldDesc;
+  }
+
+  public void addChildNode(FieldNode fieldNode) {
+    childNodes.add(fieldNode);
+  }
+
+  public void addChildNodes(List<FieldNode> fieldNodes) {
+    childNodes.addAll(fieldNodes);
   }
 
   public void reset() {

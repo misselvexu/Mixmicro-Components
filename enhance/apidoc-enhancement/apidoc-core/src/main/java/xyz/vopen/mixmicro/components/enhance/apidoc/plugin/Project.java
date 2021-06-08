@@ -234,8 +234,7 @@ class Project implements Serializable {
     }
   }
 
-  private static void setResponseToAction(
-      ClassNodeProxy responseNode, Set<Parameter> parameterSet) {
+  private static void setResponseToAction(ClassNode responseNode, Set<Parameter> parameterSet) {
     for (FieldNode fieldNode : responseNode.getChildNodes()) {
 
       Parameter parameter = Parameter.newParameter();
@@ -262,7 +261,9 @@ class Project implements Serializable {
 
       parameterSet.add(parameter);
       if (fieldNode.getChildNode() != null) {
-        setResponseToAction(fieldNode.getChildNode(), parameter.getParameterList());
+        ClassNode fieldClassNode = new ClassNode();
+        BeanUtils.copyProperties(fieldNode.getChildNode(), fieldClassNode);
+        setResponseToAction(fieldClassNode, parameter.getParameterList());
       }
     }
   }

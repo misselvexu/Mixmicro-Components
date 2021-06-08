@@ -13,7 +13,6 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.javadoc.JavadocBlockTag;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 import xyz.vopen.mixmicro.components.enhance.apidoc.annotations.ApiDoc;
 import xyz.vopen.mixmicro.components.enhance.apidoc.annotations.Ignore;
@@ -124,7 +123,6 @@ public abstract class AbsControllerParser {
 
               m.getAnnotationByClass(Deprecated.class)
                   .ifPresent(f -> requestNode.setDeprecated(true));
-
               m.getJavadoc()
                   .ifPresent(
                       d -> {

@@ -1,6 +1,7 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.model;
 
 import com.github.javaparser.ast.type.Type;
+import org.springframework.data.annotation.Transient;
 
 import java.io.File;
 import java.io.Serializable;
@@ -15,13 +16,13 @@ import java.util.List;
  */
 public class GenericNode implements Serializable {
   /** for source */
-  private Type classType;
+  @Transient private Type classType;
   /** for reflection */
-  private Class<?> modelClass;
+  @Transient private Class<?> modelClass;
   /** placeholder */
   private String placeholder;
   /** form java file */
-  private File fromJavaFile;
+  @Transient private File fromJavaFile;
   /** child generic node list */
   private List<GenericNode> childGenericNode = new ArrayList<>();
 

@@ -1,6 +1,6 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.provider;
 
-import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNodeProxy;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldModel;
 
 import java.util.List;
@@ -16,5 +16,5 @@ public interface IFieldProvider {
    * @param respNode response class node
    * @return filed model
    */
-  List<FieldModel> provideFields(ClassNodeProxy respNode);
+  List<FieldModel> provideFields(ClassNode respNode);
 }

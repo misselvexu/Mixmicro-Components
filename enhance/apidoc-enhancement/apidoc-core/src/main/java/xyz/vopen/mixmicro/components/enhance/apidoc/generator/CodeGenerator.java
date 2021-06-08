@@ -6,7 +6,6 @@ import org.springframework.beans.BeanUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 import xyz.vopen.mixmicro.components.enhance.apidoc.builder.CodeFileBuilder;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNode;
-import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNodeProxy;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.FieldNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ResponseNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
@@ -63,13 +62,15 @@ public abstract class CodeGenerator {
     return String.format("%s/%s", codeRelativePath, javaFileName);
   }
 
-  private void generateCodeForBuilder(ClassNodeProxy rootNode, StringBuilder codeBodyBuilder)
+  private void generateCodeForBuilder(ClassNode rootNode, StringBuilder codeBodyBuilder)
       throws IOException {
     codeBodyBuilder.append(generateNodeCode(rootNode));
     codeBodyBuilder.append('\n');
     for (FieldNode recordNode : rootNode.getChildNodes()) {
       if (recordNode.getChildNode() != null) {
-        generateCodeForBuilder(recordNode.getChildNode(), codeBodyBuilder);
+        ClassNode fieldClassNode = new ClassNode();
+        BeanUtils.copyProperties(recordNode.getChildNode(), fieldClassNode);
+        generateCodeForBuilder(fieldClassNode, codeBodyBuilder);
       }
     }
   }
@@ -80,7 +81,7 @@ public abstract class CodeGenerator {
    * @return code
    * @throws IOException IO exception
    */
-  public abstract String generateNodeCode(ClassNodeProxy classNode) throws IOException;
+  public abstract String generateNodeCode(ClassNode classNode) throws IOException;
 
   /**
    * 获取代码的写入的相对目录

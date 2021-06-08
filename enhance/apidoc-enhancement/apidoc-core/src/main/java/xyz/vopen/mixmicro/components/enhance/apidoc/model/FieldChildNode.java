@@ -1,16 +1,12 @@
 package xyz.vopen.mixmicro.components.enhance.apidoc.model;
 
-import org.springframework.data.annotation.Transient;
-
 import java.io.Serializable;
 
 /**
- * a field node corresponds to a response field
- *
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
- * @version ${project.version} - 2021/05/27
+ * @version ${project.version} - 2021/6/7
  */
-public class FieldNode implements Serializable {
+public class  FieldChildNode implements Serializable {
   /** field name */
   private String name;
   /** field type */
@@ -19,10 +15,6 @@ public class FieldNode implements Serializable {
   private String description;
   /** field mock node */
   private MockNode mockNode;
-  /** field child node */
-  private FieldClassNode childNode;
-  /** field position class */
-  @Transient private FieldClassNode classNode;
   /** has loop class reference,default false */
   private Boolean loopNode = Boolean.FALSE;
   /** not null,default false */
@@ -74,21 +66,5 @@ public class FieldNode implements Serializable {
 
   public void setMockNode(MockNode mockNode) {
     this.mockNode = mockNode;
-  }
-
-  public FieldClassNode getChildNode() {
-    return childNode;
-  }
-
-  public void setChildNode(FieldClassNode childNode) {
-    this.childNode = childNode;
-  }
-
-  public FieldClassNode getClassNode() {
-    return classNode;
-  }
-
-  public void setClassNode(FieldClassNode classNode) {
-    this.classNode = classNode;
   }
 }

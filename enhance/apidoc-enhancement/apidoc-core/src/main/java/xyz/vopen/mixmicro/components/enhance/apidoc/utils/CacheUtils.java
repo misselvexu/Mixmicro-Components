@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNode;
-import xyz.vopen.mixmicro.components.enhance.apidoc.model.ClassNodeProxy;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ResponseNode;
 
@@ -55,7 +54,7 @@ public class CacheUtils {
     }
   }
 
-  private static void removeLoopNode(ClassNodeProxy classNode) {
+  private static void removeLoopNode(ClassNode classNode) {
     classNode.setParentNode(null);
     classNode.setGenericNodes(null);
     classNode
@@ -64,7 +63,9 @@ public class CacheUtils {
             fieldNode -> {
               fieldNode.setClassNode(null);
               if (fieldNode.getChildNode() != null) {
-                removeLoopNode(fieldNode.getChildNode());
+                ClassNode fieldClassNode = new ClassNode();
+                BeanUtils.copyProperties(fieldNode.getChildNode(), fieldClassNode);
+                removeLoopNode(fieldClassNode);
               }
             });
   }
