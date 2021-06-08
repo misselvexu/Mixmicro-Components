@@ -92,32 +92,34 @@ public class JFinalRoutesParser {
                                       .getNameAsString();
                               File childRouteFile =
                                   ParseUtils.searchJavaFile(inJavaFile, routeClassName);
-                              LOGGER.info(
-                                  "found child routes in file :{}", childRouteFile.getName());
-                              ParseUtils.compilationUnit(childRouteFile)
-                                  .findAll(ClassOrInterfaceDeclaration.class)
-                                  .stream()
-                                  .filter(cd -> routeClassName.endsWith(cd.getNameAsString()))
-                                  .findFirst()
-                                  .ifPresent(
-                                      cd -> {
-                                        LOGGER.info(
-                                            "found config() method, start to parse child routes in file : {}",
-                                            childRouteFile.getName());
-                                        cd.getMethodsByName("config").stream()
-                                            .findFirst()
-                                            .ifPresent(
-                                                m -> {
-                                                  parse(m, childRouteFile);
-                                                });
-                                      });
-                            } else {
-                              String basicUrl =
-                                  CommonUtils.removeQuotations(arguments.get(0).toString());
-                              String controllerClass = arguments.get(1).toString();
-                              String controllerFilePath =
-                                  getControllerFilePath(inJavaFile, controllerClass);
-                              routeNodeList.add(new RouteNode(basicUrl, controllerFilePath));
+                              if (null != childRouteFile) {
+                                LOGGER.info(
+                                    "found child routes in file :{}", childRouteFile.getName());
+                                ParseUtils.compilationUnit(childRouteFile)
+                                    .findAll(ClassOrInterfaceDeclaration.class)
+                                    .stream()
+                                    .filter(cd -> routeClassName.endsWith(cd.getNameAsString()))
+                                    .findFirst()
+                                    .ifPresent(
+                                        cd -> {
+                                          LOGGER.info(
+                                              "found config() method, start to parse child routes in file : {}",
+                                              childRouteFile.getName());
+                                          cd.getMethodsByName("config").stream()
+                                              .findFirst()
+                                              .ifPresent(
+                                                  m -> {
+                                                    parse(m, childRouteFile);
+                                                  });
+                                        });
+                              } else {
+                                String basicUrl =
+                                    CommonUtils.removeQuotations(arguments.get(0).toString());
+                                String controllerClass = arguments.get(1).toString();
+                                String controllerFilePath =
+                                    getControllerFilePath(inJavaFile, controllerClass);
+                                routeNodeList.add(new RouteNode(basicUrl, controllerFilePath));
+                              }
                             }
                           }
                         }));
@@ -137,9 +139,13 @@ public class JFinalRoutesParser {
   }
 
   private String getControllerFilePath(File inJavaFile, String controllerClass) {
-    return ParseUtils.searchJavaFile(
-            inJavaFile, controllerClass.substring(0, controllerClass.indexOf(".")))
-        .getAbsolutePath();
+    File file =
+        ParseUtils.searchJavaFile(
+            inJavaFile, controllerClass.substring(0, controllerClass.indexOf(".")));
+    if (null == file) {
+      return "";
+    }
+    return file.getAbsolutePath();
   }
 
   public static class RouteNode {

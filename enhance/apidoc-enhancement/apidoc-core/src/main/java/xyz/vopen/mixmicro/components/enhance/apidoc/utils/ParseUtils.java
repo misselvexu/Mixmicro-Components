@@ -64,11 +64,11 @@ public class ParseUtils {
     }
 
     if (file == null) {
-      throw new JavaFileNotFoundException(
-          "Cannot find java file , in java file : "
-              + inJavaFile.getAbsolutePath()
-              + ", className : "
-              + className);
+      LOGGER.warn(
+          "Cannot find java file , in java file : {}, className : {}",
+          inJavaFile.getAbsolutePath(),
+          className);
+      return null;
     }
 
     return file;
@@ -158,12 +158,13 @@ public class ParseUtils {
     if (cPaths.length > 1) {
       try {
         File innerClassFile = searchJavaFile(inJavaFile, cPaths[cPaths.length - 2]);
-        if (getInnerClassNode(compilationUnit(innerClassFile), cPaths[cPaths.length - 1])
-            .isPresent()) {
+        if (null != innerClassFile
+            && getInnerClassNode(compilationUnit(innerClassFile), cPaths[cPaths.length - 1])
+                .isPresent()) {
           return innerClassFile;
         }
       } catch (JavaFileNotFoundException ex) {
-        // just ignore
+        LOGGER.error("java file not found");
       }
     }
 
@@ -254,8 +255,10 @@ public class ParseUtils {
 
         try {
           File modelJavaFile = searchJavaFile(inJavaFile, className);
-          rootClassNode.setClassFileName(modelJavaFile.getAbsolutePath());
-          parseClassNode(modelJavaFile, rootClassNode);
+          if (null != modelJavaFile) {
+            rootClassNode.setClassFileName(modelJavaFile.getAbsolutePath());
+            parseClassNode(modelJavaFile, rootClassNode);
+          }
         } catch (JavaFileNotFoundException ex) {
           parseResponseNodeByReflection(inJavaFile, className, rootClassNode);
         }
@@ -468,10 +471,12 @@ public class ParseUtils {
         Optional<EnumDeclaration> ed = Optional.empty();
         try {
           File childJavaFile = searchJavaFile(inJavaFile, fieldClassType);
-          ed =
-              compilationUnit(childJavaFile).findAll(EnumDeclaration.class).stream()
-                  .filter(em -> fieldClassType.endsWith(em.getNameAsString()))
-                  .findFirst();
+          if (null != childJavaFile) {
+            ed =
+                compilationUnit(childJavaFile).findAll(EnumDeclaration.class).stream()
+                    .filter(em -> fieldClassType.endsWith(em.getNameAsString()))
+                    .findFirst();
+          }
         } catch (JavaFileNotFoundException ex) {
           LOGGER.info("we think {} should not be an enum type", fieldClassType);
         }
@@ -593,11 +598,13 @@ public class ParseUtils {
 
       try {
         File childNodeJavaFile = searchJavaFile(inJavaFile, fieldClassType);
-        childNode.setClassFileName(childNodeJavaFile.getAbsolutePath());
-        if (!inClassDependencyTree(fieldNode, fieldNode.getClassNode())) {
-          parseClassNode(childNodeJavaFile, childNode);
-        } else {
-          fieldNode.setLoopNode(Boolean.TRUE);
+        if (null != childNodeJavaFile) {
+          childNode.setClassFileName(childNodeJavaFile.getAbsolutePath());
+          if (!inClassDependencyTree(fieldNode, fieldNode.getClassNode())) {
+            parseClassNode(childNodeJavaFile, childNode);
+          } else {
+            fieldNode.setLoopNode(Boolean.TRUE);
+          }
         }
       } catch (JavaFileNotFoundException ex) {
         LOGGER.warn(
@@ -686,6 +693,9 @@ public class ParseUtils {
   public static boolean isEnum(File inJavaFile, String className) {
     try {
       File javaFile = searchJavaFile(inJavaFile, className);
+      if (null == javaFile) {
+        return false;
+      }
       return compilationUnit(javaFile).getEnumByName(className).isPresent();
     } catch (Exception ex) {
       return false;
