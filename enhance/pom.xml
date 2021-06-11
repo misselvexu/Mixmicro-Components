@@ -32,6 +32,7 @@
         <module>logging-enhancement</module>
         <module>mongo-enhancement</module>
         <module>logback-enhancement</module>
+        <module>aksk-enhancement</module>
     </modules>
 
     <dependencyManagement>
@@ -331,6 +332,15 @@
                 <artifactId>mixmicro-components-enhance-logback-access</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <!-- AK & SK -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-aksk</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
