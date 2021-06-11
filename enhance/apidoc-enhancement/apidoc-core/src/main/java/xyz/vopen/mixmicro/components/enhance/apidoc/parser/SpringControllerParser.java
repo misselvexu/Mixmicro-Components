@@ -233,7 +233,7 @@ public class SpringControllerParser extends AbsControllerParser {
             resultType = typeNodeList.get(0).getElementType();
           }
         } else {
-          responseNode.setClassName(className);
+          responseNode.setType(className);
           return;
         }
       }

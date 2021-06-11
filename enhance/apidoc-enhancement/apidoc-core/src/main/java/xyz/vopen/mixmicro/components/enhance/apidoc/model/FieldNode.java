@@ -21,6 +21,10 @@ public class FieldNode implements Serializable {
   private MockNode mockNode;
   /** field child node */
   private FieldClassNode childNode;
+  /** java generic node */
+  private FieldClassNode genericNode;
+  /** is array */
+  private Boolean isArray;
   /** field position class */
   @Transient private FieldClassNode classNode;
   /** has loop class reference,default false */
@@ -82,6 +86,22 @@ public class FieldNode implements Serializable {
 
   public void setChildNode(FieldClassNode childNode) {
     this.childNode = childNode;
+  }
+
+  public FieldClassNode getGenericNode() {
+    return genericNode;
+  }
+
+  public void setGenericNode(FieldClassNode genericNode) {
+    this.genericNode = genericNode;
+  }
+
+  public Boolean getIsArray() {
+    return isArray;
+  }
+
+  public void setIsArray(Boolean array) {
+    isArray = array;
   }
 
   public FieldClassNode getClassNode() {

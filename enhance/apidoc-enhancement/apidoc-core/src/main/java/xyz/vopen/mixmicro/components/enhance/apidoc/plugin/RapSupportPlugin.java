@@ -8,9 +8,9 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.DocContext;
 import xyz.vopen.mixmicro.components.enhance.apidoc.DocsConfig;
 import xyz.vopen.mixmicro.components.enhance.apidoc.IPluginSupport;
 import xyz.vopen.mixmicro.components.enhance.apidoc.exception.PluginException;
-import xyz.vopen.mixmicro.components.enhance.apidoc.http.DHttpRequest;
-import xyz.vopen.mixmicro.components.enhance.apidoc.http.DHttpResponse;
-import xyz.vopen.mixmicro.components.enhance.apidoc.http.DHttpUtils;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.DHttpRequest;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.DHttpResponse;
+import xyz.vopen.mixmicro.components.enhance.apidoc.utils.DHttpUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
 
 import java.io.IOException;

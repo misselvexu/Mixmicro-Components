@@ -18,7 +18,11 @@ public class ParamNode implements Serializable {
   /** param description */
   private String description;
   /** is json body */
-  private Boolean jsonBody = Boolean.FALSE; // when true ,the json body set to description
+  private Boolean jsonBody = Boolean.FALSE;
+  /** is collection */
+  private Boolean isList;
+  /** generic node detail */
+  private ClassNode genericNode;
 
   public String getName() {
     return name;
@@ -58,5 +62,21 @@ public class ParamNode implements Serializable {
 
   public void setJsonBody(Boolean jsonBody) {
     this.jsonBody = jsonBody;
+  }
+
+  public Boolean getList() {
+    return isList;
+  }
+
+  public void setList(Boolean list) {
+    isList = list;
+  }
+
+  public ClassNode getGenericNode() {
+    return genericNode;
+  }
+
+  public void setGenericNode(ClassNode genericNode) {
+    this.genericNode = genericNode;
   }
 }

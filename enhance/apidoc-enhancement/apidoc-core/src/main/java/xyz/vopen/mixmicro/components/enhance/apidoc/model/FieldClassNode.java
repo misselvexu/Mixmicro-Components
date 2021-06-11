@@ -23,7 +23,7 @@ public class FieldClassNode implements Serializable {
   /** class description */
   private String description;
   /** class it list,default false */
-  private Boolean isList = Boolean.FALSE;
+  private Boolean isArray = Boolean.FALSE;
   /** class child nodes */
   private List<FieldChildNode> childNodes = new ArrayList<>();
   /** class ParentNode{ //parentNode; ClassNode node; } */
@@ -43,12 +43,12 @@ public class FieldClassNode implements Serializable {
     this.description = description;
   }
 
-  public Boolean isList() {
-    return isList;
+  public Boolean getIsArray() {
+    return isArray;
   }
 
-  public void setList(Boolean list) {
-    isList = list;
+  public void setIsArray(Boolean list) {
+    isArray = list;
   }
 
   public List<FieldNode> getChildNodes() {
@@ -116,10 +116,10 @@ public class FieldClassNode implements Serializable {
     classNode.setChildNodes(parentNode.getChildNodes());
     classNode.setShowFieldNotNull(parentNode.getShowFieldNotNull());
     classNode.setParentNode(parentNode.getClassParentNode());
-    classNode.setClassName(parentNode.getFieldClassName());
+    classNode.setType(parentNode.getFieldClassName());
     classNode.setDescription(parentNode.getDescription());
     classNode.setClassFileName(parentNode.getClassFileName());
-    classNode.setList(parentNode.isList());
+    classNode.setList(parentNode.getIsArray());
     classNode.setGenericNodes(parentNode.getGenericNodes());
     classNode.setModelClass(parentNode.getModelClass());
     return classNode;

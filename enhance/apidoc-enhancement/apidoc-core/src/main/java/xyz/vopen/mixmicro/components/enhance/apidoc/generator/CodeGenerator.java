@@ -50,14 +50,14 @@ public abstract class CodeGenerator {
     generateCodeForBuilder(responseNode, codeBodyBuilder);
     final String sCodeTemplate = getCodeTemplate();
     CodeFileBuilder codeBuilder =
-        new CodeFileBuilder(responseNode.getClassName(), codeBodyBuilder.toString(), sCodeTemplate);
+        new CodeFileBuilder(responseNode.getType(), codeBodyBuilder.toString(), sCodeTemplate);
     final String javaFileName =
         String.format(
             "%s_%s_%s_%s.html",
             responseNode.getControllerPackageName().replace(".", "_"),
             responseNode.getControllerClassName(),
             responseNode.getMethodName(),
-            responseNode.getClassName());
+            responseNode.getType());
     CommonUtils.writeToDisk(new File(codePath, javaFileName), codeBuilder.build());
     return String.format("%s/%s", codeRelativePath, javaFileName);
   }

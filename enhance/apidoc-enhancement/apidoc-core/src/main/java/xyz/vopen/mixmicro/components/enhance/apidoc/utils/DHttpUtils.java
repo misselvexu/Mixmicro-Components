@@ -1,4 +1,7 @@
-package xyz.vopen.mixmicro.components.enhance.apidoc.http;
+package xyz.vopen.mixmicro.components.enhance.apidoc.utils;
+
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.DHttpRequest;
+import xyz.vopen.mixmicro.components.enhance.apidoc.model.DHttpResponse;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -19,8 +22,8 @@ public class DHttpUtils {
   /**
    * send post request
    *
-   * @return
-   * @throws IOException
+   * @return DHttpResponse
+   * @throws IOException exception
    */
   public static DHttpResponse httpPost(DHttpRequest request) throws IOException {
 
@@ -62,9 +65,9 @@ public class DHttpUtils {
   /**
    * send get request
    *
-   * @param requestURL
-   * @return
-   * @throws IOException
+   * @param requestURL request url
+   * @return DHttpResponse
+   * @throws IOException exception
    */
   public static DHttpResponse httpGet(String requestURL) throws IOException {
     URL url = new URL(requestURL);

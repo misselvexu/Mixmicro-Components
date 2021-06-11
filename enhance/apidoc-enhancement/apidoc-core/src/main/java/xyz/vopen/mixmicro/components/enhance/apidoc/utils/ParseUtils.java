@@ -42,7 +42,15 @@ public class ParseUtils {
   private static final String TYPE_MODEL = "_object";
 
   private static final String OBJECT_CLASS_NAME = "Object";
+  private static final String OBJECT_CLASS_ARRAY = "Object[]";
   private static final String JAVA_FILE_SUFFIX = ".java";
+  private static final Set<String> ignoreTypeNames = new HashSet<>();
+
+  static {
+    ignoreTypeNames.add("annotation");
+    ignoreTypeNames.add("void");
+    ignoreTypeNames.add("String");
+  }
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ParseUtils.class);
 
@@ -62,9 +70,8 @@ public class ParseUtils {
         break;
       }
     }
-
     if (file == null) {
-      LOGGER.warn(
+      LOGGER.debug(
           "Cannot find java file , in java file : {}, className : {}",
           inJavaFile.getAbsolutePath(),
           className);
@@ -76,27 +83,21 @@ public class ParseUtils {
 
   private static File searchJavaFileInner(String javaSrcPath, File inJavaFile, String className) {
     CompilationUnit compilationUnit = compilationUnit(inJavaFile);
-
     String[] cPaths;
-
     Optional<ImportDeclaration> idOp =
         compilationUnit.getImports().stream()
             .filter(im -> im.getNameAsString().endsWith("." + className))
             .findFirst();
-
     // found in import
     if (idOp.isPresent()) {
       cPaths = idOp.get().getNameAsString().split("\\.");
       return backTraceJavaFileByName(javaSrcPath, cPaths);
     }
-
     // inner class in this file
     if (getInnerClassNode(compilationUnit, className).isPresent()) {
       return inJavaFile;
     }
-
     cPaths = className.split("\\.");
-
     // current directory
     if (cPaths.length == 1) {
 
@@ -108,9 +109,7 @@ public class ParseUtils {
       if (javaFiles != null && javaFiles.length == 1) {
         return javaFiles[0];
       }
-
     } else {
-
       final String firstPath = cPaths[0];
       // same package inner class
       File[] javaFiles =
@@ -132,13 +131,11 @@ public class ParseUtils {
         }
       }
     }
-
     // maybe a complete class name
     File javaFile = backTraceJavaFileByName(javaSrcPath, cPaths);
     if (javaFile != null) {
       return javaFile;
     }
-
     // .* at import
     NodeList<ImportDeclaration> importDeclarations = compilationUnit.getImports();
     if (importDeclarations.isNonEmpty()) {
@@ -153,7 +150,6 @@ public class ParseUtils {
         }
       }
     }
-
     // inner class in other package
     if (cPaths.length > 1) {
       try {
@@ -167,7 +163,6 @@ public class ParseUtils {
         LOGGER.error("java file not found");
       }
     }
-
     return javaFile;
   }
 
@@ -218,6 +213,31 @@ public class ParseUtils {
   }
 
   /**
+   * overload classNode parse method
+   *
+   * @param inJavaFile model java file
+   * @param fieldClassNode root class node
+   * @param classType type
+   */
+  public static void parseFiledClassNodeByType(
+      File inJavaFile,
+      FieldClassNode fieldClassNode,
+      com.github.javaparser.ast.type.Type classType) {
+    ClassNode classNode = new ClassNode();
+    classNode.setChildNodes(fieldClassNode.getChildNodes());
+    classNode.setShowFieldNotNull(fieldClassNode.getShowFieldNotNull());
+    classNode.setParentNode(fieldClassNode.getClassParentNode());
+    classNode.setType(fieldClassNode.getFieldClassName());
+    classNode.setDescription(fieldClassNode.getDescription());
+    classNode.setClassFileName(fieldClassNode.getClassFileName());
+    classNode.setList(fieldClassNode.getIsArray());
+    classNode.setGenericNodes(fieldClassNode.getGenericNodes());
+    classNode.setModelClass(fieldClassNode.getModelClass());
+    parseClassNodeByType(inJavaFile, classNode, classType);
+    fieldClassNode.setFieldChildNodes(classNode.getChildNodes());
+  }
+
+  /**
    * parse class model java file
    *
    * @param inJavaFile java file
@@ -239,7 +259,7 @@ public class ParseUtils {
         LOGGER.warn(
             "We found Collection without specified Class Type, Please check ! java file : {}",
             inJavaFile.getName());
-        rootClassNode.setClassName(OBJECT_CLASS_NAME);
+        rootClassNode.setType(OBJECT_CLASS_NAME);
         return;
       } else {
         classType = collectionType.get(0);
@@ -251,7 +271,7 @@ public class ParseUtils {
       if (classType instanceof ClassOrInterfaceType) {
 
         String className = ((ClassOrInterfaceType) classType).getName().getIdentifier();
-        rootClassNode.setClassName(className);
+        rootClassNode.setType(className);
 
         try {
           File modelJavaFile = searchJavaFile(inJavaFile, className);
@@ -264,7 +284,7 @@ public class ParseUtils {
         }
       }
     } else {
-      rootClassNode.setClassName(unifyClassType);
+      rootClassNode.setType(unifyClassType);
     }
   }
 
@@ -289,10 +309,10 @@ public class ParseUtils {
     classNode.setChildNodes(fieldClassNode.getChildNodes());
     classNode.setShowFieldNotNull(fieldClassNode.getShowFieldNotNull());
     classNode.setParentNode(fieldClassNode.getClassParentNode());
-    classNode.setClassName(fieldClassNode.getFieldClassName());
+    classNode.setType(fieldClassNode.getFieldClassName());
     classNode.setDescription(fieldClassNode.getDescription());
     classNode.setClassFileName(fieldClassNode.getClassFileName());
-    classNode.setList(fieldClassNode.isList());
+    classNode.setList(fieldClassNode.getIsArray());
     classNode.setGenericNodes(fieldClassNode.getGenericNodes());
     classNode.setModelClass(fieldClassNode.getModelClass());
     innerParseClassNode(modelJavaFile, classNode);
@@ -300,7 +320,7 @@ public class ParseUtils {
   }
 
   private static void innerParseClassNode(File modelJavaFile, ClassNode classNode) {
-    String resultClassName = classNode.getClassName();
+    String resultClassName = classNode.getType();
     compilationUnit(modelJavaFile).findAll(ClassOrInterfaceDeclaration.class).stream()
         .filter(f -> resultClassName.endsWith(f.getNameAsString()))
         .findFirst()
@@ -338,14 +358,11 @@ public class ParseUtils {
                             }
                           }
                         }
-
                         // 忽略字段
                         if (fd.getAnnotationByName(Ignore.class.getSimpleName()).isPresent()) {
                           return;
                         }
-
                         final boolean notNull = isFieldNotNull(fd);
-
                         fd.getVariables()
                             .forEach(
                                 field -> {
@@ -361,7 +378,6 @@ public class ParseUtils {
                                           c ->
                                               fieldNode.setDescription(
                                                   CommonUtils.cleanCommentContent(c.getContent())));
-
                                   if (StringUtils.isEmpty(fieldNode.getDescription())) {
                                     field
                                         .getComment()
@@ -409,6 +425,11 @@ public class ParseUtils {
                                   com.github.javaparser.ast.type.Type fieldType =
                                       fd.getElementType();
                                   parseFieldNode(fieldNode, modelJavaFile, fieldType);
+                                  TypeAlsResponse typeAlsResponse =
+                                      alsType(fieldType, modelJavaFile);
+                                  fieldNode.setGenericNode(
+                                      typeAlsResponse.getGenericFieldClassNode());
+                                  fieldNode.setIsArray(typeAlsResponse.getIsArray());
                                 });
                       });
               NodeList<ClassOrInterfaceType> extendClassTypeList =
@@ -446,7 +467,7 @@ public class ParseUtils {
             });
 
     // 恢复原来的名称
-    classNode.setClassName(resultClassName);
+    classNode.setType(resultClassName);
   }
 
   private static boolean isFieldNotNull(FieldDeclaration fd) {
@@ -460,9 +481,7 @@ public class ParseUtils {
 
   private static void parseFieldNode(
       FieldNode fieldNode, File inJavaFile, com.github.javaparser.ast.type.Type fieldType) {
-
     final GenericNode genericNode = fieldNode.getClassNode().getGenericNode(fieldType.asString());
-
     // Enum
     if (genericNode == null && !fieldType.asString().contains("<")) {
       final String fieldClassType = fieldType.asString();
@@ -526,7 +545,7 @@ public class ParseUtils {
           LOGGER.warn(
               "We found Collection without specified Class Type, Please check ! java file : {}",
               inJavaFile.getName());
-          fieldNode.setType("Object[]");
+          fieldNode.setType(OBJECT_CLASS_ARRAY);
           return;
         } else {
           // 是否在泛型列表中
@@ -558,7 +577,7 @@ public class ParseUtils {
       FieldClassNode childNode = new FieldClassNode();
       FieldClassNode parentFieldNode = fieldNode.getClassNode();
       childNode.setParentNode(parentFieldNode);
-      childNode.setList(isList);
+      childNode.setIsArray(isList);
       childNode.setFieldClassName(fieldClassType);
       fieldNode.setChildNode(childNode);
       fieldNode.setType(Boolean.TRUE.equals(isList) ? fieldClassType + "[]" : fieldClassType);
@@ -573,7 +592,6 @@ public class ParseUtils {
                   typeList.forEach(
                       argType -> {
                         GenericNode childClassGenericNode = new GenericNode();
-
                         if (argType instanceof ArrayType) {
                           GenericNode arrayTypeNode =
                               fieldNode
@@ -609,7 +627,7 @@ public class ParseUtils {
       } catch (JavaFileNotFoundException ex) {
         LOGGER.warn(
             "we cannot found more information of it, you've better to make it a JavaBean", ex);
-        fieldNode.setType(isList ? "Object[]" : OBJECT_CLASS_NAME);
+        fieldNode.setType(isList ? OBJECT_CLASS_ARRAY : OBJECT_CLASS_NAME);
       }
     } else {
       fieldNode.setType(isList ? unifyType + "[]" : unifyType);
@@ -631,7 +649,7 @@ public class ParseUtils {
       }
     } else if (fieldNode.getChildNode().getClassFileName() != null
         && fieldNode.getChildNode().getClassFileName().equals(parentClassNode.getClassFileName())
-        && fieldNode.getChildNode().getFieldClassName().equals(parentClassNode.getClassName())) {
+        && fieldNode.getChildNode().getFieldClassName().equals(parentClassNode.getType())) {
       return true;
     }
 
@@ -905,14 +923,13 @@ public class ParseUtils {
    * @param classNode class node
    */
   public static void parseClassNodeByReflection(ClassNode classNode) {
-
     Class<?> modelClass = classNode.getModelClass();
     // java 内部对象或者接口，直接忽略
     if (modelClass.getPackage().getName().startsWith("java.") || modelClass.isInterface()) {
       return;
     }
     List<FieldNode> childNodes = classNode.getChildNodes();
-    classNode.setClassName(modelClass.getName());
+    classNode.setType(modelClass.getName());
     for (Field field : modelClass.getDeclaredFields()) fieldHandler(classNode, childNodes, field);
     // 解析父类
     Class<?> superClass = modelClass.getSuperclass();
@@ -926,7 +943,7 @@ public class ParseUtils {
       classNode.setModelClass(modelClass.getSuperclass());
       parseClassNodeByReflection(classNode);
       // 恢复
-      classNode.setClassName(modelClass.getName());
+      classNode.setType(modelClass.getName());
       classNode.setModelClass(modelClass);
     }
   }
@@ -954,7 +971,6 @@ public class ParseUtils {
         GenericNode paramGenericNode = new GenericNode();
         final String placeholder = typeVariables[paramIndex++].getName();
         paramGenericNode.setPlaceholder(placeholder);
-
         if (paramType instanceof ParameterizedType) { // GenericResult<Student, Integer> picList
           Class<?> boxClass = (Class<?>) ((ParameterizedType) paramType).getRawType();
           paramGenericNode.setModelClass(boxClass);
@@ -1110,7 +1126,7 @@ public class ParseUtils {
     }
     // 解析泛型
     parseGenericNodesInType(childNodeClass, childGenericType, childClassNode.getGenericNodes());
-    childClassNode.setClassName(childNodeClass.getName());
+    childClassNode.setType(childNodeClass.getName());
     childClassNode.setModelClass(childNodeClass);
     FieldClassNode fieldClassT = new FieldClassNode();
     BeanUtils.copyProperties(childClassNode, fieldClassT);
@@ -1119,5 +1135,47 @@ public class ParseUtils {
     if (!inClassDependencyTree(fieldNode, classNode)) {
       parseClassNodeByReflection(childClassNode);
     }
+  }
+
+  /**
+   * generic type analyse
+   *
+   * @param type class type
+   * @return TypeAlsResponse
+   */
+  private static TypeAlsResponse alsType(com.github.javaparser.ast.type.Type type, File javaFile) {
+    TypeAlsResponse typeAlsResponse = new TypeAlsResponse();
+    String name = type.asString();
+    if (ignoreTypeNames.contains(name)) {
+      return typeAlsResponse;
+    }
+    boolean isList = false;
+    if (type instanceof ArrayType) {
+      isList = true;
+      type = ((ArrayType) type).getComponentType();
+    } else if (ParseUtils.isCollectionType(type.asString())) {
+      isList = true;
+      List<ClassOrInterfaceType> collectionTypes = type.findAll(ClassOrInterfaceType.class);
+      if (!collectionTypes.isEmpty()) {
+        type = collectionTypes.get(0);
+      } else {
+        typeAlsResponse.setType(OBJECT_CLASS_ARRAY);
+      }
+      // 解析集合泛型
+      ClassOrInterfaceType classOrInterfaceType = collectionTypes.get(1);
+      FieldClassNode fieldClassNode = new FieldClassNode();
+      parseFiledClassNodeByType(javaFile, fieldClassNode, classOrInterfaceType);
+      typeAlsResponse.setGenericFieldClassNode(fieldClassNode);
+    }
+    if (typeAlsResponse.getType() == null) {
+      if (isEnum(javaFile, type.asString())) {
+        typeAlsResponse.setType(isList ? "enum[]" : "enum");
+      } else {
+        final String pUnifyType = ParseUtils.unifyType(type.asString());
+        typeAlsResponse.setType(isList ? pUnifyType + "[]" : pUnifyType);
+      }
+    }
+    typeAlsResponse.setIsArray(isList);
+    return typeAlsResponse;
   }
 }

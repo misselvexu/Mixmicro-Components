@@ -27,7 +27,7 @@ public class APIHtmlDocGenerator implements APIGenerator {
 
   @Override
   public void generate(DocsConfig config) {
-    DocContext.init(config);
+    DocContext.initForHTMLGenerator(config);
     HtmlDocGenerator docGenerator = new HtmlDocGenerator();
     List<ControllerNode> controllerNodeList = docGenerator.getControllerNodeList();
     if (null == controllerNodeList || controllerNodeList.isEmpty()) {

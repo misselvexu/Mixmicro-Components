@@ -22,8 +22,10 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.utils.CommonUtils;
 import xyz.vopen.mixmicro.components.enhance.apidoc.utils.ParseUtils;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * parse Controller Java the common part, get all request nodes
@@ -35,6 +37,13 @@ public abstract class AbsControllerParser {
 
   private ControllerNode controllerNode;
   private File javaFile;
+  private static final Set<String> ignoreTypeNames = new HashSet<>();
+
+  static {
+    ignoreTypeNames.add("annotation");
+    ignoreTypeNames.add("void");
+    ignoreTypeNames.add("String");
+  }
 
   public ControllerNode parse(File javaFile) {
 
@@ -72,7 +81,6 @@ public abstract class AbsControllerParser {
         .ifPresent(pd -> controllerNode.setPackageName(pd.getNameAsString()));
     boolean generateDocs = c.getAnnotationByName("ApiDoc").isPresent();
     controllerNode.setGenerateDocs(generateDocs);
-
     c.getJavadoc()
         .ifPresent(
             d -> {
@@ -109,18 +117,15 @@ public abstract class AbsControllerParser {
                   && Boolean.FALSE.equals(DocContext.getDocsConfig().getAutoGenerate())) {
                 return;
               }
-
               if (shouldIgnoreMethod(m)) {
                 return;
               }
-
               RequestNode requestNode = new RequestNode();
               requestNode.setControllerNode(controllerNode);
               requestNode.setAuthor(controllerNode.getAuthor());
               requestNode.setMethodName(m.getNameAsString());
               requestNode.setUrl(requestNode.getMethodName());
               requestNode.setDescription(requestNode.getMethodName());
-
               m.getAnnotationByClass(Deprecated.class)
                   .ifPresent(f -> requestNode.setDeprecated(true));
               m.getJavadoc()
@@ -142,50 +147,35 @@ public abstract class AbsControllerParser {
                             requestNode.setAuthor(blockTag.getContent().toText());
                           } else if (blockTag.getTagName().equalsIgnoreCase("description")) {
                             requestNode.setSupplement(blockTag.getContent().toText());
+                          } else if (blockTag.getTagName().equalsIgnoreCase("return")) {
+                            ResponseNode responseNode = requestNode.getResponseNode();
+                            if (null == responseNode) {
+                              responseNode = new ResponseNode();
+                            }
+                            responseNode.setDescription(blockTag.getContent().toText());
+                            requestNode.setResponseNode(responseNode);
                           }
                         }
                       });
-
               m.getParameters()
                   .forEach(
-                      p -> {
-                        String paraName = p.getName().asString();
+                      parameter -> {
+                        String paraName = parameter.getName().asString();
                         ParamNode paramNode = requestNode.getParamNodeByName(paraName);
 
-                        if (paramNode != null && ParseUtils.isExcludeParam(p)) {
+                        if (paramNode != null && ParseUtils.isExcludeParam(parameter)) {
                           requestNode.getParamNodes().remove(paramNode);
                           return;
                         }
 
                         if (paramNode != null) {
-                          Type pType = p.getType();
-                          boolean isList = false;
-                          if (pType instanceof ArrayType) {
-                            isList = true;
-                            pType = ((ArrayType) pType).getComponentType();
-                          } else if (ParseUtils.isCollectionType(pType.asString())) {
-                            List<ClassOrInterfaceType> collectionTypes =
-                                pType.findAll(ClassOrInterfaceType.class);
-                            isList = true;
-                            if (!collectionTypes.isEmpty()) {
-                              pType = collectionTypes.get(0);
-                            } else {
-                              paramNode.setType("Object[]");
-                            }
-                          } else {
-                            pType = p.getType();
-                          }
-                          if (paramNode.getType() == null) {
-                            if (ParseUtils.isEnum(getControllerFile(), pType.asString())) {
-                              paramNode.setType(isList ? "enum[]" : "enum");
-                            } else {
-                              final String pUnifyType = ParseUtils.unifyType(pType.asString());
-                              paramNode.setType(isList ? pUnifyType + "[]" : pUnifyType);
-                            }
-                          }
+                          Type pType = parameter.getType();
+                          TypeAlsResponse typeAlsResponse = alsType(pType);
+                          paramNode.setList(typeAlsResponse.getIsArray());
+                          paramNode.setGenericNode(typeAlsResponse.getGenericClassNode());
+                          paramNode.setType(typeAlsResponse.getType());
                         }
                       });
-
               com.github.javaparser.ast.type.Type resultClassType = null;
               String stringResult = null;
               if (existsApiDoc) {
@@ -211,22 +201,27 @@ public abstract class AbsControllerParser {
                   }
                 }
               }
-
               afterHandleMethod(requestNode, m);
-
               if (resultClassType == null) {
                 if (m.getType() == null) {
                   return;
                 }
                 resultClassType = m.getType();
               }
-
-              ResponseNode responseNode = new ResponseNode();
+              ResponseNode responseNode = requestNode.getResponseNode();
+              if (null == responseNode) {
+                responseNode = new ResponseNode();
+              }
               responseNode.setControllerClassName(requestNode.getControllerNode().getClassName());
               responseNode.setMethodName(requestNode.getMethodName());
               responseNode.setRequestUrl(requestNode.getUrl());
               responseNode.setControllerPackageName(
                   requestNode.getControllerNode().getPackageName());
+              Type resultClassTypeElementType = resultClassType.getElementType();
+              TypeAlsResponse typeAlsResponse = alsType(resultClassTypeElementType);
+              responseNode.setList(typeAlsResponse.getIsArray());
+              responseNode.setGenericNode(typeAlsResponse.getGenericClassNode());
+              responseNode.setType(typeAlsResponse.getType());
               if (stringResult != null) {
                 responseNode.setStringResult(stringResult);
               } else {
@@ -330,5 +325,47 @@ public abstract class AbsControllerParser {
             .getResponseNode()
             .toJsonApi()
             .equals(lastRequestNode.getResponseNode().toJsonApi());
+  }
+
+  /**
+   * generic type analyse
+   *
+   * @param type class type
+   * @return TypeAlsResponse
+   */
+  private TypeAlsResponse alsType(Type type) {
+    TypeAlsResponse typeAlsResponse = new TypeAlsResponse();
+    String name = type.asString();
+    if (ignoreTypeNames.contains(name)) {
+      return typeAlsResponse;
+    }
+    boolean isList = false;
+    if (type instanceof ArrayType) {
+      isList = true;
+      type = ((ArrayType) type).getComponentType();
+    } else if (ParseUtils.isCollectionType(type.asString())) {
+      isList = true;
+      List<ClassOrInterfaceType> collectionTypes = type.findAll(ClassOrInterfaceType.class);
+      if (!collectionTypes.isEmpty()) {
+        type = collectionTypes.get(0);
+      } else {
+        typeAlsResponse.setType("Object[]");
+      }
+      // 解析集合泛型
+      ClassOrInterfaceType classOrInterfaceType = collectionTypes.get(1);
+      ClassNode classNode = new ClassNode();
+      ParseUtils.parseClassNodeByType(javaFile, classNode, classOrInterfaceType);
+      typeAlsResponse.setGenericClassNode(classNode);
+    }
+    if (typeAlsResponse.getType() == null) {
+      if (ParseUtils.isEnum(javaFile, type.asString())) {
+        typeAlsResponse.setType(isList ? "enum[]" : "enum");
+      } else {
+        final String pUnifyType = ParseUtils.unifyType(type.asString());
+        typeAlsResponse.setType(isList ? pUnifyType + "[]" : pUnifyType);
+      }
+    }
+    typeAlsResponse.setIsArray(isList);
+    return typeAlsResponse;
   }
 }

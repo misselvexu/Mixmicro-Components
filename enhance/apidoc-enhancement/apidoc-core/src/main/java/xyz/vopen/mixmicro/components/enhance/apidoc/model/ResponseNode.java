@@ -18,6 +18,8 @@ public class ResponseNode extends ClassNode {
   private String stringResult;
   /** request url */
   private String requestUrl;
+  /** generic node detail */
+  private ClassNode genericNode;
 
   public String getMethodName() {
     return methodName;
@@ -70,5 +72,13 @@ public class ResponseNode extends ClassNode {
       }
     }
     return super.toJsonApi();
+  }
+
+  public ClassNode getGenericNode() {
+    return genericNode;
+  }
+
+  public void setGenericNode(ClassNode genericNode) {
+    this.genericNode = genericNode;
   }
 }

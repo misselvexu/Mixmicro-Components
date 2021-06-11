@@ -29,7 +29,7 @@ public class APIDataDocGenerator extends AbsDocGenerator implements APIGenerator
    */
   @Override
   public void generate(DocsConfig config) {
-    DocContext.init(config);
+    DocContext.initForDataGenerator(config);
     super.controllerParser = DocContext.controllerParser();
     super.initControllerNodes();
     if (!CollectionUtils.isEmpty(config.getIgnorePackages())) {

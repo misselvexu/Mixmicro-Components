@@ -54,7 +54,7 @@ public class JavaCodeGenerator extends CodeGenerator {
 
   @Override
   public String generateNodeCode(ClassNode respNode) {
-    String className = respNode.getClassName();
+    String className = respNode.getType();
 
     IFieldProvider entryProvider = ProviderFactory.createProvider();
     List<FieldModel> entryFields = entryProvider.provideFields(respNode);

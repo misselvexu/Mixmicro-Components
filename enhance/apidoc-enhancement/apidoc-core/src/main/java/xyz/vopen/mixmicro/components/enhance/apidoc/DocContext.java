@@ -3,6 +3,7 @@ package xyz.vopen.mixmicro.components.enhance.apidoc;
 import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.annotations.Ignore;
@@ -51,7 +52,12 @@ public class DocContext {
   private static List<ControllerNode> lastVersionControllerNodes;
   private static List<ControllerNode> controllerNodeList;
 
-  public static void init(DocsConfig config) {
+  /**
+   * initialize for html generator
+   *
+   * @param config DocsConfig
+   */
+  public static void initForHTMLGenerator(DocsConfig config) {
     if (config.projectPath == null || !new File(config.projectPath).exists()) {
       throw new ConfigException(String.format("projectDir doesn't exists. %s", projectPath));
     }
@@ -59,11 +65,9 @@ public class DocContext {
     if (config.getApiVersion() == null) {
       throw new ConfigException("api version cannot be null");
     }
-
     if (config.getProjectName() == null) {
       config.setProjectName("Mixmicro API Docs");
     }
-
     DocContext.config = config;
     if (null != config.getLocale()) {
       i18n = new I18n(config.getLocale());
@@ -72,7 +76,6 @@ public class DocContext {
     setProjectPath(config.projectPath);
     setDocPath(config);
     initApiVersions();
-
     File logFile = getLogFile();
     if (logFile.exists()) {
       try {
@@ -81,18 +84,46 @@ public class DocContext {
         LOGGER.error("{} delete error", logFile.getName(), e);
       }
     }
-
     if (config.getJavaSrcPaths().isEmpty()) {
       findOutJavaSrcPaths();
     } else {
       javaSrcPaths.addAll(config.getJavaSrcPaths());
     }
-
     LOGGER.info("find java src paths:{}", javaSrcPaths);
-
     ProjectType projectType = findOutProjectType();
     findOutControllers(projectType);
     initLastVersionControllerNodes();
+  }
+
+  /**
+   * initialize for data generator
+   *
+   * @param config DocsConfig
+   */
+  public static void initForDataGenerator(DocsConfig config) {
+    if (config.projectPath == null || !new File(config.projectPath).exists()) {
+      throw new ConfigException(String.format("projectDir doesn't exists. %s", projectPath));
+    }
+
+    if (config.getApiVersion() == null) {
+      throw new ConfigException("api version cannot be null");
+    }
+    if (config.getProjectName() == null) {
+      config.setProjectName("Mixmicro API Docs");
+    }
+    DocContext.config = config;
+    if (null != config.getLocale()) {
+      i18n = new I18n(config.getLocale());
+    }
+    DocContext.currentApiVersion = config.getApiVersion();
+    setProjectPath(config.projectPath);
+    if (config.getJavaSrcPaths().isEmpty()) {
+      findOutJavaSrcPaths();
+    } else {
+      javaSrcPaths.addAll(config.getJavaSrcPaths());
+    }
+    LOGGER.info("find java src paths:{}", javaSrcPaths);
+    findOutControllers(findOutProjectType());
   }
 
   private static void initLastVersionControllerNodes() {
@@ -334,7 +365,7 @@ public class DocContext {
   }
 
   private static void setDocPath(DocsConfig config) {
-    if (config.docsPath == null || config.docsPath.isEmpty()) {
+    if (StringUtils.isBlank(config.docsPath)) {
       config.docsPath = projectPath + "apidocs";
     }
 

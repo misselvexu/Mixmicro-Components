@@ -46,7 +46,7 @@ public class IOSModelCodeGenerator extends CodeGenerator {
 
   @Override
   public String generateNodeCode(ClassNode respNode) throws IOException {
-    String className = respNode.getClassName();
+    String className = respNode.getType();
     IFieldProvider entryProvider = ProviderFactory.createProvider();
     List<FieldModel> entryFields = entryProvider.provideFields(respNode);
     if (entryFields == null || entryFields.isEmpty()) {

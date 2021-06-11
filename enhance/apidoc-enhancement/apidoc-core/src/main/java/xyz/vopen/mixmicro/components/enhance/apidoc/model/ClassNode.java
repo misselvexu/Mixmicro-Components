@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
  * @version ${project.version} - 2021/05/27
  */
 public class ClassNode implements Serializable {
-  /** class name */
-  private String className = "";
+  /** class type name */
+  private String type;
   /** class for reflection */
   private Class<?> modelClass;
   /** class description */
   private String description;
   /** class it list,default false */
-  private Boolean isList = Boolean.FALSE;
+  private Boolean isArray = Boolean.FALSE;
   /** class child nodes */
   private List<FieldNode> childNodes = new ArrayList<>();
   /** class generic nodes */
@@ -47,11 +47,11 @@ public class ClassNode implements Serializable {
   }
 
   public Boolean isList() {
-    return isList;
+    return isArray;
   }
 
   public void setList(Boolean list) {
-    isList = list;
+    isArray = list;
   }
 
   public List<FieldNode> getChildNodes() {
@@ -62,12 +62,12 @@ public class ClassNode implements Serializable {
     this.childNodes = childNodes;
   }
 
-  public String getClassName() {
-    return className;
+  public String getType() {
+    return type;
   }
 
-  public void setClassName(String className) {
-    this.className = className;
+  public void setType(String type) {
+    this.type = type;
   }
 
   public List<GenericNode> getGenericNodes() {
@@ -132,13 +132,13 @@ public class ClassNode implements Serializable {
 
   public String toJsonApi() {
     if (childNodes == null || childNodes.isEmpty()) {
-      return Boolean.TRUE.equals(isList) ? className + "[]" : className + "{}";
+      return Boolean.TRUE.equals(isArray) ? type + "[]" : type + "{}";
     }
     Map<String, Object> jsonRootMap = new LinkedHashMap<>();
     for (FieldNode fieldNode : childNodes) {
       toJsonApiMap(fieldNode, jsonRootMap);
     }
-    if (Boolean.TRUE.equals(isList)) {
+    if (Boolean.TRUE.equals(isArray)) {
       return JSON.toJSONString(new Map[] {jsonRootMap}, true);
     } else {
       return JSON.toJSONString(jsonRootMap, true);
@@ -177,7 +177,7 @@ public class ClassNode implements Serializable {
     if (Boolean.TRUE.equals(fieldNode.getLoopNode())) {
       fieldType =
           fieldNode.getChildNode().getFieldClassName()
-              + (Boolean.TRUE.equals(fieldNode.getChildNode().isList()) ? "[]" : "{}");
+              + (Boolean.TRUE.equals(fieldNode.getChildNode().getIsArray()) ? "[]" : "{}");
     } else {
       fieldType = fieldNode.getType();
     }

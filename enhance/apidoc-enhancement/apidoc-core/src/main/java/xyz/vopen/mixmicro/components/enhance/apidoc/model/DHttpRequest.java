@@ -1,5 +1,6 @@
-package xyz.vopen.mixmicro.components.enhance.apidoc.http;
+package xyz.vopen.mixmicro.components.enhance.apidoc.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ import java.util.Map;
  * @author <a href="mailto:tangtongda@gmail.com">Tino.Tang</a>
  * @version ${project.version} - 2021/05/27
  */
-public class DHttpRequest {
+public class DHttpRequest implements Serializable {
 
   private String url;
   private boolean autoRedirect = true; // 自动重定向
