@@ -22,6 +22,10 @@ public class APIDocProperties {
   private String projectPath;
   /** apidoc genType,default:false */
   private Boolean genLocal = false;
+  /** mongodb connection uri */
+  private String mongoUri = "mongodb://apidoc:apidoc@dev-middle.hgj.net:27017/apidoc";
+  /** api doc mongodb default database */
+  private String apiDatabase = "apidoc";
 
   public String getCurrentVersion() {
     return currentVersion;
@@ -53,5 +57,21 @@ public class APIDocProperties {
 
   public void setGenLocal(Boolean genLocal) {
     this.genLocal = genLocal;
+  }
+
+  public String getMongoUri() {
+    return mongoUri;
+  }
+
+  public void setMongoUri(String mongoUri) {
+    this.mongoUri = mongoUri;
+  }
+
+  public String getApiDatabase() {
+    return apiDatabase;
+  }
+
+  public void setApiDatabase(String apiDatabase) {
+    this.apiDatabase = apiDatabase;
   }
 }

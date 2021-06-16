@@ -1,5 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  xyz.vopen.mixmicro.components.starter.apidoc.APIDocGeneratorAutoConfiguration
+  xyz.vopen.mixmicro.components.starter.apidoc.APIDocGeneratorAutoConfiguration,\
+  xyz.vopen.mixmicro.components.starter.apidoc.APIMongodbAutoConfiguration
 
 org.springframework.boot.env.EnvironmentPostProcessor=\
   xyz.vopen.mixmicro.components.starter.apidoc.APIDocEnvironmentPostProcessor

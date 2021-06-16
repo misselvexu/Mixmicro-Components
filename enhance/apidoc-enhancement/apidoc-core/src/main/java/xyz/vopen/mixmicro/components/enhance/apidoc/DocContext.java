@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import xyz.vopen.mixmicro.components.enhance.apidoc.annotations.Ignore;
 import xyz.vopen.mixmicro.components.enhance.apidoc.consts.ProjectType;
 import xyz.vopen.mixmicro.components.enhance.apidoc.exception.ConfigException;
-import xyz.vopen.mixmicro.components.enhance.apidoc.exception.FileParseException;
 import xyz.vopen.mixmicro.components.enhance.apidoc.i18n.I18n;
 import xyz.vopen.mixmicro.components.enhance.apidoc.model.ControllerNode;
 import xyz.vopen.mixmicro.components.enhance.apidoc.parser.*;
@@ -155,14 +154,14 @@ public class DocContext {
       for (String moduleName : moduleNames) {
         final String moduleRelativePath = moduleName.replace(":", "/");
         String javaSrcPath = findModuleSrcPath(new File(projectDir, moduleRelativePath));
-        javaSrcPaths.add(javaSrcPath);
+        if (StringUtils.isNotBlank(javaSrcPath)) javaSrcPaths.add(javaSrcPath);
       }
     }
 
     // is it a simple java project?
     if (javaSrcPaths.isEmpty()) {
       String javaSrcPath = findModuleSrcPath(projectDir);
-      javaSrcPaths.add(javaSrcPath);
+      if (StringUtils.isNotBlank(javaSrcPath)) javaSrcPaths.add(javaSrcPath);
     }
   }
 
@@ -319,8 +318,8 @@ public class DocContext {
         true);
 
     if (result.isEmpty()) {
-      throw new FileParseException(
-          "cannot find any java file in this module : " + moduleDir.getName());
+      LOGGER.info("cannot find any java file in this module : {}", moduleDir.getName());
+      return null;
     }
 
     File oneJavaFile = result.get(0);

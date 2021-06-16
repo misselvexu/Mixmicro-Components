@@ -2,8 +2,6 @@ package xyz.vopen.mixmicro.components.starter.apidoc;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -30,15 +28,7 @@ import xyz.vopen.mixmicro.components.enhance.apidoc.repository.impl.APIDocGenRep
 @AutoConfigureAfter(WebMvcAutoConfiguration.class)
 @ConditionalOnWebApplication
 @EnableAsync
-// EnableAsync@Import({
-//  MongoAutoConfiguration.class,
-//  MongoDataAutoConfiguration.class,
-//  MongoRepositoriesAutoConfiguration.class
-// })
 public class APIDocGeneratorAutoConfiguration {
-
-  /** logger instance */
-  static Logger logger = LoggerFactory.getLogger(APIDocGeneratorAutoConfiguration.class);
   /** APIDoc boot Properties */
   private final APIDocProperties apiDocProperties;
 
@@ -46,8 +36,10 @@ public class APIDocGeneratorAutoConfiguration {
     this.apiDocProperties = apiDocProperties;
   }
 
-  /*
-   * Use the standard Mongo driver API to create a com.mongodb.client.MongoClient instance.
+  /**
+   * register a APIDocGenRepository by MongoTemplate
+   *
+   * @return APIDocGenRepository
    */
   @Bean
   @ConditionalOnProperty(
@@ -55,33 +47,10 @@ public class APIDocGeneratorAutoConfiguration {
       name = "gen-local",
       havingValue = "true",
       matchIfMissing = true)
-  public MongoClient mongoClient() {
-    return MongoClients.create("mongodb://apidoc:apidoc@dev-middle.hgj.net:27017/apidoc");
-  }
-
-  /**
-   * Registering a com.mongodb.client.MongoClient object and enabling Spring’s exception translation
-   * support
-   *
-   * @param mongoClient com.mongodb.client.MongoClient
-   * @return MongoTemplate
-   */
-  @Bean
-  @ConditionalOnBean(MongoClient.class)
-  public MongoTemplate mongoTemplate(MongoClient mongoClient) {
-    return new MongoTemplate(mongoClient, "apidoc");
-  }
-
-  /**
-   * register a APIDocGenRepository by MongoTemplate
-   *
-   * @param mongoTemplate MongoTemplate
-   * @return APIDocGenRepository
-   */
-  @Bean
-  @ConditionalOnBean(MongoTemplate.class)
-  public APIDocGenRepository apiDocGenRepository(MongoTemplate mongoTemplate) {
-    return new APIDocGenRepositoryImpl(mongoTemplate);
+  public APIDocGenRepository apiDocGenRepository() {
+    MongoClient mongoClient = MongoClients.create(apiDocProperties.getMongoUri());
+    return new APIDocGenRepositoryImpl(
+        new MongoTemplate(mongoClient, apiDocProperties.getApiDatabase()));
   }
 
   @Bean
