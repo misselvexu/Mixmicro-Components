@@ -1,8 +1,5 @@
 package xyz.vopen.mixmicro.components.boot.snowflake;
 
-import static org.springframework.core.annotation.AnnotationAttributes.fromMap;
-
-import java.util.Properties;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -15,6 +12,12 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotationMetadata;
+import xyz.vopen.mixmicro.kits.lang.NonNull;
+import xyz.vopen.mixmicro.kits.lang.Nullable;
+
+import java.util.Properties;
+
+import static org.springframework.core.annotation.AnnotationAttributes.fromMap;
 
 /**
  * Snowflake Bean Registrar
@@ -35,7 +38,7 @@ public class SnowflakeBeanRegistrar extends BaseBeanDefinitionRegistrar
   private BeanFactory beanFactory;
 
   @Override
-  public void setEnvironment(Environment environment) {
+  public void setEnvironment(@NonNull Environment environment) {
     this.environment = environment;
   }
 
@@ -43,23 +46,17 @@ public class SnowflakeBeanRegistrar extends BaseBeanDefinitionRegistrar
   public void registerBeanDefinitions(
       AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
 
-    BeanDefinition annotationProcessor =
-        BeanDefinitionBuilder.genericBeanDefinition(PropertySourcesPlaceholderConfigurer.class)
-            .getBeanDefinition();
+    BeanDefinition annotationProcessor = BeanDefinitionBuilder.genericBeanDefinition(PropertySourcesPlaceholderConfigurer.class).getBeanDefinition();
 
-    registry.registerBeanDefinition(
-        PropertySourcesPlaceholderConfigurer.class.getName(), annotationProcessor);
+    registry.registerBeanDefinition(PropertySourcesPlaceholderConfigurer.class.getName(), annotationProcessor);
 
-    AnnotationAttributes attributes =
-        fromMap(metadata.getAnnotationAttributes(EnableSnowflake.class.getName()));
+    AnnotationAttributes attributes = fromMap(metadata.getAnnotationAttributes(EnableSnowflake.class.getName()));
 
-    registerGlobalSnowflakeProperties(
-        attributes, registry, environment, GLOBAL_SNOWFLAKE_PROPERTIES_BEAN_NAME);
+    registerGlobalSnowflakeProperties(attributes, registry, environment, GLOBAL_SNOWFLAKE_PROPERTIES_BEAN_NAME);
 
     registerPropertySourcesPlaceholderConfigurer(registry);
 
-    registerInfrastructureBeanIfAbsent(
-        registry, SnowflakeBeanBuilder.BEAN_NAME, SnowflakeBeanBuilder.class);
+    registerInfrastructureBeanIfAbsent(registry, SnowflakeBeanBuilder.BEAN_NAME, SnowflakeBeanBuilder.class);
 
     SnowflakeBeanBuilder snowflakeBeanBuilder = beanFactory.getBean(SnowflakeBeanBuilder.class);
     Snowflake snowflake = snowflakeBeanBuilder.build();
@@ -68,7 +65,7 @@ public class SnowflakeBeanRegistrar extends BaseBeanDefinitionRegistrar
   }
 
   @Override
-  public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+  public void setBeanFactory(@Nullable BeanFactory beanFactory) throws BeansException {
     this.beanFactory = beanFactory;
   }
 }
