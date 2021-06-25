@@ -79,17 +79,20 @@ public abstract class AbstractAdvice implements BeanFactoryAware, EnvironmentAwa
 
   protected boolean checkIgnoreURL(@NonNull String path) {
 
-    if(this.contextPath == null) {
-      this.contextPath = environment.getProperty("server.servlet.context-path","");
-      this.contextPath = cleanContextPath(this.contextPath);
-    }
+    if(xyz.vopen.mixmicro.kits.StringUtils.isNotBlank(path)) {
+      if(this.contextPath == null) {
+        this.contextPath = environment.getProperty("server.servlet.context-path","");
+        this.contextPath = cleanContextPath(this.contextPath);
+      }
 
-    List<String> urls = getProperties().getResponse().getIgnoreWrapUris();
-    for (String url : urls) {
-      if(url.startsWith(this.contextPath.concat(path))) {
-        return true;
+      List<String> urls = getProperties().getResponse().getIgnoreWrapUris();
+      for (String url : urls) {
+        if(org.apache.commons.lang3.StringUtils.startsWith(this.contextPath.concat(path), url)) {
+          return true;
+        }
       }
     }
+
     return false;
   }
 }
