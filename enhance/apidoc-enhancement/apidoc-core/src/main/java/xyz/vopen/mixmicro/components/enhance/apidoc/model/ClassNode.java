@@ -188,7 +188,7 @@ public class ClassNode implements Serializable {
     } else {
       fieldDesc = fieldType;
     }
-    if (showFieldNotNull && fieldNode.getNotNull() && null != DocContext.getI18n()) {
+    if (showFieldNotNull && fieldNode.getRequired() && null != DocContext.getI18n()) {
       fieldDesc =
           String.format("%s【%s】", fieldDesc, DocContext.getI18n().getMessage("parameterNeed"));
     }

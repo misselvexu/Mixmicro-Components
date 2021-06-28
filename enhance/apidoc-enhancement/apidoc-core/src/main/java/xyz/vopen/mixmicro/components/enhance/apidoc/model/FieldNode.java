@@ -30,7 +30,7 @@ public class FieldNode implements Serializable {
   /** has loop class reference,default false */
   private Boolean loopNode = Boolean.FALSE;
   /** not null,default false */
-  private Boolean notNull = Boolean.FALSE;
+  private Boolean required = Boolean.FALSE;
 
   public Boolean getLoopNode() {
     return loopNode;
@@ -40,12 +40,12 @@ public class FieldNode implements Serializable {
     this.loopNode = loopNode;
   }
 
-  public Boolean getNotNull() {
-    return notNull;
+  public Boolean getRequired() {
+    return required;
   }
 
-  public void setNotNull(Boolean notNull) {
-    this.notNull = notNull;
+  public void setRequired(Boolean required) {
+    this.required = required;
   }
 
   public String getName() {

@@ -41,7 +41,9 @@ public class ParseUtils {
   /** means a model class type */
   private static final String TYPE_MODEL = "_object";
 
+  private static final String ARRAY_TYPE = "[]";
   private static final String OBJECT_CLASS_NAME = "Object";
+  private static final String STRING_TYPE = "string";
   private static final String OBJECT_CLASS_ARRAY = "Object[]";
   private static final String JAVA_FILE_SUFFIX = ".java";
   private static final Set<String> ignoreTypeNames = new HashSet<>();
@@ -367,7 +369,7 @@ public class ParseUtils {
                             .forEach(
                                 field -> {
                                   FieldNode fieldNode = new FieldNode();
-                                  fieldNode.setNotNull(notNull);
+                                  fieldNode.setRequired(notNull);
                                   FieldClassNode fieldClassNode = new FieldClassNode();
                                   BeanUtils.copyProperties(classNode, fieldClassNode);
                                   fieldClassNode.setFieldChildNodes(classNode.getChildNodes());
@@ -571,8 +573,10 @@ public class ParseUtils {
       fieldClassType = fieldType.asString();
     }
 
-    final String unifyType = unifyType(fieldClassType);
-
+    String unifyType = unifyType(fieldClassType);
+    if (StringUtils.isBlank(unifyType)) {
+      unifyType = STRING_TYPE;
+    }
     if (TYPE_MODEL.equals(unifyType)) {
       FieldClassNode childNode = new FieldClassNode();
       FieldClassNode parentFieldNode = fieldNode.getClassNode();
@@ -580,7 +584,7 @@ public class ParseUtils {
       childNode.setIsArray(isList);
       childNode.setFieldClassName(fieldClassType);
       fieldNode.setChildNode(childNode);
-      fieldNode.setType(Boolean.TRUE.equals(isList) ? fieldClassType + "[]" : fieldClassType);
+      fieldNode.setType(Boolean.TRUE.equals(isList) ? OBJECT_CLASS_ARRAY : fieldClassType);
 
       final File childJavaFile = inJavaFile;
       assert fieldType instanceof ClassOrInterfaceType;
@@ -630,7 +634,7 @@ public class ParseUtils {
         fieldNode.setType(isList ? OBJECT_CLASS_ARRAY : OBJECT_CLASS_NAME);
       }
     } else {
-      fieldNode.setType(isList ? unifyType + "[]" : unifyType);
+      fieldNode.setType(isList ? OBJECT_CLASS_ARRAY : unifyType);
     }
   }
 
@@ -748,7 +752,7 @@ public class ParseUtils {
     } else if ("char".equalsIgnoreCase(rawType) || "Character".equalsIgnoreCase(rawType)) {
       return "char";
     } else if ("String".equalsIgnoreCase(rawType)) {
-      return "string";
+      return STRING_TYPE;
     } else if ("date".equalsIgnoreCase(rawType)
         || "LocalDate".equalsIgnoreCase(rawType)
         || "ZonedDateTime".equalsIgnoreCase(rawType)
@@ -1029,7 +1033,7 @@ public class ParseUtils {
     if (annotations != null) {
       for (Annotation annotation : annotations) {
         if (isNotNullAnnotation(annotation.getClass().getSimpleName())) {
-          fieldNode.setNotNull(true);
+          fieldNode.setRequired(true);
           break;
         }
       }
@@ -1049,7 +1053,7 @@ public class ParseUtils {
     if (fieldClass.isArray()) {
       Class<?> componentType = fieldClass.getComponentType();
       final String unifyFieldType = unifyType(componentType.getSimpleName());
-      fieldNode.setType(unifyFieldType + "[]");
+      fieldNode.setType(OBJECT_CLASS_ARRAY);
       if (unifyFieldType.equals(TYPE_MODEL)) {
         childClassNode.setList(true);
         childNodeClass = componentType;
@@ -1060,7 +1064,7 @@ public class ParseUtils {
     }
     // 列表
     if (Collection.class.isAssignableFrom(fieldClass)) {
-      fieldNode.setType("[]");
+      fieldNode.setType(ARRAY_TYPE);
       Type genericType = field.getGenericType();
       if (!(genericType instanceof ParameterizedType)) {
         return;
@@ -1089,7 +1093,7 @@ public class ParseUtils {
         childClassNode.setList(true);
         childNodeClass = boxClass;
       } else {
-        fieldNode.setType(unifyFieldType + "[]");
+        fieldNode.setType(OBJECT_CLASS_ARRAY);
         return;
       }
     }
@@ -1120,7 +1124,11 @@ public class ParseUtils {
       }
       final String unifyFieldType = unifyType(childNodeClass.getSimpleName());
       if (!unifyFieldType.equals(TYPE_MODEL)) {
-        fieldNode.setType(unifyFieldType);
+        if (StringUtils.isNotBlank(unifyFieldType)) {
+          fieldNode.setType(unifyFieldType);
+        } else {
+          fieldNode.setType(STRING_TYPE);
+        }
         return;
       }
     }

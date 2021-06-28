@@ -167,9 +167,9 @@ public class SpringControllerParser extends AbsControllerParser {
                             return;
                           }
 
-                          if ("RequestBody".equals(name)) {
-                            setRequestBody(paramNode, p.getType());
-                          }
+//                          if ("RequestBody".equals(name)) {
+//                            setRequestBody(paramNode, p.getType());
+//                          }
 
                           // @RequestParam String name
                           if (an instanceof MarkerAnnotationExpr) {
@@ -266,7 +266,7 @@ public class SpringControllerParser extends AbsControllerParser {
                 paramNode.setName(parentName + filedNode.getName());
                 paramNode.setType(filedNode.getType());
                 paramNode.setDescription(filedNode.getDescription());
-                paramNode.setRequired(filedNode.getNotNull());
+                paramNode.setRequired(filedNode.getRequired());
                 paramNodeList.add(paramNode);
               }
             });

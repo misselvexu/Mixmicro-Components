@@ -173,7 +173,11 @@ public abstract class AbsControllerParser {
                           TypeAlsResponse typeAlsResponse = alsType(pType);
                           paramNode.setList(typeAlsResponse.getIsArray());
                           paramNode.setGenericNode(typeAlsResponse.getGenericClassNode());
-                          paramNode.setType(typeAlsResponse.getType());
+                          if (StringUtils.isNotBlank(typeAlsResponse.getType())) {
+                            paramNode.setType(typeAlsResponse.getType());
+                          } else {
+                            paramNode.setType("string");
+                          }
                         }
                       });
               com.github.javaparser.ast.type.Type resultClassType = null;
