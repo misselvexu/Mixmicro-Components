@@ -1,8 +1,15 @@
 package xyz.vopen.mixmicro.components.boot.snowflake;
 
 import com.google.common.base.Preconditions;
-import java.util.Calendar;
 import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import xyz.vopen.mixmicro.kits.StringUtils;
+
+import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Calendar;
 
 /**
  * Snowflake Bean
@@ -13,14 +20,20 @@ import lombok.SneakyThrows;
 @SuppressWarnings("ALL")
 public final class Snowflake {
 
+  private static final Logger log = LoggerFactory.getLogger(Snowflake.class);
+  private static final String AT = "@";
   public static final long EPOCH;
   private static final long SEQUENCE_BITS = 8L;
   private static final long WORKER_ID_BITS = 4L;
+  private static final long DATACENTER_ID_BITS = 4L;
   private static final long SEQUENCE_MASK = (1 << SEQUENCE_BITS) - 1;
   private static final long WORKER_ID_LEFT_SHIFT_BITS = SEQUENCE_BITS;
   private static final long TIMESTAMP_LEFT_SHIFT_BITS = WORKER_ID_LEFT_SHIFT_BITS + WORKER_ID_BITS;
   private static final long WORKER_ID_MAX_VALUE = 1L << WORKER_ID_BITS;
   private static TimeService timeService = new TimeService();
+
+  private final long maxWorkerId = -1L ^ (-1L << WORKER_ID_BITS);
+  private final long maxDatacenterId = -1L ^ (-1L << DATACENTER_ID_BITS);
 
   static {
     Calendar calendar = Calendar.getInstance();
@@ -33,18 +46,27 @@ public final class Snowflake {
   }
 
   private long workerId;
+  private long dataCenterId;
   private int maxTolerateTimeDifferenceMilliseconds = 10;
   private byte sequenceOffset;
   private long sequence;
   private long lastMilliseconds;
 
   /**
-   * New Snowflag Builder
+   * New Snowflake Builder
    *
    * @param workerId workerId
    */
   public Snowflake(long workerId) {
-    setWorkerId(workerId);
+    this(workerId, true);
+  }
+
+  public Snowflake(SnowflakeProperties properties) {
+    setWorkerId(properties.getWorkerId(), properties.isAuto());
+  }
+
+  public Snowflake(long workerId, boolean auto) {
+    setWorkerId(workerId, auto);
   }
 
   /**
@@ -52,9 +74,54 @@ public final class Snowflake {
    *
    * @param workerId work process id
    */
-  public void setWorkerId(final long workerId) {
-    Preconditions.checkArgument(workerId >= 0L && workerId < WORKER_ID_MAX_VALUE);
-    this.workerId = workerId;
+  public void setWorkerId(final long workerId, final boolean auto) {
+    if(auto) {
+      this.dataCenterId = getDatacenterId(maxDatacenterId);
+      this.workerId = getMaxWorkerId(dataCenterId, this.maxWorkerId);
+    } else {
+      Preconditions.checkArgument(workerId >= 0L && workerId < WORKER_ID_MAX_VALUE);
+      this.workerId = workerId;
+    }
+    log.info("[Snowflake] real worker id : {}", this.workerId);
+  }
+
+  /**
+   * 获取 maxWorkerId
+   *
+   * @see from mybatis-plus snowflake
+   */
+  protected static long getMaxWorkerId(long datacenterId, long maxWorkerId) {
+    StringBuilder mpid = new StringBuilder();
+    mpid.append(datacenterId);
+    String name = ManagementFactory.getRuntimeMXBean().getName();
+    if (StringUtils.isNotEmpty(name)) {
+      mpid.append(name.split(AT)[0]);
+    }
+    return (mpid.toString().hashCode() & 0xffff) % (maxWorkerId + 1);
+  }
+
+  /**
+   * 数据标识id部分
+   *
+   * @see from mybatis-plus snowflake
+   */
+  protected static long getDatacenterId(long maxDatacenterId) {
+    long id = 0L;
+    try {
+      InetAddress ip = InetAddress.getLocalHost();
+      NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+      if (network == null) {
+        id = 1L;
+      } else {
+        byte[] mac = network.getHardwareAddress();
+        if (null != mac) {
+          id = ((0x000000FF & (long) mac[mac.length - 1]) | (0x0000FF00 & (((long) mac[mac.length - 2]) << 8))) >> 6;
+          id = id % (maxDatacenterId + 1);
+        }
+      }
+    } catch (Exception ignore) {
+    }
+    return id;
   }
 
   /**

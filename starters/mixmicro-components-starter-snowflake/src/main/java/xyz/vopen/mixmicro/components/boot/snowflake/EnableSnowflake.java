@@ -1,18 +1,17 @@
 package xyz.vopen.mixmicro.components.boot.snowflake;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.*;
 
 /**
  * Snowflake Enable Annotation
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 23/10/2018.
+ * @deprecated use boot auto-configuration instead of .
  */
+@Deprecated
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
@@ -25,4 +24,11 @@ public @interface EnableSnowflake {
    * @return workId
    */
   String workerId() default "1";
+
+  /**
+   * auto generate worker id & datacenter id
+   *
+   * @return true / false
+   */
+  boolean auto() default true;
 }
