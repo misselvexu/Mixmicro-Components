@@ -9,14 +9,14 @@ import java.lang.reflect.Constructor;
  * installed on the system and tries to find the most appropriate one.
  *
  * <p>To set the logger to a particular type, set the system property
- * ("com.acmedcare.framework.dbm.orm.logger.type") contained in {@link #LOG_TYPE_SYSTEM_PROPERTY}
- * ("com.acmedcare.framework.dbm.orm.logger.type") to be one of the values in {@link
+ * ("xyz.vopen.mixmicro.components.enhance.dbm.orm.logger.type") contained in {@link #LOG_TYPE_SYSTEM_PROPERTY}
+ * ("xyz.vopen.mixmicro.components.enhance.dbm.orm.logger.type") to be one of the values in {@link
  * LoggerFactory.LogType} enum.
  */
 public class LoggerFactory {
 
   public static final String LOG_TYPE_SYSTEM_PROPERTY =
-      "com.acmedcare.framework.dbm.orm.logger.type";
+      "xyz.vopen.mixmicro.components.enhance.dbm.orm.logger.type";
   private static LogType logType;
 
   /** For static calls only. */
@@ -83,11 +83,11 @@ public class LoggerFactory {
      * WARNING: Android log must be _before_ commons logging since Android provides commons logging
      * but logging messages are ignored that are sent there. Grrrrr.
      */
-    ANDROID("android.util.Log", "com.acmedcare.framework.dbm.orm.android.AndroidLog"),
+    ANDROID("android.util.Log", "xyz.vopen.mixmicro.components.enhance.dbm.orm.android.AndroidLog"),
     COMMONS_LOGGING("org.apache.commons.logging.LogFactory", "CommonsLoggingLog"),
     LOG4J2(
-        "org.apache.logging.log4j.LogManager", "com.acmedcare.framework.dbm.orm.logger.Log4j2Log"),
-    LOG4J("org.apache.log4j.Logger", "com.acmedcare.framework.dbm.orm.logger.Log4jLog"),
+        "org.apache.logging.log4j.LogManager", "xyz.vopen.mixmicro.components.enhance.dbm.orm.logger.Log4j2Log"),
+    LOG4J("org.apache.log4j.Logger", "xyz.vopen.mixmicro.components.enhance.dbm.orm.logger.Log4jLog"),
     // this should always be at the end as the fall-back, so it's always available
     LOCAL(LocalLog.class.getName(), LocalLog.class.getName()) {
       @Override
