@@ -36,7 +36,7 @@ public class LoggerSpaceManager {
    * 从 spaceName 的空间里寻找logger对象（而且这些 logger 是从该 spaceName 下的日志实现配置中解析而来)
    *
    * @param name loggerName
-   * @param spaceName 独立的loggers空间,比如"com.acmedcare.framework.rpc"；
+   * @param spaceName 独立的loggers空间,比如"xyz.vopen.mixmicro.components.rpc"；
    * @return org.slf4j.Logger;
    */
   public static Logger getLoggerBySpace(String name, String spaceName) {
@@ -61,7 +61,7 @@ public class LoggerSpaceManager {
    * 从 spaceName 的空间里寻找logger对象（而且这些 logger 是从该 spaceName 下的日志实现配置中解析而来)
    *
    * @param name loggerName
-   * @param spaceName 独立的loggers空间,比如"com.acmedcare.framework.rpc"；
+   * @param spaceName 独立的loggers空间,比如"xyz.vopen.mixmicro.components.rpc"；
    * @param spaceClassloader 该空间下独立的类加载器；（建议就是 APPClassloader 即可）
    * @return org.slf4j.Logger;
    */
@@ -93,7 +93,7 @@ public class LoggerSpaceManager {
    * @param spaceName 日志对应的空间名称
    * @param adapterLevel 要更新的日志级别
    * @return
-   *     更新级别后的日志,与com.acmedcare.framework.common.core.MultiAppLoggerSpaceManager#getLoggerBySpace(java.lang.String,
+   *     更新级别后的日志,与xyz.vopen.mixmicro.components.common.core.MultiAppLoggerSpaceManager#getLoggerBySpace(java.lang.String,
    *     java.lang.String) 返回的同一个日志
    */
   public static Logger setLoggerLevel(
@@ -109,7 +109,7 @@ public class LoggerSpaceManager {
    * @param spaceId 日志对应的空间名称
    * @param adapterLevel 要更新的日志级别
    * @return
-   *     更新级别后的日志,与com.acmedcare.framework.common.core.MultiAppLoggerSpaceManager#getLoggerBySpace(java.lang.String,
+   *     更新级别后的日志,与xyz.vopen.mixmicro.components.common.core.MultiAppLoggerSpaceManager#getLoggerBySpace(java.lang.String,
    *     java.lang.String) 返回的同一个日志
    */
   public static Logger setLoggerLevel(

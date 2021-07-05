@@ -182,7 +182,7 @@ public final class LogEnvUtils {
   }
 
   public static boolean isLogStarterExist() {
-    return ClassUtil.isPresent("com.acmedcare.framework.common.boot.logging.Mark");
+    return ClassUtil.isPresent("xyz.vopen.mixmicro.components.boot.logging.Mark");
   }
 
   public static boolean filterAllLogConfig(String key) {

@@ -35,9 +35,9 @@ import java.util.regex.Pattern;
 public class LocalLog implements Log {
 
   public static final String LOCAL_LOG_LEVEL_PROPERTY =
-      "com.acmedcare.framework.dbm.orm.logger.level";
+      "xyz.vopen.mixmicro.components.enhance.dbm.orm.logger.level";
   public static final String LOCAL_LOG_FILE_PROPERTY =
-      "com.acmedcare.framework.dbm.orm.logger.file";
+      "xyz.vopen.mixmicro.components.enhance.dbm.orm.logger.file";
   public static final String LOCAL_LOG_PROPERTIES_FILE = "/dbm-orm.properties";
 
   private static final Level DEFAULT_LEVEL = Level.DEBUG;

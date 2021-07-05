@@ -17,7 +17,7 @@ import java.sql.SQLException;
  * <pre>
  * 	&lt;bean id="accountRepository" class="RepositoryFactory" factory-method="createRepository"&gt;
  * 		&lt;constructor-arg index="0" ref="connectionSource" /&gt;
- * 		&lt;constructor-arg index="1" value="com.acmedcare.framework.dbm.orm.examples.spring.Account" /&gt;
+ * 		&lt;constructor-arg index="1" value="xyz.vopen.mixmicro.components.enhance.dbm.orm.examples.spring.Account" /&gt;
  * 	&lt;/bean&gt;
  * </pre>
  *

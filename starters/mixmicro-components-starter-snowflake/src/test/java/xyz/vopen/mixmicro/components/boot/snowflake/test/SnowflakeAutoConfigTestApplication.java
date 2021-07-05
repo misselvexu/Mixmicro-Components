@@ -1,7 +1,7 @@
 package xyz.vopen.mixmicro.components.boot.snowflake.test;
 
 /**
- * com.acmedcare.framework.boot.snowflake.test
+ * xyz.vopen.mixmicro.components.boot.snowflake.test
  *
  * @author <a href="mailto:iskp.me@gmail.com">Elve.Xu</a>
  * @version ${project.version} - 23/10/2018.
