@@ -48,6 +48,7 @@
         <module>mixmicro-components-starter-httpclient</module>
         <module>mixmicro-components-starter-optimization</module>
         <module>mixmicro-components-starter-redlimiter</module>
+        <module>mixmicro-components-starter-apidoc</module>
     </modules>
 
     <dependencyManagement>
@@ -257,6 +258,12 @@
                 <groupId>com.yunlsp.framework.components</groupId>
                 <artifactId>mixmicro-components-starter-redlimiter</artifactId>
                 <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-starter-apidoc</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

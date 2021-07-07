@@ -16,6 +16,7 @@
     <description>🏗 Enhance Module</description>
 
     <modules>
+        <module>apidoc-enhancement</module>
         <module>cache-enhancement</module>
         <module>security-enhancement</module>
         <module>event-enhancement</module>
@@ -341,7 +342,23 @@
                 <type>pom</type>
             </dependency>
 
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-apidocds-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-apidocds-freemarker</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-apidocds-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
