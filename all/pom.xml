@@ -45,7 +45,7 @@
         <assertj.version>3.16.1</assertj.version>
         <async.http.client.version>2.12.1</async.http.client.version>
         <guava.version>29.0-jre</guava.version>
-        <hibernate.validator.version>6.0.18.Final</hibernate.validator.version>
+        <hibernate.validator.version>6.0.20.Final</hibernate.validator.version>
         <bcprov.jdk16.version>1.46</bcprov.jdk16.version>
         <bcprov.jdk15.version>1.60</bcprov.jdk15.version>
         <commons.codec.version>1.11</commons.codec.version>
