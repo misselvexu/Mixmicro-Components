@@ -34,6 +34,7 @@
         <module>mongo-enhancement</module>
         <module>logback-enhancement</module>
         <module>aksk-enhancement</module>
+        <module>warning-notice-enhancement</module>
     </modules>
 
     <dependencyManagement>
@@ -359,6 +360,16 @@
                 <artifactId>mixmicro-components-enhance-apidocds-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <!-- Waring Notice -->
+            <dependency>
+                <groupId>com.yunlsp.framework.components</groupId>
+                <artifactId>mixmicro-components-enhance-waring-notice</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
